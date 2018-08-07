@@ -1,0 +1,7 @@
+{
+  "name": "lupacan",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
