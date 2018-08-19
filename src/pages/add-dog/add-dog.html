@@ -1,0 +1,53 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Agregar un perro</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      Datos del perro
+    </ion-list-header>
+    <ion-item>
+      <ion-label color="primary" stacked>Nombre</ion-label>
+      <ion-input type="text" placeholder="Nombre"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Raza</ion-label>
+      <ion-input type="text" placeholder="Raza"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Color</ion-label>
+      <ion-input type="text" placeholder="Color"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label color="primary" stacked>Tamanio</ion-label>
+        <ion-select [(ngModel)]="size">
+          <ion-option value="small">Chico</ion-option>
+          <ion-option value="medium">Mediano</ion-option>
+          <ion-option value="large">Grande</ion-option>
+        </ion-select>
+      </ion-item>
+    <ion-item>
+        <ion-label color="primary" stacked>Sexo</ion-label>
+        <ion-select [(ngModel)]="gender">
+          <ion-option value="f">Hembra</ion-option>
+          <ion-option value="m">Macho</ion-option>
+        </ion-select>
+      </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Direccion </ion-label>
+      <ion-input type="text" placeholder="Direccion"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Fecha</ion-label>
+      <ion-datetime displayFormat="MMM DD YYYY"></ion-datetime>
+    </ion-item>
+    <button ion-button full (click)="login()">Agregar a mis perros!</button>
+  </ion-list>
+  
+</ion-content>

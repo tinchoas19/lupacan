@@ -1,14 +1,32 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Inicio
     </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="goToMySettings()">
+       <ion-icon ios="ios-paw" md="md-paw"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+ <ion-list>
+    <button ion-item (click)="goToComunidad()">
+      Comunidad
+    </button>
+    <button ion-item (click)="goToPerdidos()">
+      Perdidos
+    </button>
+    <button ion-item (click)="goToEncontrar()">
+      Encontrar
+    </button>
+    <button ion-item (click)="goToAdopcion()">
+      Adopcion
+    </button>
+    <button ion-item (click)="goToServicios()">
+      Servicios
+    </button>
+ </ion-list>
 </ion-content>

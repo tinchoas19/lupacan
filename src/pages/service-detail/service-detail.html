@@ -1,0 +1,53 @@
+<!--
+  Generated template for the ServiceDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{service.serviceName}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4>
+        Direccion
+      </ion-col>
+      <ion-col col-8>
+        {{service.serviceAddress}}
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-4>
+        Telefono
+      </ion-col>
+      <ion-col col-8>
+        {{service.serviceTelephone}}
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-4>
+        Email
+      </ion-col>
+      <ion-col col-8>
+        {{service.serviceEmail}}
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-4>
+        Servicios
+      </ion-col>
+      <ion-col col-12>
+        <div *ngFor="let offered of service.serviceServices">
+          {{offered.offeredService}}
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

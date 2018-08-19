@@ -1,0 +1,54 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Agregar servicio</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      Datos del servicio
+    </ion-list-header>
+    <ion-item>
+      <ion-label color="primary" stacked>Nombre</ion-label>
+      <ion-input type="text" placeholder="Nombre"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Direccion</ion-label>
+      <ion-input type="text" placeholder="Direccion"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Horario apertura</ion-label>
+      <ion-input type="text" placeholder="Horario apertura"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Horario cierre</ion-label>
+      <ion-input type="text" placeholder="Horario cierre"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Categoria</ion-label>
+      <ion-select [(ngModel)]="category">
+        <ion-option value="small">Adiestramiento</ion-option>
+        <ion-option value="medium">Alimentos y Produccion</ion-option>
+        <ion-option value="large">Atencion Medica</ion-option>
+        <ion-option value="large">Guarderias</ion-option>
+        <ion-option value="large">Paseadores</ion-option>
+        <ion-option value="large">Peluqueria, Belleza y Banio</ion-option>
+        <ion-option value="large">Pet Friendly</ion-option>
+        <ion-option value="large">Pet Shop</ion-option>
+        <ion-option value="large">Refugios</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <a ion-item (click)="openModal({charNum: 0})">
+        Seleccionar servicios ofrecidos
+      </a>
+    </ion-item>
+
+    <button ion-button full (click)="addService()">Agregar servicio!</button>
+  </ion-list>
+
+</ion-content>

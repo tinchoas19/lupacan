@@ -1,0 +1,36 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{pageData.title}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-2 *ngFor="let dog of dogs" (click)="goToDogDetail(dog)">
+        
+          <img src="./assets/imgs/{{dog.imageUrl}}" alt="{{dog.dogName}}">
+          <div [style.width.px]="10" [style.height.px]="10" [style.background-color]="dog.isOnline ? 'green' : 'gray'"></div>
+          
+      </ion-col>
+    </ion-row>
+    <ion-row>
+       <ion-col col-12 >
+    <div class="text-center">Ultimos agregados</div>
+       </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>    
+    <ion-row>
+      <ion-col col-4 *ngFor="let dog of filteredDogs" (click)="goToDogDetail(dog)">
+        <div>{{dog.dogName}}</div>
+          <img src="./assets/imgs/{{dog.imageUrl}}" alt="{{dog.dogName}}">
+          <div [style.width.px]="10" [style.height.px]="10" [style.background-color]="dog.isOnline ? 'green' : 'gray'"></div>
+          
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

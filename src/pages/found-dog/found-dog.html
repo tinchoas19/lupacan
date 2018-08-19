@@ -1,0 +1,43 @@
+
+<ion-header>
+
+    <ion-navbar>
+      <ion-title>Encontre un perro</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content padding>
+    <ion-list>
+      <ion-list-header>
+        Datos del perro encontrado
+      </ion-list-header>
+      <ion-item>
+        <ion-label color="primary" stacked>Raza</ion-label>
+        <ion-input type="text" placeholder="Nombre"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" stacked>Color</ion-label>
+        <ion-input type="text" placeholder="Apellido"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" stacked>Tamanio</ion-label>
+        <ion-input type="email" placeholder="Email"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label color="primary" stacked>Sexo</ion-label>
+          <ion-input type="text" placeholder="Direccion"></ion-input>
+        </ion-item>
+      <ion-item>
+        <ion-label color="primary" stacked>Direccion </ion-label>
+        <ion-input type="text" placeholder="Direccion"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" stacked>Fecha</ion-label>
+        <ion-datetime displayFormat="MMM DD YYYY" ></ion-datetime>
+      </ion-item>
+  
+    </ion-list>
+    <button ion-button full (click)="login()">Publicar datos</button>
+  </ion-content>

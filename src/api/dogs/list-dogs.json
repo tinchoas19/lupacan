@@ -1,0 +1,92 @@
+[
+    {
+        "dogId": 1,
+        "dogName": "Rufus",
+        "isOnline": true,
+        "imageUrl": "1.jpg",
+        "perdido": false,
+        "encontrado": false,
+        "adopcion": false
+    },
+    {
+        "dogId": 2,
+        "dogName": "Willy",
+        "isOnline": false,
+        "imageUrl": "1.jpg",
+        "perdido": false,
+        "encontrado": false,
+        "adopcion": false
+    },
+    {
+        "dogId": 3,
+        "dogName": "Rufus",
+        "isOnline": true,
+        "imageUrl": "1.jpg",
+        "perdido": false,
+        "encontrado": false,
+        "adopcion": false
+    },
+    {
+        "dogId": 4,
+        "dogName": "Willy",
+        "isOnline": false,
+        "imageUrl": "1.jpg",
+        "perdido": false,
+        "encontrado": false,
+        "adopcion": false
+    },
+    {
+        "dogId": 5,
+        "dogName": "Rufus",
+        "isOnline": true,
+        "imageUrl": "1.jpg",
+        "perdido": false,
+        "encontrado": false,
+        "adopcion": false
+    },
+     {
+        "dogId": 6,
+        "dogName": "Rufus",
+        "isOnline": true,
+        "imageUrl": "1.jpg",
+        "perdido": false,
+        "encontrado": false,
+        "adopcion": true
+    },
+     {
+        "dogId": 7,
+        "dogName": "Rufus",
+        "isOnline": true,
+        "imageUrl": "1.jpg",
+        "perdido": false,
+        "encontrado": false,
+        "adopcion": true
+    },
+     {
+        "dogId": 8,
+        "dogName": "Rufus",
+        "isOnline": true,
+        "imageUrl": "1.jpg",
+        "perdido": false,
+        "encontrado": true,
+        "adopcion": false
+    },
+     {
+        "dogId": 9,
+        "dogName": "Rufus",
+        "isOnline": true,
+        "imageUrl": "1.jpg",
+        "perdido": true,
+        "encontrado": false,
+        "adopcion": false
+    },
+    {
+        "dogId": 10,
+        "dogName": "Willy",
+        "isOnline": false,
+        "imageUrl": "1.jpg",
+        "perdido": true,
+        "encontrado": false,
+        "adopcion": false
+    }
+]

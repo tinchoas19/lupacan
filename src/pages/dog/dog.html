@@ -1,0 +1,136 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{dog.dogName}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12>
+        <div class="text-center">{{dog.dogName}}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <div class="text-center" (click)="goToSlider(dog)">
+          <img src="./assets/imgs/{{dog.imageUrl}}" alt="{{dog.dogName}}">
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-4>
+        <p>Sexo:</p>
+      </ion-col>
+      <ion-col col-4>
+        <div class="text-center">{{dog.gender}}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-4>
+        <p>Color:</p>
+      </ion-col>
+      <ion-col col-4>
+        <div class="text-center">{{dog.color}}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-4>
+        <p>Raza:</p>
+      </ion-col>
+      <ion-col col-4>
+        <div class="text-center">{{dog.breed}}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-4>
+        <p>Edad:</p>
+      </ion-col>
+      <ion-col col-4>
+        <div class="text-center">{{dog.age}}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-4>
+        <p>Vive:</p>
+      </ion-col>
+      <ion-col col-4>
+        <div class="text-center">{{dog.vive}}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-4>
+        <p>Personalidad:</p>
+      </ion-col>
+      <ion-col col-4>
+        <div class="text-center">{{dog.personalidad}}</div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="dog.perdido">
+      <ion-col col-4>
+        <p>Se perdio el:</p>
+      </ion-col>
+      <ion-col col-4>
+        <div class="text-center">{{dog.fechaPerdido}}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="dog.perdido">
+      <ion-col col-4>
+        <p>Se perdio en:</p>
+      </ion-col>
+      <ion-col col-4>
+        <div class="text-center">{{dog.lugarPerdido}}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="dog.perdido">
+      <ion-col col-4>
+        <p>Caracterizticas cuando se perdio:</p>
+      </ion-col>
+      <ion-col col-4>
+        <div class="text-center">{{dog.caracterizticaPerdido}}</div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="dog.encontrado">
+      <ion-col col-4>
+        <p>Se encontro el:</p>
+      </ion-col>
+      <ion-col col-4>
+        <div class="text-center">{{dog.fechaEncontrado}}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="dog.encontrado">
+      <ion-col col-4>
+        <p>Se encontro en:</p>
+      </ion-col>
+      <ion-col col-4>
+        <div class="text-center">{{dog.lugarEncontrado}}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="showMyControls">
+      <ion-col col-4>
+        <p>Esta perdido:</p>
+      </ion-col>
+      <ion-col col-4>
+        <ion-toggle checked="false" [(ngModel)]="checkAsLost" (ionChange)="showAlert()"></ion-toggle>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="thisDogIsLost && dog.perdido">
+ 
+      <ion-col col-12>
+        <button ion-button full (click)="iFoundThisDog(dog)">Yo lo encontre!</button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="thisDogIsToBeAddopted && dog.adopcion">
+ 
+      <ion-col col-12>
+        <button ion-button full (click)="iWannaThisDog(dog)">Quiero adoptarlo!</button>
+      </ion-col>
+    </ion-row>
+    
+  </ion-grid>
+</ion-content>

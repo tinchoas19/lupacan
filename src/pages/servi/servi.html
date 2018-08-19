@@ -1,0 +1,29 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Categorias</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-searchbar (ionInput)="getItems($event)" ></ion-searchbar>
+  <ion-grid *ngIf="showCategories">
+    <ion-row>
+      <ion-col col-4 *ngFor="let cat of categories" (click)="goToCategory(cat)">
+        <div class="text-center">{{cat.categoryName}}</div>
+
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-list inset *ngIf="!showCategories">
+    <ion-list-header>
+      Resultados de {{inputText}}
+    </ion-list-header>
+    <button ion-item *ngFor="let serv of filteredServices" (click)="goToService(serv)">
+      {{serv.serviceName}}
+    </button>
+  </ion-list>
+</ion-content>
