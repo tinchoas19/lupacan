@@ -5,14 +5,8 @@
 </ion-header>
 
 <ion-content class="tutorial-page">
-
   <ion-slides pager>
-    <ion-slide *ngFor="let image of iamgeCollection">
-      <ion-toolbar>
-        <ion-buttons end>
-          <button ion-button color="primary">Skip</button>
-        </ion-buttons>
-      </ion-toolbar>
+    <ion-slide *ngFor="let image of imageCollection">
       <img src="./assets/imgs/{{image}}" class="slide-image" />
     </ion-slide>
   </ion-slides>

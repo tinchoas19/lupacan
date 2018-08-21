@@ -21,6 +21,7 @@ import { CreateServicePage } from '../pages/create-service/create-service';
 import { PhotoSliderPage } from '../pages/photo-slider/photo-slider';
 import { ModalOfferedServicesPage } from '../pages/modal-offered-services/modal-offered-services';
 import { MyServicesPage } from '../pages/my-services/my-services';
+import { EditServicePage } from '../pages/edit-service/edit-service';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { MyServicesPage } from '../pages/my-services/my-services';
     CreateServicePage,
     PhotoSliderPage,
     ModalOfferedServicesPage,
-    MyServicesPage
+    MyServicesPage,
+    EditServicePage
   ],
   imports: [
     BrowserModule,
@@ -65,7 +67,8 @@ import { MyServicesPage } from '../pages/my-services/my-services';
     CreateServicePage,
     PhotoSliderPage,
     ModalOfferedServicesPage,
-    MyServicesPage
+    MyServicesPage,
+    EditServicePage
   ],
   providers: [
     StatusBar,

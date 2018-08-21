@@ -111,7 +111,7 @@
         <div class="text-center">{{dog.lugarEncontrado}}</div>
       </ion-col>
     </ion-row>
-    <ion-row *ngIf="showMyControls">
+    <ion-row *ngIf="showMyControls && !dog.encontrado">
       <ion-col col-4>
         <p>Esta perdido:</p>
       </ion-col>
