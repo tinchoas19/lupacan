@@ -25,29 +25,36 @@
       <ion-input type="text" placeholder="Color"></ion-input>
     </ion-item>
     <ion-item>
-        <ion-label color="primary" stacked>Tamanio</ion-label>
-        <ion-select [(ngModel)]="size">
-          <ion-option value="small">Chico</ion-option>
-          <ion-option value="medium">Mediano</ion-option>
-          <ion-option value="large">Grande</ion-option>
-        </ion-select>
-      </ion-item>
+      <ion-label color="primary" stacked>Tamanio</ion-label>
+      <ion-select [(ngModel)]="size">
+        <ion-option value="small">Chico</ion-option>
+        <ion-option value="medium">Mediano</ion-option>
+        <ion-option value="large">Grande</ion-option>
+      </ion-select>
+    </ion-item>
     <ion-item>
-        <ion-label color="primary" stacked>Sexo</ion-label>
-        <ion-select [(ngModel)]="gender">
-          <ion-option value="f">Hembra</ion-option>
-          <ion-option value="m">Macho</ion-option>
-        </ion-select>
-      </ion-item>
+      <ion-label color="primary" stacked>Sexo</ion-label>
+      <ion-select [(ngModel)]="gender">
+        <ion-option value="f">Hembra</ion-option>
+        <ion-option value="m">Macho</ion-option>
+      </ion-select>
+    </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Direccion </ion-label>
       <ion-input type="text" placeholder="Direccion"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label color="primary" stacked>Fecha</ion-label>
+      <ion-label color="primary" stacked>Fecha de nacimiento</ion-label>
       <ion-datetime displayFormat="MMM DD YYYY"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Motivo</ion-label>
+      <ion-select [(ngModel)]="gender">
+        <ion-option value="mio">Es mio</ion-option>
+        <ion-option value="adopcion">En adopcion</ion-option>
+      </ion-select>
     </ion-item>
     <button ion-button full (click)="login()">Agregar a mis perros!</button>
   </ion-list>
-  
+
 </ion-content>
