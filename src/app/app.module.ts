@@ -1,3 +1,4 @@
+import { FirstProfileSettingsPage } from './../pages/first-profile-settings/first-profile-settings';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -43,7 +44,8 @@ import { EditServicePage } from '../pages/edit-service/edit-service';
     PhotoSliderPage,
     ModalOfferedServicesPage,
     MyServicesPage,
-    EditServicePage
+    EditServicePage,
+    FirstProfileSettingsPage
   ],
   imports: [
     BrowserModule,
@@ -68,7 +70,8 @@ import { EditServicePage } from '../pages/edit-service/edit-service';
     PhotoSliderPage,
     ModalOfferedServicesPage,
     MyServicesPage,
-    EditServicePage
+    EditServicePage,
+    FirstProfileSettingsPage
   ],
   providers: [
     StatusBar,

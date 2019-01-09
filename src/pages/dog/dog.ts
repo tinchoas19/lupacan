@@ -16,6 +16,7 @@ export class DogPage {
 
   private pageId: number;
   public showMyControls: boolean;
+  
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
     this.dog = this.navParams.data.dogDetail;
     this.showMyControls = this.navParams.data.isMyDogs;

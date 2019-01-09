@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { ServiPage } from "../servi/servi";
 import { FeedPage } from "../feed/feed";
 import { ProfileSettingsPage } from '../profile-settings/profile-settings';
@@ -17,8 +17,20 @@ export class HomePage {
     { id: 4, title: "Adopcion" }
   ]
 
-  constructor(public navCtrl: NavController) {
+  constructor(
+    public navCtrl: NavController,
+    public alertCtrl: AlertController
+  ) {
+    this.alertMision();
+  }
 
+  alertMision(){
+    const alert = this.alertCtrl.create({
+      title: 'NUESTRA MISIÓN',
+      subTitle: 'BUSCAR PERROS PERDIDOS Y AYUDAR A ENCONTRARLES UN HOGAR A LOS QUE NO LO TIENEN, CON LA PARTICIPACIÓN ACTIVA DE LOS MIEMBROS DE LA COMUNIDAD',
+      buttons: ['OK']
+    });
+    alert.present();
   }
 
 

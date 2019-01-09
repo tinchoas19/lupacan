@@ -8,6 +8,9 @@
 
 
 <ion-content>
+  <div class="profile-bg">
+    <img style="max-width: 40% !important;" src="https://cdn4.iconfinder.com/data/icons/social-communication/142/add_photo-512.png" alt="">
+  </div>
   <ion-list>
     <ion-list-header>
       Datos del perro
@@ -18,14 +21,16 @@
     </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Raza</ion-label>
-      <ion-input type="text" placeholder="Raza"></ion-input>
+      <ion-select [(ngModel)]="employee" placeholder="Mestizo">
+        <ion-option *ngFor="let raza of razas">{{raza.name}}</ion-option>
+      </ion-select>
     </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Color</ion-label>
       <ion-input type="text" placeholder="Color"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label color="primary" stacked>Tamanio</ion-label>
+      <ion-label color="primary" stacked>Tamaño</ion-label>
       <ion-select [(ngModel)]="size">
         <ion-option value="small">Chico</ion-option>
         <ion-option value="medium">Mediano</ion-option>
@@ -40,18 +45,26 @@
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label color="primary" stacked>Direccion </ion-label>
-      <ion-input type="text" placeholder="Direccion"></ion-input>
+      <ion-label color="primary" stacked>Vive en.. </ion-label>
+      <ion-input type="text"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Fecha de nacimiento</ion-label>
       <ion-datetime displayFormat="MMM DD YYYY"></ion-datetime>
     </ion-item>
     <ion-item>
-      <ion-label color="primary" stacked>Motivo</ion-label>
-      <ion-select [(ngModel)]="gender">
-        <ion-option value="mio">Es mio</ion-option>
-        <ion-option value="adopcion">En adopcion</ion-option>
+      <ion-label color="primary" stacked>Estado</ion-label>
+      <ion-select [(ngModel)]="estado">
+        <ion-option value="comunidad">Es mio y está en casa</ion-option>
+        <ion-option value="adopcion">Para dar en adopción</ion-option>
+        <ion-option value="perdidos">Lo perdí y aun no lo encuentro</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Personalidad</ion-label>
+      <ion-select [(ngModel)]="personalidad">
+        <ion-option value="f">Bueno</ion-option>
+        <ion-option value="m">Malo</ion-option>
       </ion-select>
     </ion-item>
     <button ion-button full (click)="login()">Agregar a mis perros!</button>
