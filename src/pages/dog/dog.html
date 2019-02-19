@@ -61,7 +61,7 @@
         <div class="text-center">{{dog.vive}}</div>
       </ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row *ngIf="!dog.encontrado">
       <ion-col col-4>
         <p>Personalidad:</p>
       </ion-col>
@@ -80,7 +80,7 @@
     </ion-row>
     <ion-row *ngIf="dog.perdido">
       <ion-col col-4>
-        <p>Se perdio en:</p>
+        <p>EN:</p>
       </ion-col>
       <ion-col col-4>
         <div class="text-center">{{dog.lugarPerdido}}</div>
@@ -88,7 +88,7 @@
     </ion-row>
     <ion-row *ngIf="dog.perdido">
       <ion-col col-4>
-        <p>Caracterizticas cuando se perdio:</p>
+        <p>Características cuando se perdio:</p>
       </ion-col>
       <ion-col col-4>
         <div class="text-center">{{dog.caracterizticaPerdido}}</div>
@@ -96,6 +96,14 @@
     </ion-row>
 
     <ion-row *ngIf="dog.encontrado">
+      <ion-col col-4>
+        <p>Comentarios:</p>
+      </ion-col>
+      <ion-col col-4> 
+        <div class="text-center">{{dog.personalidad}}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
       <ion-col col-4>
         <p>Se encontro el:</p>
       </ion-col>
@@ -105,7 +113,7 @@
     </ion-row>
     <ion-row *ngIf="dog.encontrado">
       <ion-col col-4>
-        <p>Se encontro en:</p>
+        <p>En:</p>
       </ion-col>
       <ion-col col-4>
         <div class="text-center">{{dog.lugarEncontrado}}</div>
@@ -131,6 +139,5 @@
         <button ion-button full (click)="iWannaThisDog(dog)">Quiero adoptarlo!</button>
       </ion-col>
     </ion-row>
-    
   </ion-grid>
 </ion-content>

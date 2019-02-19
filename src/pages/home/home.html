@@ -1,13 +1,26 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Inicio
-    </ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="goToMySettings()">
-       <ion-icon ios="ios-paw" md="md-paw"></ion-icon>
-      </button>
-    </ion-buttons>
+  <ion-navbar hideBackButton>
+    <ion-row>
+      <ion-col>
+        <ion-buttons float-left>
+          <button ion-button icon-only>
+            <ion-icon name="contact"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-col>
+      <ion-col>
+        <ion-title text-center>
+          Inicio
+        </ion-title>
+      </ion-col>
+      <ion-col> 
+        <ion-buttons float-right>
+          <button ion-button icon-only (click)="goToMySettings()">
+           <ion-icon ios="ios-paw" md="md-paw"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-col>
+    </ion-row>
   </ion-navbar>
 </ion-header>
 
@@ -20,10 +33,10 @@
       Perdidos
     </button>
     <button ion-item (click)="goToEncontrar()">
-      Encontrar
+      Encontrados
     </button>
     <button ion-item (click)="goToAdopcion()">
-      Adopcion
+      En Adopción
     </button>
     <button ion-item (click)="goToServicios()">
       Servicios

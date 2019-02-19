@@ -8,6 +8,7 @@ import { DogPage } from "../dog/dog";
   templateUrl: 'feed.html',
 })
 export class FeedPage {
+  public segment: string = 'dog';
   private dogs: any[];
   private filteredDogs: any[];
   public pageData: any = {};

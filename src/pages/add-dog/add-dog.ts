@@ -16,6 +16,32 @@ import { HomePage } from '../home/home';
 })
 export class AddDogPage {
 
+  public razas:any=[
+  {
+    name:'Mestizo'
+  },{
+    name:'Labrador'
+  },{
+    name:'Bulldog'
+  },{
+    name:'Bulldog francés'
+  },{
+    name:'Caniche'
+  },{
+    name:'Pastor Alemán'
+  },{
+    name:'Beagle'
+  },{
+    name:'Golden'
+  },{
+    name:'Pug'
+  },{
+    name:'Pitbull'
+  },{
+    name:'Chihuahua'
+  },
+]
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
