@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { HomePage } from '../home/home';
 
 /**
  * Generated class for the AddDogPage page.
@@ -20,6 +21,18 @@ export class AddDogPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddDogPage');
+  }
+
+  irAHome(){
+    this.navCtrl.push(HomePage);    
+  }
+
+  irAAgregar(){
+    this.navCtrl.push(AddDogPage);    
+  }
+
+  agregarFoto(){
+    
   }
 
 }

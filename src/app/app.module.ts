@@ -22,6 +22,8 @@ import { PhotoSliderPage } from '../pages/photo-slider/photo-slider';
 import { ModalOfferedServicesPage } from '../pages/modal-offered-services/modal-offered-services';
 import { MyServicesPage } from '../pages/my-services/my-services';
 import { EditServicePage } from '../pages/edit-service/edit-service';
+import { RegisterPage } from '../pages/register/register';
+import { MisionPage } from '../pages/mision/mision';
 
 
 @NgModule({
@@ -43,7 +45,9 @@ import { EditServicePage } from '../pages/edit-service/edit-service';
     PhotoSliderPage,
     ModalOfferedServicesPage,
     MyServicesPage,
-    EditServicePage
+    EditServicePage,
+    RegisterPage,
+    MisionPage
   ],
   imports: [
     BrowserModule,
@@ -68,7 +72,9 @@ import { EditServicePage } from '../pages/edit-service/edit-service';
     PhotoSliderPage,
     ModalOfferedServicesPage,
     MyServicesPage,
-    EditServicePage
+    EditServicePage,
+    RegisterPage,
+    MisionPage
   ],
   providers: [
     StatusBar,
