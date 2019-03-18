@@ -1,3 +1,18 @@
 page-service-detail {
-
+    .header{
+        padding: 0!important;
+    }
+    .toolbar{
+        background: color($colors, primary);
+        .toolbar-title{
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .icon{
+                color: #fff;
+            }
+        }
+    }
+    
 }

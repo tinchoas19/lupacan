@@ -2,14 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DogPage } from '../dog/dog';
 import { AddDogPage } from '../add-dog/add-dog';
-
-
-/**
- * Generated class for the MyDogsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { ApiProvider } from '../../providers/api/api';
 
 @IonicPage()
 @Component({
@@ -18,100 +11,20 @@ import { AddDogPage } from '../add-dog/add-dog';
 })
 export class MyDogsPage {
 
-private myDogs: any[];
-private foundDogs: any[];
+  myDogs: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.myDogs = [
-      {
-        "dogId": 1,
-        "dogName": "Rufus",
-        "isOnline": true,
-        "imageUrl": "1.jpg",
-        "perdido": false,
-        "encontrado": false,
-        "adopcion": false,
-        "age": 1,
-        "breed":"Jack Russel",
-        "color":"Marron y blanco",
-        "gender": "Macho",
-        "vive": "Azcuenaga y Callao",
-        "personalidad": "es saltarin y divertido",
-        "fechaPerdido": "19/09/2005",
-        "lugarPerdido": "Plaza italia",
-        "caracterizticaPerdido": "llevaba un collar rojo y una ropita azul",
-        "fechaEncontrado": "19/10/2010",
-        "lugarEncontrado": "Callao y Corrientes"
 
-      },
-      {
-        "dogId": 1,
-        "dogName": "Rufus",
-        "isOnline": true,
-        "imageUrl": "1.jpg",
-        "perdido": false,
-        "encontrado": false,
-        "adopcion": false,
-        "age": 1,
-        "breed":"Jack Russel",
-        "color":"Marron y blanco",
-        "gender": "Macho",
-        "vive": "Azcuenaga y Callao",
-        "personalidad": "es saltarin y divertido",
-        "fechaPerdido": "19/09/2005",
-        "lugarPerdido": "Plaza italia",
-        "caracterizticaPerdido": "llevaba un collar rojo y una ropita azul",
-        "fechaEncontrado": "19/10/2010",
-        "lugarEncontrado": "Callao y Corrientes"
-
-      }
-    ];
-
-    this.foundDogs = [
-      {
-        "dogId": 1,
-        "dogName": "Caty",
-        "isOnline": true,
-        "imageUrl": "1.jpg",
-        "perdido": false,
-        "encontrado": true,
-        "adopcion": false,
-        "age": 1,
-        "breed":"Jack Russel",
-        "color":"Marron y blanco",
-        "gender": "Macho",
-        "vive": "Azcuenaga y Callao",
-        "personalidad": "es saltarin y divertido",
-        "fechaPerdido": "19/09/2005",
-        "lugarPerdido": "Plaza italia",
-        "caracterizticaPerdido": "llevaba un collar rojo y una ropita azul",
-        "fechaEncontrado": "19/10/2010",
-        "lugarEncontrado": "Callao y Corrientes"
-
-      },
-      {
-        "dogId": 1,
-        "dogName": "Rufus",
-        "isOnline": true,
-        "imageUrl": "1.jpg",
-        "perdido": false,
-        "encontrado": true,
-        "adopcion": false,
-        "age": 1,
-        "breed":"Jack Russel",
-        "color":"Marron y blanco",
-        "gender": "Macho",
-        "vive": "Azcuenaga y Callao",
-        "personalidad": "es saltarin y divertido",
-        "fechaPerdido": "19/09/2005",
-        "lugarPerdido": "Plaza italia",
-        "caracterizticaPerdido": "llevaba un collar rojo y una ropita azul",
-        "fechaEncontrado": "19/10/2010",
-        "lugarEncontrado": "Callao y Corrientes"
-
-      }
-    ];
+  constructor(public navCtrl: NavController, public navParams: NavParams, private ApiProvider: ApiProvider) {
+    
   }
+
+  ngOnInit() {
+    this.ApiProvider.getMyDogs().subscribe(data => {
+      console.log(data , 'sarasaaa');
+      this.myDogs = (data["data"]);
+    });
+  }
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MyDogsPage');

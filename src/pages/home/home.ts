@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController, MenuController } from 'ionic-angular';
 import { ServiPage } from "../servi/servi";
 import { FeedPage } from "../feed/feed";
 import { ProfileSettingsPage } from '../profile-settings/profile-settings';
+import { AgregarPage } from '../agregar/agregar';
 
 @Component({
   selector: 'page-home',
@@ -19,7 +20,8 @@ export class HomePage {
 
   constructor(
     public navCtrl: NavController,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public menuCtrl: MenuController
   ) {
    
   }
@@ -32,6 +34,18 @@ export class HomePage {
     });
     alert.present();
   } */
+
+  openMenu() {
+    this.menuCtrl.open();
+  }
+ 
+  closeMenu() {
+    this.menuCtrl.close();
+  }
+ 
+  toggleMenu() {
+    this.menuCtrl.toggle();
+  }
 
 
   goToComunidad() {
@@ -51,5 +65,8 @@ export class HomePage {
   }
   goToMySettings() {
     this.navCtrl.push(ProfileSettingsPage);
+  }
+  goToAgregar() {
+    this.navCtrl.push(AgregarPage);
   }
 }

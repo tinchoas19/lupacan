@@ -100,39 +100,48 @@ public inputText: string;
     this.categories = [
       {
         "categoryId": 1,
-        "categoryName": "Adiestramiento"
+        "categoryName": "Adiestramiento",
+        "categoryImg": "cat-adiestramiento.png",
       },
       {
         "categoryId": 2,
-        "categoryName": "Alimentos y Produccion"
+        "categoryName": "Alimentos",
+        "categoryImg": "cat-alimentos.png",
       },
       {
         "categoryId": 3,
-        "categoryName": "Atencion Medica"
+        "categoryName": "Atencion Medica",
+        "categoryImg": "cat-atencion.png",
       },
       {
         "categoryId": 4,
-        "categoryName": "Guarderias"
+        "categoryName": "Guarderias",
+        "categoryImg": "cat-guarderia.png",
       },
       {
         "categoryId": 5,
-        "categoryName": "Paseadores"
+        "categoryName": "Paseadores",
+        "categoryImg": "cat-paseadores.png",
       },
       {
         "categoryId": 6,
-        "categoryName": "Peluqueria, Belleza y Banio"
+        "categoryName": "Peluqueria",
+        "categoryImg": "cat-peluqueria.png",
       },
       {
         "categoryId": 7,
-        "categoryName": "Pet Friendly"
+        "categoryName": "Pet Friendly",
+        "categoryImg": "cat-friendly.png",
       },
       {
         "categoryId": 8,
-        "categoryName": "Pet Shop"
+        "categoryName": "Productos",
+        "categoryImg": "cat-productos.png",
       },
       {
         "categoryId": 9,
-        "categoryName": "Refugios"
+        "categoryName": "Refugios",
+        "categoryImg": "cat-refugios.png",
       }
      
     ];

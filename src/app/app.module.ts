@@ -25,6 +25,12 @@ import { MyServicesPage } from '../pages/my-services/my-services';
 import { EditServicePage } from '../pages/edit-service/edit-service';
 import { RegisterPage } from '../pages/register/register';
 import { MisionPage } from '../pages/mision/mision';
+import { AgregarPage } from '../pages/agregar/agregar';
+import { MainPage } from '../pages/main/main';
+import { CategoriesPage } from '../pages/categories/categories';
+import { ApiProvider } from '../providers/api/api';
+import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -48,10 +54,15 @@ import { MisionPage } from '../pages/mision/mision';
     MyServicesPage,
     EditServicePage,
     RegisterPage,
-    MisionPage
+    MisionPage,
+    AgregarPage,
+    MainPage,
+    CategoriesPage
   ],
   imports: [
     BrowserModule,
+    HttpModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -75,12 +86,16 @@ import { MisionPage } from '../pages/mision/mision';
     MyServicesPage,
     EditServicePage,
     RegisterPage,
-    MisionPage
+    MisionPage,
+    AgregarPage,
+    MainPage,
+    CategoriesPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ApiProvider
   ]
 })
 export class AppModule {}

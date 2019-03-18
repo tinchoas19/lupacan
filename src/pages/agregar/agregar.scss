@@ -1,0 +1,27 @@
+page-agregar {
+    .home-grid{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        justify-content: center;
+        .home-row{
+            margin-bottom: 2.5em;
+            .home-col{
+                width: 100%;
+                align-items: center;
+                justify-content: space-evenly;
+                flex-direction: row;
+                img{
+                    max-height: 70px;
+                }
+            }
+        }
+        div{
+            display: flex;
+            height: 25vh;
+        }
+        img{
+            height: 135px;
+        }
+    }
+}

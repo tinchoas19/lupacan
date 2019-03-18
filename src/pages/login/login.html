@@ -1,43 +1,24 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Iniciar Sesión</ion-title>
-  </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
   <ion-grid>
-    <ion-row justify-content-center style="margin-top: 10%;">
-      <button ion-button icon start>
-        <ion-icon name="logo-facebook">
-          Iniciar con Facebook
-        </ion-icon>
-      </button>
-    </ion-row>
-    <ion-row justify-content-center style="margin-top: 10%">
-      <ion-list>
-        <ion-item no-lines>
-          <ion-label floating>Ususario</ion-label>
-          <ion-input type="text"></ion-input>
-        </ion-item>
-        <ion-item no-lines>
-          <ion-label floating>Contraseña</ion-label>
-          <ion-input type="password"></ion-input>
-        </ion-item>
-      </ion-list>
+    <ion-row justify-content-center>
+      <ion-col col-6 text-center>
+        <img src="../../assets/imgs/main.png" alt="">
+        <h1 text-uppercase>Lupacan</h1>
+      </ion-col>
+      <ion-col col-10 text-center>
+        <ion-input type="text" placeholder="Usuario" class="lupa-shadow"></ion-input>
+        <ion-input type="password" placeholder="Contraseña" class="lupa-shadow"></ion-input>
+        <button ion-button block (click)="login()" class="btn-iniciar lupa-shadow">Iniciar</button>
+        <p><a href="#">Olvidé mi contraseña</a></p>
+        <button ion-button block class="lupa-shadow">Registrate con Facebook</button>
+        <p>No tenés cuenta?<a (click)="registro()">Registrate</a></p>
+      </ion-col>
     </ion-row>
   </ion-grid>
-  <button ion-button block (click)="login()">Entrar</button>
+  
 </ion-content>
-<ion-footer>
-  <ion-row>
-    <ion-col>
-      <p>No tenes cuenta?</p>
-    </ion-col>
-    <ion-col>
-      <button ion-button  float-right (click)="login()">Crear cuenta</button>
-    </ion-col>
-  </ion-row>
-</ion-footer>

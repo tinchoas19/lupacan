@@ -1,8 +1,21 @@
 page-servi {
-
-        
-      ion-col {
-        height: 18vh;
-        border: 2px solid black;
-      }
+  .category{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 18vh;
+    font-size: 0.8em;
+    img{
+      max-width: 60px;
+    }
+  }
+  button{
+    span{
+      color: #fff;
+    }
+  }
+  .btn-dark{
+    background: color($colors, dark);
+  }
 }

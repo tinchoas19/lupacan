@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { ServiceDetailPage } from "../service-detail/service-detail";
 
 /**
@@ -19,7 +19,7 @@ export class ServiceListPage {
   private filteredServices: any[];
 
   private category: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
 
     this.category = this.navParams.data;
     this.services = [
@@ -100,6 +100,11 @@ export class ServiceListPage {
     ];
 
     this.filteredServices = this.services.filter(item => item.categoryId == this.category.categoryId);
+  }
+
+  serviceModal(service){
+    const modal = this.modalCtrl.create(ServiceDetailPage, service);
+    modal.present();
   }
 
   ionViewDidLoad() {

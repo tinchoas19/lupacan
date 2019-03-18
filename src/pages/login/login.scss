@@ -1,3 +1,29 @@
 page-login {
-
+    .button, .list{
+        width: 100%;
+    }
+    .button{
+        background: #fff;
+        span{
+            color: #7e7e7e;
+        }
+    }
+    .text-input{
+        margin: 0;
+        text-align: center;
+    }
+    .lupa-shadow{
+        margin: 1em 0;
+    }
+    h1{
+        margin: 0;
+    }
+    p{
+        font-size: 0.8em;
+        margin: 2em 0;
+    }
+    a{
+        color: color($colors, secondary);
+        text-decoration: none;
+    }
 }

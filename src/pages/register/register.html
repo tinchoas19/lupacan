@@ -7,36 +7,29 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>register</ion-title>
+    <ion-title>Registrarse</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <ion-list>
 
-    <ion-item>
-      <ion-label floating>Nombre</ion-label>
-      <ion-input type="text"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating>Apellido</ion-label>
-      <ion-input type="password"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating>Direccion</ion-label>
-      <ion-input type="password"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating>Telefono</ion-label>
-      <ion-input type="password"></ion-input>
-    </ion-item>
-
-  </ion-list>
-
-  <button ion-button block (click)="registrarme()">Registrarme</button>
+    <ion-grid>
+      <ion-row justify-content-center>
+        <ion-col col-5 text-center>
+          <img src="../../assets/imgs/main.png" alt="">
+        </ion-col>
+        <ion-col col-10 text-center>
+          <ion-input type="text" placeholder="Nombre" class="lupa-shadow"></ion-input>
+          <ion-input type="text" placeholder="Edad" class="lupa-shadow"></ion-input>
+          <ion-input type="text" placeholder="Email" class="lupa-shadow"></ion-input>
+          <ion-input type="password" placeholder="Contraseña" class="lupa-shadow"></ion-input>
+          <p>
+            <ion-checkbox color="primary"></ion-checkbox> Acepto los <a href="">términos y condiciones</a>
+          </p>
+          <button ion-button block (click)="registrarme()" class="btn-iniciar lupa-shadow">Registrarme</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 </ion-content>

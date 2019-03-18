@@ -19,7 +19,7 @@
 </ion-header>
 
 
-<ion-content no-padding>
+<ion-content padding>
   <div>
     <ion-grid >
     <!--   <ion-row no-padding>
@@ -60,33 +60,37 @@
           <button ion-button round color="primary">Buscar</button>
         </ion-col>
       </ion-row> -->
+      
       <ion-row>
-        <ion-col col-2 *ngFor="let dog of dogs" (click)="goToDogDetail(dog)">
-
-          <img src="./assets/imgs/{{dog.imageUrl}}" alt="{{dog.dogName}}">
-          <div [style.width.px]="10" [style.height.px]="10" [style.background-color]="dog.isOnline ? 'green' : 'gray'"></div>
+        <ion-col>
+          <h2 text-center>Ultimos agregados</h2>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-4 *ngFor="let dog of dogs" (click)="goToDogDetail(dog)">
+          <div class="dog-name">{{dog.nombre}}</div>
+          <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
+          <!--div [style.width.px]="10" [style.height.px]="10" [style.background-color]="dog.isOnline ? 'green' : 'gray'"></div-->
 
         </ion-col>
       </ion-row>
-      <ion-badge color="light">
-        <ion-row>
-          <ion-col col-12>
-            <div class="text-center">Ultimos agregados</div>
-          </ion-col>
-        </ion-row>
-      </ion-badge>
+      <ion-row>
+        <ion-col>
+          <h2 text-center>Ultimos agregados</h2>
+        </ion-col>
+      </ion-row>
       <ion-row>
         <ion-col col-4 *ngFor="let dog of filteredDogs" (click)="goToDogDetail(dog)">
-          <div>{{dog.dogName}}</div>
-          <img src="./assets/imgs/{{dog.imageUrl}}" alt="{{dog.dogName}}">
-          <div [style.width.px]="10" [style.height.px]="10" [style.background-color]="dog.isOnline ? 'green' : 'gray'"></div>
+          <div class="dog-name">{{dog.nombre}}</div>
+          <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
+          <!--div [style.width.px]="10" [style.height.px]="10" [style.background-color]="dog.isOnline ? 'green' : 'gray'"></div-->
 
         </ion-col>
       </ion-row>
       <ion-row *ngIf="pageData.id == 4">
-        <div padding style="margin: 0 auto;">
-          <button ion-button full (click)="goToRefugios()">Colabora con un refugio</button>
-        </div>
+        <ion-col>
+            <button ion-button full (click)="goToRefugios()">Colabora con un refugio</button>
+        </ion-col>
       </ion-row>
     </ion-grid>
    <!--  <ion-grid *ngSwitchCase="'users'">
@@ -145,3 +149,4 @@
     </ion-grid> -->
   </div>
 </ion-content>
+

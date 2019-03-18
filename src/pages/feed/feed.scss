@@ -1,3 +1,24 @@
 page-feed {
-
+    ion-col{
+        position: relative;
+        .dog-name{
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            font-size: 0.8em;
+        }
+        img{
+            border: 2px solid color($colors, primary);
+        }
+    }
+    .footer{
+        img{
+            border: none;
+        }
+    }
+    .button{
+        span{
+            color: #fff;
+        }
+    }
 }

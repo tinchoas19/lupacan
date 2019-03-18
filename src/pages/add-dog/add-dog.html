@@ -8,70 +8,106 @@
 
 
 <ion-content>
-  <div class="profile-bg">
-    <img style="max-width: 40% !important;" src="https://cdn4.iconfinder.com/data/icons/social-communication/142/add_photo-512.png" alt="">
-  </div>
   <ion-list>
-    <ion-list-header>
-      Datos del perro
-    </ion-list-header>
-    <ion-item>
-      <ion-label color="primary" stacked>Nombre</ion-label>
-      <ion-input type="text" placeholder="Nombre"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>Raza</ion-label>
-      <ion-select [(ngModel)]="employee" placeholder="Mestizo">
-        <ion-option *ngFor="let raza of razas">{{raza.name}}</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>Color</ion-label>
-      <ion-input type="text" placeholder="Color"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>Tamaño</ion-label>
-      <ion-select [(ngModel)]="size">
-        <ion-option value="small">Chico</ion-option>
-        <ion-option value="medium">Mediano</ion-option>
-        <ion-option value="large">Grande</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>Sexo</ion-label>
-      <ion-select [(ngModel)]="gender">
-        <ion-option value="f">Hembra</ion-option>
-        <ion-option value="m">Macho</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>Vive en.. </ion-label>
-      <ion-input type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>Fecha de nacimiento</ion-label>
-      <ion-datetime displayFormat="MMM DD YYYY"></ion-datetime>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>Estado</ion-label>
-      <ion-select [(ngModel)]="estado">
-        <ion-option value="comunidad">Es mio y está en casa</ion-option>
-        <ion-option value="adopcion">Para dar en adopción</ion-option>
-        <ion-option value="perdidos">Lo perdí y aun no lo encuentro</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>Personalidad</ion-label>
-      <ion-select [(ngModel)]="personalidad">
-        <ion-option value="f">Bueno</ion-option>
-        <ion-option value="m">Malo</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-        <button ion-button full (click)="agregarFoto()">Agregar foto</button>
-    </ion-item>
-    <button ion-button full (click)="irAHome()">Agregar y terminar</button>
-    <button ion-button full (click)="irAAgregar()">Agregar y seguir agregando</button>
-  </ion-list>
-
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-input type="text" placeholder="Nombre"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-datetime displayFormat="DD MMM YYYY" placeholder="Fecha de nacimiento    DD/MM/AA"></ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col padding>
+            <ion-list radio-group class="sexo" [(ngModel)]="gender">
+                Sexo
+                <div>
+                  <ion-radio checked="true" value="f"></ion-radio>
+                  &nbsp;hembra
+                </div>
+                <div>
+                  <ion-radio value="m"></ion-radio>
+                  &nbsp;macho
+                </div>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label stacked>Raza</ion-label>
+              <ion-select [(ngModel)]="employee" placeholder="Mestizo">
+                <ion-option *ngFor="let raza of razas">{{raza.name}}</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label stacked>Color</ion-label>
+              <ion-input type="text" placeholder="Color"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label stacked>Estado</ion-label>
+              <ion-select [(ngModel)]="estado">
+                <ion-option value="comunidad">Es mio y está en casa</ion-option>
+                <ion-option value="adopcion">Para dar en adopción</ion-option>
+                <ion-option value="perdidos">Lo perdí y aun no lo encuentro</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label stacked>Tamaño</ion-label>
+              <ion-select [(ngModel)]="size">
+                <ion-option value="small">Chico</ion-option>
+                <ion-option value="medium">Mediano</ion-option>
+                <ion-option value="large">Grande</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+            <ion-list class="lugares">
+              <ion-item *ngFor="let lugar of lugares">
+                {{ lugar }}
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        
+        <ion-row>
+          <ion-col col-5 padding>
+            <div class="lupa-shadow add-photo" (click)="agregarFoto()">
+                <ion-icon name="camera"></ion-icon>
+                Subir fotos
+            </div>
+          </ion-col>
+          <ion-col col-7>
+            <ion-item>
+                <ion-label stacked>Características</ion-label>
+                <ion-textarea placeholder="Enter more information here..." [(ngModel)]="personalidad"></ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col padding text-center>
+              <button ion-button block class="btn-iniciar lupa-shadow" (click)="irAHome()">Guardar</button>
+              <p (click)="irAAgregar()">Agregar otro perro</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-list> 
 </ion-content>

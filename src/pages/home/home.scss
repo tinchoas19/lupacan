@@ -1,3 +1,35 @@
 page-home {
-
+    .home-grid{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        .home-row{
+            padding:0 16px 16px 16px;
+            .home-col{
+                width: 100%;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                img{
+                    max-height: 48px;
+                }
+            }
+            .dir-row{
+                flex-direction: row;
+                img{
+                    max-height: 70px;
+                }
+            }
+        }
+        div{
+            display: flex;
+            height: 100%;
+        }
+        img{
+            height: 135px;
+        }
+    }
+    .scroll-content{
+        margin-top: 0!important;
+    }
 }

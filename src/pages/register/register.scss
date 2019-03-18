@@ -1,3 +1,22 @@
 page-register {
-
+    .button, .list{
+        width: 100%;
+    }
+    .button{
+        background: #fff;
+    }
+    .lupa-shadow{
+        margin: 1em 0;
+    }
+    p{
+        font-size: 0.8em;
+        margin: 2em 0;
+    }
+    .checkbox-icon{
+        border-color: color($colors, primary)!important;
+    }
+    .text-input{
+        margin: 0;
+        text-align: center;
+    }
 }
