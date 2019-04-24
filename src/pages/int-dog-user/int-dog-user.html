@@ -1,5 +1,10 @@
 <ion-header no-border no-shadow>
   <ion-navbar>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="goToChat()">
+        <ion-icon name="chatbubbles"></ion-icon>
+      </button>
+  </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -13,9 +18,12 @@
   </ion-row>
   <ion-list>
     <ion-grid padding>
-      <ion-row>
-        <ion-col text-center>
+      <ion-row justify-content-center>
+        <ion-col col-12 text-center>
           <p><span class="txt-bold">{{dog.nombre}}-{{dog.edad}}</span></p>
+        </ion-col>
+        <ion-col col-12 text-center>
+          <p>Estado:<span class="txt-bold">{{estado(dog)}}</span></p>
         </ion-col>
       </ion-row>
 
@@ -27,14 +35,12 @@
             </ion-col>
             <ion-col>
               <ion-label stacked>Lugar</ion-label>
-              <p>{{dog.vive}}</p>
+              <p>{{dog.direccion}}</p>
             </ion-col>
           </ion-row>
-
           <ion-row style="width: 100% !important; height: 200px !important;">
             <div padding #map id="map"></div>
           </ion-row>
-
           <ion-row *ngIf="!dog.encontrado">
             <ion-col>
               <ion-label stacked>Características</ion-label>
@@ -90,25 +96,9 @@
           <ion-row *ngIf="showMyControls && !dog.encontrado">
             <ion-col>
                 <ion-label>Está perdido:</ion-label>
+                
             </ion-col>
-            <ion-toggle checked="false" [(ngModel)]="checkAsLost"></ion-toggle>
-          </ion-row>
-          <ion-row *ngIf="checkAsLost">
-            <ion-col>
-              <ion-label stacked>Se perdió en:</ion-label>
-              <p>
-                <ion-input type="text" [(ngModel)]="perdido_en"></ion-input>
-              </p>
-            </ion-col>
-            <ion-col>
-              <ion-label stacked>El día:</ion-label>
-              <p>
-                <ion-datetime cancelText="Cancelar" doneText="OK" displayFormat="DD/MM/YYYY" [(ngModel)]="perdido_fecha"></ion-datetime>
-              </p>
-            </ion-col>
-            <ion-col col-12 text-center>
-              <button ion-button no-shadow (click)="showAlert()" round color="primary">Guardar Perdido</button>
-            </ion-col>
+            <ion-toggle checked="false" [(ngModel)]="checkAsLost" (ionChange)="showAlert()"></ion-toggle>
           </ion-row>
 
           <ion-row *ngIf="thisDogIsLost && dog.perdido">
@@ -123,8 +113,16 @@
             </ion-col>
           </ion-row>
 
+          <ion-row *ngIf="dog.estaperdido == 1">
+            <ion-col>
+                <ion-label>Lo encontré:</ion-label>
+            </ion-col>
+            <ion-toggle checked="false" [(ngModel)]="checkAsLost" (ionChange)="showAlert()"></ion-toggle>
+         </ion-row>
       </div>
-      
+      <ion-row *ngIf="vuelta" justify-content-center (click)="goToListUser(dog.usuarioid, dog.usuarionombre)">
+        <p text-center style="color: #ffca61; font-weight: 600;font-size: 1.3em;">Ver otros perros de {{dog.usuarionombre}}</p>
+      </ion-row>
     </ion-grid>
   </ion-list>
 </ion-content>

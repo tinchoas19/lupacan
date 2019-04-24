@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { PhotoSliderPage } from '../photo-slider/photo-slider';
+import { PhotoViewer } from '@ionic-native/photo-viewer';
 
+declare var google : any;
 
 @IonicPage()
 @Component({
@@ -9,16 +11,34 @@ import { PhotoSliderPage } from '../photo-slider/photo-slider';
   templateUrl: 'dog.html',
 })
 export class DogPage {
-  private dog: any[];
+  @ViewChild('map') mapRef: ElementRef;
+  map: any;
+  private dog: any=[];
   public checkAsLost: boolean;
   public thisDogIsLost: boolean = false;
   public thisDogIsToBeAddopted: boolean = false;
-
+  perdido_fecha: String = new Date().toISOString();
+  perdido_en: String = 'Av. Los Incas 5150';
   private pageId: number;
   public showMyControls: boolean;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    private photoViewer: PhotoViewer, 
+    public alertCtrl: AlertController
+  ) { 
+  }
+
+  //Fullscreeen
+  showImg(url){
+    this.photoViewer.show('http://ctrlztest.com.ar/lupacan/apirest/'+url, 'My Dog', {share: false}); 
+  }
+
+  ionViewWillEnter(){
+    //this.fechaHoy();
     this.dog = this.navParams.data.dogDetail;
+    console.log('detail', this.dog);
     this.showMyControls = this.navParams.data.isMyDogs;
     this.pageId = this.navParams.data.pageId;
     if (this.pageId == 2)
@@ -29,6 +49,7 @@ export class DogPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DogPage');
+    this.loadMap();
   }
 
   showAlert() {
@@ -37,9 +58,7 @@ export class DogPage {
       subTitle: 'Ya se publico como perdido. Junto a la comunidad lo vamos a encontrar.',
       buttons: ['OK']
     });
-    if (this.checkAsLost) {
       alert.present();
-    }
   }
 
   iFoundThisDog(dog) {
@@ -91,6 +110,44 @@ export class DogPage {
     });
 
     alert.present();
+  }
+
+  loadMap(){
+    //create a new map by passing HTMLElement
+    let mapEle: HTMLElement = document.getElementById('map');
+    //Map options
+    const options = {
+      center: {lat: -34.397, lng: 150.644},
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.TERRAIN,
+      streetViewControl: true,
+      disableDefaultUI: true,     
+    }
+    //create map
+    this.map = new google.maps.Map(mapEle, options)
+    
+    var geocoder = new google.maps.Geocoder();
+    var infowindow = new google.maps.InfoWindow();
+
+    this.geocodeAddress(geocoder, this.map, infowindow);
+  }
+
+  geocodeAddress(geocoder, resultMap, infowindow){
+    var address = "Av. Los Incas 5150";
+
+    geocoder.geocode({'address': address}, (results,status)=>{
+      if(status === 'OK'){
+        resultMap.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+          map: resultMap,
+          position: results[0].geometry.location
+        });
+        infowindow.setContent(address);
+        infowindow.open(resultMap, marker);
+      }else{
+        alert('Geocode was not successful for the following reason: ' + status);      
+      }
+    });
   }
 
 }

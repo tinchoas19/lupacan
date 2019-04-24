@@ -1,4 +1,7 @@
-
+import { IntDogUserPage } from './../pages/int-dog-user/int-dog-user';
+import { ListDogUserPage } from './../pages/list-dog-user/list-dog-user';
+import { ChatPage } from './../pages/chat/chat';
+import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -31,6 +34,7 @@ import { CategoriesPage } from '../pages/categories/categories';
 import { ApiProvider } from '../providers/api/api';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
+import { RelativeTimePipe } from '../pipes/relative-time/relative-time';
 
 
 @NgModule({
@@ -57,7 +61,11 @@ import { HttpClientModule } from '@angular/common/http';
     MisionPage,
     AgregarPage,
     MainPage,
-    CategoriesPage
+    CategoriesPage,
+    ChatPage,
+    ListDogUserPage,
+    IntDogUserPage,
+    RelativeTimePipe
   ],
   imports: [
     BrowserModule,
@@ -89,11 +97,15 @@ import { HttpClientModule } from '@angular/common/http';
     MisionPage,
     AgregarPage,
     MainPage,
-    CategoriesPage
+    CategoriesPage,
+    ChatPage,
+    ListDogUserPage,
+    IntDogUserPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    PhotoViewer,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApiProvider
   ]

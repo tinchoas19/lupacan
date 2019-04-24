@@ -1,0 +1,32 @@
+page-int-dog-user {
+    .dog-img{
+        border-radius: 50%;
+        width: 12rem;
+        height: 12rem;
+    }
+    .doginfo{
+        p{
+            border-bottom: 1px solid #7e7e7e;
+            margin: 0;
+            font-weight: 600;
+        }
+    }
+    .button{
+        span{
+            color: #fff;
+        }
+    }
+    #map{
+      height: 100%;
+      width: 100%;
+      opacity: 1;
+      transition: opacity 150ms ease-in;
+      display: block;
+      &.show-map{
+          opacity: 1;
+      }
+      div div div a div{
+          display: none !important;
+      }
+    }
+}

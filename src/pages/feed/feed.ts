@@ -1,3 +1,4 @@
+import { PhotoSliderPage } from './../photo-slider/photo-slider';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DogPage } from "../dog/dog";
@@ -14,16 +15,15 @@ export class FeedPage {
   filteredDogs: any = [];
   public pageData: any = {};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private ApiProvider: ApiProvider) {
-    
-  }
-
-  ngOnInit() {
-    
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private ApiProvider: ApiProvider
+  ) {  
   }
 
   goToDogDetail(dog){
-    this.navCtrl.push(DogPage,{dogDetail: dog, isMyDogs: false, pageId: this.pageData.id});
+    this.navCtrl.push(PhotoSliderPage,{chatid: "8",dogDetail: dog, isMyDogs: false, pageId: this.pageData.id});
   }
 
   ionViewDidLoad() {

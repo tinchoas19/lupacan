@@ -1,18 +1,18 @@
-import { ListDogUserPage } from './../list-dog-user/list-dog-user';
-import { ChatPage } from './../chat/chat';
-import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
+import { ListDogUserPage } from '../list-dog-user/list-dog-user';
+import { ChatPage } from '../chat/chat';
 
 declare var google : any;
 
-@IonicPage()
 @Component({
-  selector: 'page-photo-slider',
-  templateUrl: 'photo-slider.html',
+  selector: 'page-int-dog-user',
+  templateUrl: 'int-dog-user.html',
 })
-export class PhotoSliderPage {
-  @ViewChild("map") mapRef: ElementRef;
+export class IntDogUserPage {
+
+  @ViewChild('map') mapRef: ElementRef;
 
   private dog: any=[];
   public checkAsLost: boolean;
@@ -61,7 +61,7 @@ export class PhotoSliderPage {
   loadMap(){
 
     //create a new map by passing HTMLElement
-    //let mapEle: HTMLElement = document.getElementById('map');
+    let mapEle: HTMLElement = document.getElementById('map');
     //Map options
     const options = {
       center: {lat: -34.397, lng: 150.644},
@@ -91,7 +91,7 @@ export class PhotoSliderPage {
       ]     
     }
     //create map
-    this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+    this.map = new google.maps.Map(mapEle, options);
     google.maps.event.trigger(this.map, 'resize');
     var geocoder = new google.maps.Geocoder();
     var infowindow = new google.maps.InfoWindow();
@@ -176,9 +176,6 @@ export class PhotoSliderPage {
     
   }
 
-  goToSlider(dog){
-    this.navCtrl.push(PhotoSliderPage, dog.imageCollection)
-  }
 
   iWannaThisDog(dog){
     const alert = this.alertCtrl.create({

@@ -1,37 +1,32 @@
-.tutorial-page {
-
-    .toolbar-background {
-      background: #fff;
-      border-color: transparent;
+page-photo-slider {
+  .dog-img{
+    border-radius: 50%;
+    width: 12rem;
+    height: 12rem;
+}
+.doginfo{
+    p{
+        border-bottom: 1px solid #7e7e7e;
+        margin: 0;
+        font-weight: 600;
     }
-  
-    .slide-zoom {
-      height: 100%;
+}
+.button{
+    span{
+        color: #fff;
     }
-  
-    .slide-title {
-      margin-top: 2.8rem;
-    }
-  
-    .slide-image {
-      max-height: 50%;
-      max-width: 60%;
-      margin: 18px 0;
-    }
-  
-    b {
-      font-weight: 500;
-    }
-  
-    p {
-      padding: 0 40px;
-      font-size: 14px;
-      line-height: 1.5;
-      color: #60646B;
-  
-      b {
-        color: #000000;
-      }
-    }
-  
+}
+#map{
+  height: 100%;
+  width: 100%;
+  opacity: 1;
+  transition: opacity 150ms ease-in;
+  display: block;
+  &.show-map{
+      opacity: 1;
   }
+  div div div a div{
+      display: none !important;
+  }
+}
+}

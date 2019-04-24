@@ -1,13 +1,128 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>Slides</ion-title>
-  </ion-navbar>
-</ion-header>
+<ion-header no-border no-shadow>
+    <ion-navbar>
+      <ion-buttons end>
+        <button ion-button icon-only (click)="goToChat()">
+          <ion-icon name="chatbubbles"></ion-icon>
+        </button>
+    </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content>
+    <ion-row>
+      <ion-slides style="width: 100% !important;">
+        <ion-slide *ngFor="let img of dog.fotos">
+          <img style="border-radius: 50%;" src="http://ctrlztest.com.ar/lupacan/apirest/{{img.fotourl}}" (click)="showImg(img.fotourl)">
+        </ion-slide>
+      </ion-slides>
+    </ion-row>
+    <ion-list>
+      <ion-grid padding>
+        <ion-row justify-content-center>
+          <ion-col col-12 text-center>
+            <p><span class="txt-bold">{{dog.nombre}}-{{dog.edad}}</span></p>
+          </ion-col>
+          <ion-col col-12 text-center>
+            <p>Estado:<span class="txt-bold">{{estado(dog)}}</span></p>
+          </ion-col>
+        </ion-row>
+  
+        <div class="doginfo">
+            <ion-row>
+              <ion-col>
+                <ion-label stacked>Periodo</ion-label>
+                <p>{{dog.fechanacimiento}}</p>
+              </ion-col>
+              <ion-col>
+                <ion-label stacked>Lugar</ion-label>
+                <p>{{dog.direccion}}</p>
+              </ion-col>
+            </ion-row>
+            <ion-row style="width: 100% !important; height: 200px !important;">
+              <div padding #map id="map"></div>
+            </ion-row>
+            <ion-row *ngIf="!dog.encontrado">
+              <ion-col>
+                <ion-label stacked>Características</ion-label>
+                <p>{{dog.descripcion}}</p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-label stacked>Raza</ion-label>
+                <p>{{dog.raza}}</p>
+              </ion-col>
+              <ion-col>
+                <ion-label stacked>Color</ion-label>
+                <p>{{dog.color}}</p>
+              </ion-col>
+            </ion-row>
+            <ion-row *ngIf="dog.perdido">
+              <ion-col>
+                <ion-label stacked>Se perdió el:</ion-label>
+                <p>{{dog.fechaPerdido}}</p>
+              </ion-col>
+              <ion-col>
+                <ion-label stacked>En:</ion-label>
+                <p>{{dog.lugarPerdido}}</p>
+              </ion-col> 
+            </ion-row>
+  
+            <ion-row *ngIf="dog.perdido">
+              <ion-col>
+                <ion-label stacked>Características cuando se perdio:</ion-label>
+                <p>{{dog.caracterizticaPerdido}}</p>
+              </ion-col>
+            </ion-row>
+      
+            <ion-row *ngIf="dog.encontrado">
+              <ion-col>
+                <ion-label stacked>Comentarios:</ion-label>
+                <p>{{dog.personalidad}}</p>
+              </ion-col>
+            </ion-row>
+  
+            <ion-row *ngIf="dog.encontrado">
+              <ion-col>
+                <ion-label stacked>Se encontró el:</ion-label>
+                <p>{{dog.fechaEncontrado}}</p>
+              </ion-col>
+              <ion-col>
+                <ion-label stacked>En:</ion-label>
+                <p>{{dog.lugarEncontrado}}</p>
+              </ion-col>
+            </ion-row>
+  
+            <ion-row *ngIf="showMyControls && !dog.encontrado">
+              <ion-col>
+                  <ion-label>Está perdido:</ion-label>
+                  
+              </ion-col>
+              <ion-toggle checked="false" [(ngModel)]="checkAsLost" (ionChange)="showAlert()"></ion-toggle>
+            </ion-row>
+  
+            <ion-row *ngIf="thisDogIsLost && dog.perdido">
+              <ion-col>
+                <button ion-button full (click)="iFoundThisDog(dog)">Yo lo encontre!</button>
+              </ion-col>
+            </ion-row>
+  
+            <ion-row *ngIf="thisDogIsToBeAddopted && dog.adopcion">
+              <ion-col>
+                <button ion-button full (click)="iWannaThisDog(dog)">Quiero adoptarlo!</button>
+              </ion-col>
+            </ion-row>
 
-<ion-content class="tutorial-page">
-  <ion-slides pager>
-    <ion-slide *ngFor="let image of imageCollection">
-      <img src="./assets/imgs/{{image}}" class="slide-image" />
-    </ion-slide>
-  </ion-slides>
-</ion-content>
+            <ion-row *ngIf="dog.estaperdido == 1">
+              <ion-col>
+                  <ion-label>Lo encontré:</ion-label>
+              </ion-col>
+              <ion-toggle checked="false" [(ngModel)]="checkAsLost" (ionChange)="showAlert()"></ion-toggle>
+           </ion-row>
+        </div>
+        <ion-row *ngIf="vuelta" justify-content-center (click)="goToListUser(dog.usuarioid, dog.usuarionombre)">
+          <p text-center style="color: #ffca61; font-weight: 600;font-size: 1.3em;">Ver otros perros de {{dog.usuarionombre}}</p>
+        </ion-row>
+      </ion-grid>
+    </ion-list>
+  </ion-content>

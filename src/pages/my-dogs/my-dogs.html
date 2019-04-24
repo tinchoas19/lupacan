@@ -15,7 +15,7 @@
     </ion-list-header>
     <ion-item *ngFor="let dog of myDogs" (click)="goToDogDetail(dog)">
       <ion-thumbnail item-start>
-        <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotourl}}" alt="{{dog.nombre}}">
+        <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
       </ion-thumbnail>
       <h2>{{dog.nombre}}</h2>
       <p>{{dog.color}}</p>

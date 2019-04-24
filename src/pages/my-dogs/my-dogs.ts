@@ -19,7 +19,7 @@ export class MyDogsPage {
   }
 
   ngOnInit() {
-    this.ApiProvider.getMyDogs().subscribe(data => {
+    this.ApiProvider.getMyDogs(1).subscribe(data => {
       console.log(data , 'sarasaaa');
       this.myDogs = (data["data"]);
     });

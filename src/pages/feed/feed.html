@@ -71,12 +71,11 @@
           <div class="dog-name">{{dog.nombre}}</div>
           <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
           <!--div [style.width.px]="10" [style.height.px]="10" [style.background-color]="dog.isOnline ? 'green' : 'gray'"></div-->
-
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
-          <h2 text-center>Ultimos agregados</h2>
+          <h2 text-center>{{pageData.title}}</h2>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -84,7 +83,6 @@
           <div class="dog-name">{{dog.nombre}}</div>
           <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
           <!--div [style.width.px]="10" [style.height.px]="10" [style.background-color]="dog.isOnline ? 'green' : 'gray'"></div-->
-
         </ion-col>
       </ion-row>
       <ion-row *ngIf="pageData.id == 4">
