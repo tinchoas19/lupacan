@@ -1,42 +1,41 @@
 <!--ion-nav [root]="rootPage"></ion-nav-->
 <ion-menu [content]="content">
-<ion-header text-center>
-    <img src="../assets/imgs/1.jpg" alt="">
-    <h2>Nombre Usuario</h2>
-</ion-header>
-<ion-content>
-    <ion-list class="left-menu">
-        <ion-item>
-            <img src="../assets/imgs/menu01.png" alt="">
-            &nbsp;Mi perfil
-        </ion-item>
-        <ion-item>
-            <img src="../assets/imgs/menu02.png" alt="">
-            &nbsp;Perros agregados
-        </ion-item>
-        <ion-item>
-            <img src="../assets/imgs/menu03.png" alt="">
-            &nbsp;Servicios agregados
-        </ion-item>
-        <ion-item>
-            <img src="../assets/imgs/menu04.png" alt="">
-            &nbsp;Configuraciones
-        </ion-item>
-        <ion-item>
-            <img src="../assets/imgs/menu05.png" alt="">
-            &nbsp;Salir
-        </ion-item>
-        <ion-item>
-            <img src="../assets/imgs/menu06.png" alt="">
-            &nbsp;Como funciona?
-        </ion-item>
-        <ion-item>
-            <img src="../assets/imgs/menu07.png" alt="">
-            &nbsp;Soporte
-        </ion-item>
-    </ion-list>
-</ion-content>
+    <ion-header text-center>
+        <img src="../assets/imgs/1.jpg" alt="">
+        <h2>Nombre Usuario</h2>
+    </ion-header>
+    <ion-content>
+        <ion-list class="left-menu">
+            <ion-item (click)="goToMyProfile()" menuClose>
+                <img src="assets/imgs/menu01.png" alt="">
+                &nbsp;Mi perfil
+            </ion-item>
+            <ion-item (click)="goToAdopcion()" menuClose>
+                <img src="assets/imgs/menu02.png" alt="">
+                &nbsp;Perros agregados
+            </ion-item>
+            <ion-item>
+                <img src="assets/imgs/menu03.png" alt="">
+                &nbsp;Servicios agregados
+            </ion-item>
+            <ion-item>
+                <img src="assets/imgs/menu04.png" alt="">
+                &nbsp;Configuraciones
+            </ion-item>
+            <ion-item>
+                <img src="assets/imgs/menu05.png" alt="">
+                &nbsp;Salir
+            </ion-item>
+            <ion-item>
+                <img src="assets/imgs/menu06.png" alt="">
+                &nbsp;Como funciona?
+            </ion-item>
+            <ion-item>
+                <img src="assets/imgs/menu07.png" alt="">
+                &nbsp;Soporte
+            </ion-item>
+        </ion-list>
+    </ion-content>
 </ion-menu>
 
 <ion-nav id="nav" #content [root]="rootPage"></ion-nav>
-

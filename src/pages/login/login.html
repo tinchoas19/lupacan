@@ -11,14 +11,14 @@
         <h1 text-uppercase>Lupacan</h1>
       </ion-col>
       <ion-col col-10 text-center>
-        <ion-input type="text" placeholder="Usuario" class="lupa-shadow"></ion-input>
-        <ion-input type="password" placeholder="Contraseña" class="lupa-shadow"></ion-input>
-        <button ion-button block (click)="login()" class="btn-iniciar lupa-shadow">Iniciar</button>
+        <ion-input type="text" placeholder="Usuario" class="lupa-shadow" [(ngModel)]="usuario"></ion-input>
+        <ion-input type="password" placeholder="Contraseña" class="lupa-shadow" [(ngModel)]="password"></ion-input>
+        <button ion-button block (click)="login(usuario, password)" class="btn-iniciar lupa-shadow">Iniciar</button>
         <p><a href="#">Olvidé mi contraseña</a></p>
         <button ion-button block class="lupa-shadow">Registrate con Facebook</button>
-        <p>No tenés cuenta?<a (click)="registro()">Registrate</a></p>
+        <p>No tenés cuenta?<a (click)="registro()"> Registrate</a></p>
       </ion-col>
     </ion-row>
   </ion-grid>
-  
+
 </ion-content>

@@ -1,30 +1,53 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AddDogPage } from '../add-dog/add-dog';
-import { MisionPage } from '../mision/mision';
-
-/**
- * Generated class for the RegisterPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Component } from "@angular/core";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  AlertController
+} from "ionic-angular";
+import { AddDogPage } from "../add-dog/add-dog";
+import { MisionPage } from "../mision/mision";
 
 @IonicPage()
 @Component({
-  selector: 'page-register',
-  templateUrl: 'register.html',
+  selector: "page-register",
+  templateUrl: "register.html"
 })
 export class RegisterPage {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public alertCtrl: AlertController
+  ) {}
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  aceptoterminos: boolean = false;
+
+  registrarme(nombre, edad, email, password) {
+    console.log(nombre, edad, email, password, this.aceptoterminos);
+
+    if (nombre && edad && email && password && this.aceptoterminos) {
+      this.navCtrl.push(MisionPage);
+    } else {
+      this.showAlert();
+    }
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad RegisterPage');
+  check(event) {
+    console.log(event.checked);
+
+    if (event.checked == true) {
+      this.aceptoterminos = true;
+    } else {
+      this.aceptoterminos = false;
+    }
   }
 
-  registrarme(){
-    this.navCtrl.push(MisionPage);    
+  showAlert() {
+    const alert = this.alertCtrl.create({
+      title: "Error!",
+      subTitle: "Por favor, revisá los campos!",
+      buttons: ["Ok"]
+    });
+    alert.present();
   }
 }
