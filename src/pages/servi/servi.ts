@@ -15,6 +15,9 @@ import { ServiceListPage } from "../service-list/service-list";
   templateUrl: 'servi.html',
 })
 export class ServiPage {
+
+  servicios: string = "favoritos";
+
 private categories: any[];
 private services: any[];
 private filteredServices: any[];

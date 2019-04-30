@@ -22,6 +22,7 @@ export class PhotoSliderPage {
   private pageId: number;
   public showMyControls: boolean;
   vuelta:boolean = true;
+  isChecked :boolean;
 
   constructor(
     public navCtrl: NavController, 
@@ -30,6 +31,19 @@ export class PhotoSliderPage {
     public modalCtrl: ModalController, 
     public alertCtrl: AlertController
   ) { 
+  }
+
+  //add Favorites
+  addToFavorites(){
+    console.log('add_Fav => (userid, dogid)');
+    if(this.isChecked){
+      //this.favorite.deleteToFavorite(userid, productid);
+      this.isChecked = false;
+    }else{
+    console.log('remove_Fav => (userid, dogid)');      
+      //this.favorite.addToFavorite(userid, productid);
+      this.isChecked = true;
+    }
   }
   //Ver otros perros
   goToListUser(id, name){

@@ -26,9 +26,9 @@
           <ion-input type="text" placeholder="Email" class="lupa-shadow"></ion-input>
           <ion-input type="password" placeholder="Contraseña" class="lupa-shadow"></ion-input>
           <p>
-            <ion-checkbox color="primary"></ion-checkbox> Acepto los <a href="">términos y condiciones</a>
+            <ion-checkbox color="primary" (click)="toggleCheckbox()"></ion-checkbox> Acepto los <a href="">términos y condiciones</a>
           </p>
-          <button ion-button block (click)="registrarme()" class="btn-iniciar lupa-shadow">Registrarme</button>
+          <button ion-button block (click)="registrarme()" [disabled]="!terminos" class="btn-iniciar lupa-shadow">Registrarme</button>
         </ion-col>
       </ion-row>
     </ion-grid>

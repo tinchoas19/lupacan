@@ -1,3 +1,5 @@
+import { Facebook } from '@ionic-native/facebook/ngx';
+import { RecuperoPassPage } from './../pages/recupero-pass/recupero-pass';
 import { IntDogUserPage } from './../pages/int-dog-user/int-dog-user';
 import { ListDogUserPage } from './../pages/list-dog-user/list-dog-user';
 import { ChatPage } from './../pages/chat/chat';
@@ -36,7 +38,6 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { RelativeTimePipe } from '../pipes/relative-time/relative-time';
 
-
 @NgModule({
   declarations: [
     MyApp,
@@ -65,6 +66,7 @@ import { RelativeTimePipe } from '../pipes/relative-time/relative-time';
     ChatPage,
     ListDogUserPage,
     IntDogUserPage,
+    RecuperoPassPage,
     RelativeTimePipe
   ],
   imports: [
@@ -101,10 +103,12 @@ import { RelativeTimePipe } from '../pipes/relative-time/relative-time';
     ChatPage,
     ListDogUserPage,
     IntDogUserPage,
+    RecuperoPassPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    Facebook,
     PhotoViewer,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApiProvider
