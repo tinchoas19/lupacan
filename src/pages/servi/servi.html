@@ -13,7 +13,7 @@
     <ion-segment-button value="favoritos">
       Favoritos
     </ion-segment-button>
-    <ion-segment-button value="mapa">
+    <ion-segment-button value="mapa" (click)="this.getUserPosition()">
       Ver en mapa
     </ion-segment-button>
   </ion-segment>
@@ -37,14 +37,8 @@
       </ion-grid>
     </div>
 
-    <div *ngSwitchCase="'mapa'">
-      <ion-grid>
-          <ion-row>
-              <ion-col>
-                  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13139.172211610985!2d-58.4080162!3d-34.5841026!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x2704541ae686099a!2sParque+Las+Heras!5e0!3m2!1ses-419!2sar!4v1551373683293" width="100%" height="420" frameborder="0" style="border:0" allowfullscreen></iframe>
-              </ion-col>
-          </ion-row>
-      </ion-grid>
+    <div *ngSwitchCase="'mapa'" style="height: 500px !important;">
+      <div #map id="map"></div>
     </div>
   </div>
 
