@@ -1,49 +1,53 @@
 page-add-dog {
-    p{
-        color: color($colors, primary);
+  p {
+    color: color($colors, primary);
+  }
+  .text-input {
+    text-align: left;
+  }
+  .datetime {
+    padding: 0;
+  }
+  .list-md .item-input:last-child {
+    border: none;
+  }
+  .add-photo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    .icon {
+      font-size: 4em;
+      color: #f0c52e;
     }
-    .text-input{
-        text-align: left;
+  }
+  .sexo {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    div {
+      display: flex;
     }
-    .datetime{
-        padding: 0;
-    }
-    .list-md .item-input:last-child {
-        border: none;
-    }
-    .add-photo{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 1.5rem;
-        .icon{
-            font-size: 4em;
-            color: #f0c52e;
-        }
-    }
-    .sexo{
-        display: flex;
-        align-items: center;
-        justify-content: space-evenly;
-        div{
-            display: flex;
-        }
-    }
-    .lugares{
-        display: none;
-    }
-    .searchbar-input {
-        padding: 6px 55px;
-        background-position: left 8px center;
-        height: 4rem!important;
-        border-radius: 4rem!important;
-        font-weight: 400;
-        line-height: 3rem;
-        color:inherit;
-        background-color: #fff;
-        -webkit-box-shadow:none!important;
-        box-shadow: none!important;
-        border: 1px solid color($colors, primary);
-    }
+  }
+  .lugares {
+    display: none;
+  }
+  .searchbar-input {
+    padding: 6px 55px;
+    background-position: left 8px center;
+    height: 4rem !important;
+    border-radius: 4rem !important;
+    font-weight: 400;
+    line-height: 3rem;
+    color: inherit;
+    background-color: #fff;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: 1px solid color($colors, primary);
+  }
+
+  .searchbar-ios {
+    background-color: #fff;
+  }
 }

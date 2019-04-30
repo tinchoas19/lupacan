@@ -8,8 +8,8 @@ import { MainPage } from '../main/main';
 
 @IonicPage()
 @Component({
-  selector: 'page-login',
-  templateUrl: 'login.html',
+  selector: "page-login",
+  templateUrl: "login.html"
 })
 export class LoginPage {
 
@@ -21,14 +21,14 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+    console.log("ionViewDidLoad LoginPage");
   }
-  
-  login(){
+
+  login(usuario, password) {
     this.navCtrl.push(MainPage);
   }
 
-  registro(){
+  registro() {
     this.navCtrl.push(RegisterPage);
   }
 
