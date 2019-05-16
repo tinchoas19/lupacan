@@ -1,3 +1,4 @@
+import { ApiProvider } from './../../providers/api/api';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ServiceListPage } from "../service-list/service-list";
@@ -20,6 +21,7 @@ dogwalkMarker : any;
 info : any;
 infoWindows: any =[];
 private categories: any[];
+private categoras: any[];
 private services: any[];
 private filteredServices: any[];
 private showCategories: boolean = true;
@@ -28,148 +30,40 @@ public inputText: string;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
+    private apiService: ApiProvider,
     private geolocation: Geolocation
   ) {
-    this.services = [
-      {
-        "serviceId": 1,
-        "serviceName": "Vererinaria Patito",
-        "categoryId": 1,
-        "serviceTelephone": "47745698",
-        "serviceAddress": "Lavalle 1514",
-        "serviceEmail": "pets@petshot.com",
-        "serviceServices": [{ "offeredService": "lavado" },{ "offeredService": "limpieza" },{ "offeredService": "barrido" }]
-      },
-      {
-        "serviceId": 2,
-        "serviceName": "Vererinaria Patito2",
-        "categoryId": 1,
-        "serviceTelephone": "47745698",
-        "serviceAddress": "Lavalle 1514",
-        "serviceEmail": "pets@petshot.com",
-        "serviceServices": [{ "offeredService": "lavado" },{ "offeredService": "limpieza" },{ "offeredService": "barrido" }]
-      },
-      {
-        "serviceId": 3,
-        "serviceName": "Vererinaria Patito3",
-        "categoryId": 1,
-        "serviceTelephone": "47745698",
-        "serviceAddress": "Lavalle 1514",
-        "serviceEmail": "pets@petshot.com",
-        "serviceServices": [{ "offeredService": "lavado" },{ "offeredService": "limpieza" },{ "offeredService": "barrido" }]
-      },
-      {
-        "serviceId": 4,
-        "serviceName": "Vererinaria Patito4",
-        "categoryId": 2,
-        "serviceTelephone": "47745698",
-        "serviceAddress": "Lavalle 1514",
-        "serviceEmail": "pets@petshot.com",
-        "serviceServices": [{ "offeredService": "lavado" },{ "offeredService": "limpieza" },{ "offeredService": "barrido" }]
-      },
-      {
-        "serviceId": 5,
-        "serviceName": "Vererinaria Patito5",
-        "categoryId": 2,
-        "serviceTelephone": "47745698",
-        "serviceAddress": "Lavalle 1514",
-        "serviceEmail": "pets@petshot.com",
-        "serviceServices": [{ "offeredService": "lavado" },{ "offeredService": "limpieza" },{ "offeredService": "barrido" }]
-      },
-      {
-        "serviceId": 6,
-        "serviceName": "Vererinaria Patito6",
-        "categoryId": 3,
-        "serviceTelephone": "47745698",
-        "serviceAddress": "Lavalle 1514",
-        "serviceEmail": "pets@petshot.com",
-        "serviceServices": [{ "offeredService": "lavado" },{ "offeredService": "limpieza" },{ "offeredService": "barrido" }]
-      },
-      {
-        "serviceId": 7,
-        "serviceName": "Vererinaria Patito7",
-        "categoryId": 4,
-        "serviceTelephone": "47745698",
-        "serviceAddress": "Lavalle 1514",
-        "serviceEmail": "pets@petshot.com",
-        "serviceServices": [{ "offeredService": "lavado" },{ "offeredService": "limpieza" },{ "offeredService": "barrido" }]
-      },
-      {
-        "serviceId": 8,
-        "serviceName": "Vererinaria Patito 8",
-        "categoryId": 4,
-        "serviceTelephone": "47745698",
-        "serviceAddress": "Lavalle 1514",
-        "serviceEmail": "pets@petshot.com",
-        "serviceServices": [{ "offeredService": "lavado" },{ "offeredService": "limpieza" },{ "offeredService": "barrido" }]
-      }
-
-
-    ];
-    this.categories = [
-      {
-        "categoryId": 1,
-        "categoryName": "Adiestramiento",
-        "categoryImg": "cat-adiestramiento.png",
-      },
-      {
-        "categoryId": 2,
-        "categoryName": "Alimentos",
-        "categoryImg": "cat-alimentos.png",
-      },
-      {
-        "categoryId": 3,
-        "categoryName": "Atencion Medica",
-        "categoryImg": "cat-atencion.png",
-      },
-      {
-        "categoryId": 4,
-        "categoryName": "Guarderias",
-        "categoryImg": "cat-guarderia.png",
-      },
-      {
-        "categoryId": 5,
-        "categoryName": "Paseadores",
-        "categoryImg": "cat-paseadores.png",
-      },
-      {
-        "categoryId": 6,
-        "categoryName": "Peluqueria",
-        "categoryImg": "cat-peluqueria.png",
-      },
-      {
-        "categoryId": 7,
-        "categoryName": "Pet Friendly",
-        "categoryImg": "cat-friendly.png",
-      },
-      {
-        "categoryId": 8,
-        "categoryName": "Productos",
-        "categoryImg": "cat-productos.png",
-      },
-      {
-        "categoryId": 9,
-        "categoryName": "Refugios",
-        "categoryImg": "cat-refugios.png",
-      }
-     
-    ];
   }
 
   ionViewWillEnter(){
-    this.getUserPosition();
+    this.traerLocales();
+    this.traerCategorias();
+    //this.getUserPosition();
+  }
+
+  traerLocales(){
+    this.apiService.getLocales().subscribe(x=>{
+      console.log('locales',x);
+    })
+  }
+
+  traerCategorias(){
+    this.apiService.getCategories().subscribe(x=>{
+      console.log('categories', x);
+      this.categoras = x['data'];
+    })
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ServiPage');
-    //this.getUserPosition();
+    this.getUserPosition();
   }
 
   getUserPosition(){
-    this.geolocation.getCurrentPosition().then((pos : Geoposition) => {    
+    this.geolocation.getCurrentPosition().then(async(pos : Geoposition) => {    
       this.currentPos = pos;  
       console.log(this.currentPos);
-      this.addMap(pos.coords.latitude,pos.coords.longitude);
+      await this.addMap(pos.coords.latitude,pos.coords.longitude);
 
     },(err : PositionError)=>{
         console.log("error : " + err.message);
@@ -177,6 +71,7 @@ public inputText: string;
   }
 
   addMap(lat,long){
+    let mapEle: HTMLElement = document.getElementById('map');
     let latLng = new google.maps.LatLng(lat, long);
 
     let mapOptions = {
@@ -185,7 +80,7 @@ public inputText: string;
     mapTypeId: google.maps.MapTypeId.ROADMAP
     }
 
-    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+    this.map = new google.maps.Map(mapEle, mapOptions);
     this.addMarker();
     this.setLocation();
   }
@@ -211,7 +106,7 @@ public inputText: string;
 
   setLocation(){
     var geocoder = new google.maps.Geocoder();
-    this.services.map(x=>{
+    this.categoras.map(x=>{
       var address = x.serviceAddress;
       geocoder.geocode({'address': address}, (results, status)=>{
         console.log('results', results);
@@ -295,7 +190,7 @@ public inputText: string;
   }
   
   goToCategory(category){
-    this.navCtrl.push(ServiceListPage, category);
+    this.navCtrl.push(ServiceListPage, {catId:category});
   }
   
   getItems(ev: any) {

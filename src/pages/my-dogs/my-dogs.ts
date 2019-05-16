@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DogPage } from '../dog/dog';
 import { AddDogPage } from '../add-dog/add-dog';
 import { ApiProvider } from '../../providers/api/api';
+import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -14,15 +15,22 @@ export class MyDogsPage {
   myDogs: any = [];
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private ApiProvider: ApiProvider) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private ApiProvider: ApiProvider,
+    private storage: Storage
+  ) {
     
   }
 
-  ngOnInit() {
-    this.ApiProvider.getMyDogs(1).subscribe(data => {
-      console.log(data , 'sarasaaa');
-      this.myDogs = (data["data"]);
-    });
+  ionViewWillEnter() {
+    this.storage.get('userData').then(val=>{
+      this.ApiProvider.getMyDogs(val['usuarioid']).subscribe(data => {
+        console.log(data , 'sarasaaa');
+        this.myDogs = (data["data"]);
+      });
+    })
   }
 
 

@@ -47,7 +47,9 @@ page-add-dog {
     border: 1px solid color($colors, primary);
   }
 
-  .searchbar-ios {
-    background-color: #fff;
+  .button{
+    span{
+        color: #7e7e7e !important;
+    }
   }
 }

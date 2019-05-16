@@ -68,7 +68,7 @@ export class PhotoSliderPage {
   
   //FullScreen
   showImg(url){
-    this.photoViewer.show('http://ctrlztest.com.ar/lupacan/apirest/'+url, 'My Dog', {share: false}); 
+    this.photoViewer.show('http://ctrlztest.com.ar/lupacan/apirest/upload/10-1.jpg', 'My Dog', {share: false}); 
   }
 
   //Mapa
@@ -114,7 +114,7 @@ export class PhotoSliderPage {
   }
 
   geocodeAddress(geocoder, resultMap, infowindow){
-    var address = "Av. Los Incas 5150";
+    var address = this.dog['direccion'];
 
     geocoder.geocode({'address': address}, (results,status)=>{
       if(status === 'OK'){
@@ -152,7 +152,9 @@ export class PhotoSliderPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DogPage');
-    this.loadMap();
+    setTimeout(()=>{
+      this.loadMap();
+    },1000)
   }
 
   showAlert() {

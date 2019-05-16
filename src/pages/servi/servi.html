@@ -22,10 +22,10 @@
     <div *ngSwitchCase="'favoritos'">
       <ion-grid *ngIf="showCategories">
         <ion-row padding-vertical>
-          <ion-col col-4 *ngFor="let cat of categories" (click)="goToCategory(cat)">
+          <ion-col col-4 *ngFor="let cat of categoras" (click)="goToCategory(cat.categorialocalid)">
             <div class="category lupa-shadow">
-              <img src="../../assets/imgs/{{cat.categoryImg}}" alt="">
-              {{cat.categoryName}}
+              <img src="http://ctrlztest.com.ar/lupacan/apirest/{{cat.icono}}" alt="">
+              {{cat.nombre}}
             </div>
           </ion-col>
         </ion-row>

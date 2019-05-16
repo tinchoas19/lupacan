@@ -18,7 +18,7 @@ export class FeedPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
-    private ApiProvider: ApiProvider
+    private services : ApiProvider
   ) {  
   }
 
@@ -27,12 +27,19 @@ export class FeedPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad FeedPage');
-    
+    console.log('ionViewDidLoad FeedPage'); 
+  }
+
+  ultimosAgregados(){
+    this.services.getUltimosAgregados().subscribe(x=>{
+      console.log('ultimos', x);
+      this.dogs = x['data'];
+    })
   }
 
   ionViewWillEnter(){
-    this.ApiProvider.getDogs().subscribe(data => {
+    this.ultimosAgregados();
+    /* this.services.getDogs().subscribe(data => {
       console.log(data , 'sarasaaa');
       this.dogs = (data["data"]);
     
@@ -54,7 +61,7 @@ export class FeedPage {
         break;
     }
     console.log('filtered', this.filteredDogs);
-  });
+  }); */
   }
 
 }

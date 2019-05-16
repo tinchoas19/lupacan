@@ -7,7 +7,7 @@
   <ion-row>
     <ion-slides style="width: 100% !important;">
       <ion-slide *ngFor="let img of dog.fotos">
-        <img style="border-radius: 50%;" src="http://ctrlztest.com.ar/lupacan/apirest/{{img.fotourl}}" (click)="showImg(img.fotourl)">
+        <img style="border-radius: 50%; width: 60%;" src="http://ctrlztest.com.ar/lupacan/apirest/{{img.fotourl}}" imageViewer>
       </ion-slide>
     </ion-slides>
   </ion-row>
@@ -15,7 +15,7 @@
     <ion-grid padding>
       <ion-row>
         <ion-col text-center>
-          <p><span class="txt-bold">{{dog.nombre}}-{{dog.edad}}</span></p>
+          <p><span class="txt-bold">{{dog.nombre}}</span></p>
         </ion-col>
       </ion-row>
 
@@ -27,7 +27,7 @@
             </ion-col>
             <ion-col>
               <ion-label stacked>Lugar</ion-label>
-              <p>{{dog.vive}}</p>
+              <p>{{dog.direccion}}</p>
             </ion-col>
           </ion-row>
 

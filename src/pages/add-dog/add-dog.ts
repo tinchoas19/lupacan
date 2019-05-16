@@ -1,3 +1,5 @@
+import { Storage } from '@ionic/storage';
+import { ApiProvider, usuario } from './../../providers/api/api';
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { HomePage } from "../home/home";
@@ -17,41 +19,18 @@ import { Camera, CameraOptions } from "@ionic-native/camera";
   templateUrl: "add-dog.html"
 })
 export class AddDogPage {
-  public razas: any = [
-    {
-      name: "Mestizo"
-    },
-    {
-      name: "Labrador"
-    },
-    {
-      name: "Bulldog"
-    },
-    {
-      name: "Bulldog francés"
-    },
-    {
-      name: "Caniche"
-    },
-    {
-      name: "Pastor Alemán"
-    },
-    {
-      name: "Beagle"
-    },
-    {
-      name: "Golden"
-    },
-    {
-      name: "Pug"
-    },
-    {
-      name: "Pitbull"
-    },
-    {
-      name: "Chihuahua"
-    }
-  ];
+
+  dog:any={
+    usuarioid:'',
+    nombre:'',
+    nacimiento:'',
+    gender:'',
+    raza:'',
+    color:'',
+    estado:'',
+    size:'',
+    descripcion:''
+  };
 
   constructor(
     public navCtrl: NavController,
@@ -60,6 +39,8 @@ export class AddDogPage {
     private camera: Camera,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
+    private services : ApiProvider,
+    private storage: Storage,
     private DomSanitizer: DomSanitizer
   ) {
     this.initializeItems();
@@ -67,8 +48,21 @@ export class AddDogPage {
 
   searchQuery: string = "";
   lugares: string[];
+  razas:any=[];
+  colores:any=[];
+  msgError:any;
+  dataCreate:any=[];
 
   initializeItems() {
+    this.storage.get('userData').then(x=>{
+      if(x) this.dog['usuarioid'] = x['usuarioid'];
+      console.log('ja',this.dog.usuarioid)
+    })
+    this.services.getBreed().subscribe(data=>{
+      console.log('raza', data);
+      this.razas = data['data']['colores'];
+      this.colores = data['data']['razas'];
+    })
     this.lugares = ["Amsterdam", "Bogota", "Buenos Aires"];
   }
 
@@ -82,72 +76,91 @@ export class AddDogPage {
 
   agregarFoto() {}
 
-  irAHome(
-    nombre,
-    nacimiento,
-    gender,
-    raza,
-    color,
-    estado,
-    size,
-    lugar,
-    descripcion
-  ) {
-    console.log(
-      "Nombre: ",
-      nombre,
-      "Nacimiento: ",
-      nacimiento,
-      "Gender: ",
-      gender,
-      "Raza: ",
-      raza,
-      "Color: ",
-      color,
-      "Estado: ",
-      estado,
-      "Size: ",
-      size,
-      "Lugar: ",
-      lugar,
-      "Descripcion: ",
-      descripcion
-    );
-
-    // this.navCtrl.push(HomePage);
-  }
-
-  getItems(ev: any) {
-    // Reset items back to all of the items
-    this.initializeItems();
-
-    // set val to the value of the searchbar
-    const val = ev.target.value;
-
-    // if the value is an empty string don't filter the items
-    if (val && val.trim() != "") {
-      this.lugares = this.lugares.filter(item => {
-        return item.toLowerCase().indexOf(val.toLowerCase()) > -1;
-      });
+  irAHome(){
+    console.log('dog',this.dog);
+    if(this.validacion()){
+      this.services.createDog(this.dog, this.galleryDog).subscribe(x=>{
+        console.log('createDog', x);
+        this.dataCreate = JSON.parse(x['_body'])['data'];
+        if(this.dataCreate == 'inserted'){
+          this.msgError = 'Se agrego con Exito!'
+          this,this.presentToast(this.msgError);
+          setTimeout(()=>{
+            this.navCtrl.pop();
+          },2000)
+        }else{
+          this.msgError = 'Hubo un error, vuelve a intentarlo mas tarde...'
+          this,this.presentToast(this.msgError);
+        }
+      })
+    }else{
+      this.presentToast(this.msgError);
     }
   }
 
-  // ************* SUBIR IMAGENES
+  validacion() {
+    let ret = true;
+    let msg = "";
 
+    if (this.dog.nombre == "") {
+      ret = false;
+      msg += "Debe completar el nombre\n";
+    }
+    if (this.dog.nacimiento == "") {
+      ret = false;
+      msg += "Debe completar la fecha de nacimiento";
+    }
+    if (this.dog.gender == "") {
+      ret = false;
+      msg += "Debe escoger un genero";
+    }
+    if (this.dog.raza == "") {
+      ret = false;
+      msg += "Debe escoger una raza";
+    }
+    if (this.dog.color == "") {
+      ret = false;
+      msg += "Debe completar su color";
+    }
+    if (this.dog.estado == "") {
+      ret = false;
+      msg += "Debe completar su estado";
+    }
+    if (this.dog.size == "") {
+      ret = false;
+      msg += "Debe escoger un tamaño";
+    }
+    if (this.dog.descripcion == "") {
+      ret = false;
+      msg += "Debe completar la descripcion";
+    }
+
+    this.msgError = msg;
+    return ret;
+  }
+
+  // ************* SUBIR IMAGENES
+  galleryDog:any=[];
   imageURI: any;
   imageFileName: any;
 
   getImage() {
-    var options = {
+    const options = {
+      quality: 70,
+      destinationType: this.camera.DestinationType.DATA_URL,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.FILE_URI
+      saveToPhotoAlbum:false,
+      allowEdit: true,
+      targetWidth:400,
+      targetHeight:400
     };
     this.camera
       .getPicture(options)
       .then(imageData => {
         console.log("IMAGE DATA IS", imageData);
-        this.imageFileName = `data:image/jpeg;base64,${imageData}`;
-        this.uploadFile();
+        this.imageFileName = 'data:image/jpeg;base64,'+imageData;
+        this.galleryDog.push(this.imageFileName);
+        //this.uploadFile();
       })
       .catch(e => {
         console.log("Error while picking from gallery", e);

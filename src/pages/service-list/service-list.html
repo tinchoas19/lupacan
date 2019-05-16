@@ -7,23 +7,23 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{category.categoryName}}</ion-title>
+    <!-- <ion-title>{{category.categoryName}}</ion-title> -->
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <ion-card class="lupa-shadow" *ngFor="let serv of filteredServices" (click)="serviceModal(service)">
+  <ion-card class="lupa-shadow" *ngFor="let serv of services" (click)="serviceModal(service)">
     <ion-grid>
       <ion-row>
         <ion-col col-5 no-padding class="service-img">
-          <img src="../../assets/imgs/vet.jpg" alt="">
+          <img src="assets/imgs/vet.jpg" alt="">
         </ion-col>
         <ion-col col-7>
-          <h2>{{serv.serviceName}}</h2>
-          <p><ion-icon name="pin"></ion-icon> {{serv.serviceAddress}}</p>
-          <p>Horarios: 10 a 20hs</p>
+          <h2>{{serv.nombre}}</h2>
+          <p><ion-icon name="pin"></ion-icon> {{serv.direccion}}</p>
+          <p>Horarios: {{serv.horarios}}hrs</p>
           <p>
             <ion-icon name="star" class="plus"></ion-icon>
             <ion-icon name="star" class="plus"></ion-icon>

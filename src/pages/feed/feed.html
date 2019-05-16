@@ -73,23 +73,26 @@
           <!--div [style.width.px]="10" [style.height.px]="10" [style.background-color]="dog.isOnline ? 'green' : 'gray'"></div-->
         </ion-col>
       </ion-row>
-      <ion-row>
+      <ion-row justify-content-center>
+        <button ion-button color="primary" round>Ver Más</button>
+      </ion-row>
+      <!-- <ion-row>
         <ion-col>
           <h2 text-center>{{pageData.title}}</h2>
         </ion-col>
-      </ion-row>
+      </ion-row> 
       <ion-row>
         <ion-col col-4 *ngFor="let dog of filteredDogs" (click)="goToDogDetail(dog)">
           <div class="dog-name">{{dog.nombre}}</div>
           <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
-          <!--div [style.width.px]="10" [style.height.px]="10" [style.background-color]="dog.isOnline ? 'green' : 'gray'"></div-->
+          <!--div [style.width.px]="10" [style.height.px]="10" [style.background-color]="dog.isOnline ? 'green' : 'gray'"></div>
         </ion-col>
       </ion-row>
       <ion-row *ngIf="pageData.id == 4">
         <ion-col>
             <button ion-button full (click)="goToRefugios()">Colabora con un refugio</button>
         </ion-col>
-      </ion-row>
+      </ion-row>-->
     </ion-grid>
    <!--  <ion-grid *ngSwitchCase="'users'">
       <ion-row no-padding>

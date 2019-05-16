@@ -1,3 +1,4 @@
+import { ApiProvider } from './../../providers/api/api';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { ServiceDetailPage } from "../service-detail/service-detail";
@@ -18,10 +19,15 @@ export class ServiceListPage {
   private services: any[];
   private filteredServices: any[];
 
-  private category: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
+  private categoryId: any;
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    private apiService: ApiProvider, 
+    public modalCtrl: ModalController
+  ) {
 
-    this.category = this.navParams.data;
+    this.categoryId = this.navParams.get('catId');
     this.services = [
       {
         "serviceId": 1,
@@ -99,12 +105,23 @@ export class ServiceListPage {
 
     ];
 
-    this.filteredServices = this.services.filter(item => item.categoryId == this.category.categoryId);
+    this.filteredServices = this.services.filter(item => item.categoryId == this.categoryId);
   }
 
   serviceModal(service){
     const modal = this.modalCtrl.create(ServiceDetailPage, service);
     modal.present();
+  }
+
+  ionViewWillEnter(){
+    this.getStore();
+  }
+
+  getStore(){
+    this.apiService.getStores(this.categoryId).subscribe(x=>{
+      console.log('dataService', x);
+      this.services = x['data'];
+    }) 
   }
 
   ionViewDidLoad() {

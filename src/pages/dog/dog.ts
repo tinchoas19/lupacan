@@ -1,3 +1,4 @@
+import { Storage } from '@ionic/storage';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { PhotoSliderPage } from '../photo-slider/photo-slider';
@@ -26,13 +27,15 @@ export class DogPage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     private photoViewer: PhotoViewer, 
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    private storage: Storage
   ) { 
   }
 
   //Fullscreeen
   showImg(url){
-    this.photoViewer.show('http://ctrlztest.com.ar/lupacan/apirest/'+url, 'My Dog', {share: false}); 
+    console.log(url);
+    this.photoViewer.show('http://ctrlztest.com.ar/lupacan/apirest/upload/10-1.jpg', 'My Dog', {share: false}); 
   }
 
   ionViewWillEnter(){
@@ -49,7 +52,9 @@ export class DogPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DogPage');
-    this.loadMap();
+    setTimeout(()=>{
+      this.loadMap();
+    },1000)
   }
 
   showAlert() {
@@ -132,10 +137,11 @@ export class DogPage {
     this.geocodeAddress(geocoder, this.map, infowindow);
   }
 
-  geocodeAddress(geocoder, resultMap, infowindow){
-    var address = "Av. Los Incas 5150";
+  async geocodeAddress(geocoder, resultMap, infowindow){
+    console.log('adress', this.dog['direccion']);
+    var address = this.dog['direccion']
 
-    geocoder.geocode({'address': address}, (results,status)=>{
+    await geocoder.geocode({'address': address}, (results,status)=>{
       if(status === 'OK'){
         resultMap.setCenter(results[0].geometry.location);
         var marker = new google.maps.Marker({

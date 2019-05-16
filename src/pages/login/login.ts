@@ -1,10 +1,12 @@
+import { ApiProvider } from './../../providers/api/api';
 import { RecuperoPassPage } from '../recupero-pass/recupero-pass';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { RegisterPage } from '../register/register';
 import { MainPage } from '../main/main';
+import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -13,10 +15,15 @@ import { MainPage } from '../main/main';
 })
 export class LoginPage {
 
+  dataUsuario:any=[];
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
+    private services: ApiProvider,
     private fb: Facebook,
+    private storage: Storage,
+    public alertCtrl: AlertController
   ) {
   }
 
@@ -25,7 +32,20 @@ export class LoginPage {
   }
 
   login(usuario, password) {
-    this.navCtrl.push(MainPage);
+    if(usuario != "" && password != ""){
+      this.services.validarUsuario(usuario, password).subscribe(x=>{
+        console.log('vueltaValidaUser',x['data']);
+        if(x['data']['usuarioid'] != 0){
+          this.dataUsuario = x['data'];
+          this.storage.set('userData', this.dataUsuario);
+          this.navCtrl.setRoot(MainPage, {user:this.dataUsuario});
+        }else{
+          this.showAlert();
+        }
+      })
+    }else{
+      this.showAlert();
+    }
   }
 
   registro() {
@@ -48,7 +68,9 @@ export class LoginPage {
             // Get user ID and Token
             var fb_id = res.authResponse.userID;
             var fb_token = res.authResponse.accessToken;
-
+            this.services.validarUserFb(fb_id).subscribe(x=>{
+              
+            console.log('dataFB',x);
             // Get user infos from the API
             this.fb.api("/me?fields=name,gender,birthday,email", []).then((user) => {
 
@@ -65,9 +87,9 @@ export class LoginPage {
                 console.log("Email : " + email);
 
                 // => Open user session and redirect to the next page
-
+              
             });
-
+          })
         } 
         // An error occurred while loging-in
         else {
@@ -80,5 +102,14 @@ export class LoginPage {
     .catch((e) => {
         console.log('Error logging into Facebook', e);
     });
+  }
+
+  showAlert() {
+    const alert = this.alertCtrl.create({
+      title: "Error!",
+      subTitle: "Por favor, revisá los campos!",
+      buttons: ["Ok"]
+    });
+    alert.present();
   }
 }

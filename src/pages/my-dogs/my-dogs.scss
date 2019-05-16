@@ -3,4 +3,12 @@ page-my-dogs {
         margin: 0!important;
         padding: 0;
     }
+    .button{
+        span{
+            color: #707070;
+            .button-inner{
+                color: #707070 !important;
+            }
+        }
+    }
 }

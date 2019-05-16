@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from "@angular/http";
 import { Observable } from 'rxjs/Observable';
@@ -43,10 +43,39 @@ export class ApiProvider {
     private httpPost: Http,
     private httpClient: HttpClient,
     private events: Events
-  ) {}
+  ) { }
+
+  //--------LOGIN--------
+  validarUsuario(usuario, pass) {
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/validarusuario.php?usuario=" + usuario + "&password=" + pass)
+      .pipe(
+        tap(x => {
+          console.log('validar usuario', x);
+        })
+      );
+  }
+
+  validarUserFb(id) {
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/validarusuario.php?facebookid=" + id)
+      .pipe(
+        tap(x => {
+          console.log('validar fbId', x);
+        })
+      );
+  }
+
+  //-------- ULTIMOS AGREGADOS -----------
+  getUltimosAgregados() {
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traerultimosagregados.php")
+      .pipe(
+        tap(x => {
+          console.log('Ultimos Agregados', x);
+        })
+      );
+  }
 
   //-------- CHAT -------
-  getChat(){
+  getChat() {
     return this.httpClient.get("http://ctrlztest.com.ar/ranto/apirest/traermensajeschat.php?chatid=8")
       .pipe(
         tap(x => {
@@ -71,53 +100,83 @@ export class ApiProvider {
     }, Math.random() * 1800)
   }
 
-  sendMsg(msg: ChatMessage){
-    return new Promise(resolve => setTimeout(()=> resolve(msg), Math.random() * 1000))
-      .then(()=> this.mockNewMsg(msg));
+  sendMsg(msg: ChatMessage) {
+    return new Promise(resolve => setTimeout(() => resolve(msg), Math.random() * 1000))
+      .then(() => this.mockNewMsg(msg));
   }
 
   //---------------------
 
-  getCategories():Observable<any> {
+  getCategories(): Observable<any> {
     return this.httpClient.get(
       this.ApiUrl + "traercategoriaslocal.php"
     );
   }
 
-  getComments():Observable<any> {
+  getLocales(): Observable<any> {
+    return this.httpClient.get(
+      this.ApiUrl + "traerlocales.php"
+    );
+  }
+
+  getComments(): Observable<any> {
     return this.httpClient.get(
       this.ApiUrl + "traercomentariosporlocal.php" + this.localId
     );
   }
 
-  getStores():Observable<any> {
+  getStores(categoriaId): Observable<any> {
     return this.httpClient.get(
-      this.ApiUrl + "traerlocalesporcategoria.php" + this.categoriaId
+      this.ApiUrl + "traerlocalesporcategoria.php?categoriaid=" + categoriaId
     );
   }
 
-  getDogs():Observable<any> {
+  getDogs(): Observable<any> {
     return this.httpClient.get(
       this.ApiUrl + "traerperros.php?usuarioid=" + this.usuarioId
     );
   }
 
-  getMyDogs(id):Observable<any> {
+  getMyDogs(id): Observable<any> {
     return this.httpClient.get(
       this.ApiUrl + "traermisperros.php?usuarioid=" + id
     );
   }
 
-  getBreed():Observable<any> {
+  getBreed(): Observable<any> {
     return this.httpClient.get(
       this.ApiUrl + "traerrazaycolor.php"
     );
   }
 
-  getRecent() {
-    return this.httpClient.get(
-      this.ApiUrl + "traerultimosagregados.php"
-    );
+  //----------------POST--------------
+
+   createDog(dog, fotos): Observable<any> {
+    console.log('dog', dog);
+    console.log('fot', fotos);
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    var body = JSON.stringify({ 
+      nombre: dog.nombre, 
+      descripcion: dog.descripcion, 
+      generoid: dog.gender,
+      estado: dog.estado,
+      fechanacimiento: dog.nacimiento, 
+      razaid: dog.raza, 
+      colorid: dog.color, 
+      usuarioid: dog.usuarioid, 
+      fotos: fotos 
+    });
+      
+    console.log('body', body);
+
+    return this.httpPost.post(this.ApiUrl + "agregarperro.php", body, options).pipe(
+      tap(x => {
+        console.log('createDog', x);
+      }));
   }
+
 
 }
