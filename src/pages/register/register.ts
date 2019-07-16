@@ -19,6 +19,7 @@ import { Base64 } from '@ionic-native/base64';
 import { MainPage } from '../main/main';
 import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 
+
 @IonicPage()
 @Component({
   selector: "page-register",
