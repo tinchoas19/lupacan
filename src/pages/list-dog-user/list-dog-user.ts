@@ -10,7 +10,10 @@ import { NavController, NavParams, ViewController } from 'ionic-angular';
 })
 export class ListDogUserPage {
 
+  imgSrc:any;
   nombreUser:String;
+  apellidoUser:String;
+  telefonoUser:String;
   idUser:any;
   misPerros:any=[];
 
@@ -23,13 +26,32 @@ export class ListDogUserPage {
   }
 
   ionViewWillEnter(){
-    this.nombreUser = this.navParams.get('userName');
-    this.idUser = this.navParams.get('id');
-    console.log(this.idUser);
-    this.services.getMyDogs(this.idUser).subscribe(data=>{
-      console.log('vuelta', data);
-      this.misPerros = data['data'];
-    })
+    if(this.navParams.data.id){
+      //let user = this.navParams.data.user;
+      //this.nombreUser = user['nombre'];
+      this.idUser = this.navParams.data.id;
+      this.services.getUser(this.idUser).subscribe(x=>{
+        console.log('datUser', x);
+        let user = x['data'];
+        this.imgSrc="http://ctrlztest.com.ar/lupacan/apirest/"+user['imagen'];
+        this.nombreUser=user['nombre'];
+        this.apellidoUser=user['apellido'];
+        this.telefonoUser=user['telefono'];
+        this.services.getMyDogs(this.idUser).subscribe(data=>{
+          console.log('vuelta', data);
+          this.misPerros = data['data'];
+        })
+      })
+    }
+    if(this.navParams.data.userName){
+      this.nombreUser = this.navParams.get('userName');
+      this.idUser = this.navParams.get('id');
+      console.log(this.idUser);
+      this.services.getMyDogs(this.idUser).subscribe(data=>{
+        console.log('vuelta', data);
+        this.misPerros = data['data'];
+      })
+    }
   }
 
   ionViewDidLoad() {

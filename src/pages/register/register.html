@@ -1,9 +1,3 @@
-<!--
-  Generated template for the RegisterPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -14,32 +8,87 @@
 
 
 <ion-content padding>
-
-  <ion-grid>
-    <ion-row justify-content-center>
-      <ion-col col-5 text-center>
-        <img src="assets/imgs/main.png" alt="">
-      </ion-col>
-      <ion-col col-10 text-center>
-        <ion-input type="text" placeholder="Nombre" class="lupa-shadow" [(ngModel)]="nombre" required>
-        </ion-input>
-        <ion-input type="number" placeholder="Edad" class="lupa-shadow" [(ngModel)]="edad" required>
-        </ion-input>
-        <ion-input type="text" placeholder="Email" class="lupa-shadow" [(ngModel)]="email" required>
-        </ion-input>
-        <ion-input type="password" placeholder="Contraseña" class="lupa-shadow" [(ngModel)]="password" required>
-        </ion-input>
-        <div class="checkbox">
-          <ion-checkbox (ionChange)="check($event)" checked="false" [(ngModel)]="aceptoterminos" color="primary">
-          </ion-checkbox>
-          Acepto
-          los <a href="" class="terms">términos y
-            condiciones</a>
+  <ion-row justify-content-center>
+    <ion-col *ngIf="!imgFacebook" text-center col-6 no-padding>
+      <img text-center *ngIf="imagePath" class="img_add" [src]="getTrustImg(imagePath)">
+      <img text-center *ngIf="!imagePath" class="img_add" src="assets/imgs/main.png">
+      <div class="col_add">
+        <span text-center>
+          <ion-icon ion-fab mini class="icon_add" name="add" (click)="addPerfilPhoto()"></ion-icon>
+        </span>
+      </div>
+    </ion-col>
+    <ion-col *ngIf="imgFacebook" text-center col-6 no-padding>
+      <img text-center *ngIf="!imagePath" class="img_add" [src]="imgSrc">
+      <img text-center *ngIf="imagePath" class="img_add" [src]="getTrustImg(imagePath)">
+      <div class="col_add">
+        <span text-center>
+          <ion-icon ion-fab mini class="icon_add" name="add" (click)="addPerfilPhoto()"></ion-icon>
+        </span>
+      </div>
+    </ion-col>
+    <ion-col col-10 text-center>
+      <p *ngIf="submitAttempt" style="color: #ea6153;">Por favor complete todos los campos.</p>
+      <ion-list no-lines>
+        <form [formGroup]="myForm">
+          <ion-input type="text" placeholder="Nombre" class="lupa-shadow" formControlName="nombre" [class.invalid]="!myForm.controls.nombre.valid && (myForm.controls.nombre.dirty || submitAttempt)"></ion-input>
+          <ion-item *ngIf="!myForm.controls.nombre.valid  && (myForm.controls.nombre.dirty || submitAttempt)">
+            <p>Por favor ingresar un nombre válido.</p>
+          </ion-item>
+          <ion-input type="text" placeholder="Apellido" class="lupa-shadow" formControlName="apellido" [class.invalid]="!myForm.controls.apellido.valid && (myForm.controls.apellido.dirty || submitAttempt)"></ion-input>
+          <ion-item *ngIf="!myForm.controls.apellido.valid  && (myForm.controls.apellido.dirty || submitAttempt)">
+            <p>Por favor ingresar un apellido válido.</p>
+          </ion-item>
+          <ion-input type="tel" placeholder="Teléfono" class="lupa-shadow" formControlName="telefono" [class.invalid]="!myForm.controls.telefono.valid && (myForm.controls.telefono.dirty || submitAttempt)"></ion-input>
+          <ion-item *ngIf="!myForm.controls.telefono.valid  && (myForm.controls.telefono.dirty || submitAttempt)">
+            <p>Por favor ingresar un teléfono válido.</p>
+          </ion-item>
+          <!-- <ion-input type="text" placeholder="Dirección" class="lupa-shadow" formControlName="direccion" [class.invalid]="!myForm.controls.direccion.valid && (myForm.controls.direccion.dirty || submitAttempt)"></ion-input>
+            <ion-item *ngIf="!myForm.controls.direccion.valid  && (myForm.controls.direccion.dirty || submitAttempt)">
+              <p>Por favor ingresar una dirección válido.</p>
+            </ion-item> -->
+          <ion-item no-padding style="height: 3.6rem !important; border-radius: 1.8rem !important;box-shadow: 0px 0px 37px -1px rgba(0, 0, 0, 0.3)!important;">
+            <ion-datetime displayFormat="MM/DD/YYYY" placeholder="Fecha de nacimiento" formControlName="edad" [class.invalid]="!myForm.controls.edad.valid && (myForm.controls.edad.dirty || submitAttempt)"></ion-datetime>
+          </ion-item>
+          <ion-item *ngIf="!myForm.controls.edad.valid  && (myForm.controls.edad.dirty || submitAttempt)">
+            <p>Por favor ingresar una edad válida.</p>
+          </ion-item>
+          <ion-input type="text" placeholder="Email" class="lupa-shadow" formControlName="email" [class.invalid]="!myForm.controls.email.valid && (myForm.controls.email.dirty || submitAttempt)"></ion-input>
+          <ion-item *ngIf="!myForm.controls.email.valid  && (myForm.controls.email.dirty || submitAttempt)">
+            <p>Por favor ingresar un email válido.</p>
+          </ion-item>
+          <ion-input type="password" placeholder="Contraseña" class="lupa-shadow" formControlName="password" [class.invalid]="!myForm.controls.password.valid && (myForm.controls.password.dirty || submitAttempt)"></ion-input>
+          <ion-item *ngIf="!myForm.controls.password.valid  && (myForm.controls.password.dirty || submitAttempt)">
+            <p>Por favor ingresar una contraseña.</p>
+          </ion-item>
+        </form>
+      </ion-list>
+      <ion-row>
+        <ion-col col-12 no-padding>
+          <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" placeholder="Direccion"></ion-searchbar>
+        </ion-col>
+        <ion-col no-padding style="padding-top: 0px!important;">
+          <ion-list class="list_map">
+            <ion-item *ngFor="let place of places" (touchstart)="selectPlace(place)">
+              <p>{{place.description}}</p>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+        <div #pleaseConnect id="please-connect">
+          <p>Please connect to the Internet...</p>
         </div>
-        <button ion-button block (click)="registrarme(nombre, edad, email, password)"
-          class="btn-iniciar lupa-shadow">Registrarme</button>
-
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+        <div #map id="map">
+          <!-- <ion-spinner></ion-spinner> -->
+        </div>
+      </ion-row>
+      <div class="checkbox">
+        <ion-checkbox (ionChange)="check($event)" checked="false" [(ngModel)]="aceptoterminos" color="primary">
+        </ion-checkbox>
+        Acepto los
+        <a href="" class="terms">términos y condiciones
+        </a>
+      </div>
+      <button ion-button block (click)="registrarme()" [disabled]="!aceptoterminos" class="btn-iniciar lupa-shadow">Registrarme</button>
+    </ion-col>
+  </ion-row>
 </ion-content>

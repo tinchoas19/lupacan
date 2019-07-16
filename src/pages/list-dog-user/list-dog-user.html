@@ -5,14 +5,30 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-row justify-content-center>
+    <ion-col text-center col-6 no-padding>
+      <img text-center class="img_add" [src]="imgSrc">
+    </ion-col>
+  </ion-row>
+  <ion-row justify-content-center>
+    <ion-col col-12>
+      <h4 text-center style="margin-top: 10px;">{{nombreUser}} {{apellidoUser}}</h4>
+    </ion-col>
+    <ion-col col-12>
+      <p text-center><ion-icon name="call"></ion-icon>{{telefonoUser}}</p>
+    </ion-col>
+  </ion-row>
   <ion-list *ngIf="misPerros.length > 0">
+    <ion-list-header no-lines>
+      Mis Perros
+    </ion-list-header>
     <ion-item *ngFor="let dog of misPerros" (click)="goToDogDetail(dog)">
       <ion-thumbnail item-start>
         <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}">
       </ion-thumbnail>
       <h2>{{dog.nombre}}</h2>
       <p>{{dog.raza}}</p>
-      <p>{{dog.direccion}}</p>
+      <p text-wrap>{{dog.perrodireccion}}</p>
     </ion-item>
   </ion-list>
 </ion-content>

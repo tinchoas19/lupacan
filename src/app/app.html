@@ -1,8 +1,9 @@
 <!--ion-nav [root]="rootPage"></ion-nav-->
 <ion-menu [content]="content">
     <ion-header text-center>
-        <img src="../assets/imgs/1.jpg" alt="">
-        <h2>{{userName}} {{userLastName}}</h2>
+        <img style="margin-top: 10px;" [src]="imagen" alt="">
+        <h2>{{userName}}</h2>
+        <p>{{email}}</p>
     </ion-header>
     <ion-content>
         <ion-list class="left-menu">
@@ -22,7 +23,7 @@
                 <img src="assets/imgs/menu04.png" alt="">
                 &nbsp;Configuraciones
             </ion-item>
-            <ion-item>
+            <ion-item (click)="logOut()" menuClose>
                 <img src="assets/imgs/menu05.png" alt="">
                 &nbsp;Salir
             </ion-item>

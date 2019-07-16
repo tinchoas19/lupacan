@@ -188,3 +188,30 @@ h1 {
 h2 {
     font-size: 1.8rem;
 }
+
+.toastExito{
+    width: 90%;
+    margin-top: 20% !important;
+    margin: 5%;
+    //padding: 15px;
+.toast-wrapper {
+    background: #21c064;  
+  }
+  .toast-message {   
+    color: white;
+    white-space: pre-line;
+    }  
+}
+.toastError{
+    width: 90%;
+    margin-top: 20% !important;
+    margin: 5%;
+    //padding: 15px;
+    .toast-wrapper {
+        background: #e0483d;       
+      }
+      .toast-message {       
+        color: white;
+        white-space: pre-line;
+    }  
+}

@@ -2,10 +2,13 @@
   <ion-navbar hideBackButton>
     <ion-row>
       <ion-col>
-        <ion-buttons float-left>
-          <button ion-button icon-only (click)="openMenu()">
+        <ion-buttons float-left (click)="openMenu()">
+          <button *ngIf="!imgSrc" ion-button icon-only >
             <ion-icon name="contact"></ion-icon>
           </button>
+          <div *ngIf="imgSrc" (click)="openMenu()">
+            <img class="imgPerfil" style="max-width: 20% !important;" [src]="imgSrc">          
+          </div>
         </ion-buttons>
       </ion-col>
       <ion-col> 

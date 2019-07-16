@@ -1,3 +1,4 @@
+import { CreateServicePage } from './../create-service/create-service';
 import { ApiProvider } from './../../providers/api/api';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -14,7 +15,7 @@ declare var google;
 export class ServiPage {
 
 @ViewChild('map') mapElement: ElementRef;
-servicios: string = "mapa";
+servicios: string = "favoritos";
 currentPos : Geoposition;
 map: any;
 dogwalkMarker : any;
@@ -134,10 +135,14 @@ public inputText: string;
         this.dogwalkMarker.setMap(this.map);
         this.addInfoWindowToMarker(this.dogwalkMarker);
       }else {
-        alert('Geocode was not successful for the following reason: ' + status);
+        console.log('Geocode was not successful for the following reason: ' + status);
       };
     })
     })
+  }
+
+  createServicio(){
+    this.navCtrl.push(CreateServicePage);
   }
 
   //infoWindowMarkers

@@ -18,12 +18,12 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        Direccion: {{service.serviceAddress}}
+        Direccion: {{service.direccion}}
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        Telefono: {{service.serviceTelephone}}
+        Telefono: {{service.telefono}}
       </ion-col>
     </ion-row>
     <ion-row>
@@ -34,8 +34,8 @@
     <ion-row>
       <ion-col>
         Servicios:
-        <div *ngFor="let offered of service.serviceServices">
-          {{offered.offeredService}}
+        <div *ngFor="let offered of service.servicios">
+          <p style="margin-left: 14px;">{{offered.nombre}}</p>
         </div>
       </ion-col>
     </ion-row>

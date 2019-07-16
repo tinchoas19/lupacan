@@ -1,11 +1,8 @@
 <ion-header>
-
   <ion-navbar>
-    <ion-title>recupero-pass</ion-title>
+    <!-- <ion-title>recupero-pass</ion-title> -->
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content padding>
   <ion-grid>
@@ -15,10 +12,17 @@
         <h1 text-uppercase>Lupacan</h1>
       </ion-col>
       <ion-col col-10 text-center>
-        <ion-input type="text" placeholder="Tu Email" class="lupa-shadow"></ion-input>
-        <button ion-button block (click)="recuperarPass()" class="btn-iniciar lupa-shadow">Recuperar Contraseña</button>
+        <p *ngIf="submitAttempt" style="color: #ea6153;">Por favor complete los campos.</p>
+        <ion-list no-lines>
+          <form [formGroup]="myForm">
+            <ion-input type="email" placeholder="Ingresá tu usuario(e-mail)" class="lupa-shadow" formControlName="usuario" [class.invalid]="!myForm.controls.usuario.valid && (myForm.controls.usuario.dirty || submitAttempt)"></ion-input>
+            <ion-item *ngIf="!myForm.controls.usuario.valid  && (myForm.controls.usuario.dirty || submitAttempt)">
+              <p>Por favor ingresar un usuario válido.</p>
+            </ion-item>
+          </form>
+          <button ion-button block (click)="recuperarPass()" class="btn-iniciar lupa-shadow">Enviar</button>
+        </ion-list> 
       </ion-col>
     </ion-row>
   </ion-grid>
-  
 </ion-content>

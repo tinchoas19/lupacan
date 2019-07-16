@@ -1,8 +1,9 @@
 import { ListDogUserPage } from './../list-dog-user/list-dog-user';
 import { ChatPage } from './../chat/chat';
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
+import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 
 declare var google : any;
 
@@ -12,7 +13,8 @@ declare var google : any;
   templateUrl: 'photo-slider.html',
 })
 export class PhotoSliderPage {
-  @ViewChild("map") mapRef: ElementRef;
+  @ViewChild('map') mapElement: ElementRef;
+  @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
 
   private dog: any=[];
   public checkAsLost: boolean;
@@ -23,14 +25,22 @@ export class PhotoSliderPage {
   public showMyControls: boolean;
   vuelta:boolean = true;
   isChecked :boolean;
-
+  placesService: any;
+  searchDisabled: boolean;
+  saveDisabled: boolean;
+  location: any;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private photoViewer: PhotoViewer,
-    public modalCtrl: ModalController, 
+    public modalCtrl: ModalController,
+    public maps: GoogleMapsProvider,
+    public zone: NgZone, 
     public alertCtrl: AlertController
-  ) { 
+  ) {
+    this.dog = this.navParams.data.dogDetail;     
+    this.searchDisabled = true;
+    this.saveDisabled = true; 
   }
 
   //add Favorites
@@ -53,8 +63,6 @@ export class PhotoSliderPage {
   estado(dog){
     if(dog.estaperdido != 0){
       return 'Perdido';
-    }else if(dog.estaenadopcion != 0){
-      return 'En Adopción'
     }else if(dog.estaencontrado != 0){
       return 'Encontrado'
     }else{
@@ -69,66 +77,6 @@ export class PhotoSliderPage {
   //FullScreen
   showImg(url){
     this.photoViewer.show('http://ctrlztest.com.ar/lupacan/apirest/upload/10-1.jpg', 'My Dog', {share: false}); 
-  }
-
-  //Mapa
-  loadMap(){
-
-    //create a new map by passing HTMLElement
-    //let mapEle: HTMLElement = document.getElementById('map');
-    //Map options
-    const options = {
-      center: {lat: -34.397, lng: 150.644},
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.TERRAIN,
-      streetViewControl: true,
-      disableDefaultUI: true,
-      styles: [
-        {
-          "featureType": "poi.business",
-          "elementType": "labels",
-          "stylers": [
-            {
-              "visibility": "off"
-            }
-          ]
-        },
-        {
-          "featureType": "poi.sports_complex",
-          "elementType": "labels",
-          "stylers": [
-            {
-              "visibility": "off"
-            }
-          ]
-        }
-      ]     
-    }
-    //create map
-    this.map = new google.maps.Map(this.mapRef.nativeElement, options);
-    google.maps.event.trigger(this.map, 'resize');
-    var geocoder = new google.maps.Geocoder();
-    var infowindow = new google.maps.InfoWindow();
-
-    this.geocodeAddress(geocoder, this.map, infowindow);
-  }
-
-  geocodeAddress(geocoder, resultMap, infowindow){
-    var address = this.dog['direccion'];
-
-    geocoder.geocode({'address': address}, (results,status)=>{
-      if(status === 'OK'){
-        resultMap.setCenter(results[0].geometry.location);
-        var marker = new google.maps.Marker({
-          map: resultMap,
-          position: results[0].geometry.location
-        });
-        infowindow.setContent(address);
-        infowindow.open(resultMap, marker);
-      }else{
-        alert('Geocode was not successful for the following reason: ' + status);      
-      }
-    });
   }
 
   ionViewWillEnter(){
@@ -151,10 +99,11 @@ export class PhotoSliderPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad DogPage');
-    setTimeout(()=>{
-      this.loadMap();
-    },1000)
+    console.log('ionViewDidLoad photo-slide');
+    let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then(() => {
+      this.placesService = new google.maps.places.PlacesService(this.maps.map);
+      this.selectPlace(this.dog['placeid']);
+    });    
   }
 
   showAlert() {
@@ -167,6 +116,32 @@ export class PhotoSliderPage {
       alert.present();
     }
   }
+
+  selectPlace(placeid) {
+    console.log('place', placeid);
+    //this.places = [];
+    let location = {
+      lat: null,
+      lng: null,
+      name: this.dog.perrodireccion
+    };
+    this.placesService.getDetails({ placeId: placeid }, (details) => {
+      this.zone.run(() => {
+        location.name = details.name;
+        location.lat = details.geometry.location.lat();
+        location.lng = details.geometry.location.lng();
+        this.saveDisabled = false;
+        this.maps.map.setCenter({ lat: location.lat, lng: location.lng });
+        var marker = new google.maps.Marker({
+          map: this.maps.map,
+          title: this.dog.perrodireccion,
+          position: { lat: location.lat, lng: location.lng }
+        });
+        this.location = location;
+      });
+    });
+  }
+
 
   iFoundThisDog(dog) {
     const alert = this.alertCtrl.create({

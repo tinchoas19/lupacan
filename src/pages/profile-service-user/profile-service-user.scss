@@ -1,0 +1,59 @@
+page-profile-service-user {
+    .img-cont{
+        display: flex;
+        height: 200px;
+        overflow: hidden;
+        img{
+            align-self: center;
+        }
+    }
+    .tienda-header{
+        margin-top: -32px;
+        background: #fff;
+        color: black;
+    }
+    .top-cont{
+        color: #fff;
+        header{
+          .heading{
+            border-bottom: 2px solid #fff;
+            h2{
+              background: black;
+              color: #fff;
+            }
+          }
+        }
+    }
+    .info_tienda{
+        padding-top: 0px !important;
+        margin-top: -20px;
+        //border-top: 1px solid #ffffff;
+        p{
+            padding-top: 10px;
+            margin-bottom: 5px;
+            padding-bottom: 5px;
+            color: #ffffff;
+            font-size: 1.8rem;
+            font-weight: 500;
+            ion-icon{
+                margin: 5px;
+                font-size: 2.5rem;
+            }
+        }
+        .col{
+            padding-bottom: 0px !important;
+            padding-top: 3%;
+        }
+    }
+    .btn_tienda{
+        border: 1px solid #b7b7b7;
+        //margin-top: -30px !important;
+        margin: 0 auto;
+        font-size: 1.7rem;
+        font-weight: 600;
+        color: #35d9c1;
+        background: #ffffff !important;
+        width: 90%;
+        text-transform: uppercase;
+    }
+}

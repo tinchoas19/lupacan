@@ -1,34 +1,21 @@
 <ion-header>
     <ion-toolbar>
       <ion-title>
-        Servicios ofrecidos
+        Servicios
       </ion-title>
-      <ion-buttons start>
-        <button ion-button (click)="dismiss()">
-          <span ion-text color="primary" showWhen="ios">Cancel</span>
-          <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
-        </button>
-      </ion-buttons>
+      <ion-buttons end>
+          <button ion-button (click)="dismiss()">
+            Ok
+          </button>
+        </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
   <ion-content>
-
-      <ion-list>
-            
-        <ion-item>
-            <ion-label>Cuidado</ion-label>
-            <ion-checkbox color="royal" checked="false"></ion-checkbox>
+      <ion-list unset>
+        <ion-item no-lines *ngFor="let serv of servicios; let i = index;">
+            <ion-label>{{serv.nombre}}</ion-label>
+            <ion-checkbox color="royal" [checked]="serv.checked" (ionChange)="updateCucumber(serv,i)"></ion-checkbox>
           </ion-item>
-    
-          <ion-item>
-              <ion-label>Peinado</ion-label>
-              <ion-checkbox color="royal" checked="false"></ion-checkbox>
-            </ion-item>
-            <button ion-button full (click)="dismiss()">
-                Aceptar
-              </button>
-    
       </ion-list>
-    
     </ion-content>

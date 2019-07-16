@@ -69,7 +69,8 @@
       <ion-row>
         <ion-col col-4 *ngFor="let dog of dogs" (click)="goToDogDetail(dog)">
           <div class="dog-name">{{dog.nombre}}</div>
-          <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
+          <img *ngIf="dog.fotos[0].fotourl" src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
+          <img *ngIf="!dog.fotos[0].fotourl" src="assets/imgs/1.jpg" alt="{{dog.nombre}}">
           <!--div [style.width.px]="10" [style.height.px]="10" [style.background-color]="dog.isOnline ? 'green' : 'gray'"></div-->
         </ion-col>
       </ion-row>

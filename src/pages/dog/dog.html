@@ -31,9 +31,13 @@
             </ion-col>
           </ion-row>
 
-          <ion-row style="width: 100% !important; height: 200px !important;">
-            <div padding #map id="map"></div>
-          </ion-row>
+          <div #pleaseConnect id="please-connect">
+            <p>Please connect to the Internet...</p>
+          </div>
+          
+          <div #map id="map" style="width: 100% !important; height: 200px !important;">
+            <ion-spinner></ion-spinner>
+          </div>
 
           <ion-row *ngIf="!dog.encontrado">
             <ion-col>

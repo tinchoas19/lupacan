@@ -1,10 +1,8 @@
 import { Component, ViewChild } from "@angular/core";
-import { Platform, NavController } from "ionic-angular";
+import { Platform, NavController, MenuController, App } from "ionic-angular";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
-
 import { Nav } from "ionic-angular";
-
 import { HomePage } from "../pages/home/home";
 import { ProfileSettingsPage } from "../pages/profile-settings/profile-settings";
 import { LoginPage } from "../pages/login/login";
@@ -12,13 +10,15 @@ import { DogPage } from "../pages/dog/dog";
 import { MyProfilePage } from "../pages/my-profile/my-profile";
 import { Storage } from "@ionic/storage";
 import { MainPage } from "../pages/main/main";
+
 @Component({
   templateUrl: "app.html"
 })
 export class MyApp {
   rootPage: any;
-  userName:string;
-  userLastName:string;
+  userName: string;
+  email: string;
+  imagen:any;
   @ViewChild(Nav) nav: Nav;
   @ViewChild(Nav) navChild: Nav;
 
@@ -26,15 +26,19 @@ export class MyApp {
     platform: Platform,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
-    storage: Storage
+    public menuCtrl: MenuController,
+    public app: App,
+    public storage: Storage
   ) {
     platform.ready().then(() => {
-      storage.get('userData').then(val=>{
-        if(val != null){
+      storage.get('userData').then(val => {
+        if (val != null) {
+          console.log('components', val);
+          this.imagen = "http://ctrlztest.com.ar/lupacan/apirest/"+val['imagen']
           this.userName = val['nombre'];
-          this.userLastName = val['apellido'];
+          this.email = val['email'];
           this.rootPage = MainPage;
-        }else{
+        } else {
           this.rootPage = LoginPage;
         }
       })
@@ -48,4 +52,13 @@ export class MyApp {
   goToMyProfile() {
     this.nav.push(MyProfilePage);
   }
+
+  logOut() {
+    this.storage.set('userData', null);
+    this.menuCtrl.close();
+    var nav = this.app.getRootNav();
+    nav.setRoot(LoginPage);
+    //this.nav.setRoot(LoginPage);
+  }
+
 }

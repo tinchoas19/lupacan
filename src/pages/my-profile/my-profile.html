@@ -1,39 +1,65 @@
-<!--
-  Generated template for the MyProfilePage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>my-profile</ion-title>
+    <ion-title>Mi Perfil</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
-  <ion-list>
-    <ion-list-header>
+  <ion-row justify-content-center>
+    <ion-col *ngIf="!conFoto" text-center col-6 no-padding>
+      <img text-center *ngIf="imagePath" class="img_add" [src]="getTrustImg(imagePath)">
+      <img text-center *ngIf="!imagePath" class="img_add" src="assets/imgs/1.jpg">
+      <div class="col_add">
+        <span text-center><ion-icon ion-fab mini class="icon_add" name="add" (click)="addPerfilPhoto()"></ion-icon></span>
+      </div>
+    </ion-col>
+    <ion-col *ngIf="conFoto" text-center col-6 no-padding>
+      <img text-center *ngIf="imagePath" class="img_add" [src]="getTrustImg(imagePath)">
+      <img text-center *ngIf="!imagePath" class="img_add" [src]="imgSrc">
+      <div class="col_add">
+        <span text-center><ion-icon ion-fab mini class="icon_add" name="add" (click)="addPerfilPhoto()"></ion-icon></span>
+      </div>
+    </ion-col>
+<!--     <ion-col col-6 text-center no-padding class="col_add">
+    </ion-col>   -->
+  </ion-row>
+  <ion-list no-lines>
+    <ion-list-header text-center>
       Mis datos
     </ion-list-header>
-    <ion-item>
-      <ion-label stacked>Nombre</ion-label>
-      <ion-input type="text" placeholder="Nombre"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label stacked>Apellido</ion-label>
-      <ion-input type="text" placeholder="Apellido"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label stacked>Email</ion-label>
-      <ion-input type="email" placeholder="Email"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label stacked>Direccion</ion-label>
-      <ion-input type="text" placeholder="Direccion"></ion-input>
-    </ion-item>
+    <form [formGroup]="myForm">
+      <ion-input type="text" placeholder="Nombre" class="lupa-shadow" formControlName="nombre" [class.invalid]="!myForm.controls.nombre.valid && (myForm.controls.nombre.dirty || submitAttempt)"></ion-input>
+      <ion-item *ngIf="!myForm.controls.nombre.valid  && (myForm.controls.nombre.dirty || submitAttempt)">
+        <p>Por favor ingresar un nombre válido.</p>
+      </ion-item>
+      <ion-input type="text" placeholder="Apellido" class="lupa-shadow" formControlName="apellido" [class.invalid]="!myForm.controls.apellido.valid && (myForm.controls.apellido.dirty || submitAttempt)"></ion-input>
+      <ion-item *ngIf="!myForm.controls.apellido.valid  && (myForm.controls.apellido.dirty || submitAttempt)">
+        <p>Por favor ingresar un apellido válido.</p>
+      </ion-item>
+      <ion-input type="text" placeholder="Teléfono" class="lupa-shadow" formControlName="telefono" [class.invalid]="!myForm.controls.telefono.valid && (myForm.controls.telefono.dirty || submitAttempt)"></ion-input>
+      <ion-item *ngIf="!myForm.controls.telefono.valid  && (myForm.controls.telefono.dirty || submitAttempt)">
+        <p>Por favor ingresar un teléfono válido.</p>
+      </ion-item>
+      <ion-input type="text" placeholder="Dirección" class="lupa-shadow" formControlName="direccion" [class.invalid]="!myForm.controls.direccion.valid && (myForm.controls.direccion.dirty || submitAttempt)"></ion-input>
+      <ion-item *ngIf="!myForm.controls.direccion.valid  && (myForm.controls.direccion.dirty || submitAttempt)">
+        <p>Por favor ingresar una dirección válido.</p>
+      </ion-item>
+      <ion-item no-padding style="height: 3.6rem !important; border-radius: 1.8rem !important;box-shadow: 0px 0px 37px -1px rgba(0, 0, 0, 0.3)!important;">
+        <ion-datetime displayFormat="MM/DD/YYYY" placeholder="Fecha de nacimiento" formControlName="edad" [class.invalid]="!myForm.controls.edad.valid && (myForm.controls.edad.dirty || submitAttempt)"></ion-datetime>
+      </ion-item>
+      <ion-item *ngIf="!myForm.controls.edad.valid  && (myForm.controls.edad.dirty || submitAttempt)">
+        <p>Por favor ingresar una edad válida.</p>
+      </ion-item>
+      <ion-input type="text" placeholder="Email" class="lupa-shadow" formControlName="email" [class.invalid]="!myForm.controls.email.valid && (myForm.controls.email.dirty || submitAttempt)"></ion-input>
+      <ion-item *ngIf="!myForm.controls.email.valid  && (myForm.controls.email.dirty || submitAttempt)">
+        <p>Por favor ingresar un email válido.</p>
+      </ion-item>
+      <ion-input type="password" placeholder="Contraseña" class="lupa-shadow" formControlName="password" [class.invalid]="!myForm.controls.password.valid && (myForm.controls.password.dirty || submitAttempt)"></ion-input>
+      <ion-item *ngIf="!myForm.controls.password.valid  && (myForm.controls.password.dirty || submitAttempt)">
+        <p>Por favor ingresar una contraseña.</p>
+      </ion-item>
+    </form>
   </ion-list>
-  <button ion-button full (click)="login()">Guardar cambios</button>
+  <button ion-button full (click)="guardarCambio()">Guardar cambios</button>
 </ion-content>

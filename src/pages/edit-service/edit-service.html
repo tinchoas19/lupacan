@@ -8,25 +8,29 @@
   
   
   <ion-content>
+    <ion-row no-padding (click)="addPerfilPhoto()">
+      <img *ngIf="imagenEdit" text-center src="http://ctrlztest.com.ar/lupacan/apirest/{{service['fotos'][0]['imagen']}}">
+      <img *ngIf="!imagenEdit"text-center [src]="getTrustImg(imagePath)">
+    </ion-row>
     <ion-list>
       <ion-list-header>
         Datos del servicio
       </ion-list-header>
       <ion-item>
         <ion-label color="primary" stacked>Nombre</ion-label>
-        <ion-input type="text" placeholder="Nombre" value="{{service.serviceName}}"></ion-input>
+        <ion-input type="text" placeholder="Nombre" value="{{service.nombre}}"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label color="primary" stacked>Direccion</ion-label>
-        <ion-input type="text" placeholder="Direccion" value="{{service.serviceAddress}}"></ion-input>
+        <ion-input type="text" placeholder="Direccion" value="{{service.direccion}}"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label color="primary" stacked>Horario apertura</ion-label>
-        <ion-input type="text" placeholder="Horario apertura"></ion-input>
+        <ion-input type="text" placeholder="Horario apertura" value="{{service.horarioapertura}}"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label color="primary" stacked>Horario cierre</ion-label>
-        <ion-input type="text" placeholder="Horario cierre"></ion-input>
+        <ion-input type="text" placeholder="Horario cierre" value="{{service.horariocierre}}"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label color="primary" stacked>Categoria</ion-label>
@@ -46,9 +50,16 @@
         <a ion-item (click)="openModal({charNum: 0})">
           Seleccionar servicios ofrecidos
         </a>
+        <div *ngIf="service.servicios.length > 0">
+        <ion-list unset *ngFor="let serv of service.servicios">
+          <ion-item>
+            <p color="primary">{{serv.nombre}}</p>
+          </ion-item>
+        </ion-list>
+      </div>
       </ion-item>
   
-      <button ion-button full (click)="editService()">Editar servicio</button>
+      <button ion-button full (click)="editService()">Guardar Cambios</button>
     </ion-list>
   
     <button ion-button full color="danger" (click)="deleteService()">Eliminar servicio</button>

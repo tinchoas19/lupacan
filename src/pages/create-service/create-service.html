@@ -8,45 +8,65 @@
 
 
 <ion-content>
+  <ion-row no-padding (click)="addPerfilPhoto()">
+    <img text-center [src]="getTrustImg(imagePath)">
+  </ion-row>
   <ion-list>
-    <ion-list-header>
+    <ion-list-header text-center>
       Datos del servicio
     </ion-list-header>
     <ion-item>
       <ion-label color="primary" stacked>Nombre</ion-label>
-      <ion-input type="text" placeholder="Nombre"></ion-input>
+      <ion-input type="text" [(ngModel)]="tienda.nombre" placeholder="Nombre"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label color="primary" stacked>Direccion</ion-label>
-      <ion-input type="text" placeholder="Direccion"></ion-input>
+      <ion-label color="primary" stacked>Telefono</ion-label>
+      <ion-input type="number" [(ngModel)]="tienda.telefono" placeholder="Telefono"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Horario apertura</ion-label>
-      <ion-input type="text" placeholder="Horario apertura"></ion-input>
+      <ion-datetime [(ngModel)]="tienda.horaA" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Horario cierre</ion-label>
-      <ion-input type="text" placeholder="Horario cierre"></ion-input>
+      <ion-datetime [(ngModel)]="tienda.horaC" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Categoria</ion-label>
-      <ion-select [(ngModel)]="category">
-        <ion-option value="small">Adiestramiento</ion-option>
-        <ion-option value="medium">Alimentos y Produccion</ion-option>
-        <ion-option value="large">Atencion Medica</ion-option>
-        <ion-option value="large">Guarderias</ion-option>
-        <ion-option value="large">Paseadores</ion-option>
-        <ion-option value="large">Peluqueria, Belleza y Banio</ion-option>
-        <ion-option value="large">Pet Friendly</ion-option>
-        <ion-option value="large">Pet Shop</ion-option>
-        <ion-option value="large">Refugios</ion-option>
+      <ion-select [(ngModel)]="tienda.category" multiple="true" cancelText="Cancelar" okText="Ok">
+        <ion-option *ngFor="let cat of categorias" value="{{cat.categorialocalid}}">{{cat.nombre}}</ion-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <a ion-item (click)="openModal({charNum: 0})">
         Seleccionar servicios ofrecidos
       </a>
+      <div *ngIf="dataService">
+        <ion-list unset *ngFor="let serv of dataService">
+          <ion-item>
+            <p color="primary">{{serv.nombre}}</p>
+          </ion-item>
+        </ion-list>
+      </div>
     </ion-item>
+    <ion-row>
+      <ion-col col-12 no-padding>
+        <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" placeholder="Direccion"></ion-searchbar>
+      </ion-col>
+      <ion-col no-padding style="padding-top: 0px!important;">
+        <ion-list class="list_map">
+          <ion-item *ngFor="let place of places" (touchstart)="selectPlace(place)">
+            <p>{{place.description}}</p>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+      <div #pleaseConnect id="please-connect">
+        <p>Please connect to the Internet...</p>
+      </div>
+      <div #map id="map">
+        <!-- <ion-spinner></ion-spinner> -->
+      </div>
+    </ion-row>
 
     <button ion-button full (click)="addService()">Agregar servicio!</button>
   </ion-list>

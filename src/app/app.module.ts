@@ -1,4 +1,6 @@
-import { Facebook } from '@ionic-native/facebook/ngx';
+import { Facebook } from '@ionic-native/facebook';
+import { ProfileServiceUserPage } from './../pages/profile-service-user/profile-service-user';
+import { BuscarPage } from './../pages/buscar/buscar';
 import { RecuperoPassPage } from './../pages/recupero-pass/recupero-pass';
 import { IntDogUserPage } from './../pages/int-dog-user/int-dog-user';
 import { ListDogUserPage } from './../pages/list-dog-user/list-dog-user';
@@ -37,7 +39,7 @@ import { ApiProvider } from "../providers/api/api";
 import { HttpModule } from "@angular/http";
 import { HttpClientModule } from "@angular/common/http";
 import { RelativeTimePipe } from "../pipes/relative-time/relative-time";
-
+import { ReactiveFormsModule } from '@angular/forms';
 import {
   FileTransfer,
   FileUploadOptions,
@@ -45,9 +47,14 @@ import {
 } from "@ionic-native/file-transfer";
 import { File } from "@ionic-native/file";
 import { Camera } from "@ionic-native/camera";
+import { Crop } from '@ionic-native/crop';
+import { Base64 } from '@ionic-native/base64';
 import { Geolocation } from '@ionic-native/geolocation';
 import { IonicStorageModule } from '@ionic/storage';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
+import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service';
+import { GoogleMapsProvider } from '../providers/google-maps/google-maps';
+import { Network } from '@ionic-native/network';
 
 @NgModule({
   declarations: [
@@ -78,13 +85,24 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
     ListDogUserPage,
     IntDogUserPage,
     RecuperoPassPage,
+    BuscarPage,
+    ProfileServiceUserPage,
     RelativeTimePipe
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     HttpModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp,{
+      backButtonText: '',
+      backButtonIcon: 'md-arrow-back',
+      iconMode: 'ios',
+      modalEnter: 'modal-slide-in',
+      modalLeave: 'modal-slide-out',
+      tabsPlacement: 'bottom',
+      pageTransition: 'ios-transition'
+    }),
     IonicImageViewerModule,
     IonicStorageModule.forRoot()
   ],
@@ -117,20 +135,28 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
     ListDogUserPage,
     IntDogUserPage,
     RecuperoPassPage,
+    BuscarPage,
+    ProfileServiceUserPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    Facebook,
+
     PhotoViewer,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ApiProvider,
     FileTransfer,
+    Facebook,
     // FileUploadOptions,
     FileTransferObject,
     File,
     Camera,
-    Geolocation
+    Crop,
+    Base64,
+    Geolocation,
+    ConnectivityServiceProvider,
+    GoogleMapsProvider,
+    Network
   ]
 })
 export class AppModule {}

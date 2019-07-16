@@ -42,20 +42,24 @@ export class ChatPage {
       loading.present();
       this.services.getChat().subscribe(x=>{
         console.log('dataChat',x);
-        x['data'].map((msj)=>{
-          let newMsg : ChatMessage = {
-            messageId : msj.chatmensajeid,
-            userId : msj.origenusuarioid,
-            userName: this.user.name,
-            time : msj.fechayhora,
-            message : msj.mensaje,
-            status : 'success',
-            destinoId : this.user.id,
-          };
-          this.toUser = msj.origenusuarioid;
-          this.pushNewMsg(newMsg);
-        })
-        loading.dismiss();
+        if(x['data']){
+          x['data'].map((msj)=>{
+            let newMsg : ChatMessage = {
+              messageId : msj.chatmensajeid,
+              userId : msj.origenusuarioid,
+              userName: this.user.name,
+              time : msj.fechayhora,
+              message : msj.mensaje,
+              status : 'success',
+              destinoId : this.user.id,
+            };
+            this.toUser = msj.origenusuarioid;
+            this.pushNewMsg(newMsg);
+          })
+          loading.dismiss();
+        }else{
+          loading.dismiss();          
+        }
       })
     /* if(this.navParams.data.tienda && this.navParams.data.producto){
       this.dataTienda = this.navParams.data.tienda[0];

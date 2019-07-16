@@ -1,13 +1,10 @@
+import { ApiProvider } from './../../providers/api/api';
+import { Storage } from '@ionic/storage';
+import { ProfileServiceUserPage } from './../profile-service-user/profile-service-user';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { EditServicePage } from '../edit-service/edit-service';
 
-/**
- * Generated class for the MyServicesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -16,7 +13,13 @@ import { EditServicePage } from '../edit-service/edit-service';
 })
 export class MyServicesPage {
   private services: any[];
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  misLocales:any=[];
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    private storage: Storage,
+    private api: ApiProvider
+  ) {
     this.services = [
       {
         "serviceId": 1,
@@ -41,6 +44,21 @@ export class MyServicesPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MyServicesPage');
+  }
+
+  ionViewWillEnter(){
+    this.storage.get('usuario').then(val=>{
+      if(val){
+        this.api.getMisLocales(val['usuarioid']).subscribe(x=>{
+          console.log('misLocales', x);
+          this.misLocales=x['data'];
+        })
+      }
+    })
+  }
+
+  goToProfileService(service){
+    this.navCtrl.push(ProfileServiceUserPage, service);
   }
   goToService(service) {
     this.navCtrl.push(EditServicePage, service);

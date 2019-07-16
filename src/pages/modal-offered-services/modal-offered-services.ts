@@ -1,3 +1,4 @@
+import { ApiProvider } from './../../providers/api/api';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
@@ -9,41 +10,47 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 })
 export class ModalOfferedServicesPage {
   private character: any;
-  public viewCtrl: ViewController;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    var characters = [
-      {
-        name: 'Gollum',
-        quote: 'Sneaky little hobbitses!',
-        image: 'assets/img/avatar-gollum.jpg',
-        items: [
-          { title: 'Race', note: 'Hobbit' },
-          { title: 'Culture', note: 'River Folk' },
-          { title: 'Alter Ego', note: 'Smeagol' }
-        ]
-      },
-      {
-        name: 'Frodo',
-        quote: 'Go back, Sam! I\'m going to Mordor alone!',
-        image: 'assets/img/avatar-frodo.jpg',
-        items: [
-          { title: 'Race', note: 'Hobbit' },
-          { title: 'Culture', note: 'Shire Folk' },
-          { title: 'Weapon', note: 'Sting' }
-        ]
-      },
-      {
-        name: 'Samwise Gamgee',
-        quote: 'What we need is a few good taters.',
-        image: 'assets/img/avatar-samwise.jpg',
-        items: [
-          { title: 'Race', note: 'Hobbit' },
-          { title: 'Culture', note: 'Shire Folk' },
-          { title: 'Nickname', note: 'Sam' }
-        ]
-      }
-    ];
-    this.character = characters[this.navParams.get('charNum')];
+  servicios:any=[];
+  serviciosSelected:any=[];
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public viewCtrl: ViewController,
+    private api: ApiProvider
+  ) {
+  
+  }
+
+  ionViewWillEnter(){
+    this.api.getServiciosdeLocal().subscribe(serv=>{
+      //console.log('serv', serv);
+      this.servicios = serv['data'];
+      this.servicios.map(service=>{
+        service.checked = false;
+      })
+      console.log('servicios', this.servicios);
+    })
+  }
+
+  eliminarServicio(index){
+    console.log('index', index);
+    console.log('antes', this.serviciosSelected);
+    this.serviciosSelected.splice(index, 1);
+    console.log('desp-elimino', this.serviciosSelected);
+  }
+
+  updateCucumber(serv, index){
+    console.log('serv', serv);
+    if(!serv.checked){
+      console.log('1')
+      serv.checked = true;
+      this.serviciosSelected.push(serv);
+    }else{
+      console.log('2')      
+      serv.checked = false;
+      this.eliminarServicio(index)
+    }
+    console.log('this.serviciosSelected', this.serviciosSelected);
   }
 
   ionViewDidLoad() {
@@ -51,6 +58,6 @@ export class ModalOfferedServicesPage {
   }
 
   dismiss() {
-    this.navCtrl.pop();
+    this.viewCtrl.dismiss(this.serviciosSelected);
   }
 }

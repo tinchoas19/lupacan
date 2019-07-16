@@ -1,8 +1,9 @@
 import { Storage } from '@ionic/storage';
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { PhotoSliderPage } from '../photo-slider/photo-slider';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
+import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 
 declare var google : any;
 
@@ -12,8 +13,8 @@ declare var google : any;
   templateUrl: 'dog.html',
 })
 export class DogPage {
-  @ViewChild('map') mapRef: ElementRef;
-  map: any;
+  @ViewChild('map') mapElement: ElementRef;
+  @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
   private dog: any=[];
   public checkAsLost: boolean;
   public thisDogIsLost: boolean = false;
@@ -22,14 +23,23 @@ export class DogPage {
   perdido_en: String = 'Av. Los Incas 5150';
   private pageId: number;
   public showMyControls: boolean;
-  
+  placesService: any;
+  searchDisabled: boolean;
+  saveDisabled: boolean;
+  location: any;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private photoViewer: PhotoViewer, 
     public alertCtrl: AlertController,
+    public maps: GoogleMapsProvider,
+    public zone: NgZone,
     private storage: Storage
-  ) { 
+  ) {
+    this.dog = this.navParams.data.dogDetail;    
+    this.searchDisabled = true;
+    this.saveDisabled = true; 
   }
 
   //Fullscreeen
@@ -40,7 +50,7 @@ export class DogPage {
 
   ionViewWillEnter(){
     //this.fechaHoy();
-    this.dog = this.navParams.data.dogDetail;
+    //this.dog = this.navParams.data.dogDetail;
     console.log('detail', this.dog);
     this.showMyControls = this.navParams.data.isMyDogs;
     this.pageId = this.navParams.data.pageId;
@@ -51,10 +61,38 @@ export class DogPage {
   }
 
   ionViewDidLoad() {
+    //console.log('detail', this.dog);
     console.log('ionViewDidLoad DogPage');
-    setTimeout(()=>{
-      this.loadMap();
-    },1000)
+    let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then(() => {
+      this.placesService = new google.maps.places.PlacesService(this.maps.map);
+      this.selectPlace(this.dog['placeid']);
+    });
+    
+  }
+
+  selectPlace(placeid) {
+    console.log('place', placeid);
+    //this.places = [];
+    let location = {
+      lat: null,
+      lng: null,
+      name: this.dog.perrodireccion
+    };
+    this.placesService.getDetails({ placeId: placeid }, (details) => {
+      this.zone.run(() => {
+        location.name = details.name;
+        location.lat = details.geometry.location.lat();
+        location.lng = details.geometry.location.lng();
+        this.saveDisabled = false;
+        this.maps.map.setCenter({ lat: location.lat, lng: location.lng });
+        var marker = new google.maps.Marker({
+          map: this.maps.map,
+          title: this.dog.perrodireccion,
+          position: { lat: location.lat, lng: location.lng }
+        });
+        this.location = location;
+      });
+    });
   }
 
   showAlert() {
@@ -116,44 +154,4 @@ export class DogPage {
 
     alert.present();
   }
-
-  loadMap(){
-    //create a new map by passing HTMLElement
-    let mapEle: HTMLElement = document.getElementById('map');
-    //Map options
-    const options = {
-      center: {lat: -34.397, lng: 150.644},
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.TERRAIN,
-      streetViewControl: true,
-      disableDefaultUI: true,     
-    }
-    //create map
-    this.map = new google.maps.Map(mapEle, options)
-    
-    var geocoder = new google.maps.Geocoder();
-    var infowindow = new google.maps.InfoWindow();
-
-    this.geocodeAddress(geocoder, this.map, infowindow);
-  }
-
-  async geocodeAddress(geocoder, resultMap, infowindow){
-    console.log('adress', this.dog['direccion']);
-    var address = this.dog['direccion']
-
-    await geocoder.geocode({'address': address}, (results,status)=>{
-      if(status === 'OK'){
-        resultMap.setCenter(results[0].geometry.location);
-        var marker = new google.maps.Marker({
-          map: resultMap,
-          position: results[0].geometry.location
-        });
-        infowindow.setContent(address);
-        infowindow.open(resultMap, marker);
-      }else{
-        alert('Geocode was not successful for the following reason: ' + status);      
-      }
-    });
-  }
-
 }

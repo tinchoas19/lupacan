@@ -111,6 +111,24 @@
         </ion-col>
       </ion-row>
       <ion-row>
+          <ion-col col-12 padding>
+            <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" placeholder="Direccion"></ion-searchbar>
+          </ion-col>
+          <ion-col padding style="padding-top: 0px!important;">
+            <ion-list class="list_map">
+              <ion-item *ngFor="let place of places" (touchstart)="selectPlace(place)">
+                <p>{{place.description}}</p>
+              </ion-item>
+            </ion-list>
+          </ion-col>  
+          <div #pleaseConnect id="please-connect">
+            <p>Please connect to the Internet...</p>
+          </div>
+          <div #map id="map" style="width: 100% !important; height: 200px !important;">
+            <ion-spinner></ion-spinner>
+          </div>
+        </ion-row>
+      <ion-row>
         <ion-col padding text-center>
           <button ion-button block class="btn-iniciar lupa-shadow"
             (click)="irAHome()">Guardar</button>

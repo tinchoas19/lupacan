@@ -12,7 +12,7 @@
     <ion-row>
       <ion-slides style="width: 100% !important;">
         <ion-slide *ngFor="let img of dog.fotos">
-          <img style="border-radius: 50%;" src="http://ctrlztest.com.ar/lupacan/apirest/{{img.fotourl}}" (click)="showImg(img.fotourl)">
+          <img style="border-radius: 50%; width: 60%;" src="http://ctrlztest.com.ar/lupacan/apirest/{{img.fotourl}}" imageViewer>
         </ion-slide>
       </ion-slides>
     </ion-row>
@@ -41,9 +41,13 @@
                 <p>{{dog.direccion}}</p>
               </ion-col>
             </ion-row>
-            <ion-row style="width: 100% !important; height: 200px !important;">
-              <div padding #map id="map"></div>
-            </ion-row>
+            <div #pleaseConnect id="please-connect">
+            <p>Please connect to the Internet...</p>
+          </div>
+          
+          <div #map id="map" style="width: 100% !important; height: 200px !important;">
+            <ion-spinner></ion-spinner>
+          </div>
             <ion-row *ngIf="!dog.encontrado">
               <ion-col>
                 <ion-label stacked>Características</ion-label>
@@ -123,8 +127,8 @@
               <ion-toggle checked="false" [(ngModel)]="checkAsLost" (ionChange)="showAlert()"></ion-toggle>
            </ion-row>
         </div>
-        <ion-row *ngIf="vuelta" justify-content-center (click)="goToListUser(dog.usuarioid, dog.usuarionombre)">
-          <p text-center style="color: #ffca61; font-weight: 600;font-size: 1.3em;">Ver otros perros de {{dog.usuarionombre}}</p>
+        <ion-row *ngIf="vuelta" justify-content-center (click)="goToListUser(dog.usuarioid, dog.nombreusuario)">
+          <p text-center style="color: #ffca61; font-weight: 600;font-size: 1.3em;">Ver otros perros de {{dog.nombreusuario}}</p>
         </ion-row>
       </ion-grid>
     </ion-list>

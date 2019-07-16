@@ -1,5 +1,6 @@
+import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
-import { NavController, AlertController, MenuController } from 'ionic-angular';
+import { NavController, AlertController, MenuController, NavParams } from 'ionic-angular';
 import { ServiPage } from "../servi/servi";
 import { FeedPage } from "../feed/feed";
 import { ProfileSettingsPage } from '../profile-settings/profile-settings';
@@ -11,6 +12,8 @@ import { AgregarPage } from '../agregar/agregar';
 })
 export class HomePage {
 
+  usuario:any;
+  imgSrc:any=null;
   public pagesData = [
     { id: 1, title: "Comunidad" },
     { id: 2, title: "Perdidos" },
@@ -20,10 +23,19 @@ export class HomePage {
 
   constructor(
     public navCtrl: NavController,
+    public navParams: NavParams,
     public alertCtrl: AlertController,
-    public menuCtrl: MenuController
+    public menuCtrl: MenuController,
+    private storage: Storage
   ) {
-   
+  }
+  ionViewWillEnter(){
+    this.storage.get('usuario').then(val=>{
+      console.log('usuarioHome', val);
+      if(val){
+        this.imgSrc = "http://ctrlztest.com.ar/lupacan/apirest/"+val['imagen'];
+      }
+    })
   }
 /* 
   alertMision(){
@@ -35,6 +47,9 @@ export class HomePage {
     alert.present();
   } */
 
+  /* ionViewWillEnter(){
+    
+  } */
   openMenu() {
     this.menuCtrl.open();
   }

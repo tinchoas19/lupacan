@@ -26,4 +26,16 @@ page-recupero-pass {
         color: color($colors, secondary);
         text-decoration: none;
     }
+    ion-label, .select-text {
+        margin-left: 10px;
+    }
+    .invalid {
+        border: 1px solid #ea6153;
+    }
+    .item{
+      p{
+        font-size: 0.7em;
+        color: #ea6153;
+      }
+    }
 }
