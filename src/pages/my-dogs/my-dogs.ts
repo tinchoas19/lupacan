@@ -25,7 +25,7 @@ export class MyDogsPage {
   }
 
   ionViewWillEnter() {
-    this.storage.get('userData').then(val=>{
+    this.storage.get('datauser').then(val=>{
       this.ApiProvider.getMyDogs(val['usuarioid']).subscribe(data => {
         console.log(data , 'sarasaaa');
         this.myDogs = (data["data"]);

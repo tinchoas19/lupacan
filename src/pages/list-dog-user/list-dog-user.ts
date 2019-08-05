@@ -26,6 +26,29 @@ export class ListDogUserPage {
   }
 
   ionViewWillEnter(){
+    if(this.navParams.data.user){
+      //let user = this.navParams.data.user;
+      //this.nombreUser = user['nombre'];
+      this.idUser = this.navParams.data.user['usuarioid'];
+      this.services.getUser(this.idUser).subscribe(x=>{
+        console.log('datUser', x);
+        let user = x['data'];
+        if (user.imagen == "" && user.facebookid != "") {
+          this.imgSrc = "https://graph.facebook.com/" + user.facebookid + "/picture?type=large";
+        } else if (user.imagen != "") {
+          this.imgSrc = "http://ctrlztest.com.ar/lupacan/apirest/" + user.imagen
+        } else {
+          this.imgSrc = 'assets/imgs/1.jpg';
+        }
+        this.nombreUser=user['nombre'];
+        this.apellidoUser=user['apellido'];
+        this.telefonoUser=user['telefono'];
+        this.services.getMyDogs(this.idUser).subscribe(data=>{
+          console.log('vuelta', data);
+          this.misPerros = data['data'];
+        })
+      })
+    }
     if(this.navParams.data.id){
       //let user = this.navParams.data.user;
       //this.nombreUser = user['nombre'];
@@ -33,7 +56,13 @@ export class ListDogUserPage {
       this.services.getUser(this.idUser).subscribe(x=>{
         console.log('datUser', x);
         let user = x['data'];
-        this.imgSrc="http://ctrlztest.com.ar/lupacan/apirest/"+user['imagen'];
+        if (user.imagen == "" && user.facebookid != "") {
+          this.imgSrc = "https://graph.facebook.com/" + user.facebookid + "/picture?type=large";
+        } else if (user.imagen != "") {
+          this.imgSrc = "http://ctrlztest.com.ar/lupacan/apirest/" + user.imagen
+        } else {
+          this.imgSrc = 'assets/imgs/1.jpg';
+        }
         this.nombreUser=user['nombre'];
         this.apellidoUser=user['apellido'];
         this.telefonoUser=user['telefono'];

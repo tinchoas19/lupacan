@@ -1,13 +1,19 @@
 <ion-header>
   <ion-navbar hideBackButton>
     <ion-row>
-      <ion-col>
+      <ion-col *ngIf="usuario != 0">
         <ion-buttons float-left (click)="openMenu()">
-          <button *ngIf="!imgSrc" ion-button icon-only >
+          <button *ngIf="usuario.facebookid == '' && usuario.imagen == ''" ion-button icon-only >
             <ion-icon name="contact"></ion-icon>
           </button>
-          <div *ngIf="imgSrc" (click)="openMenu()">
+          <div *ngIf="usuario.imagen != '' && usuario.facebookid == ''">
             <img class="imgPerfil" style="max-width: 20% !important;" [src]="imgSrc">          
+          </div>
+          <div *ngIf="usuario.imagen != '' && usuario.facebookid != ''">
+            <img class="imgPerfil" style="max-width: 20% !important;" [src]="imgSrc">          
+          </div>
+          <div *ngIf="usuario.imagen == '' && usuario.facebookid != ''">
+            <img class="imgPerfil" style="max-width: 20% !important;" src="https://graph.facebook.com/{{usuario.facebookid}}/picture?type=large">          
           </div>
         </ion-buttons>
       </ion-col>

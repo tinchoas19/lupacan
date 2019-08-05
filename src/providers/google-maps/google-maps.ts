@@ -36,7 +36,7 @@ export class GoogleMapsProvider {
 
     return new Promise((resolve) => {
 
-      if(typeof google == "undefined" || typeof google.maps == "undefined"){
+      //if(typeof google == "undefined" || typeof google.maps == "undefined"){
 
         console.log("Google maps JavaScript needs to be loaded.");
         this.disableMap();
@@ -57,13 +57,13 @@ export class GoogleMapsProvider {
 
           if(this.apiKey){
             script.src = 'http://maps.google.com/maps/api/js?key=' + this.apiKey + '&callback=mapInit&libraries=places';
-          } else {
+          } /* else {
             script.src = 'http://maps.google.com/maps/api/js?callback=mapInit';       
-          }
+          } */
 
           document.body.appendChild(script);  
 
-        } 
+        //} 
       } else {
 
         if(this.connectivityService.isOnline()){

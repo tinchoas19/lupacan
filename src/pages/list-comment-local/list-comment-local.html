@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title text-center>{{title}}</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="dismiss()">
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list *ngIf="title == 'Comentarios'">
+    <ion-list-header text-center>
+      Lista de Comentarios
+    </ion-list-header>
+    <p text-center *ngIf="comentarios.length == 0"> Sin comentarios por el momento!</p>
+    <div *ngIf="!(comentarios.length == 0)">
+      <ion-item *ngFor="let comment of comentarios">
+        <ion-avatar item-start>
+          <img src="../../assets/imgs/1.jpg">
+        </ion-avatar>
+        <h2>Usuario</h2>
+        <p text-wrap>{{comment.detalle}}</p>
+      </ion-item>
+    </div>
+  </ion-list>
+  <ion-list *ngIf="title == 'Seguidores'">
+      <ion-list-header text-center>
+        Lista de Seguidores
+      </ion-list-header>
+      <p text-center *ngIf="seguidores.length == 0"> Sin seguidores por el momento!</p>
+      <div *ngIf="!(seguidores.length == 0)">
+        <!-- <ion-item *ngFor="let comment of comentarios">
+          <ion-avatar item-start>
+            <img src="../../assets/imgs/1.jpg">
+          </ion-avatar>
+          <h2>Usuario</h2>
+          <p text-wrap>{{comment.detalle}}</p>
+        </ion-item> -->
+      </div>
+    </ion-list>
+</ion-content>

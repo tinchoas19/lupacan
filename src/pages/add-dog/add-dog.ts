@@ -76,7 +76,7 @@ export class AddDogPage {
   dataCreate: any = [];
 
   initializeItems() {
-    this.storage.get('userData').then(x => {
+    this.storage.get('datauser').then(x => {
       if (x) this.dog['usuarioid'] = x['usuarioid'];
       console.log('ja', this.dog.usuarioid)
     })

@@ -1,52 +1,52 @@
 <ion-header>
 
-    <ion-navbar>
-      <ion-title>Editar mi servicio</ion-title>
-    </ion-navbar>
-  
-  </ion-header>
-  
-  
-  <ion-content>
-    <ion-row no-padding (click)="addPerfilPhoto()">
-      <img *ngIf="imagenEdit" text-center src="http://ctrlztest.com.ar/lupacan/apirest/{{service['fotos'][0]['imagen']}}">
-      <img *ngIf="!imagenEdit"text-center [src]="getTrustImg(imagePath)">
-    </ion-row>
-    <ion-list>
-      <ion-list-header>
-        Datos del servicio
-      </ion-list-header>
-      <ion-item>
-        <ion-label color="primary" stacked>Nombre</ion-label>
-        <ion-input type="text" placeholder="Nombre" value="{{service.nombre}}"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label color="primary" stacked>Direccion</ion-label>
-        <ion-input type="text" placeholder="Direccion" value="{{service.direccion}}"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label color="primary" stacked>Horario apertura</ion-label>
-        <ion-input type="text" placeholder="Horario apertura" value="{{service.horarioapertura}}"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label color="primary" stacked>Horario cierre</ion-label>
-        <ion-input type="text" placeholder="Horario cierre" value="{{service.horariocierre}}"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label color="primary" stacked>Categoria</ion-label>
-        <ion-select [(ngModel)]="category">
-          <ion-option value="small">Adiestramiento</ion-option>
-          <ion-option value="medium">Alimentos y Produccion</ion-option>
-          <ion-option value="large">Atencion Medica</ion-option>
-          <ion-option value="large">Guarderias</ion-option>
-          <ion-option value="large">Paseadores</ion-option>
-          <ion-option value="large">Peluqueria, Belleza y Banio</ion-option>
-          <ion-option value="large">Pet Friendly</ion-option>
-          <ion-option value="large">Pet Shop</ion-option>
-          <ion-option value="large">Refugios</ion-option>
-        </ion-select>
-      </ion-item>
-      <ion-item>
+  <ion-navbar>
+    <ion-title>Editar mi servicio</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-row no-padding (click)="addPerfilPhoto()">
+    <img *ngIf="imagenEdit" text-center src="http://ctrlztest.com.ar/lupacan/apirest/{{service['fotos'][0]['imagen']}}">
+    <img *ngIf="!imagenEdit" text-center [src]="getTrustImg(imagePath)">
+  </ion-row>
+  <ion-list>
+    <ion-list-header>
+      Datos del servicio
+    </ion-list-header>
+    <ion-item>
+      <ion-label color="primary" stacked>Nombre</ion-label>
+      <ion-input type="text" placeholder="Nombre" value="{{service.nombre}}"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Direccion</ion-label>
+      <ion-input type="text" placeholder="Direccion" value="{{service.direccion}}"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Horario apertura</ion-label>
+      <ion-datetime displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Horario cierre</ion-label>
+      <ion-datetime displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Categoria</ion-label>
+      <ion-select [(ngModel)]="category">
+        <ion-option value="small">Adiestramiento</ion-option>
+        <ion-option value="medium">Alimentos y Produccion</ion-option>
+        <ion-option value="large">Atencion Medica</ion-option>
+        <ion-option value="large">Guarderias</ion-option>
+        <ion-option value="large">Paseadores</ion-option>
+        <ion-option value="large">Peluqueria, Belleza y Banio</ion-option>
+        <ion-option value="large">Pet Friendly</ion-option>
+        <ion-option value="large">Pet Shop</ion-option>
+        <ion-option value="large">Refugios</ion-option>
+      </ion-select>
+    </ion-item>
+    <!-- <ion-item>
         <a ion-item (click)="openModal({charNum: 0})">
           Seleccionar servicios ofrecidos
         </a>
@@ -57,11 +57,11 @@
           </ion-item>
         </ion-list>
       </div>
-      </ion-item>
-  
-      <button ion-button full (click)="editService()">Guardar Cambios</button>
-    </ion-list>
-  
-    <button ion-button full color="danger" (click)="deleteService()">Eliminar servicio</button>
+      </ion-item> -->
 
-  </ion-content>
+    <button ion-button full (click)="editService()">Guardar Cambios</button>
+  </ion-list>
+
+  <button ion-button full color="danger" (click)="deleteService()">Eliminar servicio</button>
+
+</ion-content>

@@ -1,0 +1,127 @@
+page-menu {
+    item-ios{
+        color: #7e7e7e;
+    }
+    
+    .item{
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    
+    h1{
+        font-weight:700;
+    }
+    
+    .header::after{
+        background-image: none;
+    }
+    
+    .toolbar-background{
+        background: transparent;
+        border: none!important;
+    }
+    
+    .txt-bold{
+        font-weight: 700;
+    }
+    
+    .button{
+        box-shadow: none;
+        border-radius: 1.8rem;
+        text-transform: none;
+        height: 3.6rem;
+        span{
+            color: #707070;
+        }
+    }
+    .btn-iniciar{
+        background: color($colors, secondary)!important;
+        span{
+            color: #fff!important;
+        }
+    }
+    
+    .text-input, .button{
+        font-size: 1em;
+    }
+    
+    .input{
+        display: flex;
+    }
+    
+    .menu-inner{
+        .header{
+            background: color($colors, primary);
+            img{
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+            }
+            h2{
+                font-weight: 700;
+            }
+        }
+        .item{
+            .item-inner{
+                .label{
+                    display: flex;
+                    align-items: center;
+                }
+                border: none;
+            }
+            img{
+                max-width: 30px;
+            }
+        }
+    }
+    
+    .tabbar{
+        background: #343536!important;
+        color: #bdbdbd!important;
+        .tab-button[aria-selected=true]{
+            background: color($colors, primary)!important;
+            span, .tab-button-icon{
+                color: #fff!important;
+            }
+        }
+        .tab-button-icon{
+            color: #bdbdbd!important;
+        }
+    }
+    
+    .lupa-menu{
+        background: color($colors, dark);
+        .toolbar{
+            min-height: auto!important;
+        }
+        .grid, .toolbar{
+            padding: 0;
+            padding-bottom: 0!important;
+        }
+        img{
+            max-width: 25px;
+        }
+        p{
+            margin: 0;
+            color: #fff;
+            opacity: 0.6;
+        }
+        .col{
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 0.8em;
+            padding: 1em;
+            
+        }
+        .col.current{
+            background: color($colors, primary);
+        }
+    }
+    
+    .show-page{
+        padding: 15vh 2em;
+        background: rgba(0, 0, 0, 0.5);
+    }
+}

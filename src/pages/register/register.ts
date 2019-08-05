@@ -18,6 +18,7 @@ import { Crop } from '@ionic-native/crop';
 import { Base64 } from '@ionic-native/base64';
 import { MainPage } from '../main/main';
 import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
+import { MenuPage } from '../menu/menu';
 
 
 @IonicPage()
@@ -64,7 +65,7 @@ export class RegisterPage {
       nombre:['',Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],//Contener letras y espacios, y tener menos de 30 caracteres.
       apellido:['',Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],//Contener letras y espacios, y tener menos de 30 caracteres.
       telefono:['',Validators.required],      
-      //direccion:['',Validators.compose([Validators.maxLength(40), Validators.required])],//Contener letras y espacios, y tener menos de 30 caracteres.
+      direccion:['', Validators.required],//Contener letras y espacios, y tener menos de 30 caracteres.
       edad:['',Validators.required],
       email:['',Validators.compose([Validators.required,Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')])],
       password:['',Validators.required]
@@ -87,9 +88,10 @@ export class RegisterPage {
   }
 
   selectPlace(place){
-    this.query = place.description;
-    //this.tienda.direcc = this.query;
     console.log('placeSlected', place);  
+    this.query = place.description;
+    this.myForm.controls['direccion'].setValue(place.description);
+    this.places = [];
   }
 
 
@@ -133,12 +135,11 @@ export class RegisterPage {
           this.storage.set('userId', this.dataUserId);
           this.api.getUser(this.dataUserId).subscribe(dataUser=>{
             console.log('dataUser_login',dataUser);
-            this.storage.set('userData', dataUser['data']);
-            this.navCtrl.setRoot(MainPage, {user:this.dataUserId});
+            this.storage.set('datauser', dataUser['data']);
             this.presentToasteEx();
             setTimeout(()=>{
-              this.navCtrl.setRoot(MainPage, {user:this.dataUserId});
-            },500)
+              this.navCtrl.setRoot(MenuPage, dataUser['data']);
+            },700)
           })
         }else{
           this.presentToasteError();
@@ -233,8 +234,10 @@ export class RegisterPage {
   }
 
   toBase64(filePath) {
+    console.log('toBase64', filePath);
     this.base64.encodeFile(filePath).then((base64File: string) => {
       this.base64Image = base64File;
+      console.log('yaconvert', this.base64Image);
     });
   }
 

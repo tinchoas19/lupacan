@@ -2,11 +2,12 @@ import { ApiProvider } from './../../providers/api/api';
 import { RecuperoPassPage } from '../recupero-pass/recupero-pass';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { RegisterPage } from '../register/register';
 import { MainPage } from '../main/main';
 import { Storage } from '@ionic/storage';
+import { MenuPage } from '../menu/menu';
 
 @IonicPage()
 @Component({
@@ -23,7 +24,8 @@ export class LoginPage {
     private services: ApiProvider,
     private fb: Facebook,
     private storage: Storage,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public toastController: ToastController
   ) {
   }
 
@@ -39,8 +41,11 @@ export class LoginPage {
           this.services.getUser(x['data']['usuarioid']).subscribe(dataUser=>{
             this.dataUsuario = x['data']['usuarioid'];
             console.log('dataUser_login',dataUser);
-            this.storage.set('userData', dataUser['data']);
-            this.navCtrl.setRoot(MainPage, {user:this.dataUsuario});
+            this.storage.set('datauser', dataUser['data']);
+                this.presentToasteEx();
+                setTimeout(()=>{
+                  this.navCtrl.setRoot(MenuPage, dataUser['data']);
+                },700)
           })
         }else{
           this.showAlert();
@@ -94,7 +99,15 @@ export class LoginPage {
                 this.navCtrl.push(RegisterPage,{userFb:user, fbId: fb_id});
               });
             }else{
-              this.navCtrl.setRoot(MainPage);
+              console.log('aquiFB');
+              this.services.getUser(x['data']['usuarioid']).subscribe(user=>{
+                console.log('fbbbbb', user);
+                this.storage.set('datauser', user['data']);
+                this.presentToasteEx();
+                setTimeout(()=>{
+                  this.navCtrl.setRoot(MenuPage, user['data']);
+                },700)
+              })
             }
           })
         } 
@@ -119,4 +132,30 @@ export class LoginPage {
     });
     alert.present();
   }
+
+
+  async presentToasteError() {
+    const toast = await this.toastController.create({
+      message: "Hubo un error!\n Vuleve a intentarlo.",
+      duration:2000,
+      showCloseButton: true,
+      position: 'top',
+      cssClass: 'toastError',
+      closeButtonText: 'x'
+    });
+    toast.present();
+  }
+
+  async presentToasteEx() {
+    const toast = await this.toastController.create({
+      message: "Listo!\n Bienvenido a LupaCan!",
+      duration:2000,
+      showCloseButton: true,
+      position: 'top',
+      cssClass: 'toastExito',
+      closeButtonText: 'x'
+    });
+    toast.present();
+  }
+
 }

@@ -16,12 +16,15 @@ declare var google: any;
   templateUrl: 'create-service.html',
 })
 export class CreateServicePage {
+  catSelected: any =[];
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
   private win: any = window;
   tienda:any={
     nombre:"",
     direcc:"",
+    localidad:"",
+    email:"",
     telefono:"",
     horaA:"",
     horaC:"",
@@ -41,6 +44,11 @@ export class CreateServicePage {
   places: any = [];
   searchDisabled: boolean;
   saveDisabled: boolean;
+  selectOptions = {
+    title: 'Categorias',
+    subTitle: 'Selecciona las categorias para tu tienda!',
+    mode: 'md'
+  };
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -61,7 +69,7 @@ export class CreateServicePage {
 
 
   ionViewWillEnter(){
-    this.storage.get('usuario').then(val=>{
+    this.storage.get('datauser').then(val=>{
       if(val){
         this.tienda.usuarioid = val['usuarioid']
       }
@@ -91,6 +99,22 @@ export class CreateServicePage {
     })
   }
 
+  eliminarCategoria(index) {
+    console.log('index', index);
+    console.log('antes', this.catSelected[0]);
+    this.catSelected[0].splice(index, 1);
+    console.log('desp-elimino', this.catSelected);
+  }
+
+  getItem(cat) {
+    console.log('at', cat);
+    this.catSelected = [];
+    this.catSelected.push(cat);
+    console.log('cats', this.catSelected);
+    /* this.categoria = cod_operativo;//Aquí envío el valor seleccionado
+    this.getInventoryList(); *///Ésta es la función que traerá el servicio que necesito
+  }
+
 
   ionViewDidLoad() {
     let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then(() => {
@@ -107,11 +131,13 @@ export class CreateServicePage {
     this.query = place.description;
     this.tienda.direcc = this.query;
     this.tienda.placeid = place.place_id
+    this.places = [];
     console.log('placeSlected', place);  
   }
 
   addService(){
     let data;
+    this.servicios = this.catSelected[0].map(x=>{ return x.categorialocalid})
     console.log('tienda', this.tienda);
     console.log('servSelec', this.servicios);
     console.log('imagene', this.imagenes);    

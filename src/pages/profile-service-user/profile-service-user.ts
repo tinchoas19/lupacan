@@ -33,8 +33,8 @@ export class ProfileServiceUserPage {
     console.log('ionViewDidLoad ProfileServiceUserPage');
   }
 
-  goToService(service) {
-    this.navCtrl.push(EditServicePage, service);
+  goToService() {
+    this.navCtrl.push(EditServicePage, this.dataService);
   }
 
   vercomentarios(){

@@ -1,3 +1,4 @@
+import { Storage } from '@ionic/storage';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from "@angular/http";
@@ -42,6 +43,7 @@ export class ApiProvider {
   constructor(
     private httpPost: Http,
     private httpClient: HttpClient,
+    private storage: Storage,
     private events: Events
   ) { }
 
@@ -56,7 +58,8 @@ export class ApiProvider {
   }
 
   validarUserFb(id) {
-    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/validarusuario.php?facebookid=" + id)
+    console.log('yendo a valida fb', id);
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/validarusuariofb.php?facebookid=" + id)
       .pipe(
         tap(x => {
           console.log('validar fbId', x);
@@ -210,25 +213,57 @@ export class ApiProvider {
         })
       );
   }
+
   getCategories(): Observable<any> {
     return this.httpClient.get(
       this.ApiUrl + "traercategoriaslocal.php"
     );
   }
 
-  getLocales(): Observable<any> {
+  getLocales(userid): Observable<any> {
     return this.httpClient.get(
-      this.ApiUrl + "traerlocales.php"
+      this.ApiUrl + "traerlocales.php?usuarioid="+userid
     );
   }
 
+  //---------COMENTARIOS
   getComments(localid): Observable<any> {
     return this.httpClient.get(
       this.ApiUrl + "traercomentariosporlocal.php?localid="+localid
     );
   }
 
+  postComment(localid, userid, comment): Observable<any> {
+    console.log('t', userid);
+    console.log('ser', userid);
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    var body = JSON.stringify({ 
+      localid: localid,
+      usuarioid: userid, 
+      comentario: comment,  
+    });
+      
+    console.log('body_createComment', body);
+
+    return this.httpPost.post(this.ApiUrl + "enviarcomentario.php", body, options).pipe(
+      tap(x => {
+        console.log('vueltaAddComment', x);
+      }));
+  }
+
   //-------- SERVICIO -----------
+
+  getSeguidores(localid): Observable<any>{
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traerfavoritosporlocal.php?localid="+localid)
+    .pipe(
+      tap(x => {
+        console.log('traerlocalesporusuario', x);
+      })
+    );
+  }
 
   getMisLocales(userid): Observable<any> {
     return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traerlocalesporusuario.php?usuarioid="+userid)
@@ -238,25 +273,28 @@ export class ApiProvider {
       })
     );
   }
+
   //----------------POST--------------
-  createService(tienda,servicios,foto): Observable<any> {
+  createService(tienda,categorias,foto): Observable<any> {
     console.log('t', tienda);
-    console.log('ser', servicios);
+    console.log('cat', categorias);
     var headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
     let options = new RequestOptions({ headers: headers, withCredentials: true });
     var body = JSON.stringify({ 
-      nombre: tienda.nombre, 
+      nombre: tienda.nombre,
+      email:tienda.email,
+      localidad:tienda.localidad, 
       direccion: tienda.direcc, 
       telefono: tienda.telefono,
       horarioapertura: tienda.horaA,
       horariocierre: tienda.horaC, 
-      categoria: tienda.category, 
+      categoria: categorias, 
       imagenes: foto,
       usuarioid: tienda.usuarioid, 
       placeid: tienda.placeid,
-      servicios: servicios, 
+      //servicios: servicios, 
     });
       
     console.log('body_createServ', body);
@@ -267,6 +305,50 @@ export class ApiProvider {
       }));
   }
 
+  //-------- FAVORITOS -----------
+  //----------------POST--------------
+  favorite(userid,perroid,valor): Observable<any> {
+    console.log('t', userid);
+    console.log('ser', userid);
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    var body = JSON.stringify({ 
+      perroid: perroid,
+      usuarioid: userid, 
+      valor: valor,  
+    });
+      
+    console.log('body_createServ', body);
+
+    return this.httpPost.post(this.ApiUrl + "agregarperrofavorito.php", body, options).pipe(
+      tap(x => {
+        console.log('vueltaAddFavPerro', x);
+      }));
+  }
+
+  addFavoriteLocal(userid,comercioid,valor): Observable<any> {
+    console.log('t', userid);
+    console.log('ser', userid);
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    var body = JSON.stringify({ 
+      usuarioid: userid,
+      comercioid: comercioid, 
+      valor: valor,  
+    });
+      
+    console.log('body_createServ', body);
+
+    return this.httpPost.post(this.ApiUrl + "actualizarfavorito.php", body, options).pipe(
+      tap(x => {
+        console.log('vueltaAddFavLocal', x);
+      }));
+  }
+  
   //-------- EDITAR SERVICIO -----------
   //----------------POST--------------
   updateService(localid,tienda,servicios,foto): Observable<any> {
@@ -279,14 +361,16 @@ export class ApiProvider {
     var body = JSON.stringify({ 
       localid: localid,
       nombre: tienda.nombre, 
-      direccion: tienda.direcc, 
+      direccion: tienda.direcc,
+      localidad:tienda.localidad,
+      email:tienda.email, 
       telefono: tienda.telefono,
       horarioapertura: tienda.horaA,
       horariocierre: tienda.horaC, 
       categoria: tienda.category, 
       imagenes: foto,
       usuarioid: tienda.usuarioid, 
-      servicios: servicios, 
+      //servicios: servicios, 
     });
       
     console.log('body_createServ', body);
@@ -296,9 +380,22 @@ export class ApiProvider {
         console.log('vueltaAPiCreateServ', x);
       }));
   }
-  getStores(categoriaId): Observable<any> {
+  getStores(categoriaId, userId): Observable<any> {
     return this.httpClient.get(
-      this.ApiUrl + "traerlocalesporcategoria.php?categoriaid=" + categoriaId
+      this.ApiUrl + "traerlocalesporcategoria.php?categoriaid="+categoriaId+"&usuarioid="+userId
+    );
+  }
+
+  //---------------LOCALIDADES----------------
+  getLocalidades(catId){
+    return this.httpClient.get(
+      this.ApiUrl + "traerlocalidades.php?categoriaid="+catId
+    );
+  }
+  //-------------------------------------
+  getDogData(dogid){
+    return this.httpClient.get(
+      this.ApiUrl + "traerperroporid.php?perroid="+dogid
     );
   }
 

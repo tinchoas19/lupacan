@@ -2,10 +2,26 @@ page-service-list {
     *{
         color: #7e7e7e;
     }
+    .img_banner{
+        background-position: center;
+        height: 22vh;
+    }
     .grid{
         padding: 0;
         .col[col-7]{
             padding: 0.8em;
+        }
+    }
+    .checks{
+        margin-top: 3%;
+        .item{
+            ion-label{
+                font-size: 1.3rem;
+            }
+            padding: 0px 0px !important;
+            .checkbox{
+                margin: 9px 4px !important;
+            }
         }
     }
     .card{

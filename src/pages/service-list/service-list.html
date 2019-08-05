@@ -1,38 +1,76 @@
-<!--
-  Generated template for the ServiceListPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar>
     <!-- <ion-title>{{category.categoryName}}</ion-title> -->
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
-  <ion-card class="lupa-shadow" *ngFor="let serv of services" (click)="serviceModal(serv)">
-    <ion-grid>
-      <ion-row>
-        <ion-col col-5 no-padding class="service-img">
-          <img src="assets/imgs/vet.jpg" alt="">
-        </ion-col>
-        <ion-col col-7>
-          <h2>{{serv.nombre}}</h2>
-          <p><ion-icon name="pin"></ion-icon> {{serv.direccion}}</p>
-          <p>Horarios: {{serv.horarios}}hrs</p>
-          <p>
-            <ion-icon name="star" class="plus"></ion-icon>
-            <ion-icon name="star" class="plus"></ion-icon>
-            <ion-icon name="star"></ion-icon>
-            <ion-icon name="star"></ion-icon>
-            <ion-icon name="star"></ion-icon>
-          </p>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-card>
+  <ion-row justify-content-center>
+    <img class="img_banner" src="https://www.portaldetuciudad.com/imagenes/3/empresas/Clinica-Veterinaria-Inmaculada-Acevedo_690775-1.jpg">
+  </ion-row>
+  <ion-row justify-content-center style="margin-top: 5%;">
+    <ion-col col-12 text-center>
+      <h3 text-center color="primary">{{dataCategory.nombre}}</h3>
+    </ion-col>
+  </ion-row>
+  <ion-row justify-content-center>
+    <div #pleaseConnect id="please-connect">
+      <p>Please connect to the Internet...</p>
+    </div>
+    <div #map id="map" style="width: 100% !important; height: 200px;">
+      <ion-spinner></ion-spinner>
+    </div>
+  </ion-row>
+  <ion-row justify-content-center class="checks">
+    <ion-col col-4>
+      <ion-item no-lines>
+        <ion-label>Filtros</ion-label>
+        <ion-checkbox color="primary" [(ngModel)]="verFiltro" (ionChange)="updateFilter(verFiltro)"></ion-checkbox>
+      </ion-item>
+    </ion-col>
+    <ion-col col-4>
+      <ion-item no-lines>
+        <ion-label>Favoritos</ion-label>
+        <ion-checkbox color="primary" [(ngModel)]="varFav" (ionChange)="updateFilterFav(varFav)"></ion-checkbox>
+      </ion-item>
+    </ion-col>
+  </ion-row>  
+  <ion-list>
+    <ion-list-header text-center>
+      CERCANOS A MI
+    </ion-list-header>
+    <ion-row justify-content-center *ngIf="services2.length == 0">
+      <ion-spinner text-center></ion-spinner>
+    </ion-row>
+    <ion-card class="lupa-shadow" *ngFor="let serv of services2" (click)="serviceModal(serv)">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-5 no-padding class="service-img">
+            <img src="assets/imgs/vet.jpg" alt="">
+          </ion-col>
+          <ion-col col-7>
+            <h2>{{serv.nombre}}</h2>
+            <p>
+              <ion-icon name="pin"></ion-icon> {{serv.direccion}}</p>
+            <p>Horarios: {{serv.horarios}}hrs</p>
+            <p>
+              <ion-icon name="star" class="plus"></ion-icon>
+              <ion-icon name="star" class="plus"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+            </p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </ion-list>
+  <ion-row justify-content-center>
+    <ion-col col-6 text-center>
+      <button text-center ion-button round color="primary">Publicite aquí</button>
+    </ion-col>
+    <ion-col col-6 text-center>
+      <button text-center ion-button round color="primary" (click)="goBack()">Volver</button>
+    </ion-col>
+  </ion-row>
 </ion-content>

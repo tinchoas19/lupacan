@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Categorias</ion-title>
+    <ion-title>Servicios</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -10,11 +10,11 @@
 <ion-content padding>
   <!--ion-searchbar (ionInput)="getItems($event)" ></ion-searchbar-->
   <ion-segment [(ngModel)]="servicios">
+    <ion-segment-button value="mapa" (click)="getUserPosition()">
+      Ver en mapa
+    </ion-segment-button>
     <ion-segment-button value="favoritos">
       Categorias
-    </ion-segment-button>
-    <ion-segment-button value="mapa" (click)="this.getUserPosition()">
-      Ver en mapa
     </ion-segment-button>
   </ion-segment>
 
@@ -22,23 +22,28 @@
     <div *ngSwitchCase="'favoritos'">
       <ion-grid *ngIf="showCategories">
         <ion-row padding-vertical>
-          <ion-col col-4 *ngFor="let cat of categoras" (click)="goToCategory(cat.categorialocalid)">
+          <ion-col col-4 *ngFor="let cat of categoras" (click)="goToCategory(cat, cat.categorialocalid)">
             <div class="category lupa-shadow">
-              <img src="http://ctrlztest.com.ar/lupacan/apirest/{{cat.icono}}" alt="">
-              {{cat.nombre}}
+              <img src="http://ctrlztest.com.ar/lupacan/apirest/{{cat.icono}}" alt=""> {{cat.nombre}}
             </div>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <button ion-button block class="lupa-shadow" (click)="createServicio()">Agregar a servicios</button>
+            <button ion-button block class="lupa-shadow">Publicite gratis aquí</button>
           </ion-col>
         </ion-row>
       </ion-grid>
     </div>
 
     <div *ngSwitchCase="'mapa'" style="height: 500px !important;">
-      <div #map id="map"></div>
+      <div #pleaseConnect id="please-connect">
+        <p>Please connect to the Internet...</p>
+      </div>
+
+      <div #map id="map" style="width: 100% !important;">
+        <ion-spinner></ion-spinner>
+      </div>
     </div>
   </div>
 

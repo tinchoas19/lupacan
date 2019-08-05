@@ -21,7 +21,7 @@ export class MainPage {
     private api: ApiProvider,
     private storage: Storage
   ) {
-    if(this.navParams.data.user){
+    /* if(this.navParams.data.user){
       this.api.getUser(this.navParams.data.user).subscribe(user=>{
         console.log('dataUser', user);
         if(user['data']){
@@ -30,7 +30,7 @@ export class MainPage {
           this.storage.set('usuario', user['data']);
         }
       })
-    } 
+    }  */
   }
 
 
@@ -39,10 +39,14 @@ export class MainPage {
   public agregarTab = AgregarPage;
   public buscatTab = BuscarPage;
   
-  /* ionViewWillEnter(){
-    //LOGIN
-    
-  } */
+  ionViewWillEnter(){
+    this.storage.get('datauser').then(val=>{
+      if(val != null){
+        this.user = val;
+        console.log('main_param', this.user);
+      }
+    })  
+  }
   
   ionViewDidLoad() {
     console.log('ionViewDidLoad MainPage');

@@ -21,8 +21,8 @@
 
 <ion-content padding>
   <div>
-    <ion-grid >
-    <!--   <ion-row no-padding>
+    <ion-grid no-padding>
+      <!--   <ion-row no-padding>
         <ion-col col-3>
           <ion-item float-left>
             <ion-label color="primary" stacked>Raza</ion-label>
@@ -60,42 +60,81 @@
           <button ion-button round color="primary">Buscar</button>
         </ion-col>
       </ion-row> -->
-      
+
       <ion-row>
         <ion-col>
           <h2 text-center>Ultimos agregados</h2>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col col-4 *ngFor="let dog of dogs" (click)="goToDogDetail(dog)">
-          <div class="dog-name">{{dog.nombre}}</div>
-          <img *ngIf="dog.fotos[0].fotourl" src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
-          <img *ngIf="!dog.fotos[0].fotourl" src="assets/imgs/1.jpg" alt="{{dog.nombre}}">
-          <!--div [style.width.px]="10" [style.height.px]="10" [style.background-color]="dog.isOnline ? 'green' : 'gray'"></div-->
+      <ion-slides pager>
+        <ion-slide>
+          <ion-row>
+            <ion-col col-3 *ngFor="let dog of dogs" (click)="goToDogDetail(dog)">
+              <div class="dog-name">{{dog.nombre}}</div>
+              <img *ngIf="dog.fotos[0].fotourl" src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
+              <img *ngIf="!dog.fotos[0].fotourl" src="assets/imgs/1.jpg" alt="{{dog.nombre}}">
+              <!--div [style.width.px]="10" [style.height.px]="10" [style.background-color]="dog.isOnline ? 'green' : 'gray'"></div-->
+            </ion-col>
+          </ion-row>
+        </ion-slide>
+      </ion-slides>
+      <ion-row justify-content-center class="btn_nav">
+        <ion-col text-center col-4>
+          <button text-center ion-button block color="primary">Perros</button>
+        </ion-col>
+        <ion-col text-center col-4>
+          <button text-center ion-button outline color="primary">Usuarios</button>
+        </ion-col>
+        <ion-col text-center col-4>
+          <button text-center ion-button outline color="primary" (click)="goServices()">Servicios</button>
         </ion-col>
       </ion-row>
-      <ion-row justify-content-center>
-        <button ion-button color="primary" round>Ver Más</button>
-      </ion-row>
-      <!-- <ion-row>
+      <ion-row style="margin-top: 7%;">
         <ion-col>
           <h2 text-center>{{pageData.title}}</h2>
         </ion-col>
-      </ion-row> 
-      <ion-row>
+      </ion-row>
+      <ion-row justify-content-center class="checks">
+        <ion-col col-4>
+          <ion-item no-lines>
+            <ion-label>Filtros</ion-label>
+            <ion-checkbox color="primary" [(ngModel)]="verFiltro" (ionChange)="updateCucumber()"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+        <ion-col col-4>
+          <ion-item no-lines>
+            <ion-label>Favoritos</ion-label>
+            <ion-checkbox color="primary"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+        <ion-col col-4>
+          <ion-item float-right no-lines>
+            <ion-label>Ver en mapa</ion-label>
+            <ion-checkbox color="primary" [(ngModel)]="verMapa" (ionChange)="updateVerMapa()"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="!mostrarMapa" style="margin-top: 7%;">
         <ion-col col-4 *ngFor="let dog of filteredDogs" (click)="goToDogDetail(dog)">
           <div class="dog-name">{{dog.nombre}}</div>
           <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
-          <!--div [style.width.px]="10" [style.height.px]="10" [style.background-color]="dog.isOnline ? 'green' : 'gray'"></div>
         </ion-col>
       </ion-row>
       <ion-row *ngIf="pageData.id == 4">
         <ion-col>
-            <button ion-button full (click)="goToRefugios()">Colabora con un refugio</button>
+          <button ion-button full (click)="goToRefugios()">Colabora con un refugio</button>
         </ion-col>
-      </ion-row>-->
+      </ion-row>
+      <ion-row no-padding [ngClass]="mostrarMapa ? 'active' : 'inactive'">
+        <div #pleaseConnect id="please-connect">
+          <p>Please connect to the Internet...</p>
+        </div>
+        <div #map id="map" style="width: 100% !important; height: 500px !important;">
+          <ion-spinner></ion-spinner>
+        </div>
+      </ion-row>
     </ion-grid>
-   <!--  <ion-grid *ngSwitchCase="'users'">
+    <!--  <ion-grid *ngSwitchCase="'users'">
       <ion-row no-padding>
         <ion-col col-6>
           <ion-item>
@@ -151,4 +190,3 @@
     </ion-grid> -->
   </div>
 </ion-content>
-

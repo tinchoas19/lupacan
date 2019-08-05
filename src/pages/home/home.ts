@@ -12,7 +12,7 @@ import { AgregarPage } from '../agregar/agregar';
 })
 export class HomePage {
 
-  usuario:any;
+  usuario:any = 0;
   imgSrc:any=null;
   public pagesData = [
     { id: 1, title: "Comunidad" },
@@ -28,28 +28,20 @@ export class HomePage {
     public menuCtrl: MenuController,
     private storage: Storage
   ) {
+    
   }
+
+
   ionViewWillEnter(){
-    this.storage.get('usuario').then(val=>{
+    this.storage.get('datauser').then(val=>{
       console.log('usuarioHome', val);
       if(val){
+        this.usuario = val;
         this.imgSrc = "http://ctrlztest.com.ar/lupacan/apirest/"+val['imagen'];
       }
     })
   }
-/* 
-  alertMision(){
-    const alert = this.alertCtrl.create({
-      title: 'NUESTRA MISIÓN',
-      subTitle: 'BUSCAR PERROS PERDIDOS Y AYUDAR A ENCONTRARLES UN HOGAR A LOS QUE NO LO TIENEN, CON LA PARTICIPACIÓN ACTIVA DE LOS MIEMBROS DE LA COMUNIDAD',
-      buttons: ['OK']
-    });
-    alert.present();
-  } */
 
-  /* ionViewWillEnter(){
-    
-  } */
   openMenu() {
     this.menuCtrl.open();
   }

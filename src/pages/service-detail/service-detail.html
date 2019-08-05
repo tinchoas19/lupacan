@@ -1,42 +1,85 @@
-<!--
-  Generated template for the ServiceDetailPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header padding>
-
   <ion-navbar>
-    <ion-title>Veterinaria<ion-icon name="close" (click)="closeModal()"></ion-icon></ion-title>
+    <ion-title>Veterinaria</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
-<ion-content>
-  <img src="assets/imgs/vet.jpg" alt="">
+<ion-content padding>
+  <ion-row justify-content-center>
+    <img class="img_banner" src="https://www.portaldetuciudad.com/imagenes/3/empresas/Clinica-Veterinaria-Inmaculada-Acevedo_690775-1.jpg">
+  </ion-row>
+  <ion-row justify-content-center style="margin-top: 5%;">
+    <ion-col col-12 text-center>
+      <h3 text-center color="primary">{{dataCategory.nombre}}</h3>
+    </ion-col>
+  </ion-row>
+  <ion-row justify-content-center>
+    <div #pleaseConnect id="please-connect">
+      <p>Please connect to the Internet...</p>
+    </div>
+    <div #map id="map" style="width: 100% !important; height: 200px;">
+      <ion-spinner></ion-spinner>
+    </div>
+  </ion-row>
+  <ion-row style="margin-top: 5%;">
+    <ion-slides pager>
+      <ion-slide *ngFor="let dog of [1,2,3]">
+        <img src="assets/imgs/vet.jpg" alt="">
+      </ion-slide>
+    </ion-slides>
+  </ion-row>
   <ion-grid>
     <ion-row>
-      <ion-col>
+      <ion-col col-12>
+        <ion-icon style="font-size: 3rem;" float-right [color]="isChecked ? 'danger' : 'dark'" name="heart" (click)="addToFavorites()"></ion-icon>
+      </ion-col>
+      <ion-col col-6>
+        <p text-center>{{service.nombre}}</p>
+      </ion-col>
+      <ion-col col-6>
+        <p text-center>
+          <ion-icon name="star" class="plus"></ion-icon>
+          <ion-icon name="star" class="plus"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+        </p>
+      </ion-col>
+      <ion-col col-6>
         Direccion: {{service.direccion}}
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col>
+      <ion-col col-6>
         Telefono: {{service.telefono}}
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col>
-        Email: {{service.serviceEmail}}
+      <ion-col col-6>
+        Email: {{service.email}}
       </ion-col>
+      <!-- <ion-col col-6>
+        <ion-icon name="chatbubbles"></ion-icon>
+      </ion-col> -->
     </ion-row>
-    <ion-row>
-      <ion-col>
-        Servicios:
-        <div *ngFor="let offered of service.servicios">
-          <p style="margin-left: 14px;">{{offered.nombre}}</p>
-        </div>
+    <ion-row justify-content-center>
+      <ion-col col-12 text-center>
+        <button text-center ion-button color="primary" (click)="dejarComment()">Deja tu comentario</button>
+      </ion-col>
+      <ion-col *ngIf="dejarcomment" col-12 text-center padding>
+        <ion-card>
+          <ion-item>
+            <ion-textarea [(ngModel)]="message" type="text" placeholder="Comentario..."></ion-textarea>
+          </ion-item>
+          <button float-right ion-button small float-right round (click)="sendComment(message)">Enviar</button>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6 text-center>
+        <button text-center ion-button outline color="primary" (click)="verComments()">Ver comentarios</button>
+      </ion-col>
+      <ion-col col-6 text-center>
+        <button text-center ion-button outline color="primary" (click)="getSeguidores()">Ver seguidores</button>
       </ion-col>
     </ion-row>
   </ion-grid>

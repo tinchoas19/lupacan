@@ -51,6 +51,10 @@ export class DogPage {
   ionViewWillEnter(){
     //this.fechaHoy();
     //this.dog = this.navParams.data.dogDetail;
+    let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then(() => {
+      this.placesService = new google.maps.places.PlacesService(this.maps.map);
+      this.selectPlace(this.dog['placeid']);
+    });
     console.log('detail', this.dog);
     this.showMyControls = this.navParams.data.isMyDogs;
     this.pageId = this.navParams.data.pageId;
@@ -63,11 +67,6 @@ export class DogPage {
   ionViewDidLoad() {
     //console.log('detail', this.dog);
     console.log('ionViewDidLoad DogPage');
-    let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then(() => {
-      this.placesService = new google.maps.places.PlacesService(this.maps.map);
-      this.selectPlace(this.dog['placeid']);
-    });
-    
   }
 
   selectPlace(placeid) {

@@ -1,4 +1,4 @@
-import { IntDogUserPage } from './../int-dog-user/int-dog-user';
+import { PhotoSliderPage } from './../photo-slider/photo-slider';
 import { ListDogUserPage } from './../list-dog-user/list-dog-user';
 import { ApiProvider } from './../../providers/api/api';
 import { Component } from '@angular/core';
@@ -73,9 +73,16 @@ export class BuscarPage {
   }
 
   goToPerfilDog(item){
-    this.navCtrl.push(IntDogUserPage, {
-        dog:item
-      })
-    }
+    let dog;
+    this.api.getDogData(item['perroid']).subscribe(x=>{
+      dog = x['data'][0];
+      console.log('dog_buscar', dog);
+      setTimeout(()=>{
+        this.navCtrl.push(PhotoSliderPage, {
+          dogDetail: dog
+        })
+      },700)
+    })
+  }
 
 }

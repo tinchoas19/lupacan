@@ -1,3 +1,4 @@
+import { ApiProvider } from './../../providers/api/api';
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
@@ -28,7 +29,8 @@ export class IntDogUserPage {
     public navParams: NavParams,
     private photoViewer: PhotoViewer,
     public modalCtrl: ModalController, 
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    private api: ApiProvider
   ) { 
   }
   //Ver otros perros
@@ -118,6 +120,11 @@ export class IntDogUserPage {
   }
 
   ionViewWillEnter(){
+    if(this.navParams.data.dog){
+      this.api.getDogData(this.navParams.data.dog['perroid']).subscribe(x=>{
+        this.dog = x['data'];
+      })
+    }
     console.log('vuelta',this.navParams.get('vuelta'))
     if(this.navParams.get('vuelta')){
       console.log('hola');

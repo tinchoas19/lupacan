@@ -47,8 +47,9 @@ export class MyServicesPage {
   }
 
   ionViewWillEnter(){
-    this.storage.get('usuario').then(val=>{
+    this.storage.get('datauser').then(val=>{
       if(val){
+        console.log('valUser_servicios',val)
         this.api.getMisLocales(val['usuarioid']).subscribe(x=>{
           console.log('misLocales', x);
           this.misLocales=x['data'];
@@ -60,6 +61,7 @@ export class MyServicesPage {
   goToProfileService(service){
     this.navCtrl.push(ProfileServiceUserPage, service);
   }
+  
   goToService(service) {
     this.navCtrl.push(EditServicePage, service);
   }

@@ -2,6 +2,7 @@ page-feed {
     ion-col{
         position: relative;
         .dog-name{
+            color: white;
             position: absolute;
             top: 8px;
             left: 8px;
@@ -10,6 +11,38 @@ page-feed {
         img{
             border: 2px solid color($colors, primary);
         }
+    }
+    .btn_nav{
+        padding: 15px 0;
+        border-bottom: 0.5px solid #7777;
+    }
+    .checks{
+        margin-top: 7%;
+        .item{
+            ion-label{
+                font-size: 1rem;
+            }
+            padding: 0px 0px !important;
+            .checkbox{
+                margin: 9px 4px !important;
+            }
+        }
+    }
+    .btn_filtros{
+        button{
+            padding-left: 16px!important;
+            padding-right: 16px!important;
+        }
+        .select{
+            padding: 0px!important;
+        }
+    }
+    .active{
+        margin-top: 7%;         
+    }
+    .inactive{
+        margin-top: 7%; 
+        display: none;
     }
     .footer{
         img{

@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title text-center>Filtros</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="dismiss()">
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-row justify-content-center *ngIf="filtrosList == 'service'">
+    <ion-col col-12 text-center>
+      <button class="btn_categorias" ion-button round>Localidad
+        <ion-select [(ngModel)]="localidad" okText="Ok" cancelText="Cancelar" multiple="true" [selectOptions]="selectOptionsLocal"
+          (ionChange)="getLocal(localidad)" selectedText=" ">
+          <ion-option *ngFor="let cat of localidades" [value]="cat">{{cat.localidad}}</ion-option>
+        </ion-select>
+      </button>
+    </ion-col>
+    <ion-col *ngIf="localidadSelected.length > 0" col-12 padding text-center>
+      <ion-list *ngFor="let select of localidadSelected[0]; let i = index;">
+        <button class="btn_catSelected" ion-button round icon-end>{{select.localidad}}
+          <span (click)="eliminarLocalidad(i)">
+            <ion-icon name="close"></ion-icon>
+          </span>
+        </button>
+      </ion-list>
+    </ion-col>
+    <ion-col col-12 text-center>
+      <button class="btn_catSelected" ion-button round>Descuentos</button>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="filtrosList == 'perros'" justify-content-center no-padding class="btn_filtros">
+    <ion-col col-12 no-padding text-center>
+      <button text-center ion-button round color="primary">Estado
+        <ion-select [(ngModel)]="estadoDog" okText="Ok" cancelText="Cancelar">
+          <ion-option value="casa">En casa</ion-option>
+          <ion-option value="adopcion">En adopción</ion-option>
+          <ion-option value="perdido">Perdidos</ion-option>
+        </ion-select>
+      </button>
+    </ion-col>
+    
+    <ion-col col-12 no-padding text-center>
+      <button text-center ion-button round color="primary">Raza
+        <ion-select [(ngModel)]="selectraza" okText="Ok" cancelText="Cancelar" multiple="true" [selectOptions]="selectOptionsRaza" (ionChange)="somethingRaza(selectraza)" selectedText=" ">
+          <ion-option *ngFor="let raza of razas" [value]="raza">{{raza.nombre}}</ion-option>
+        </ion-select>
+      </button>
+    </ion-col>
+    <ion-col *ngIf="razaSelected.length > 0" col-12 padding text-center>
+      <ion-list *ngFor="let select of razaSelected[0]; let i = index;">
+        <button class="btn_catSelected" ion-button round icon-end>{{select.nombre}}
+          <span (click)="eliminarRaza(i)">
+            <ion-icon name="close"></ion-icon>
+          </span>
+        </button>
+      </ion-list>
+    </ion-col>
+    <ion-col col-12 text-center>
+      <button text-center ion-button round color="primary" (click)="openSelectGenero()">Género
+        <ion-select multiple="false" #select2 [(ngModel)]="selectgeneroDog" (ionChange)="somethingGenero($event)">
+          <ion-option value="0">Masculino</ion-option>
+          <ion-option value="1">Femenino</ion-option>
+        </ion-select>
+      </button>
+    </ion-col>
+    <ion-col col-12 text-center>
+      <button text-center ion-button round color="primary">Ubicación
+        <ion-select multiple="true" #select3 [(ngModel)]="selectubicacion" (ionChange)="somethingUbicacion($event)">
+          <ion-option value="10km">10 km</ion-option>
+          <ion-option value="50km">50 km</ion-option>
+          <ion-option value="100km">100 km</ion-option>
+        </ion-select>
+      </button>
+    </ion-col>
+  </ion-row>
+</ion-content>
+<ion-footer no-border>
+  <ion-row justify-content-center style="margin: 10px 0;">
+    <button *ngIf="filtrosList == 'service'" class="btn_tienda" ion-button full round (click)="aplicarFiltro()">Aplicar</button>
+    <button *ngIf="filtrosList == 'perros'" class="btn_tienda" ion-button full round (click)="aplicarFiltroDog()">Aplicar</button>
+  </ion-row>
+</ion-footer>

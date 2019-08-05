@@ -24,6 +24,14 @@
       <ion-input type="number" [(ngModel)]="tienda.telefono" placeholder="Telefono"></ion-input>
     </ion-item>
     <ion-item>
+      <ion-label color="primary" stacked>Email</ion-label>
+      <ion-input type="email" [(ngModel)]="tienda.email" placeholder="Email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Localidad</ion-label>
+      <ion-input type="text" [(ngModel)]="tienda.localidad" placeholder="Localidad"></ion-input>
+    </ion-item>
+    <ion-item>
       <ion-label color="primary" stacked>Horario apertura</ion-label>
       <ion-datetime [(ngModel)]="tienda.horaA" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
     </ion-item>
@@ -31,13 +39,30 @@
       <ion-label color="primary" stacked>Horario cierre</ion-label>
       <ion-datetime [(ngModel)]="tienda.horaC" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
     </ion-item>
-    <ion-item>
+    <!-- <ion-item>
       <ion-label color="primary" stacked>Categoria</ion-label>
       <ion-select [(ngModel)]="tienda.category" multiple="true" cancelText="Cancelar" okText="Ok">
         <ion-option *ngFor="let cat of categorias" value="{{cat.categorialocalid}}">{{cat.nombre}}</ion-option>
       </ion-select>
-    </ion-item>
-    <ion-item>
+    </ion-item> -->
+    <ion-row justify-content-center style="margin-top: 3%;">
+      <button class="btn_categorias" ion-button round>Categorias
+        <ion-select [(ngModel)]="tienda.category" okText="Ok" cancelText="Cancelar" multiple="true" [selectOptions]="selectOptions"
+          (ionChange)="getItem(tienda.category)" selectedText=" ">
+          <ion-option *ngFor="let cat of categorias" [value]="cat">{{cat.nombre}}</ion-option>
+        </ion-select>
+      </button>
+    </ion-row>
+    <ion-row padding style="margin-top: 3%;" justify-content-center>
+      <ion-list *ngFor="let select of catSelected[0]; let i = index;">
+        <button class="btn_catSelected" ion-button round icon-end>{{select.nombre}}
+          <span (click)="eliminarCategoria(i)">
+            <ion-icon name="close"></ion-icon>
+          </span>
+        </button>
+      </ion-list>
+    </ion-row>
+    <!-- <ion-item>
       <a ion-item (click)="openModal({charNum: 0})">
         Seleccionar servicios ofrecidos
       </a>
@@ -48,8 +73,8 @@
           </ion-item>
         </ion-list>
       </div>
-    </ion-item>
-    <ion-row>
+    </ion-item> -->
+    <ion-row style="margin: 3% 0;">
       <ion-col col-12 no-padding>
         <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" placeholder="Direccion"></ion-searchbar>
       </ion-col>

@@ -1,3 +1,5 @@
+import { FiltrosPage } from './../pages/filtros/filtros';
+import { ListCommentLocalPage } from './../pages/list-comment-local/list-comment-local';
 import { Facebook } from '@ionic-native/facebook';
 import { ProfileServiceUserPage } from './../pages/profile-service-user/profile-service-user';
 import { BuscarPage } from './../pages/buscar/buscar';
@@ -34,6 +36,7 @@ import { RegisterPage } from "../pages/register/register";
 import { MisionPage } from "../pages/mision/mision";
 import { AgregarPage } from "../pages/agregar/agregar";
 import { MainPage } from "../pages/main/main";
+import { MenuPage } from "./../pages/menu/menu";
 import { CategoriesPage } from "../pages/categories/categories";
 import { ApiProvider } from "../providers/api/api";
 import { HttpModule } from "@angular/http";
@@ -80,6 +83,7 @@ import { Network } from '@ionic-native/network';
     MisionPage,
     AgregarPage,
     MainPage,
+    MenuPage,
     CategoriesPage,
     ChatPage,
     ListDogUserPage,
@@ -87,6 +91,8 @@ import { Network } from '@ionic-native/network';
     RecuperoPassPage,
     BuscarPage,
     ProfileServiceUserPage,
+    ListCommentLocalPage,
+    FiltrosPage,
     RelativeTimePipe
   ],
   imports: [
@@ -130,6 +136,7 @@ import { Network } from '@ionic-native/network';
     MisionPage,
     AgregarPage,
     MainPage,
+    MenuPage,
     CategoriesPage,
     ChatPage,
     ListDogUserPage,
@@ -137,6 +144,8 @@ import { Network } from '@ionic-native/network';
     RecuperoPassPage,
     BuscarPage,
     ProfileServiceUserPage,
+    ListCommentLocalPage,
+    FiltrosPage,
   ],
   providers: [
     StatusBar,

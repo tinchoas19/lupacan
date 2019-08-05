@@ -1,7 +1,10 @@
+import { Storage } from '@ionic/storage';
+import { ApiProvider } from './../../providers/api/api';
+import { Geolocation } from '@ionic-native/geolocation';
 import { ListDogUserPage } from './../list-dog-user/list-dog-user';
 import { ChatPage } from './../chat/chat';
 import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController, ToastController } from 'ionic-angular';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 
@@ -26,19 +29,28 @@ export class PhotoSliderPage {
   vuelta:boolean = true;
   isChecked :boolean;
   placesService: any;
+  distanceService:any;
   searchDisabled: boolean;
   saveDisabled: boolean;
-  location: any;
+  locationUser: any={lat:'',lng:''};
+  locationDog: any;
+  perroMio:boolean=false;
+  distanciaPerro:any="Calculando...";
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private photoViewer: PhotoViewer,
     public modalCtrl: ModalController,
+    private api: ApiProvider,
     public maps: GoogleMapsProvider,
-    public zone: NgZone, 
-    public alertCtrl: AlertController
+    private geo: Geolocation,
+    public zone: NgZone,
+    private storage: Storage, 
+    public alertCtrl: AlertController,
+    public toastController: ToastController
   ) {
-    this.dog = this.navParams.data.dogDetail;     
+    this.getCurrentPosition();
+    this.dog = this.navParams.data.dogDetail;
     this.searchDisabled = true;
     this.saveDisabled = true; 
   }
@@ -47,18 +59,45 @@ export class PhotoSliderPage {
   addToFavorites(){
     console.log('add_Fav => (userid, dogid)');
     if(this.isChecked){
-      //this.favorite.deleteToFavorite(userid, productid);
+      this.api.favorite(this.dog.usuarioid, this.dog.perroid, 0).subscribe(x=>{
+        console.log('fav',x);
+        let data = JSON.parse(x['_body'])['data'];
+        if(data){
+          this.presentToasteError();
+        }
+      });
       this.isChecked = false;
     }else{
     console.log('remove_Fav => (userid, dogid)');      
-      //this.favorite.addToFavorite(userid, productid);
+    this.api.favorite(this.dog.usuarioid, this.dog.perroid, 1).subscribe(x=>{
+      console.log('fav',x);
+      let data = JSON.parse(x['_body'])['data'];
+      if(data){
+        this.presentToasteEx();
+      }
+    });
       this.isChecked = true;
     }
   }
+
+  controlData(){
+    this.storage.get('datauser').then(val=>{
+      if(val){
+        console.log('dataUser', val);
+        if(val['usuarioid'] == this.dog['usuarioid']){
+          this.perroMio = false;
+        }else{
+          this.perroMio = true;
+        }
+      }
+    })
+  }
+
   //Ver otros perros
   goToListUser(id, name){
     this.navCtrl.push(ListDogUserPage, {id: id, userName:name, pageId: this.pageId});
   }
+
   //EstadoDog
   estado(dog){
     if(dog.estaperdido != 0){
@@ -73,13 +112,26 @@ export class PhotoSliderPage {
   goToChat(){
     this.navCtrl.push(ChatPage,{dog:this.dog});
   }
+  //Position
+  getCurrentPosition(){
+    this.geo.getCurrentPosition().then((pos)=>{
+      this.locationUser.lat = pos.coords.latitude;
+      this.locationUser.lng = pos.coords.longitude;
+      console.log('position', this.locationUser);
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
+  }
   
   //FullScreen
   showImg(url){
     this.photoViewer.show('http://ctrlztest.com.ar/lupacan/apirest/upload/10-1.jpg', 'My Dog', {share: false}); 
   }
 
+
   ionViewWillEnter(){
+    this.createMap();
+    this.controlData();
     console.log('vuelta',this.navParams.get('vuelta'))
     if(this.navParams.get('vuelta')){
       console.log('hola');
@@ -98,12 +150,39 @@ export class PhotoSliderPage {
       this.thisDogIsToBeAddopted = true;
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad photo-slide');
+  createMap(){
     let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then(() => {
       this.placesService = new google.maps.places.PlacesService(this.maps.map);
+      this.distanceService = new google.maps.DistanceMatrixService;
       this.selectPlace(this.dog['placeid']);
-    });    
+      this.getDistance(this.dog['direccion'])
+    }); 
+  }
+
+  getDistance(direcc){
+    this.distanceService.getDistanceMatrix({
+      origins: [this.locationUser],
+      destinations: [direcc],
+      travelMode: 'DRIVING',
+      unitSystem : google.maps.UnitSystem.Metric,
+      avoidHighways: false,
+      avoidTolls: false
+    }, async(response, status)=>{
+      if (status !== 'OK'){
+        alert('Error was: ' + status);
+      }else{
+        console.log('data',response)
+        console.log('respuesta', response['rows'][0]['elements'][0]['distance']['text']);
+        this.distanciaPerro = await response['rows'][0]['elements'][0]['distance']['text'];
+        /*x.duration = await response['rows'][0]['elements'][0]['duration']['text'];
+        x.distanceVal = await response['rows'][0]['elements'][0]['duration']['value']; */
+        //console.log('duration', x.duration);
+      }
+    });//Aca termina de resolver una distancia
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad photo-slide');   
   }
 
   showAlert() {
@@ -126,6 +205,7 @@ export class PhotoSliderPage {
       name: this.dog.perrodireccion
     };
     this.placesService.getDetails({ placeId: placeid }, (details) => {
+      console.log('details', details);
       this.zone.run(() => {
         location.name = details.name;
         location.lat = details.geometry.location.lat();
@@ -137,7 +217,8 @@ export class PhotoSliderPage {
           title: this.dog.perrodireccion,
           position: { lat: location.lat, lng: location.lng }
         });
-        this.location = location;
+        this.locationDog = location;
+        console.log('location', this.locationDog);
       });
     });
   }
@@ -192,6 +273,30 @@ export class PhotoSliderPage {
     });
 
     alert.present();
+  }
+
+  async presentToasteError() {
+    const toast = await this.toastController.create({
+      message: "Lo eliminaste de tus favoritos :(",
+      duration:2000,
+      showCloseButton: true,
+      position: 'top',
+      cssClass: 'toastError',
+      closeButtonText: 'x'
+    });
+    toast.present();
+  }
+
+  async presentToasteEx() {
+    const toast = await this.toastController.create({
+      message: "Listo!\n Se agrego a tus favoritos.",
+      duration:2000,
+      showCloseButton: true,
+      position: 'top',
+      cssClass: 'toastExito',
+      closeButtonText: 'x'
+    });
+    toast.present();
   }
 
 }

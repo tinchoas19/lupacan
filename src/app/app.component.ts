@@ -9,13 +9,13 @@ import { LoginPage } from "../pages/login/login";
 import { DogPage } from "../pages/dog/dog";
 import { MyProfilePage } from "../pages/my-profile/my-profile";
 import { Storage } from "@ionic/storage";
-import { MainPage } from "../pages/main/main";
+import { MenuPage } from "../pages/menu/menu";
 
 @Component({
   templateUrl: "app.html"
 })
 export class MyApp {
-  rootPage: any;
+  rootPage: any= LoginPage;
   userName: string;
   email: string;
   imagen:any;
@@ -31,13 +31,13 @@ export class MyApp {
     public storage: Storage
   ) {
     platform.ready().then(() => {
-      storage.get('userData').then(val => {
+      storage.get('datauser').then(val => {
         if (val != null) {
           console.log('components', val);
           this.imagen = "http://ctrlztest.com.ar/lupacan/apirest/"+val['imagen']
           this.userName = val['nombre'];
           this.email = val['email'];
-          this.rootPage = MainPage;
+          this.rootPage = MenuPage;
         } else {
           this.rootPage = LoginPage;
         }
