@@ -23,7 +23,6 @@ export class CreateServicePage {
   tienda:any={
     nombre:"",
     direcc:"",
-    localidad:"",
     email:"",
     telefono:"",
     horaA:"",

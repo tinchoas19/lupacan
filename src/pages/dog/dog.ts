@@ -1,3 +1,4 @@
+import { ApiProvider } from './../../providers/api/api';
 import { Storage } from '@ionic/storage';
 import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
@@ -27,7 +28,7 @@ export class DogPage {
   searchDisabled: boolean;
   saveDisabled: boolean;
   location: any;
-
+  dogId:any;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -35,9 +36,9 @@ export class DogPage {
     public alertCtrl: AlertController,
     public maps: GoogleMapsProvider,
     public zone: NgZone,
-    private storage: Storage
-  ) {
-    this.dog = this.navParams.data.dogDetail;    
+    private storage: Storage,
+    private api: ApiProvider,
+  ) {   
     this.searchDisabled = true;
     this.saveDisabled = true; 
   }
@@ -49,8 +50,15 @@ export class DogPage {
   }
 
   ionViewWillEnter(){
-    //this.fechaHoy();
-    //this.dog = this.navParams.data.dogDetail;
+    if(this.navParams.data.dogDetail != null){
+      this.dog = this.navParams.data.dogDetail;    
+    }else{
+      this.dogId = this.navParams.data.perroid;
+      this.api.getDogData(this.dogId).subscribe(x=>{
+        console.log('perroid',x);
+        this.dog = x['data'];
+      })
+    }    
     let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then(() => {
       this.placesService = new google.maps.places.PlacesService(this.maps.map);
       this.selectPlace(this.dog['placeid']);
@@ -95,12 +103,21 @@ export class DogPage {
   }
 
   showAlert() {
-    const alert = this.alertCtrl.create({
+    this.storage.get('firebaseUserId').then(val=>{
+      console.log('val', val);
+      /* this.api.probarPush(val).subscribe(x=>{
+        console.log('prueba push',x);
+      }) */
+    })
+    /* this.api.marcarDogPerdido(this.dog['usuarioid'], this.dog['perroid'], this.location['lat'], this.location['lng']).subscribe(x=>{
+      console.log('vueltaPerdido',x);
+    }) */
+    /* const alert = this.alertCtrl.create({
       title: 'Aviso!',
       subTitle: 'Ya se publico como perdido. Junto a la comunidad lo vamos a encontrar.',
       buttons: ['OK']
     });
-      alert.present();
+      alert.present(); */
   }
 
   iFoundThisDog(dog) {

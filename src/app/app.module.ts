@@ -58,6 +58,7 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
 import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service';
 import { GoogleMapsProvider } from '../providers/google-maps/google-maps';
 import { Network } from '@ionic-native/network';
+import { Push } from '@ionic-native/push';
 
 @NgModule({
   declarations: [
@@ -162,6 +163,7 @@ import { Network } from '@ionic-native/network';
     Camera,
     Crop,
     Base64,
+    Push,
     Geolocation,
     ConnectivityServiceProvider,
     GoogleMapsProvider,

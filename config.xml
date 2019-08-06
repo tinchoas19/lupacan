@@ -107,4 +107,9 @@
     </plugin>
     <plugin name="cordova-plugin-network-information" spec="2.0.2" />
     <engine name="android" spec="7.1.4" />
+    <plugin name="phonegap-plugin-push" spec="2.2.3">
+        <variable name="SENDER_ID" value="522555540369" />
+        <variable name="ANDROID_SUPPORT_V13_VERSION" value="27.+" />
+        <variable name="FCM_VERSION" value="11.6.2" />
+    </plugin>
 </widget>

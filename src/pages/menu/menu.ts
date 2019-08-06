@@ -55,7 +55,7 @@ export class MenuPage {
     getStorage(){
         this.storage.get('datauser').then(val=>{
             console.log('valMnu', val);
-            this.dataUser = this.navParams.data ? this.navParams.data :  val;
+            this.dataUser = val;
             console.log('userHome', this.dataUser);
             if(this.dataUser.imagen == "" && this.dataUser.facebookid != ""){
                 this.imagen = "https://graph.facebook.com/"+this.dataUser.facebookid+"/picture?type=large";                           

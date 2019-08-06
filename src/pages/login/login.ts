@@ -17,7 +17,7 @@ import { MenuPage } from '../menu/menu';
 export class LoginPage {
 
   dataUsuario:any=[];
-
+  firebaseUserId:any;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -33,9 +33,21 @@ export class LoginPage {
     console.log("ionViewDidLoad LoginPage");
   }
 
+  ionViewWillEnter(){
+    this.getFirebaseUser();
+  }
+
+  getFirebaseUser(){
+    this.storage.get('firebaseUserId').then(val=>{
+      if(val){
+        this.firebaseUserId = val;
+      }
+    });
+  }
+
   login(usuario, password) {
     if(usuario != "" && password != ""){
-      this.services.validarUsuario(usuario, password).subscribe(x=>{
+      this.services.validarUsuario(this.firebaseUserId,usuario, password).subscribe(x=>{
         console.log('vueltaValidaUser',x['data']);
         if(x['data']['usuarioid'] > 0){
           this.services.getUser(x['data']['usuarioid']).subscribe(dataUser=>{
@@ -76,7 +88,7 @@ export class LoginPage {
             // Get user ID and Token
             var fb_id = res.authResponse.userID;
             var fb_token = res.authResponse.accessToken;
-            this.services.validarUserFb(fb_id).subscribe(x=>{
+            this.services.validarUserFb(fb_id, this.firebaseUserId).subscribe(x=>{
               
             console.log('dataFB',x);
             if(x['data'] == null){

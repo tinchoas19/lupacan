@@ -27,6 +27,7 @@ import { MenuPage } from '../menu/menu';
   templateUrl: "register.html"
 })
 export class RegisterPage {
+  firebaseUserId: any;
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
   public myForm: FormGroup;
@@ -85,6 +86,15 @@ export class RegisterPage {
   ionViewWillEnter(){
     this.facebookid = 0;
     this.registroFb(this.navParams.data);
+    this.getFirebaseUser();
+  }
+
+  getFirebaseUser(){
+    this.storage.get('firebaseUserId').then(val=>{
+      if(val){
+        this.firebaseUserId = val;
+      }
+    });
   }
 
   selectPlace(place){
@@ -127,7 +137,7 @@ export class RegisterPage {
     }else{
       console.log("success!")
       console.log(this.myForm.value);
-      this.api.createUser(this.myForm.value, this.base64Image,this.facebookid).subscribe(x=>{
+      this.api.createUser(this.myForm.value, this.base64Image,this.facebookid, this.firebaseUserId).subscribe(x=>{
         console.log('VUELTA_API_CREATEUSER', x);
         this.dataUser = JSON.parse(x['_body'])['data']
         if(this.dataUser > 0){
@@ -172,6 +182,15 @@ export class RegisterPage {
     } else {
       this.aceptoterminos = false;
     }
+  }
+
+  goTerminos(){
+    const alert = this.alertCtrl.create({
+      title: "Términos y condiciones",
+      subTitle: "Por favor, enviar pagina para agregar como se veria.",
+      buttons: ["Ok"]
+    });
+    alert.present();
   }
 
   showAlert() {

@@ -85,7 +85,7 @@
         <ion-checkbox (ionChange)="check($event)" checked="false" [(ngModel)]="aceptoterminos" color="primary">
         </ion-checkbox>
         Acepto los
-        <a href="" class="terms">términos y condiciones
+        <a (click)="goTerminos()" class="terms">términos y condiciones
         </a>
       </div>
       <button ion-button block (click)="registrarme()" [disabled]="!aceptoterminos" class="btn-iniciar lupa-shadow">Registrarme</button>

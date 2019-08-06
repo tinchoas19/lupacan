@@ -48,8 +48,8 @@ export class ApiProvider {
   ) { }
 
   //--------LOGIN--------
-  validarUsuario(usuario, pass) {
-    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/validarusuario.php?usuario=" + usuario + "&password=" + pass)
+  validarUsuario(firebaseUser,usuario, pass) {
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/validarusuario.php?usuario=" + usuario + "&password=" + pass +"&firebaseusuarioid="+firebaseUser)
       .pipe(
         tap(x => {
           console.log('validar usuario', x);
@@ -57,9 +57,9 @@ export class ApiProvider {
       );
   }
 
-  validarUserFb(id) {
+  validarUserFb(id,firebaseusuarioid) {
     console.log('yendo a valida fb', id);
-    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/validarusuariofb.php?facebookid=" + id)
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/validarusuariofb.php?facebookid=" + id+"&firebaseusuarioid="+firebaseusuarioid)
       .pipe(
         tap(x => {
           console.log('validar fbId', x);
@@ -76,10 +76,43 @@ export class ApiProvider {
       );
   }
 
+  //POST--------------------
+  marcarDogPerdido(userid,perroid,lat,lng){
+    console.log('user', userid,perroid,lat,lng);
+
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    var body = JSON.stringify({ 
+      usuarioid: userid,
+      perroid: perroid, 
+      latitud: lat,
+      longitud: lng,
+    });
+      
+    console.log('body', body);
+
+    return this.httpPost.post(this.ApiUrl + "marcarcomoperdido.php", body, options).pipe(
+      tap(x => {
+        console.log('perroPerdido', x);
+      }));
+  }
+
+
+  //------PUSH NOTIFICATION---------------
+  probarPush(userId){
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/probarpush.php?id=" + userId)
+      .pipe(
+        tap(x => {
+          console.log('Probar push', x);
+        })
+      );
+  }
   
   //-------- REGISTRO -----------
   //-POST--------------
-  createUser(user, foto, facebookid): Observable<any>{
+  createUser(user, foto, facebookid, firebaseusuarioid): Observable<any>{
     console.log('user', user);
 
     var headers = new Headers();
@@ -95,6 +128,7 @@ export class ApiProvider {
       password: user.password,
       fechanacimiento: user.edad, 
       imagen: foto,
+      firebaseusuarioid:firebaseusuarioid,
       facebookid: facebookid ? facebookid : 0
     });
       
