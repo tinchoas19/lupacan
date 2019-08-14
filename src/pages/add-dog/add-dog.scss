@@ -82,4 +82,17 @@ page-add-dog {
       justify-content: center;
       align-items: center;
   }
+  ion-col{
+    position: relative;
+    .dog-name{
+        color: white;
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        font-size: 0.8em;
+    }
+    img{
+        border: 2px solid color($colors, primary);
+    }
+}
 }

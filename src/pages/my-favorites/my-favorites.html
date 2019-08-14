@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Mis Favoritos</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-row justify-content-center>
+    <ion-segment class="seg_fav" mode="md" [(ngModel)]="sections" color="primary">
+      <ion-segment-button class="first" value="perros">
+        PERROS
+      </ion-segment-button>
+      <ion-segment-button class="med" value="usuarios">
+        USUARIOS
+      </ion-segment-button>
+      <ion-segment-button class="second" value="locales">
+        SERVICIOS
+      </ion-segment-button>
+    </ion-segment>
+
+    <ion-grid [ngSwitch]="sections">
+      <div *ngSwitchCase="'perros'">
+        <ion-list style="margin-top: 10%;">
+          <ion-item *ngFor="let dog of perros">
+            <ion-avatar item-start>
+              <img src={{dog.foto}}>
+            </ion-avatar>
+            <h2>{{dog.nombre}}</h2>
+          </ion-item>
+        </ion-list>
+      </div>
+      <div *ngSwitchCase="'usuarios'">
+        <ion-list style="margin-top: 10%;">
+          <ion-item *ngFor="let user of usuarios">
+            <ion-avatar item-start>
+              <img src={{user.foto}}>
+            </ion-avatar>
+            <h2>{{user.nombre}}</h2>
+          </ion-item>
+        </ion-list>
+      </div>
+      <div *ngSwitchCase="'locales'">
+        <ion-list style="margin-top: 10%;">
+          <ion-item *ngFor="let local of locales">
+            <ion-avatar item-start>
+              <img src={{local.foto}}>
+            </ion-avatar>
+            <h2>{{local.nombre}}</h2>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-grid>
+  </ion-row>
+</ion-content>

@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Mi Refugio</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-row justify-content-center>
+    <ion-list inset>
+      <ion-list-header text-center>
+        Mis Refugios
+      </ion-list-header>
+      <ion-item *ngFor="let ref of dataRefugio" (click)="goToServicio(ref)">
+        <ion-thumbnail item-start>
+          <img src="http://ctrlztest.com.ar/lupacan/apirest/{{ref.imagenes[0].imagen}}">
+        </ion-thumbnail>
+        <h2>{{ref.nombre}}</h2>
+        <p text-wrap>{{ref.direccion}}</p>
+      </ion-item>
+    </ion-list>
+  </ion-row>
+</ion-content>

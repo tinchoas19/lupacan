@@ -20,14 +20,50 @@
     </button>
   </ion-list>
   <ion-list inset>
-      <ion-list-header text-center>
-        Mis servicios
-      </ion-list-header>
-      <button ion-item (click)="goToMyServices()">
-          Listado mis servicios
-        </button>      
-      <button ion-item (click)="goToCreateService()">
-        Crear un servicio
-      </button>
-    </ion-list>
+    <ion-list-header text-center>
+      Mis servicios
+    </ion-list-header>
+    <button ion-item (click)="goToMyServices()">
+      Mis servicios
+    </button>
+    <button ion-item (click)="goToCreateService()">
+      Crear un servicio
+    </button>
+  </ion-list>
+  <ion-list inset>
+    <ion-list-header text-center>
+      Mis Refugios
+    </ion-list-header>
+   <!--  <button ion-item (click)="goToRefugios()">
+      Mis refugios
+    </button> -->
+    <button ion-item (click)="goToCreateRefugio()">
+      Crear un refugio
+    </button>
+  </ion-list>
+  <ion-list inset>
+    <ion-list-header text-center>
+      Mis Notificaciones
+    </ion-list-header>
+    <button ion-item (click)="goToNotificaciones()">
+      Mis Notificaciones
+      <ion-badge item-end color="danger">{{numberBadge}}</ion-badge>
+    </button>
+  </ion-list>
+  <ion-list inset>
+    <ion-list-header text-center>
+      Mis Favoritos
+    </ion-list-header>
+    <button ion-item (click)="goToFavoritos()">
+      Mis Favoritos
+    </button>
+  </ion-list>
+  <ion-list inset>
+    <ion-list-header text-center>
+      Mis Conversaciones
+    </ion-list-header>
+    <button ion-item (click)="goToConversaciones()">
+      Mis Conversaciones
+    </button>
+  </ion-list>
 </ion-content>

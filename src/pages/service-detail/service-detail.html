@@ -25,7 +25,7 @@
   <ion-row style="margin-top: 5%;">
     <ion-slides pager>
       <ion-slide *ngFor="let dog of [1,2,3]">
-        <img src="assets/imgs/vet.jpg" alt="">
+        <img src="http://ctrlztest.com.ar/lupacan/apirest/{{service.imagenes[0].imagen}}" alt="">
       </ion-slide>
     </ion-slides>
   </ion-row>
@@ -80,6 +80,13 @@
       </ion-col>
       <ion-col col-6 text-center>
         <button text-center ion-button outline color="primary" (click)="getSeguidores()">Ver seguidores</button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="service.perros.length > 1" style="margin-top: 7%;">
+      <h4 text-center>Perros en este Refugio</h4>
+      <ion-col col-4 *ngFor="let dog of service.perros" (click)="goToDogDetail(dog)">
+        <div class="dog-name">{{dog.nombre}}</div>
+        <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
       </ion-col>
     </ion-row>
   </ion-grid>

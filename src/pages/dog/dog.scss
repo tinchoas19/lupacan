@@ -34,5 +34,41 @@ page-dog {
             display: none !important;
         }
       }
+      .checks{
+        .item{
+            ion-label{
+                font-size: 1.2rem;
+            }
+            padding: 0px 0px !important;
+            .checkbox{
+                margin: 9px 4px !important;
+            }
+        }
+    }
+    .badgePerdido{
+        width: 100%;
+        h3{
+            color: white;
+            margin: 10px 0 0 0 !important;
+        }
+        p{
+            color: white;
+            border-bottom: none;
+            margin: 13px 0;
+        }
+    }
+    .searchbar-input {
+        padding: 6px 55px;
+        background-position: left 8px center;
+        height: 4rem !important;
+        border-radius: 4rem !important;
+        font-weight: 400;
+        line-height: 3rem;
+        color: inherit;
+        background-color: #fff;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        border: 1px solid color($colors, primary);
+    }
 }
     

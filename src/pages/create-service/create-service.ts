@@ -43,6 +43,7 @@ export class CreateServicePage {
   places: any = [];
   searchDisabled: boolean;
   saveDisabled: boolean;
+  refugio:boolean=false;
   selectOptions = {
     title: 'Categorias',
     subTitle: 'Selecciona las categorias para tu tienda!',
@@ -64,16 +65,25 @@ export class CreateServicePage {
     this.searchDisabled = true;
     this.saveDisabled = true;
     this.imagePath = "assets/imgs/vet.jpg";
+    
   }
 
 
   ionViewWillEnter(){
+    
     this.storage.get('datauser').then(val=>{
       if(val){
         this.tienda.usuarioid = val['usuarioid']
       }
     })
-    this.getCateg();
+    if(this.navParams.data.refugio){
+      this.refugio = true;
+      this.catSelected = [];
+      this.catSelected.push({categorialocalid: "9", nombre: "Refugios", icono: "upload/icon/cat-refugios.png"});
+      console.log('ref', this.catSelected);
+    }else{
+      this.getCateg();
+    }
   }
   
   openModal(characterNum) {
@@ -136,14 +146,21 @@ export class CreateServicePage {
 
   addService(){
     let data;
-    this.servicios = this.catSelected[0].map(x=>{ return x.categorialocalid})
+    console.log('this.catSelected[0]', this.catSelected[0].legth);
+    if(this.catSelected[0].legth > 1){
+      this.servicios = this.catSelected[0].map(x=>{ return x.categorialocalid});
+    }else{
+      this.servicios = [];
+      this.servicios.push(this.catSelected[0].categorialocalid)
+    }    
     console.log('tienda', this.tienda);
     console.log('servSelec', this.servicios);
     console.log('imagene', this.imagenes);    
     this.api.createService(this.tienda, this.servicios, this.imagenes).subscribe(x=>{
       console.log('VUELTA_API_CREATESERVICE', x);
-      data = JSON.parse(x['_body'])['data'];
-      if(data != 'inserted'){
+      data = JSON.parse(x['_body'])['status_message'];
+      console.log('data_service_created', data);
+      if(data != "event created"){
         this.presentToasteError();
       }else{
         this.presentToasteEx()

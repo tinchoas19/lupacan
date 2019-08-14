@@ -11,17 +11,17 @@
     <img style="display: flex; margin: 0 auto;" src="{{apiUrl+dataService.fotos[0].imagen}}" alt="imagen servico">
   </div>
   <div padding class="top-cont">
-  <ion-row justify-content-center>
-    <h1 class="tienda-header">{{dataService.nombre}}</h1>
-  </ion-row>
-  <ion-row>
-    <ion-col col-6 text-right>
-       {{dataService.direccion}}
-    </ion-col>
-    <ion-col col-6>
-       {{dataService.telefono}}
-    </ion-col>
-  </ion-row>
+    <ion-row justify-content-center>
+      <h1 class="tienda-header">{{dataService.nombre}}</h1>
+    </ion-row>
+    <ion-row>
+      <ion-col col-6 text-right>
+        {{dataService.direccion}}
+      </ion-col>
+      <ion-col col-6>
+        {{dataService.telefono}}
+      </ion-col>
+    </ion-row>
   </div>
   <ion-row class="info_tienda" padding justify-content-center>
     <ion-col col-12 padding text-center>
@@ -30,19 +30,16 @@
     <ion-col col-12 padding text-center>
       <button class="btn_tienda" ion-button full round (click)="vercomentarios()">Comentarios</button>
     </ion-col>
-   <!--  <ion-col col-12 padding text-center>
-      <button class="btn_tienda" ion-button full round (click)="goToListEventos()">Mis Eventos</button>
+    <ion-col *ngIf="dataService.refugio" col-12 padding text-center>
+      <button class="btn_tienda" ion-button full round (click)="addDog()">Agregar Perro</button>
     </ion-col>
-    <ion-col col-12 padding text-center>
-      <button class="btn_tienda" ion-button full round (click)="goToLisVoucher()">Mis Vouchers</button>
-    </ion-col> -->
   </ion-row>
   <div *ngIf="expanded">
     <ion-row *ngIf="!comments.length > 0">
       <ion-list style="width: 100%;">
-        <ion-list-header>
+        <ion-list-header text-center>
           Ultimos comentarios
-         </ion-list-header>
+        </ion-list-header>
         <ion-item>
           <ion-avatar item-start>
             <img src="assets/imgs/1.jpg">
@@ -57,7 +54,7 @@
       <ion-list style="width: 100%;">
         <ion-list-header>
           Ultimos comentarios
-         </ion-list-header>
+        </ion-list-header>
         <ion-item *ngFor="let comment of comments">
           <ion-avatar item-start>
             <img src="assets/imgs/1.jpg">
@@ -69,4 +66,13 @@
       </ion-list>
     </ion-row>
   </div>
+  <ion-row *ngIf="dataService.refugio" style="margin-top: 7%;">
+    <ion-col col-12 padding style="border-top: 1px solid #dedede">
+      <p text-center>Perros en este Refugio</p>
+    </ion-col>
+    <ion-col col-4 *ngFor="let dog of dogsRefugio" (click)="goToDogDetail(dog)">
+      <div class="dog-name">{{dog.nombre}}</div>
+      <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
+    </ion-col>
+  </ion-row>
 </ion-content>

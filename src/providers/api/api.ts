@@ -76,9 +76,50 @@ export class ApiProvider {
       );
   }
 
+  //------------------- NOTIFICACIONES USUARIO ----------------
+  getNotificacionesUser(userId): Observable<any>{
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traernotificaciones.php?usuarioid=" + userId)
+      .pipe(
+        tap(x => {
+          console.log('notificaciones usuario', x);
+        })
+      );
+  }
+
+  getNotificacionesSinLeer(userId): Observable<any>{
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traernotificacionessinleer.php?usuarioid=" + userId)
+      .pipe(
+        tap(x => {
+          console.log('notificaciones usuario', x);
+        })
+      );
+  }
+
+  //-------------------USUARIO UPDATE UBICACION----------------
+  actualizarPositionUser(userid,lat,lng){
+    console.log('user', userid,lat,lng);
+
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    var body = JSON.stringify({ 
+      usuarioid: userid,
+      latitud: lat,
+      longitud: lng,
+    });
+      
+    console.log('body', body);
+
+    return this.httpPost.post(this.ApiUrl + "actualizarubicacion.php", body, options).pipe(
+      tap(x => {
+        console.log('perroPerdido', x);
+      }));
+  }
+
   //POST--------------------
   marcarDogPerdido(userid,perroid,lat,lng){
-    console.log('user', userid,perroid,lat,lng);
+    console.log('perroPerdido', userid,perroid,lat,lng);
 
     var headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -87,8 +128,8 @@ export class ApiProvider {
     var body = JSON.stringify({ 
       usuarioid: userid,
       perroid: perroid, 
-      latitud: lat,
-      longitud: lng,
+      latitud: new String(lat),
+      longitud: new String(lng),
     });
       
     console.log('body', body);
@@ -96,6 +137,26 @@ export class ApiProvider {
     return this.httpPost.post(this.ApiUrl + "marcarcomoperdido.php", body, options).pipe(
       tap(x => {
         console.log('perroPerdido', x);
+      }));
+  }
+
+  marcarDogEncontrado(userid,perroid){
+    console.log('perroPerdido', userid,perroid);
+
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    var body = JSON.stringify({ 
+      usuarioid: userid,
+      perroid: perroid, 
+    });
+      
+    console.log('body', body);
+
+    return this.httpPost.post(this.ApiUrl + "marcarcomoencontrado.php", body, options).pipe(
+      tap(x => {
+        console.log('perroEncontrado', x);
       }));
   }
 
@@ -318,8 +379,7 @@ export class ApiProvider {
     let options = new RequestOptions({ headers: headers, withCredentials: true });
     var body = JSON.stringify({ 
       nombre: tienda.nombre,
-      email:tienda.email,
-      localidad:tienda.localidad, 
+      email:tienda.email, 
       direccion: tienda.direcc, 
       telefono: tienda.telefono,
       horarioapertura: tienda.horaA,
@@ -382,6 +442,67 @@ export class ApiProvider {
         console.log('vueltaAddFavLocal', x);
       }));
   }
+
+  getMyFavorites(userid){
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traerfavoritos.php?usuarioid="+userid)
+    .pipe(
+      tap(x => {
+        console.log('traerlocalesporusuario', x);
+      })
+    );
+  }
+
+  //---------------REFUGIOS---------------------
+  //---AREGAR_PERRO_REFUGIO----------
+  addDogRefugio(dog, fotos, refugioid): Observable<any> {
+    console.log('t', refugioid);
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    var body = JSON.stringify({ 
+      nombre: dog.nombre,
+      estado: dog.estado, 
+      descripcion: dog.descripcion, 
+      generoid: dog.gender,
+      direccion: dog.direccion,
+      fechanacimiento: dog.nacimiento, 
+      razaid: dog.raza, 
+      colorid: dog.color, 
+      placeid: dog.placeid, 
+      fotos: fotos,
+      refugioid: refugioid  
+      //servicios: servicios, 
+    });
+      
+    console.log('body_createServ', body);
+
+    return this.httpPost.post(this.ApiUrl + "agregarperrorefugio.php", body, options).pipe(
+      tap(x => {
+        console.log('vueltaAPiagregarperrorefugio', x);
+      }));
+  }
+
+  //---TRAER_MIS_REFUGIO----------
+  getMyRefugios(userid){
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traermisrefugios.php?usuarioid="+userid)
+    .pipe(
+      tap(x => {
+        console.log('traermisrefugios', x);
+      })
+    );
+  }
+
+  //---TRAER_PERROS_POR_REFUGIO----------
+  getMyDogRefugios(refugioid){
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traerperrosporrefugio.php?refugioid="+refugioid)
+    .pipe(
+      tap(x => {
+        console.log('traermisrefugios', x);
+      })
+    );
+  }
+
   
   //-------- EDITAR SERVICIO -----------
   //----------------POST--------------

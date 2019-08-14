@@ -6,33 +6,35 @@
     </ion-header>
     <ion-content>
         <ion-list class="left-menu">
+            <ion-item>
+                <ion-toggle checked="false"></ion-toggle>
+                <ion-label>
+                    Mostrar mi N° de celular
+                </ion-label>
+            </ion-item>
             <ion-item (click)="goToMyProfile()" menuClose>
-                <img src="assets/imgs/menu01.png" alt="">
-                &nbsp;Mi perfil
+                <img src="assets/imgs/menu01.png" alt=""> &nbsp;Mi perfil
             </ion-item>
             <ion-item (click)="goToMyDogs()" menuClose>
-                <img src="assets/imgs/menu02.png" alt="">
-                &nbsp;Perros agregados
+                <img src="assets/imgs/menu02.png" alt=""> &nbsp;Perros agregados
             </ion-item>
-            <ion-item (click)="goToMyServices()"> 
-                <img src="assets/imgs/menu03.png" alt="">
-                &nbsp;Servicios agregados
+            <ion-item (click)="goToMyServices()" menuClose>
+                <img src="assets/imgs/menu03.png" alt=""> &nbsp;Servicios agregados
             </ion-item>
             <ion-item>
-                <img src="assets/imgs/menu04.png" alt="">
-                &nbsp;Configuraciones
+                <img src="assets/imgs/menu04.png" alt=""> &nbsp;Configuraciones
             </ion-item>
             <ion-item (click)="logOut()" menuClose>
-                <img src="assets/imgs/menu05.png" alt="">
-                &nbsp;Salir
+                <img src="assets/imgs/menu05.png" alt=""> &nbsp;Salir
+            </ion-item>
+            <ion-item (click)="scanCode()" menuClose>
+                <ion-icon name="qr-scanner" style="font-size: 1.8em;"></ion-icon> &nbsp;Scanner QR
             </ion-item>
             <ion-item>
-                <img src="assets/imgs/menu06.png" alt="">
-                &nbsp;Como funciona?
+                <img src="assets/imgs/menu06.png" alt=""> &nbsp;Como funciona?
             </ion-item>
             <ion-item>
-                <img src="assets/imgs/menu07.png" alt="">
-                &nbsp;Soporte
+                <img src="assets/imgs/menu07.png" alt=""> &nbsp;Soporte
             </ion-item>
         </ion-list>
     </ion-content>

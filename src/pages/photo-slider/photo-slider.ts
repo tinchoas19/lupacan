@@ -187,9 +187,27 @@ export class PhotoSliderPage {
 
   showAlert() {
     const alert = this.alertCtrl.create({
-      title: 'Aviso!',
-      subTitle: 'Le estaremos informando a su dueño!',
-      buttons: ['OK']
+      title: 'Perro encontrado!',
+      subTitle: 'Estas seguro/a de haber encontrado a '+this.dog.nombre+ '?',
+      buttons: [
+        {
+          text: 'Si',
+          handler: data => {
+            this.storage.get('datauser').then(user=>{
+              this.api.marcarDogEncontrado(user['usuarioid'], this.dog['perroid']).subscribe(x=>{
+                console.log('veultaEncontrado',x);
+                this.api.getUser(this.dog['usuarioid']).subscribe(user=>{
+                  this.navCtrl.push(ChatPage,{user:user['data']})
+                })
+              })
+            })
+          }
+        },
+        {
+          text: 'No',
+          role: 'cancel',
+        }
+      ]
     });
     if (this.checkAsLost) {
       alert.present();

@@ -97,7 +97,16 @@ export class GoogleMapsProvider {
         let mapOptions = {
           center: latLng,
           zoom: 15,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          streetViewControl: false,
+          disableDefaultUI: false,
+          fullscreenControl: false,
+          // zoomControl: true,
+          mapTypeControl: false,
+          scaleControl: false,
+          rotateControl: false,
+          // disableDoubleClickZoom: true,
+          draggable: false
         }
 
         this.map = new google.maps.Map(this.mapElement, mapOptions);

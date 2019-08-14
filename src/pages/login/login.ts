@@ -91,7 +91,7 @@ export class LoginPage {
             this.services.validarUserFb(fb_id, this.firebaseUserId).subscribe(x=>{
               
             console.log('dataFB',x);
-            if(x['data'] == null){
+            if(x['data']['usuarioid'] == 0){
               // Get user infos from the API
               this.fb.api("/me?fields=name,gender,birthday,email", []).then((user) => {
                 

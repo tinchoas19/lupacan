@@ -1,7 +1,9 @@
+import { AddDogPage } from './../add-dog/add-dog';
 import { ApiProvider } from './../../providers/api/api';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { EditServicePage } from '../edit-service/edit-service';
+import { PhotoSliderPage } from '../photo-slider/photo-slider';
 
 
 @Component({
@@ -13,6 +15,7 @@ export class ProfileServiceUserPage {
   expanded:boolean = false;
   apiUrl:any="http://ctrlztest.com.ar/lupacan/apirest/";
   comments:any=[];
+  dogsRefugio:any;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -27,10 +30,22 @@ export class ProfileServiceUserPage {
       console.log('comments', x);
       this.comments = x['data'];
     })
+    this.getRefugioDogs();
+  }
+
+  getRefugioDogs(){
+    this.api.getMyDogRefugios(this.dataService['localid']).subscribe(x=>{
+      console.log('x_dogsRefugio',x);
+      this.dogsRefugio = x['data'];
+    })
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfileServiceUserPage');
+  }
+
+  goToDogDetail(dog){
+    this.navCtrl.push(PhotoSliderPage,{chatid: "8",dogDetail: dog, isMyDogs: false});
   }
 
   goToService() {
@@ -39,5 +54,10 @@ export class ProfileServiceUserPage {
 
   vercomentarios(){
     this.expanded = !this.expanded;
+  }
+
+  addDog(){
+    console.log('refugioid', this.dataService['localid'])
+    this.navCtrl.push(AddDogPage,{refugio:true, refugioid: this.dataService['localid']});
   }
 }

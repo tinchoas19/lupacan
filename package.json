@@ -20,6 +20,8 @@
     "@angular/http": "5.2.11",
     "@angular/platform-browser": "5.2.11",
     "@angular/platform-browser-dynamic": "5.2.11",
+    "@ionic-native/badge": "^4.20.0",
+    "@ionic-native/barcode-scanner": "^4.20.0",
     "@ionic-native/base64": "^4.20.0",
     "@ionic-native/camera": "^4.20.0",
     "@ionic-native/core": "~4.11.0",
@@ -39,10 +41,11 @@
     "com-badrit-base64": "0.2.0",
     "com-sarriaroman-photoviewer": "1.2.1",
     "cordova-android": "7.1.4",
+    "cordova-plugin-badge": "0.8.8",
     "cordova-plugin-camera": "4.0.3",
     "cordova-plugin-crop": "0.4.0",
     "cordova-plugin-device": "^2.0.2",
-    "cordova-plugin-facebook4": "5.0.0",
+    "cordova-plugin-facebook4-no-zxing": "4.2.2",
     "cordova-plugin-file": "6.0.1",
     "cordova-plugin-file-transfer": "1.7.1",
     "cordova-plugin-geolocation": "4.0.1",
@@ -57,6 +60,7 @@
     "ionic-angular": "3.9.2",
     "ionic-img-viewer": "^2.9.0",
     "ionicons": "3.0.0",
+    "phonegap-plugin-barcodescanner": "8.1.0",
     "phonegap-plugin-multidex": "1.0.0",
     "phonegap-plugin-push": "2.2.3",
     "rxjs": "5.5.11",
@@ -87,17 +91,21 @@
       },
       "cordova-plugin-file": {},
       "cordova-plugin-file-transfer": {},
-      "cordova-plugin-facebook4": {
-        "APP_ID": "654199105014770",
-        "APP_NAME": "Lupacan",
-        "FACEBOOK_HYBRID_APP_EVENTS": "false",
-        "FACEBOOK_ANDROID_SDK_VERSION": "5.0.2"
-      },
       "cordova-plugin-network-information": {},
       "phonegap-plugin-push": {
         "SENDER_ID": "522555540369",
         "ANDROID_SUPPORT_V13_VERSION": "27.+",
         "FCM_VERSION": "11.6.2"
+      },
+      "phonegap-plugin-barcodescanner": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
+      "cordova-plugin-badge": {},
+      "cordova-plugin-facebook4-no-zxing": {
+        "APP_ID": "654199105014770",
+        "APP_NAME": "Lupacan",
+        "FACEBOOK_HYBRID_APP_EVENTS": "false",
+        "FACEBOOK_ANDROID_SDK_VERSION": "4.40.0"
       }
     },
     "platforms": [

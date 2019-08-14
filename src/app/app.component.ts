@@ -1,5 +1,5 @@
+import { ApiProvider } from './../providers/api/api';
 import { DogPage } from './../pages/dog/dog';
-import { PerfilPerroPerdidoPage } from './../pages/perfil-perro-perdido/perfil-perro-perdido';
 import { Component, ViewChild } from "@angular/core";
 import { Platform, NavController, MenuController, App, AlertController } from "ionic-angular";
 import { StatusBar } from "@ionic-native/status-bar";
@@ -12,6 +12,7 @@ import { MyProfilePage } from "../pages/my-profile/my-profile";
 import { Storage } from "@ionic/storage";
 import { MenuPage } from "../pages/menu/menu";
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
+import { Badge } from '@ionic-native/badge';
 
 @Component({
   templateUrl: "app.html"
@@ -32,6 +33,8 @@ export class MyApp {
     private push: Push,
     public app: App,
     public storage: Storage,
+    private api: ApiProvider,
+    private badge: Badge,
     public alertCtrl: AlertController
   ) {
     platform.ready().then(() => {
@@ -77,26 +80,39 @@ export class MyApp {
     });
 
     pushObject.on('notification').subscribe((notification: any) => {
-      console.log('Received a notification', notification)
+      console.log('Received a notification', notification);
+      this.storage.get('datauser').then(user=>{
+        if(user!=null){
+          this.api.getNotificacionesSinLeer(user['usuarioid']).subscribe(x=>{
+            console.log('misNot',x['data']);
+            let numberNot = Number(x['data']);
+            console.log('misNot_Parse',numberNot);            
+            this.badge.set(numberNot+1);
+          })
+        }
+      })
       if (notification.foreground) {
         alert ("'" + notification.message +"'");
       }
-      console.log('perroID -> ' + notification.additionalData.perroid);
+      console.log('perroID {params}-> ' + notification.additionalData.params);
       //if user using app and push notification comes
-      if (notification.additionalData.perroid > 0) {
+      if (notification.additionalData.params.perroid > 0) {
         // if application open, show popup
         let confirmAlert = this.alertCtrl.create({
           title: 'Se perdió un Perro!',
           message: notification.message,
           buttons: [{
-            text: 'Ignore',
+            text: 'Cancelar',
             role: 'cancel'
           }, {
-            text: 'View',
+            text: 'Ver perfil',
             handler: () => {
               //TODO: Your logic here
               console.log('ir a dogPage');
-              this.nav.push(DogPage,{ perroid: notification.additionalData.perroid});
+              this.api.getDogData(notification.additionalData.params.perroid).subscribe(dog=>{
+                let dataDog = dog['data'];
+                this.nav.push(DogPage,{ dogDetail: dataDog});
+              })
             }
           }]
         });
@@ -113,6 +129,7 @@ export class MyApp {
     pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
   }
 
+  
   goToMyProfile() {
     this.nav.push(MyProfilePage);
   }

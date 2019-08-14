@@ -1,7 +1,7 @@
 import { ApiProvider } from './../../providers/api/api';
 import { Storage } from '@ionic/storage';
 import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import { PhotoSliderPage } from '../photo-slider/photo-slider';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
@@ -29,6 +29,13 @@ export class DogPage {
   saveDisabled: boolean;
   location: any;
   dogId:any;
+  query: string = '';
+  places: any = [];
+  autocompleteService: any;
+  otherLocation = {
+    lat: null,
+    lng: null
+  }
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -38,6 +45,7 @@ export class DogPage {
     public zone: NgZone,
     private storage: Storage,
     private api: ApiProvider,
+    public toastController: ToastController
   ) {   
     this.searchDisabled = true;
     this.saveDisabled = true; 
@@ -50,7 +58,7 @@ export class DogPage {
   }
 
   ionViewWillEnter(){
-    if(this.navParams.data.dogDetail != null){
+    if(this.navParams.data.dogDetail){
       this.dog = this.navParams.data.dogDetail;    
     }else{
       this.dogId = this.navParams.data.perroid;
@@ -60,7 +68,9 @@ export class DogPage {
       })
     }    
     let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then(() => {
+      this.autocompleteService = new google.maps.places.AutocompleteService();
       this.placesService = new google.maps.places.PlacesService(this.maps.map);
+      this.searchDisabled = false;
       this.selectPlace(this.dog['placeid']);
     });
     console.log('detail', this.dog);
@@ -102,16 +112,57 @@ export class DogPage {
     });
   }
 
-  showAlert() {
-    this.storage.get('firebaseUserId').then(val=>{
-      console.log('val', val);
-      /* this.api.probarPush(val).subscribe(x=>{
-        console.log('prueba push',x);
-      }) */
+  getPlace(place){
+    this.query = place.description;
+    this.places = [];
+    this.placesService.getDetails({ placeId: place.place_id }, (details) => {
+      this.zone.run(() => {
+        this.otherLocation.lat = details.geometry.location.lat();
+        this.otherLocation.lng = details.geometry.location.lng();
+      })
     })
-    /* this.api.marcarDogPerdido(this.dog['usuarioid'], this.dog['perroid'], this.location['lat'], this.location['lng']).subscribe(x=>{
+    console.log('placeSlected', place);  
+  }
+
+  newDogLocation(){
+    this.api.marcarDogPerdido(this.dog['usuarioid'], this.dog['perroid'], this.otherLocation.lat, this.otherLocation.lng).subscribe(x=>{
       console.log('vueltaPerdido',x);
-    }) */
+    })
+  }
+
+  searchPlace(){
+    this.saveDisabled = true;
+    console.log('query', this.query);
+    if(this.query.length > 0 && !this.searchDisabled) {
+        let config = {
+            types: ['geocode'],
+            input: this.query
+        }
+        console.log('query', this,this.query);
+        this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
+            if(status == google.maps.places.PlacesServiceStatus.OK && predictions){
+                this.places = [];
+                predictions.forEach((prediction) => {
+                    this.places.push(prediction);
+                });
+                console.log('places', this.places);
+            }
+        });
+    } else {
+        this.places = [];
+    }
+  }
+
+  showAlert() {
+    this.storage.get('locatioUser').then(location=>{
+      this.api.marcarDogPerdido(this.dog['usuarioid'], this.dog['perroid'], location['lat'], location['lng']).subscribe(x=>{
+        console.log('vueltaPerdido',x);
+        let data = JSON.parse(x['_body'])['data'];
+        if(data == 'update'){
+          this.presentToasteEx();
+        }
+      })
+    })
     /* const alert = this.alertCtrl.create({
       title: 'Aviso!',
       subTitle: 'Ya se publico como perdido. Junto a la comunidad lo vamos a encontrar.',
@@ -169,5 +220,16 @@ export class DogPage {
     });
 
     alert.present();
+  }
+
+  async presentToasteEx() {
+    const toast = await this.toastController.create({
+      message: "Listo!\n No te preocupes ya avisamos a los usuarios de LupaCan cercanos a ti.",
+      duration:3000,
+      showCloseButton: true,
+      position: 'top',
+      closeButtonText: 'x'
+    });
+    toast.present();
   }
 }

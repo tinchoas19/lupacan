@@ -120,11 +120,11 @@
           <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="pageData.id == 4">
+      <!-- <ion-row *ngIf="pageData.id == 4">
         <ion-col>
           <button ion-button full (click)="goToRefugios()">Colabora con un refugio</button>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <ion-row no-padding [ngClass]="mostrarMapa ? 'active' : 'inactive'">
         <div #pleaseConnect id="please-connect">
           <p>Please connect to the Internet...</p>

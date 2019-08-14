@@ -49,7 +49,8 @@ export class AddDogPage {
     direccion:'',
     placeid:''
   };
-
+  perroRefugio:boolean;
+  refugioid:any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -63,6 +64,9 @@ export class AddDogPage {
     private storage: Storage,
     private DomSanitizer: DomSanitizer
   ) {
+    this.navParams.data.refugio ? this.perroRefugio = true : this.perroRefugio = false;
+    this.navParams.data.refugioid ? this.refugioid = this.navParams.data.refugioid : this.refugioid = null;
+    console.log('this.refugioid', this.navParams.data.refugioid);
     this.searchDisabled = true;
     this.saveDisabled = true;
     this.initializeItems();
@@ -194,6 +198,29 @@ export class AddDogPage {
     }
   }
 
+  addDogRefugio(){
+    console.log('dog', this.dog);
+    console.log('refugioid', this.refugioid);
+    if (this.validacion()) {
+      this.services.addDogRefugio(this.dog, this.galleryDog, this.refugioid).subscribe(x => {
+        console.log('createDog', x);
+        this.dataCreate = JSON.parse(x['_body'])['data'];
+        if (this.dataCreate == 'inserted') {
+          this.msgError = 'Se agrego con Exito!'
+          this, this.presentToast(this.msgError);
+          setTimeout(() => {
+            this.navCtrl.pop();
+          }, 2000)
+        } else {
+          this.msgError = 'Hubo un error, vuelve a intentarlo mas tarde...'
+          this, this.presentToast(this.msgError);
+        }
+      })
+    } else {
+      this.presentToast(this.msgError);
+    }
+  }
+
   validacion() {
     let ret = true;
     let msg = "";
@@ -238,9 +265,18 @@ export class AddDogPage {
   // ************* SUBIR IMAGENES
   galleryDog: any = [];
   imageURI: any;
-  imageFileName: any;
+  img1:boolean=false;
+  img2:boolean=false;
+  img3:boolean=false;
+  img4:boolean=false;
+  img5:boolean=false;
+  imageFileName1: any;
+  imageFileName2: any;
+  imageFileName3: any;
+  imageFileName4: any;
+  imageFileName5: any;
 
-  getImage() {
+  getImage(index) {
     const options = {
       quality: 70,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -254,8 +290,33 @@ export class AddDogPage {
       .getPicture(options)
       .then(imageData => {
         console.log("IMAGE DATA IS", imageData);
-        this.imageFileName = 'data:image/jpeg;base64,' + imageData;
-        this.galleryDog.push(this.imageFileName);
+        switch(index){
+          case 1:
+            this.imageFileName1 = 'data:image/jpeg;base64,' + imageData;
+            this.img1 = true;
+            this.galleryDog.push(this.imageFileName1);
+          break;
+          case 2:
+            this.imageFileName2 = 'data:image/jpeg;base64,' + imageData;
+            this.img2 = true;
+            this.galleryDog.push(this.imageFileName2);
+          break;
+          case 3:
+            this.imageFileName3 = 'data:image/jpeg;base64,' + imageData;
+            this.img3 = true;
+            this.galleryDog.push(this.imageFileName3);
+          break;
+          case 4:
+            this.imageFileName4 = 'data:image/jpeg;base64,' + imageData;
+            this.img4 = true;
+            this.galleryDog.push(this.imageFileName4);
+          break;
+          case 5:
+            this.imageFileName5 = 'data:image/jpeg;base64,' + imageData;
+            this.img5 = true;
+            this.galleryDog.push(this.imageFileName5);
+          break;
+        }
         //this.uploadFile();
       })
       .catch(e => {
@@ -263,36 +324,6 @@ export class AddDogPage {
       });
   }
 
-  uploadFile() {
-    let loader = this.loadingCtrl.create({
-      content: "Uploading..."
-    });
-    loader.present();
-    const fileTransfer: FileTransferObject = this.transfer.create();
-
-    let options: FileUploadOptions = {
-      fileKey: "ionicfile",
-      fileName: "ionicfile",
-      chunkedMode: false,
-      mimeType: "image/jpeg",
-      headers: {}
-    };
-
-    fileTransfer.upload(this.imageURI, "http://uploadImage", options).then(
-      data => {
-        console.log(data + " Uploaded Successfully");
-        this.imageFileName = this.imageURI;
-        //   "http://192.168.0.7:8080/static/images/ionicfile.jpg";
-        loader.dismiss();
-        this.presentToast("Image uploaded successfully");
-      },
-      err => {
-        console.log(err);
-        loader.dismiss();
-        this.presentToast(err);
-      }
-    );
-  }
 
   presentToast(msg) {
     let toast = this.toastCtrl.create({
@@ -307,6 +338,4 @@ export class AddDogPage {
 
     toast.present();
   }
-
-  img1: any;
 }

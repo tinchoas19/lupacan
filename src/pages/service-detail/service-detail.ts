@@ -4,6 +4,7 @@ import { ApiProvider } from './../../providers/api/api';
 import { Component, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, ToastController } from 'ionic-angular';
 import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
+import { PhotoSliderPage } from '../photo-slider/photo-slider';
 
 
 
@@ -88,6 +89,10 @@ export class ServiceDetailPage {
     })
   }
 
+  goToDogDetail(dog){
+    this.navCtrl.push(PhotoSliderPage,{chatid: "8",dogDetail: dog, isMyDogs: false});
+  }
+  
   addToFavorites(){
      this.storage.get('datauser').then(val=>{
       if(val != null){

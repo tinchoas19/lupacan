@@ -42,16 +42,25 @@
       </ion-select>
     </ion-item> -->
     <ion-row justify-content-center style="margin-top: 3%;">
-      <button class="btn_categorias" ion-button round>Categorias
+      <button class="btn_categorias" ion-button round [disabled]="refugio">Categorias
         <ion-select [(ngModel)]="tienda.category" okText="Ok" cancelText="Cancelar" multiple="true" [selectOptions]="selectOptions"
           (ionChange)="getItem(tienda.category)" selectedText=" ">
           <ion-option *ngFor="let cat of categorias" [value]="cat">{{cat.nombre}}</ion-option>
         </ion-select>
       </button>
     </ion-row>
-    <ion-row padding style="margin-top: 3%;" justify-content-center>
+    <ion-row *ngIf="!refugio" padding style="margin-top: 3%;" justify-content-center>
       <ion-list *ngFor="let select of catSelected[0]; let i = index;">
         <button class="btn_catSelected" ion-button round icon-end>{{select.nombre}}
+          <span (click)="eliminarCategoria(i)">
+            <ion-icon name="close"></ion-icon>
+          </span>
+        </button>
+      </ion-list>
+    </ion-row>
+    <ion-row *ngIf="refugio" padding style="margin-top: 3%;" justify-content-center>
+      <ion-list>
+        <button class="btn_catSelected" ion-button round icon-end>{{catSelected[0].nombre}}
           <span (click)="eliminarCategoria(i)">
             <ion-icon name="close"></ion-icon>
           </span>
@@ -74,7 +83,7 @@
       <ion-col col-12 no-padding>
         <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" placeholder="Direccion"></ion-searchbar>
       </ion-col>
-      <ion-col no-padding style="padding-top: 0px!important;">
+      <ion-col no-padding style="padding-top: 0px!important; margin-bottom: 5%;">
         <ion-list class="list_map">
           <ion-item *ngFor="let place of places" (touchstart)="selectPlace(place)">
             <p>{{place.description}}</p>
@@ -88,8 +97,10 @@
         <!-- <ion-spinner></ion-spinner> -->
       </div>
     </ion-row>
-
-    <button ion-button full (click)="addService()">Agregar servicio!</button>
+    <ion-row *ngIf="!(tienda.direcc == '')" style="margin-top: 5%;">
+      <button *ngIf="!refugio" ion-button full (click)="addService()">Agregar servicio!</button>
+      <button *ngIf="refugio" ion-button full (click)="addService()">Agregar refugio!</button>
+    </ion-row>
   </ion-list>
 
 </ion-content>

@@ -1,3 +1,4 @@
+import { IntervalProvider } from './../../providers/interval/interval';
 import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
 import { NavController, AlertController, MenuController, NavParams } from 'ionic-angular';
@@ -26,9 +27,10 @@ export class HomePage {
     public navParams: NavParams,
     public alertCtrl: AlertController,
     public menuCtrl: MenuController,
-    private storage: Storage
+    private storage: Storage,
+    private interval: IntervalProvider
   ) {
-    
+    this.interval.toggleInterval();
   }
 
 

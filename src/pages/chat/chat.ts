@@ -12,25 +12,28 @@ export class ChatPage {
   @ViewChild('chat_input') messageInput: ElementRef;
   showEmojiPicker = false;
   editorMsg = '';
-  dataTienda:any=[];
-  dataDog:any=[];
-  imgDog:any;
+  dataTienda: any = [];
+  dataDog: any = null;
+  dataUser: any = null;
+  imgDog: any;
+  imgUser: any;
   msgList: ChatMessage[] = [];
-  user:any;
-  toUser:any;
-  nombreChat:string;
+  user: any;
+  toUser: any;
+  nombreChat: string;
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     public loadingCtrl: LoadingController,
     private services: ApiProvider,
   ) {
   }
 
-  ionViewWillEnter(){
-    this.imgDog = this.navParams.data.dog['fotos'][0].fotourl;
-    this.dataDog = this.navParams.data.dog;
+  controlParams(params) {
+    if (params.dog) {
+      this.imgDog = this.navParams.data.dog['fotos'][0].fotourl;
+      this.dataDog = this.navParams.data.dog;
       this.user = {
         id: 1,
         name: 'Rodri'
@@ -40,41 +43,79 @@ export class ChatPage {
         content: 'Espere por favor...'
       });
       loading.present();
-      this.services.getChat().subscribe(x=>{
-        console.log('dataChat',x);
-        if(x['data']){
-          x['data'].map((msj)=>{
-            let newMsg : ChatMessage = {
-              messageId : msj.chatmensajeid,
-              userId : msj.origenusuarioid,
+      this.services.getChat().subscribe(x => {
+        console.log('dataChat', x);
+        if (x['data']) {
+          x['data'].map((msj) => {
+            let newMsg: ChatMessage = {
+              messageId: msj.chatmensajeid,
+              userId: msj.origenusuarioid,
               userName: this.user.name,
-              time : msj.fechayhora,
-              message : msj.mensaje,
-              status : 'success',
-              destinoId : this.user.id,
+              time: msj.fechayhora,
+              message: msj.mensaje,
+              status: 'success',
+              destinoId: this.user.id,
             };
             this.toUser = msj.origenusuarioid;
             this.pushNewMsg(newMsg);
           })
           loading.dismiss();
-        }else{
-          loading.dismiss();          
+        } else {
+          loading.dismiss();
         }
       })
-    /* if(this.navParams.data.tienda && this.navParams.data.producto){
-      this.dataTienda = this.navParams.data.tienda[0];
-      this.nombreChat = this.dataTienda.nombre;
-      this.dataProd = this.navParams.data.producto;
-      this.toUser = this.dataProd.usuarioid == null ? this.dataProd.tiendaid : this.dataProd.usuarioid;
+      /* if(this.navParams.data.tienda && this.navParams.data.producto){
+        this.dataTienda = this.navParams.data.tienda[0];
+        this.nombreChat = this.dataTienda.nombre;
+        this.dataProd = this.navParams.data.producto;
+        this.toUser = this.dataProd.usuarioid == null ? this.dataProd.tiendaid : this.dataProd.usuarioid;
+        this.user = {
+          id: this.services._usuario.usuarioid,
+          name: this.services._usuario.nombre
+        }
+      } */
+    }
+    if (params.user) {
+      console.log('pramsUser', params.user);
+      this.imgUser = params.user['imagen'];
+      this.dataUser = params.user;
       this.user = {
-        id: this.services._usuario.usuarioid,
-        name: this.services._usuario.nombre
+        id: 1,
+        name: 'Rodri'
       }
-    } */
-    console.log('dataUser', this.services._usuario);
-    console.log(this.navParams.data);
+      let loading = this.loadingCtrl.create({
+        content: 'Espere por favor...'
+      });
+      loading.present();
+      this.services.getChat().subscribe(x => {
+        console.log('dataChat', x);
+        if (x['data']) {
+          x['data'].map((msj) => {
+            let newMsg: ChatMessage = {
+              messageId: msj.chatmensajeid,
+              userId: msj.origenusuarioid,
+              userName: this.user.name,
+              time: msj.fechayhora,
+              message: msj.mensaje,
+              status: 'success',
+              destinoId: this.user.id,
+            };
+            this.toUser = msj.origenusuarioid;
+            this.pushNewMsg(newMsg);
+          })
+          loading.dismiss();
+        } else {
+          loading.dismiss();
+        }
+      })
+      console.log('dataUser', this.dataUser);
+    }
   }
-  
+
+  ionViewWillEnter() {
+    this.controlParams(this.navParams.data);
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChatPage');
   }
@@ -97,27 +138,27 @@ export class ChatPage {
     if (!this.editorMsg.trim()) return;
 
     const id = Date.now().toString();
-    
-    let newMsg : ChatMessage = {
-      messageId : Date.now().toString(),
-      userId : this.user.id,
+
+    let newMsg: ChatMessage = {
+      messageId: Date.now().toString(),
+      userId: this.user.id,
       userName: this.user.name,
-      time : Date.now(),
-      message : this.editorMsg,
-      status : 'pending',
-      destinoId : this.toUser,
+      time: Date.now(),
+      message: this.editorMsg,
+      status: 'pending',
+      destinoId: this.toUser,
     };
 
     this.pushNewMsg(newMsg);
     this.editorMsg = '';
 
-    if(!this.showEmojiPicker){
+    if (!this.showEmojiPicker) {
       this.focus();
     }
 
-    this.services.sendMsg(newMsg).then(()=>{
+    this.services.sendMsg(newMsg).then(() => {
       let index = this.getMsgIndexById(id);
-      if(index !== -1){
+      if (index !== -1) {
         this.msgList[index].status = 'success';
       }
     })
@@ -139,13 +180,13 @@ export class ChatPage {
     return this.msgList.findIndex(e => e.messageId === id)
   }
 
-  private focus(){
-    if(this.messageInput && this.messageInput.nativeElement){
+  private focus() {
+    if (this.messageInput && this.messageInput.nativeElement) {
       this.messageInput.nativeElement.focus();
     }
   }
 
-  private setTextareaScroll(){
+  private setTextareaScroll() {
     const textarea = this.messageInput.nativeElement;
     textarea.scrollTop = textarea.scrollHeight;
   }

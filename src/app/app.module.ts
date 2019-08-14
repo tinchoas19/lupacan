@@ -1,3 +1,6 @@
+import { RefugioPage } from './../pages/refugio/refugio';
+import { MyFavoritesPage } from './../pages/my-favorites/my-favorites';
+import { MisNotificacionesPage } from './../pages/mis-notificaciones/mis-notificaciones';
 import { FiltrosPage } from './../pages/filtros/filtros';
 import { ListCommentLocalPage } from './../pages/list-comment-local/list-comment-local';
 import { Facebook } from '@ionic-native/facebook';
@@ -59,6 +62,9 @@ import { ConnectivityServiceProvider } from '../providers/connectivity-service/c
 import { GoogleMapsProvider } from '../providers/google-maps/google-maps';
 import { Network } from '@ionic-native/network';
 import { Push } from '@ionic-native/push';
+import { IntervalProvider } from '../providers/interval/interval';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { Badge } from '@ionic-native/badge';
 
 @NgModule({
   declarations: [
@@ -94,6 +100,9 @@ import { Push } from '@ionic-native/push';
     ProfileServiceUserPage,
     ListCommentLocalPage,
     FiltrosPage,
+    MisNotificacionesPage,
+    MyFavoritesPage,
+    RefugioPage,
     RelativeTimePipe
   ],
   imports: [
@@ -147,6 +156,9 @@ import { Push } from '@ionic-native/push';
     ProfileServiceUserPage,
     ListCommentLocalPage,
     FiltrosPage,
+    MisNotificacionesPage,
+    MyFavoritesPage,
+    RefugioPage,
   ],
   providers: [
     StatusBar,
@@ -163,11 +175,14 @@ import { Push } from '@ionic-native/push';
     Camera,
     Crop,
     Base64,
+    BarcodeScanner,
     Push,
     Geolocation,
+    Badge,
     ConnectivityServiceProvider,
     GoogleMapsProvider,
-    Network
+    Network,
+    IntervalProvider
   ]
 })
 export class AppModule {}

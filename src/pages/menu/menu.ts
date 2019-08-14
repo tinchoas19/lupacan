@@ -1,6 +1,6 @@
 import { MyServicesPage } from './../my-services/my-services';
 import { Component, ViewChild } from "@angular/core";
-import { Platform, NavController, MenuController, App, IonicPage, NavParams } from "ionic-angular";
+import { Platform, NavController, MenuController, App, IonicPage, NavParams, LoadingController } from "ionic-angular";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { Nav } from "ionic-angular";
@@ -12,6 +12,7 @@ import { MyProfilePage } from "../../pages/my-profile/my-profile";
 import { Storage } from "@ionic/storage";
 import { MainPage } from "../../pages/main/main";
 import { MyDogsPage } from '../my-dogs/my-dogs';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 @IonicPage()
 @Component({
@@ -31,6 +32,8 @@ export class MenuPage {
         public navParams: NavParams,
         private appCtrl: App,
         public menuCtrl: MenuController,
+        private barcodeScanner: BarcodeScanner,
+        public loadingCtrl : LoadingController,
         private storage: Storage
     ) {
         console.log("params", this.navParams.data);
@@ -74,4 +77,32 @@ export class MenuPage {
         nav.setRoot(LoginPage);
         //this.nav.setRoot(LoginPage);
     }
+
+    scanCode(){
+        let loading = this.loadingCtrl.create({
+          spinner: 'bubbles',
+          content: 'Espere por favor...'
+        });
+        this.barcodeScanner.scan({
+          preferFrontCamera : false, // iOS and Android
+          showFlipCameraButton : false, // iOS and Android
+          showTorchButton : true, // iOS and Android
+          torchOn: false, // Android, launch with the torch switched on (if available)
+          prompt : "Coloque el código de QR dentro del área de escaneo", // Android
+          resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+          formats : "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
+          orientation : "portrait", // Android only (portrait|landscape), default unset so it rotates with the device
+          disableAnimations : true, // iOS
+          disableSuccessBeep: false // iOS and Android
+        }).then(barcodeData =>{
+          console.log('data', barcodeData);
+          if(barcodeData.text != ""){
+            loading.present();
+          }
+        }).catch((err) => {
+          // This seems to happen only when the "back" button is pressed
+         //this.showCancelledAlert();
+         console.log('erro',err);
+      });
+      }
 }

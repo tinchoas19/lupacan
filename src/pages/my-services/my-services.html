@@ -1,16 +1,27 @@
 <ion-header>
 
-    <ion-navbar>
-      <ion-title>Mis Servicios</ion-title>
-    </ion-navbar>
-  
-  </ion-header>
-  
-  
-  <ion-content padding>
-    <ion-list inset>
-      <button ion-item *ngFor="let serv of misLocales" (click)="goToProfileService(serv)">
-        {{serv.nombre}}
-      </button>
-    </ion-list>
-  </ion-content>
+  <ion-navbar>
+    <ion-title>Mis Servicios</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list inset>
+    <ion-list-header text-center>
+      Mis Servicios
+    </ion-list-header>
+    <button ion-item *ngFor="let serv of misLocales" (click)="goToProfileService(serv)">
+      {{serv.nombre}}
+    </button>
+  </ion-list>
+  <ion-list inset>
+    <ion-list-header text-center>
+      Mis Refugios
+    </ion-list-header>
+    <button ion-item *ngFor="let serv of misRefugios" (click)="goToProfileService(serv)">
+      {{serv.nombre}}
+    </button>
+  </ion-list>
+</ion-content>

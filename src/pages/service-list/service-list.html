@@ -42,11 +42,11 @@
     <ion-row justify-content-center *ngIf="services2.length == 0">
       <ion-spinner text-center></ion-spinner>
     </ion-row>
-    <ion-card class="lupa-shadow" *ngFor="let serv of services2" (click)="serviceModal(serv)">
+    <ion-card class="lupa-shadow" *ngFor="let serv of services2" (click)="goToService(serv)">
       <ion-grid>
         <ion-row>
           <ion-col col-5 no-padding class="service-img">
-            <img src="assets/imgs/vet.jpg" alt="">
+            <img src="http://ctrlztest.com.ar/lupacan/apirest/{{serv.imagenes[0].imagen}}" alt="">
           </ion-col>
           <ion-col col-7>
             <h2>{{serv.nombre}}</h2>

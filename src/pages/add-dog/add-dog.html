@@ -20,8 +20,8 @@
       <ion-row>
         <ion-col>
           <ion-item>
-            <ion-datetime [(ngModel)]="dog.nacimiento" displayFormat="DD MMM YYYY"
-              placeholder="Fecha de nacimiento    DD/MM/AA" cancelText="Cancelar" doneText="Ok"></ion-datetime>
+            <ion-datetime [(ngModel)]="dog.nacimiento" displayFormat="DD MMM YYYY" placeholder="Fecha de nacimiento    DD/MM/AA" cancelText="Cancelar"
+              doneText="Ok"></ion-datetime>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -81,61 +81,85 @@
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col>
-          <!-- <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar> -->
-          <ion-list class="lugares">
-            <ion-item *ngFor="let lugar of lugares">
-              {{ lugar }}
-            </ion-item>
-          </ion-list>
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col col-5 padding>
-          <div class="lupa-shadow add-photo" (click)="getImage()">
-            <ion-icon name="camera"></ion-icon>
-            Subir fotos
-          </div>
-        </ion-col>
-        <ion-col col-7>
+        <ion-col col-12>
           <ion-item>
             <ion-label stacked>Características</ion-label>
             <ion-textarea placeholder="Descripción..." [(ngModel)]="dog.descripcion"></ion-textarea>
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <ion-row style="margin-top: 7%;">
+        <ion-col *ngIf="!img1" col-4 class="lupa-shadow add-photo" (click)="getImage(1)">
+          <ion-icon name="camera"></ion-icon>
+          Subir fotos
+        </ion-col>
+        <ion-col *ngIf="img1" col-4 class="lupa-shadow add-photo">
+          <img src="{{imageFileName1}}">
+        </ion-col>
+        <ion-col *ngIf="!img2" col-4 class="lupa-shadow add-photo" (click)="getImage(2)">
+          <ion-icon name="camera"></ion-icon>
+          Subir fotos
+        </ion-col>
+        <ion-col *ngIf="img2" col-4 class="lupa-shadow add-photo">
+          <img src="{{imageFileName2}}">
+        </ion-col>
+        <ion-col *ngIf="!img3" col-4 class="lupa-shadow add-photo" (click)="getImage(3)">
+          <ion-icon name="camera"></ion-icon>
+          Subir fotos
+        </ion-col>
+        <ion-col *ngIf="img3" col-4 class="lupa-shadow add-photo">
+          <img src="{{imageFileName3}}">
+        </ion-col>
+        <ion-col *ngIf="!img4" col-4 class="lupa-shadow add-photo" (click)="getImage(4)">
+          <ion-icon name="camera"></ion-icon>
+          Subir fotos
+        </ion-col>
+        <ion-col *ngIf="img4" col-4 class="lupa-shadow add-photo">
+          <img src="{{imageFileName4}}">
+        </ion-col>
+        <ion-col *ngIf="!img5" col-4 class="lupa-shadow add-photo" (click)="getImage(5)">
+          <ion-icon name="camera"></ion-icon>
+          Subir fotos
+        </ion-col>
+        <ion-col *ngIf="img5" col-4 class="lupa-shadow add-photo">
+          <img src="{{imageFileName5}}">
+        </ion-col>
+      </ion-row>
+      <!-- <ion-row>
         <ion-col col-3 *ngFor="let img of galleryDog">
           <img src="{{ img }}" *ngIf="img" alt="Ionic File" />
         </ion-col>
+      </ion-row> -->
+      <ion-row>
+        <ion-col col-12 padding>
+          <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" placeholder="Direccion"></ion-searchbar>
+        </ion-col>
+        <ion-col padding style="padding-top: 0px!important;">
+          <ion-list class="list_map">
+            <ion-item *ngFor="let place of places" (touchstart)="selectPlace(place)">
+              <p>{{place.description}}</p>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+        <div #pleaseConnect id="please-connect">
+          <p>Please connect to the Internet...</p>
+        </div>
+        <div #map id="map" style="width: 100% !important; height: 200px !important;">
+          <ion-spinner></ion-spinner>
+        </div>
       </ion-row>
-      <ion-row>
-          <ion-col col-12 padding>
-            <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" placeholder="Direccion"></ion-searchbar>
-          </ion-col>
-          <ion-col padding style="padding-top: 0px!important;">
-            <ion-list class="list_map">
-              <ion-item *ngFor="let place of places" (touchstart)="selectPlace(place)">
-                <p>{{place.description}}</p>
-              </ion-item>
-            </ion-list>
-          </ion-col>  
-          <div #pleaseConnect id="please-connect">
-            <p>Please connect to the Internet...</p>
-          </div>
-          <div #map id="map" style="width: 100% !important; height: 200px !important;">
-            <ion-spinner></ion-spinner>
-          </div>
-        </ion-row>
-      <ion-row>
+      <ion-row *ngIf="!perroRefugio">
         <ion-col padding text-center>
-          <button ion-button block class="btn-iniciar lupa-shadow"
-            (click)="irAHome()">Guardar</button>
+          <button ion-button block class="btn-iniciar lupa-shadow" (click)="irAHome()">Guardar</button>
+          <p (click)="irAAgregar()">Agregar otro perro</p>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="perroRefugio">
+        <ion-col padding text-center>
+          <button ion-button block class="btn-iniciar lupa-shadow" (click)="addDogRefugio()">Agregar perro al refugio!</button>
           <p (click)="irAAgregar()">Agregar otro perro</p>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-list>
-
 </ion-content>

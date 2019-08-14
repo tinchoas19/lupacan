@@ -1,24 +1,39 @@
+import { Badge } from '@ionic-native/badge';
+import { ApiProvider } from './../../providers/api/api';
+import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the MisNotificacionesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @Component({
   selector: 'page-mis-notificaciones',
   templateUrl: 'mis-notificaciones.html',
 })
 export class MisNotificacionesPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  notificaciones:any=[];
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    private storage: Storage,
+    private api: ApiProvider,
+    private badge: Badge
+  ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MisNotificacionesPage');
+  }
+
+  ionViewWillEnter(){
+    this.storage.get('datauser').then(user=>{
+      if(user!=null){
+        this.api.getNotificacionesUser(user['usuarioid']).subscribe(x=>{
+          console.log('not', x);
+          this.notificaciones = x['data'];
+          this.badge.clear();
+        })
+      }
+    })
   }
 
 }

@@ -196,7 +196,7 @@ export class ServiceListPage {
   }
 
   goToService(service) {
-    this.navCtrl.push(ServiceDetailPage, service);
+    this.navCtrl.push(ServiceDetailPage, {serv:service, cat:this.dataCategory});
   }
 
   goBack(){

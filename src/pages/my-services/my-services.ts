@@ -14,6 +14,7 @@ import { EditServicePage } from '../edit-service/edit-service';
 export class MyServicesPage {
   private services: any[];
   misLocales:any=[];
+  misRefugios:any=[];
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -47,12 +48,28 @@ export class MyServicesPage {
   }
 
   ionViewWillEnter(){
+    this.misRefugios=[];
+    this.misLocales=[];
     this.storage.get('datauser').then(val=>{
       if(val){
         console.log('valUser_servicios',val)
         this.api.getMisLocales(val['usuarioid']).subscribe(x=>{
-          console.log('misLocales', x);
-          this.misLocales=x['data'];
+          let data = x['data'];
+          data.map(local=>{
+            local.categorias.map(cat=>{
+              if(cat.categorialocalid == '9'){
+                local.refugio = true;
+              }else{
+                local.refugio = false;
+              }
+            })
+            if(local.refugio){
+              this.misRefugios.push(local);
+            }else{
+              this.misLocales.push(local);
+            }
+          })
+          console.log('da', data);
         })
       }
     })
