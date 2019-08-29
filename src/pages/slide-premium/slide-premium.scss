@@ -1,0 +1,26 @@
+page-slide-premium {
+    .scroll-content{
+        margin-bottom: 0px !important;
+    }
+    ion-slides{
+        ion-slide{
+            p{
+                font-size: 1em;
+                padding-top: 0px !important;
+                padding-bottom: 30px !important;
+            }
+        }
+    }
+    .swiper-pagination {
+        padding: 3px;
+        bottom:0px;
+        .swiper-pagination-bullet{
+            background: white;
+            margin: 0 3px;
+        }
+        .swiper-pagination-bullet.swiper-pagination-bullet-active{
+            background: #259fa6;
+            margin: 0 3px;
+        }
+    }
+}

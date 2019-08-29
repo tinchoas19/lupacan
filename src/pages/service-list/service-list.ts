@@ -202,4 +202,10 @@ export class ServiceListPage {
   goBack(){
     this.navCtrl.pop();
   }
+
+  traerPublicidad(){
+    this.apiService.getPublicidad("2").subscribe(x=>{
+      console.log('publicidad',x);
+    })
+  }
 }

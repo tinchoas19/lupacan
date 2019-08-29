@@ -7,7 +7,11 @@
 
 <ion-content padding>
   <ion-row justify-content-center>
-    <img class="img_banner" src="https://www.portaldetuciudad.com/imagenes/3/empresas/Clinica-Veterinaria-Inmaculada-Acevedo_690775-1.jpg">
+    <ion-slides autoplay="3000" loop="true" speed="800" pager>
+      <ion-slide *ngFor="let image of [1,2,3,4,5]">
+        <img class="img_banner" src="https://www.portaldetuciudad.com/imagenes/3/empresas/Clinica-Veterinaria-Inmaculada-Acevedo_690775-1.jpg">
+      </ion-slide>
+    </ion-slides>
   </ion-row>
   <ion-row justify-content-center style="margin-top: 5%;">
     <ion-col col-12 text-center>
@@ -33,6 +37,9 @@
     <ion-row>
       <ion-col col-12>
         <ion-icon style="font-size: 3rem;" float-right [color]="isChecked ? 'danger' : 'dark'" name="heart" (click)="addToFavorites()"></ion-icon>
+        <ion-badge *ngIf="service.premium != null" color="primary" float-left>
+          <p>{{service.descuento}}%</p>
+        </ion-badge>
       </ion-col>
       <ion-col col-6>
         <p text-center>{{service.nombre}}</p>
@@ -84,9 +91,9 @@
     </ion-row>
     <ion-row *ngIf="service.perros.length > 1" style="margin-top: 7%;">
       <h4 text-center>Perros en este Refugio</h4>
-      <ion-col col-4 *ngFor="let dog of service.perros" (click)="goToDogDetail(dog)">
-        <div class="dog-name">{{dog.nombre}}</div>
-        <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
+      <ion-col col-4 *ngFor="let dog of service.perros" (click)="goToDogDetail(dog[0])">
+        <div class="dog-name">{{dog[0].nombre}}</div>
+        <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog[0].fotos[0].fotourl}}" alt="{{dog.nombre}}">
       </ion-col>
     </ion-row>
   </ion-grid>

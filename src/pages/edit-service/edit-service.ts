@@ -1,9 +1,12 @@
+import { MyServicesPage } from './../my-services/my-services';
+import { ApiProvider } from './../../providers/api/api';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, AlertController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, AlertController, Platform, ToastController } from 'ionic-angular';
 import { ModalOfferedServicesPage } from '../modal-offered-services/modal-offered-services';
 import { Camera } from '@ionic-native/camera';
 import { Crop } from '@ionic-native/crop';
 import { Base64 } from '@ionic-native/base64';
+import { ServiceListPage } from '../service-list/service-list';
 
 
 @IonicPage()
@@ -17,6 +20,8 @@ export class EditServicePage {
   imagePath:any;
   imageToEdit:any;
   base64Image:any;
+  horariocierre:any;
+  horarioapertura:any;  
   imagenEdit:boolean = true;
   private win: any = window;
   constructor(
@@ -24,14 +29,18 @@ export class EditServicePage {
     public navParams: NavParams,
     public modalCtrl: ModalController, 
     public alertCtrl: AlertController,
+    private api:ApiProvider,
     public platform: Platform,
     private camera: Camera,
     public crop: Crop,
     private base64: Base64,
+    public toastController: ToastController
   ) {
     this.service = this.navParams.data;
     console.log('service',this.service)
     this.imageToEdit =  "http://ctrlztest.com.ar/lupacan/apirest/"+this.navParams.data['fotos'][0]['imagen'];
+    this.horarioapertura = this.service.horarioapertura;
+    this,this.horariocierre = this.service.horariocierre;
     console.log('this.imageToEdit',this.imageToEdit);
   }
 
@@ -44,13 +53,18 @@ export class EditServicePage {
     let modal = this.modalCtrl.create(ModalOfferedServicesPage, characterNum);
     modal.present();
   }
+  
+  
   editService(){
 
   }
+
+
   deleteService(){
     this.showAlert();
   }
- showAlert() {
+  
+  showAlert() {
     const alert = this.alertCtrl.create({
       title: 'Aviso!',
       subTitle: 'Esta seguro que desea eliminar este servicio?',
@@ -65,6 +79,9 @@ export class EditServicePage {
           text: 'Si',
           handler: data => {
             console.log("si");
+            this.api.deleteLocal(this.service['localid']).subscribe(x=>{
+              this.presentToasteEx();
+            })
           }
         }
       ]
@@ -134,5 +151,20 @@ export class EditServicePage {
     },error=>{
       console.log('error_Crop', error );
     })
+  }
+
+  async presentToasteEx() {
+    const toast = await this.toastController.create({
+      message: "Listo!\n Se borró de tu cuenta!",
+      duration:2000,
+      showCloseButton: true,
+      position: 'top',
+      cssClass: 'toastExito',
+      closeButtonText: 'x'
+    });
+    toast.present();
+    const startIndex = this.navCtrl.getActive().index - 1;
+    this.navCtrl.remove(startIndex, 1);
+    this.navCtrl.pop();
   }
 }

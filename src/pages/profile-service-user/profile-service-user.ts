@@ -1,7 +1,9 @@
+import { DescuentosPage } from './../descuentos/descuentos';
+import { SlidePremiumPage } from './../slide-premium/slide-premium';
 import { AddDogPage } from './../add-dog/add-dog';
 import { ApiProvider } from './../../providers/api/api';
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { EditServicePage } from '../edit-service/edit-service';
 import { PhotoSliderPage } from '../photo-slider/photo-slider';
 
@@ -11,15 +13,19 @@ import { PhotoSliderPage } from '../photo-slider/photo-slider';
   templateUrl: 'profile-service-user.html',
 })
 export class ProfileServiceUserPage {
+  @ViewChild('input') myInput ;
+
   dataService:any;
   expanded:boolean = false;
+  mostrarDescuentos:boolean = false;
   apiUrl:any="http://ctrlztest.com.ar/lupacan/apirest/";
   comments:any=[];
   dogsRefugio:any;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    private api: ApiProvider
+    private api: ApiProvider,
+    public modalCtrl: ModalController
   ) {
     this.dataService = this.navParams.data;
     console.log(this.dataService);
@@ -40,8 +46,18 @@ export class ProfileServiceUserPage {
     })
   }
 
+  updateCucumber(){
+    setTimeout(() => {
+      this.myInput.setFocus();
+    },150);
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfileServiceUserPage');
+  }
+
+  localPremium(){
+    this.navCtrl.push(SlidePremiumPage, {localid: this.dataService['localid']})
   }
 
   goToDogDetail(dog){
@@ -54,6 +70,11 @@ export class ProfileServiceUserPage {
 
   vercomentarios(){
     this.expanded = !this.expanded;
+  }
+
+  verDescuentos(){
+    let profileModal = this.modalCtrl.create(DescuentosPage,{localid:this.dataService['localid']});
+    profileModal.present();
   }
 
   addDog(){

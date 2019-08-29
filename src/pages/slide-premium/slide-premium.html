@@ -1,0 +1,27 @@
+<ion-header transparent no-border>
+  <ion-navbar transparent no-shadow>
+    <ion-title></ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-content no-padding>
+    <ion-slides pager="true" style="height: 90%;" (ionSlideDidChange)="slideChanged()">
+      <ion-slide>
+        <img text-center src="../../assets/imgs/main.png">
+      </ion-slide>
+      <ion-slide>
+        <img text-center src="../../assets/imgs/main.png">
+      </ion-slide>
+      <ion-slide>
+        <img text-center src="../../assets/imgs/main.png">
+      </ion-slide>
+    </ion-slides>
+    <ion-row padding justify-content-center padding *ngIf="muestraBtn">
+      <button (click)="checkout()" style="margin: 10px auto; height: 45px; color: black;"
+        ion-button full round>Quiero ser Premium</button>
+        <button (click)="salir()" style="margin: 10px auto 40px auto; height: 45px; color: black;"
+        ion-button full round>Cerrar</button>
+    </ion-row>
+  </ion-content>

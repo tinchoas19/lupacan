@@ -1,3 +1,4 @@
+import { ApiProvider } from './../../providers/api/api';
 import { IntervalProvider } from './../../providers/interval/interval';
 import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
@@ -28,6 +29,7 @@ export class HomePage {
     public alertCtrl: AlertController,
     public menuCtrl: MenuController,
     private storage: Storage,
+    private api: ApiProvider,
     private interval: IntervalProvider
   ) {
     this.interval.toggleInterval();
@@ -56,7 +58,13 @@ export class HomePage {
     this.menuCtrl.toggle();
   }
 
+  traerPublicidad(){
+    this.api.getPublicidad("1").subscribe(x=>{
+      console.log('publicidad',x);
+    })
+  }
 
+  
   goToComunidad() {
     this.navCtrl.push(FeedPage,this.pagesData[0]);
   }

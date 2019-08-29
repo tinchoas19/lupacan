@@ -1,0 +1,65 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Usuarios</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div>
+    <ion-grid no-padding>
+      <ion-row>
+        <ion-col>
+          <h2 text-center>Ultimos agregados</h2>
+        </ion-col>
+      </ion-row>
+      <!-- <ion-slides pager>
+    <ion-slide>
+      <ion-row>
+        <ion-col col-3 *ngFor="let dog of users" (click)="goToDogDetail(dog)">
+          <div class="dog-name">{{dog.nombre}}</div>
+          <img *ngIf="dog.fotos[0].fotourl" src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
+          <img *ngIf="!dog.fotos[0].fotourl" src="assets/imgs/1.jpg" alt="{{dog.nombre}}">
+        </ion-col>
+      </ion-row>
+    </ion-slide>
+  </ion-slides> -->
+      <ion-row justify-content-center class="checks">
+        <ion-col col-4>
+          <ion-item no-lines>
+            <ion-label>Filtros</ion-label>
+            <ion-checkbox color="primary" [(ngModel)]="verFiltro" (ionChange)="updateCucumber()"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+        <ion-col col-4>
+          <ion-item no-lines>
+            <ion-label>Favoritos</ion-label>
+            <ion-checkbox color="primary"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+        <ion-col col-4>
+          <ion-item float-right no-lines>
+            <ion-label>Ver en mapa</ion-label>
+            <ion-checkbox color="primary" [(ngModel)]="verMapa" (ionChange)="updateVerMapa()"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <!-- <ion-row *ngIf="!mostrarMapa" style="margin-top: 7%;">
+    <ion-col col-4 *ngFor="let dog of filteredDogs" (click)="goToDogDetail(dog)">
+      <div class="dog-name">{{dog.nombre}}</div>
+      <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
+    </ion-col>
+  </ion-row> -->
+      <ion-row no-padding [ngClass]="mostrarMapa ? 'active' : 'inactive'">
+        <div #pleaseConnect id="please-connect">
+          <p>Please connect to the Internet...</p>
+        </div>
+        <div #map id="map" style="width: 100% !important; height: 500px !important;">
+          <ion-spinner></ion-spinner>
+        </div>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

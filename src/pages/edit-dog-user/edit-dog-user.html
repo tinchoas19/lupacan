@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Agregar un perro</ion-title>
+    <ion-title>Editar mi perro</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -148,18 +148,17 @@
           <ion-spinner></ion-spinner>
         </div>
       </ion-row>
-      <ion-row *ngIf="!perroRefugio">
+      <ion-row>
         <ion-col padding text-center>
-          <button ion-button block class="btn-iniciar lupa-shadow" (click)="irAHome()">Guardar</button>
-          <p (click)="irAAgregar()">Agregar otro perro</p>
+          <button ion-button block class="btn-iniciar lupa-shadow" (click)="edit()">Guardar</button>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="perroRefugio">
+      <!-- <ion-row *ngIf="perroRefugio">
         <ion-col padding text-center>
           <button ion-button block class="btn-iniciar lupa-shadow" (click)="addDogRefugio()">Agregar perro al refugio!</button>
           <p (click)="irAAgregar()">Agregar otro perro</p>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
     </ion-grid>
   </ion-list>
 </ion-content>

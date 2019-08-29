@@ -26,6 +26,7 @@ export class PhotoSliderPage {
   map: any;
   private pageId: number;
   public showMyControls: boolean;
+  userid:any;
   vuelta:boolean = true;
   isChecked :boolean;
   placesService: any;
@@ -51,15 +52,27 @@ export class PhotoSliderPage {
   ) {
     this.getCurrentPosition();
     this.dog = this.navParams.data.dogDetail;
+    console.log('this.dog',this.dog);
     this.searchDisabled = true;
     this.saveDisabled = true; 
+  }
+
+  marcarFavorito(perroid,userid){
+    this.api.traerFavoritoPerro(perroid,userid).subscribe(x=>{
+      console.log('marcarFavorito',x);
+      if(x['data']){
+        this.isChecked = true;
+      }else{
+        this.isChecked = false;
+      }
+    })
   }
 
   //add Favorites
   addToFavorites(){
     console.log('add_Fav => (userid, dogid)');
     if(this.isChecked){
-      this.api.favorite(this.dog.usuarioid, this.dog.perroid, 0).subscribe(x=>{
+      this.api.favorite(this.userid, this.dog.perroid, 0).subscribe(x=>{
         console.log('fav',x);
         let data = JSON.parse(x['_body'])['data'];
         if(data){
@@ -69,7 +82,7 @@ export class PhotoSliderPage {
       this.isChecked = false;
     }else{
     console.log('remove_Fav => (userid, dogid)');      
-    this.api.favorite(this.dog.usuarioid, this.dog.perroid, 1).subscribe(x=>{
+    this.api.favorite(this.userid, this.dog.perroid, 1).subscribe(x=>{
       console.log('fav',x);
       let data = JSON.parse(x['_body'])['data'];
       if(data){
@@ -84,6 +97,8 @@ export class PhotoSliderPage {
     this.storage.get('datauser').then(val=>{
       if(val){
         console.log('dataUser', val);
+        this.userid=val['usuarioid'];
+        this.marcarFavorito(this.dog['perroid'], val['usuarioid']);
         if(val['usuarioid'] == this.dog['usuarioid']){
           this.perroMio = false;
         }else{
@@ -154,7 +169,11 @@ export class PhotoSliderPage {
     let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then(() => {
       this.placesService = new google.maps.places.PlacesService(this.maps.map);
       this.distanceService = new google.maps.DistanceMatrixService;
-      this.selectPlace(this.dog['placeid']);
+      if(this.dog['estaperdido'] != 0){
+        this.selectPlace(this.dog['perdidoplaceid']);
+      }else{
+        this.selectPlace(this.dog['placeid']);        
+      }
       this.getDistance(this.dog['direccion'])
     }); 
   }

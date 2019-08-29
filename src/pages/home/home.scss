@@ -5,7 +5,7 @@ page-home {
     .home-grid{
         display: flex;
         flex-direction: column;
-        height: 100%;
+        height: 95%;
         .home-row{
             padding:0 16px 16px 16px;
             .home-col{
@@ -13,6 +13,7 @@ page-home {
                 align-items: center;
                 justify-content: center;
                 flex-direction: column;
+                border-radius: 7px;
                 img{
                     max-height: 48px;
                 }
@@ -30,6 +31,9 @@ page-home {
         }
         img{
             height: 135px;
+        }
+        .publ_img{
+            height: 10vh;
         }
     }
     .scroll-content{

@@ -1,3 +1,7 @@
+import { FeedUsuariosPage } from './../pages/feed-usuarios/feed-usuarios';
+import { EditDogUserPage } from './../pages/edit-dog-user/edit-dog-user';
+import { DescuentosPage } from './../pages/descuentos/descuentos';
+import { SlidePremiumPage } from './../pages/slide-premium/slide-premium';
 import { RefugioPage } from './../pages/refugio/refugio';
 import { MyFavoritesPage } from './../pages/my-favorites/my-favorites';
 import { MisNotificacionesPage } from './../pages/mis-notificaciones/mis-notificaciones';
@@ -65,6 +69,8 @@ import { Push } from '@ionic-native/push';
 import { IntervalProvider } from '../providers/interval/interval';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Badge } from '@ionic-native/badge';
+import { UsernameValidator } from './validators/username';
+import { InAppBrowser } from "@ionic-native/in-app-browser";
 
 @NgModule({
   declarations: [
@@ -103,6 +109,10 @@ import { Badge } from '@ionic-native/badge';
     MisNotificacionesPage,
     MyFavoritesPage,
     RefugioPage,
+    SlidePremiumPage,
+    DescuentosPage,
+    EditDogUserPage,
+    FeedUsuariosPage,
     RelativeTimePipe
   ],
   imports: [
@@ -159,11 +169,15 @@ import { Badge } from '@ionic-native/badge';
     MisNotificacionesPage,
     MyFavoritesPage,
     RefugioPage,
+    SlidePremiumPage,
+    DescuentosPage,
+    EditDogUserPage,
+    FeedUsuariosPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
-
+    UsernameValidator,
     PhotoViewer,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ApiProvider,
@@ -172,6 +186,7 @@ import { Badge } from '@ionic-native/badge';
     // FileUploadOptions,
     FileTransferObject,
     File,
+    InAppBrowser,
     Camera,
     Crop,
     Base64,

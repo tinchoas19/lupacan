@@ -19,6 +19,7 @@ import { Base64 } from '@ionic-native/base64';
 import { MainPage } from '../main/main';
 import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 import { MenuPage } from '../menu/menu';
+import { UsernameValidator } from '../../app/validators/username';
 
 
 @IonicPage()
@@ -50,6 +51,7 @@ export class RegisterPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
+    public usernameValidator: UsernameValidator,
     public alertCtrl: AlertController,
     private api: ApiProvider,
     public platform: Platform,
@@ -68,7 +70,7 @@ export class RegisterPage {
       telefono:['',Validators.required],      
       direccion:['', Validators.required],//Contener letras y espacios, y tener menos de 30 caracteres.
       edad:['',Validators.required],
-      email:['',Validators.compose([Validators.required,Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')])],
+      email:['',Validators.compose([Validators.maxLength(30),Validators.required,Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]), usernameValidator.checkUsername.bind(usernameValidator)],
       password:['',Validators.required]
     })
   }

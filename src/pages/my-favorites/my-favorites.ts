@@ -13,6 +13,7 @@ export class MyFavoritesPage {
   locales:any;
   usuarios:any;
   sections:any= 'perros';
+  url:string="http://ctrlztest.com.ar/lupacan/apirest/";
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,

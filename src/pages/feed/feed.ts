@@ -1,3 +1,4 @@
+import { FeedUsuariosPage } from './../feed-usuarios/feed-usuarios';
 import { ServiPage } from './../servi/servi';
 import { PhotoSliderPage } from './../photo-slider/photo-slider';
 import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
@@ -92,6 +93,7 @@ export class FeedPage {
       };
       this.placesService.getDetails({ placeId: dog.placeid }, (details) => {
         this.zone.run(() => {
+          /* console.log('details',details); */
           location.name = details.name;
           location.lat = details.geometry.location.lat();
           location.lng = details.geometry.location.lng();
@@ -186,6 +188,10 @@ export class FeedPage {
 
   goServices(){
     this.navCtrl.push(ServiPage);
+  }
+
+  goUsuarios(){
+    this.navCtrl.push(FeedUsuariosPage);
   }
 
 }

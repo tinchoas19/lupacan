@@ -12,6 +12,7 @@ export class BuscarPage {
   items: any;
   mostarUsuarios:boolean = false;
   mostrarPerros:boolean = false;
+  mostrarLocales:boolean = false;
 
   constructor(
     public navCtrl: NavController, 
@@ -42,28 +43,16 @@ export class BuscarPage {
           console.log('2');
           this.mostrarPerros = true;
         }
+        console.log('item_locales', this.items['locales']);                
+        if(this.items['locales'].length > 0 ){
+          console.log('3');
+          this.mostrarLocales = true;
+        }
       })
     }else{
       this.items = [];
-      this.mostarUsuarios = this.mostrarPerros = false;
-    }/*
-      //console.log("bus", val);
-      if (this.parametro == 1) {
-        this.serviceProvider.buscarProductosAuto(val).subscribe(res => {
-          //console.log(res);
-          this.items = JSON.parse(res);
-        });
-      }
-      else {
-        this.serviceProvider.buscarEmpleosAuto(val).subscribe(res => {
-          //console.log(res);
-          this.items = JSON.parse(res);
-        });
-      }
+      this.mostarUsuarios = this.mostrarPerros = this.mostrarLocales = false;
     }
-    else {
-      this.items = [];
-    } */
   }
 
   goToPerfilUser(item){

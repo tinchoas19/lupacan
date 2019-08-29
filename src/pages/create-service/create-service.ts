@@ -1,3 +1,4 @@
+import { LoadingController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { ApiProvider } from './../../providers/api/api';
 import { Component, ViewChild, ElementRef } from '@angular/core';
@@ -61,6 +62,7 @@ export class CreateServicePage {
     private base64: Base64,
     private storage: Storage,
     public toastController: ToastController,
+    public loading : LoadingController
   ) {
     this.searchDisabled = true;
     this.saveDisabled = true;
@@ -145,6 +147,11 @@ export class CreateServicePage {
   }
 
   addService(){
+    let loading = this.loading.create({
+      spinner: 'hide',
+      content: 'Please Wait...'
+    });
+    loading.present();
     let data;
     console.log('this.catSelected[0]', this.catSelected[0].legth);
     if(this.catSelected[0].legth > 1){
@@ -162,8 +169,10 @@ export class CreateServicePage {
       console.log('data_service_created', data);
       if(data != "event created"){
         this.presentToasteError();
+        loading.dismiss();
       }else{
         this.presentToasteEx()
+        loading.dismiss();
         setTimeout(()=>{
           this.navCtrl.pop()
         },500);

@@ -40,7 +40,7 @@ export class ServiceDetailPage {
     this.dataCategory = this.navParams.get('cat');
     this.searchDisabled = true;
     this.saveDisabled = true;
-    console.log("mi servicio: ", this.service);
+    console.log("mi servicio: ", this.service.perros);
     this.dejarcomment = false;
   }
 

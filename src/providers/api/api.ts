@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from "@angular/http";
 import { Observable } from 'rxjs/Observable';
 import { tap } from 'rxjs/operators/tap';
+import { map } from 'rxjs/operators/map';
 import { Events } from 'ionic-angular';
 
 export class ChatMessage {
@@ -57,9 +58,19 @@ export class ApiProvider {
       );
   }
 
-  validarUserFb(id,firebaseusuarioid) {
+  validateUsername(username){
+    console.log('username_validaremailexiste', username);
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/validaremailexiste.php?email=" + username)
+    .pipe(
+      tap(x => {
+        console.log('validaremailexiste', x);
+      })
+    );
+  }
+
+  validarUserFb(id,firebaseusuarioid,userName,userEmail) {
     console.log('yendo a valida fb', id);
-    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/validarusuariofb.php?facebookid=" + id+"&firebaseusuarioid="+firebaseusuarioid)
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/validarusuariofb.php?facebookid=" + id+"&firebaseusuarioid="+firebaseusuarioid+"&nombre="+userName+"&email="+userEmail)
       .pipe(
         tap(x => {
           console.log('validar fbId', x);
@@ -118,7 +129,7 @@ export class ApiProvider {
   }
 
   //POST--------------------
-  marcarDogPerdido(userid,perroid,lat,lng){
+  marcarDogPerdido(userid,perroid,lat,lng,placeid){
     console.log('perroPerdido', userid,perroid,lat,lng);
 
     var headers = new Headers();
@@ -130,6 +141,7 @@ export class ApiProvider {
       perroid: perroid, 
       latitud: new String(lat),
       longitud: new String(lng),
+      placeid:placeid,
     });
       
     console.log('body', body);
@@ -321,6 +333,52 @@ export class ApiProvider {
     );
   }
 
+  //-------- SERVICIO -----------
+  //-------- PEMIUM -----------
+  localPremium(localid): Observable<any> {
+    console.log('localid', localid);
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    var body = JSON.stringify({ 
+      localid: localid,
+    });
+      
+    console.log('body_marcarlocalPremium', body);
+
+    return this.httpPost.post(this.ApiUrl + "marcarlocalpremium.php", body, options).pipe(
+      tap(x => {
+        console.log('vuelta_LocalPremium', x);
+      }));
+  }
+  //-------- BANNERS -----------
+  getPublicidad(tipo): Observable<any> {
+    return this.httpClient.get(
+      this.ApiUrl + "traerpublicidad.php?tipo="+tipo
+    );
+  }
+
+  publicidadLeida(publicidadid,usuarioid): Observable<any> {
+    console.log('t', publicidadid);
+    console.log('ser', usuarioid);
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    var body = JSON.stringify({ 
+      publicidadid: publicidadid,
+      usuarioid: usuarioid, 
+    });
+      
+    console.log('body_marcarpublicidadleida', body);
+
+    return this.httpPost.post(this.ApiUrl + "marcarpublicidadleida.php", body, options).pipe(
+      tap(x => {
+        console.log('marcarpublicidadleida', x);
+      }));
+  }
+
   //---------COMENTARIOS
   getComments(localid): Observable<any> {
     return this.httpClient.get(
@@ -351,6 +409,24 @@ export class ApiProvider {
 
   //-------- SERVICIO -----------
 
+  deleteLocal(localid): Observable<any>{
+    console.log('localid', localid);
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    var body = JSON.stringify({ 
+      localid: localid,
+    });
+      
+    console.log('borrarlocal', body);
+
+    return this.httpPost.post(this.ApiUrl + "borrarlocal.php", body, options).pipe(
+      tap(x => {
+        console.log('vuelta_borrarlocal', x);
+      }));
+  }
+
   getSeguidores(localid): Observable<any>{
     return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traerfavoritosporlocal.php?localid="+localid)
     .pipe(
@@ -367,6 +443,36 @@ export class ApiProvider {
         console.log('traerlocalesporusuario', x);
       })
     );
+  }
+
+  descuentosLocal(localid): Observable<any> {
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traerdescuentosporlocal.php?localid="+localid)
+    .pipe(
+      tap(x => {
+        console.log('vuelta_traerdescuentosporlocal', x);
+      })
+    );
+  }
+
+  actualizarDescuentoLocal(localid,categoriaid,descuento,fechavencimiento): Observable<any> {
+    console.log('localid', localid);
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    var body = JSON.stringify({ 
+      localid: localid,
+      categoriaid: categoriaid,
+      descuento: descuento,
+      fechavencimiento:fechavencimiento,
+    });
+      
+    console.log('actualizardescuentolocal', body);
+
+    return this.httpPost.post(this.ApiUrl + "actualizardescuentoslocal.php", body, options).pipe(
+      tap(x => {
+        console.log('vuelta_actualizardescuentolocal', x);
+      }));
   }
 
   //----------------POST--------------
@@ -443,11 +549,20 @@ export class ApiProvider {
       }));
   }
 
-  getMyFavorites(userid){
+  getMyFavorites(userid): Observable<any>{
     return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traerfavoritos.php?usuarioid="+userid)
     .pipe(
       tap(x => {
-        console.log('traerlocalesporusuario', x);
+        console.log('traerfavoritos', x);
+      })
+    );
+  }
+
+  traerFavoritoPerro(perroid, userid): Observable<any>{
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traerfavoritoporperro.php?perroid="+perroid+"&usuarioid="+userid)
+    .pipe(
+      tap(x => {
+        console.log('traerFavoritoPerro', x);
       })
     );
   }
@@ -535,6 +650,7 @@ export class ApiProvider {
         console.log('vueltaAPiCreateServ', x);
       }));
   }
+  
   getStores(categoriaId, userId): Observable<any> {
     return this.httpClient.get(
       this.ApiUrl + "traerlocalesporcategoria.php?categoriaid="+categoriaId+"&usuarioid="+userId
@@ -601,6 +717,15 @@ export class ApiProvider {
       tap(x => {
         console.log('createDog', x);
       }));
+  }
+
+  getLocalData(localid): Observable<any> {
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traerlocalporid.php?localid="+localid)
+    .pipe(
+      tap(x => {
+        console.log('traermisrefugios', x);
+      })
+    );
   }
 
 

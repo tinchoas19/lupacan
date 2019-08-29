@@ -6,7 +6,11 @@
 
 <ion-content padding>
   <ion-row justify-content-center>
-    <img class="img_banner" src="https://www.portaldetuciudad.com/imagenes/3/empresas/Clinica-Veterinaria-Inmaculada-Acevedo_690775-1.jpg">
+    <ion-slides autoplay="3000" loop="true" speed="800" pager>
+      <ion-slide *ngFor="let image of [1,2,3,4,5]">
+        <img class="img_banner" src="https://www.portaldetuciudad.com/imagenes/3/empresas/Clinica-Veterinaria-Inmaculada-Acevedo_690775-1.jpg">
+      </ion-slide>
+    </ion-slides>
   </ion-row>
   <ion-row justify-content-center style="margin-top: 5%;">
     <ion-col col-12 text-center>
@@ -34,7 +38,7 @@
         <ion-checkbox color="primary" [(ngModel)]="varFav" (ionChange)="updateFilterFav(varFav)"></ion-checkbox>
       </ion-item>
     </ion-col>
-  </ion-row>  
+  </ion-row>
   <ion-list>
     <ion-list-header text-center>
       CERCANOS A MI
@@ -50,9 +54,19 @@
           </ion-col>
           <ion-col col-7>
             <h2>{{serv.nombre}}</h2>
-            <p>
-              <ion-icon name="pin"></ion-icon> {{serv.direccion}}</p>
-            <p>Horarios: {{serv.horarios}}hrs</p>
+            <ion-col col-12>
+              <ion-badge *ngIf="serv.descuento != null" color="primary" float-right>
+                <p>Con Descuentos!</p>
+              </ion-badge>
+            </ion-col>
+            <ion-col col-12>
+              <p>
+                <ion-icon name="pin"></ion-icon> {{serv.direccion}}
+              </p>
+            </ion-col>
+            <ion-col col-12>
+              <p>Horarios: {{serv.horarioapertura}}hrs a {{serv.horariocierre}}hrs</p>
+            </ion-col>
             <p>
               <ion-icon name="star" class="plus"></ion-icon>
               <ion-icon name="star" class="plus"></ion-icon>

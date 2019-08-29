@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title text-center>Descuentos</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-row justify-content-center>
+    <ion-list *ngFor="let cat of misDescuentos" no-padding>
+      <ion-col col-12>
+        <h6 text-center><strong>{{cat.nombre}}</strong></h6>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item no-padding>
+          <ion-label stocked>%</ion-label>
+          <ion-input type="number" [(ngModel)]="cat.descuento"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12>
+        <ion-item no-padding>
+          <ion-label stocked>Fecha vecimiento</ion-label>
+          <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="cat.fechavencimiento"></ion-datetime>
+        </ion-item>
+      </ion-col>
+    </ion-list>
+    <ion-col padding col-12 padding text-center>
+      <button class="btn_tienda" ion-button full round (click)="crearDescuentos()">Crear descuentos</button>
+    </ion-col>
+  </ion-row>
+</ion-content>

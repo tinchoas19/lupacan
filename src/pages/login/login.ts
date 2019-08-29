@@ -88,46 +88,39 @@ export class LoginPage {
             // Get user ID and Token
             var fb_id = res.authResponse.userID;
             var fb_token = res.authResponse.accessToken;
-            this.services.validarUserFb(fb_id, this.firebaseUserId).subscribe(x=>{
+            this.fb.api("/me?fields=name,gender,birthday,email", []).then((user) => {
               
-            console.log('dataFB',x);
-            if(x['data']['usuarioid'] == 0){
-              // Get user infos from the API
-              this.fb.api("/me?fields=name,gender,birthday,email", []).then((user) => {
-                
-                  // Get the connected user details
-                  var gender    = user.gender;
-                  var birthday  = user.birthday;
-                  var name      = user.name;
-                  var email     = user.email;
-  
-                  console.log("=== USER INFOS ===");
-                  console.log("Gender : " + gender);
-                  console.log("Birthday : " + birthday);
-                  console.log("Name : " + name);
-                  console.log("Email : " + email);
-  
-                  // => Open user session and redirect to the next page
-                this.navCtrl.push(RegisterPage,{userFb:user, fbId: fb_id});
-              });
-            }else{
-              console.log('aquiFB');
-              this.services.getUser(x['data']['usuarioid']).subscribe(user=>{
-                console.log('fbbbbb', user);
-                this.storage.set('datauser', user['data']);
-                this.presentToasteEx();
-                setTimeout(()=>{
-                  this.navCtrl.setRoot(MenuPage, user['data']);
-                },700)
+                // Get the connected user details
+                var gender    = user.gender;
+                var birthday  = user.birthday;
+                var name      = user.name;
+                var email     = user.email;
+
+                console.log("=== USER INFOS ===");
+                console.log("Gender : " + gender);
+                console.log("Birthday : " + birthday);
+                console.log("Name : " + name);
+                console.log("Email : " + email);
+
+                // => Open user session and redirect to the next page
+              //this.navCtrl.push(RegisterPage,{userFb:user, fbId: fb_id});
+              this.services.validarUserFb(fb_id, this.firebaseUserId,name,email).subscribe(x=>{
+                console.log('dataFB',x);
+                this.services.getUser(x['data']['usuarioid']).subscribe(user=>{
+                  console.log('fbbbbb', user);
+                  this.storage.set('datauser', user['data']);
+                  this.presentToasteEx();
+                  setTimeout(()=>{
+                    this.navCtrl.setRoot(MenuPage, user['data']);
+                  },700)
+                })
               })
-            }
-          })
+            });
         } 
         // An error occurred while loging-in
         else {
-
+            this.presentToasteError();
             console.log("An error occurred...");
-
         }
 
     })
