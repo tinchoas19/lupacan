@@ -49,7 +49,7 @@ export class ApiProvider {
   ) { }
 
   //--------LOGIN--------
-  validarUsuario(firebaseUser,usuario, pass) {
+  validarUsuario(firebaseUser,usuario, pass) : Observable<any>{
     return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/validarusuario.php?usuario=" + usuario + "&password=" + pass +"&firebaseusuarioid="+firebaseUser)
       .pipe(
         tap(x => {
@@ -58,7 +58,7 @@ export class ApiProvider {
       );
   }
 
-  validateUsername(username){
+  validateUsername(username): Observable<any>{
     console.log('username_validaremailexiste', username);
     return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/validaremailexiste.php?email=" + username)
     .pipe(
@@ -68,7 +68,7 @@ export class ApiProvider {
     );
   }
 
-  validarUserFb(id,firebaseusuarioid,userName,userEmail) {
+  validarUserFb(id,firebaseusuarioid,userName,userEmail): Observable<any> {
     console.log('yendo a valida fb', id);
     return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/validarusuariofb.php?facebookid=" + id+"&firebaseusuarioid="+firebaseusuarioid+"&nombre="+userName+"&email="+userEmail)
       .pipe(
@@ -107,7 +107,7 @@ export class ApiProvider {
   }
 
   //-------------------USUARIO UPDATE UBICACION----------------
-  actualizarPositionUser(userid,lat,lng){
+  actualizarPositionUser(userid,lat,lng): Observable<any>{
     console.log('user', userid,lat,lng);
 
     var headers = new Headers();
@@ -128,8 +128,34 @@ export class ApiProvider {
       }));
   }
 
+  //--------------------PERRO ENCONTRADO--------------------
+  addPerroEncontrado(dog, fotos) :Observable<any>{
+    console.log('perroPerdido',);
+
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    var body = JSON.stringify({ 
+      usuarioid: dog.usuarioid,
+      descripcion: dog.descripcion,
+      generoid:dog.gender,
+      razaid:dog.raza,
+      colorid:dog.color,
+      direccion: dog.direccion,
+      placeid:dog.placeid,
+      fotos: fotos
+    });
+      
+    console.log('body_perroEncontrado', body);
+
+    return this.httpPost.post(this.ApiUrl + "agregarperroencontrado.php", body, options).pipe(
+      tap(x => {
+        console.log('add_perroEncontrado', x);
+      }));
+  }
   //POST--------------------
-  marcarDogPerdido(userid,perroid,lat,lng,placeid){
+  marcarDogPerdido(userid,perroid,lat,lng,placeid) :Observable<any>{
     console.log('perroPerdido', userid,perroid,lat,lng);
 
     var headers = new Headers();
@@ -152,7 +178,7 @@ export class ApiProvider {
       }));
   }
 
-  marcarDogEncontrado(userid,perroid){
+  marcarDogEncontrado(userid,perroid) :Observable<any>{
     console.log('perroPerdido', userid,perroid);
 
     var headers = new Headers();
@@ -174,7 +200,7 @@ export class ApiProvider {
 
 
   //------PUSH NOTIFICATION---------------
-  probarPush(userId){
+  probarPush(userId) :Observable<any>{
     return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/probarpush.php?id=" + userId)
       .pipe(
         tap(x => {
@@ -183,7 +209,7 @@ export class ApiProvider {
       );
   }
   
-  //-------- REGISTRO -----------
+  //-------- USER REGISTRO -----------
   //-POST--------------
   createUser(user, foto, facebookid, firebaseusuarioid): Observable<any>{
     console.log('user', user);
@@ -212,10 +238,30 @@ export class ApiProvider {
         console.log('createUser', x);
       }));
   }
+
+  //-------- USER ULTIMOS AGREGADOS -----------
+  getUltimosAgregadosUsuarios(): Observable<any> {
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traerultimosusuariosagregados.php")
+      .pipe(
+        tap(x => {
+          console.log('Ultimos Agregados', x);
+        })
+      );
+  }
+  //-------- TODOS USERS -----------
+  getAllUsers(): Observable<any>{
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traerusuarios.php")
+    .pipe(
+      tap(x => {
+        console.log('Ultimos Agregados', x);
+      })
+    );
+  }
+  
   
   //-------- UPDATE USER -----------
   //-POST--------------
-  updateUser(user,usuarioid, foto): Observable<any>{
+  updateUser(user,direccion,usuarioid, foto): Observable<any>{
     console.log('user', user);
 
     var headers = new Headers();
@@ -228,7 +274,7 @@ export class ApiProvider {
       apellido: user.apellido, 
       email: user.email,
       telefono: user.telefono,
-      direccion: user.direccion,
+      direccion: direccion,
       password: user.password,
       fechanacimiento: user.edad, 
       imagen: foto
@@ -236,7 +282,7 @@ export class ApiProvider {
       
     console.log('body', body);
 
-    return this.httpPost.post(this.ApiUrl + "crearusuario.php", body, options).pipe(
+    return this.httpPost.post(this.ApiUrl + "actualizarusuario.php", body, options).pipe(
       tap(x => {
         console.log('createUser', x);
       }));
@@ -263,7 +309,7 @@ export class ApiProvider {
   }
 
   //-------- ULTIMOS AGREGADOS -----------
-  getUltimosAgregados() {
+  getUltimosAgregados() :Observable<any>{
     return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traerultimosagregados.php")
       .pipe(
         tap(x => {
@@ -278,8 +324,26 @@ export class ApiProvider {
   }
 
   //-------- CHAT -------
-  getChat() {
-    return this.httpClient.get("http://ctrlztest.com.ar/ranto/apirest/traermensajeschat.php?chatid=8")
+  getMisChats(usuarioid): Observable<any>{
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traerchats.php?usuarioid="+usuarioid)
+      .pipe(
+        tap(x => {
+          console.log('chat', x);
+        })
+      );
+  }
+  getChat(origenid, origentipo, destinoid, destinotipo): Observable<any>{
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traermensajeschat2.php?origenid="+origenid+"&origentipo="+origentipo+"&destinoid="+destinoid+"&destinotipo="+destinotipo)
+      .pipe(
+        tap(x => {
+          console.log('chat', x);
+        })
+      );
+  }
+  
+  //-------- CHAT SERVICE -------
+  getMisChatsService(localid): Observable<any>{
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traerchatslocal.php?localid="+localid)
       .pipe(
         tap(x => {
           console.log('chat', x);
@@ -287,6 +351,7 @@ export class ApiProvider {
       );
   }
 
+  //-------- SEND MESSAGE -------
   mockNewMsg(msg) {
     const mockMsg: ChatMessage = {
       messageId: Date.now().toString(),
@@ -303,9 +368,19 @@ export class ApiProvider {
     }, Math.random() * 1800)
   }
 
-  sendMsg(msg: ChatMessage) {
-    return new Promise(resolve => setTimeout(() => resolve(msg), Math.random() * 1000))
-      .then(() => this.mockNewMsg(msg));
+  sendMsg(msg: ChatMessage, tipodestino, tipoorigen) {
+    var headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
+    headers.append('Accept', 'application/json');
+    headers.append('content-type', 'application/json');
+    const requestOptions = new RequestOptions({ headers: headers });
+
+    var body = JSON.stringify({ tipodestino: tipodestino, tipoorigen: tipoorigen, destinoid: msg.destinoId, origenid: msg.userId, mensaje: msg.message });
+    console.log(body);
+    return this.httpPost.post("http://ctrlztest.com.ar/lupacan/apirest/enviarchat.php", body, { headers: headers, withCredentials: true });
+    /* return new Promise(resolve => setTimeout(() => resolve(msg), Math.random() * 1000))
+      .then(() => this.mockNewMsg(msg)); */
   }
 
   //---------------------
@@ -353,9 +428,9 @@ export class ApiProvider {
       }));
   }
   //-------- BANNERS -----------
-  getPublicidad(tipo): Observable<any> {
+  getPublicidad(tipo, localidadid): Observable<any> {
     return this.httpClient.get(
-      this.ApiUrl + "traerpublicidad.php?tipo="+tipo
+      this.ApiUrl + "traerpublicidad.php?tipo="+tipo+"&localidadid="+localidadid
     );
   }
 
@@ -488,6 +563,7 @@ export class ApiProvider {
       email:tienda.email, 
       direccion: tienda.direcc, 
       telefono: tienda.telefono,
+      localidad: tienda.localidad,
       horarioapertura: tienda.horaA,
       horariocierre: tienda.horaC, 
       categoria: categorias, 
@@ -537,16 +613,43 @@ export class ApiProvider {
     let options = new RequestOptions({ headers: headers, withCredentials: true });
     var body = JSON.stringify({ 
       usuarioid: userid,
-      comercioid: comercioid, 
+      localid: comercioid, 
       valor: valor,  
     });
       
     console.log('body_createServ', body);
 
-    return this.httpPost.post(this.ApiUrl + "actualizarfavorito.php", body, options).pipe(
+    return this.httpPost.post(this.ApiUrl + "agregarlocalfavorito.php", body, options).pipe(
       tap(x => {
         console.log('vueltaAddFavLocal', x);
       }));
+  }
+
+  getFavLocal(usuarioid,localid): Observable<any>{
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traerfavoritoporlocal.php?usuarioid="+usuarioid+"&localid="+localid)
+    .pipe(
+      tap(x => {
+        console.log('traerfavoritos', x);
+      })
+    );
+  }
+
+  getFavDog(usuarioid,perroid): Observable<any>{
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traerfavoritoporperro.php?usuarioid="+usuarioid+"&perroid="+perroid)
+    .pipe(
+      tap(x => {
+        console.log('traerfavoritos', x);
+      })
+    );
+  }
+
+  getFavUser(usuarioid,usuariofavoritoid): Observable<any>{
+    return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traerfavoritoporusuario.php?usuarioid="+usuarioid+"&usuariofavoritoid="+usuariofavoritoid)
+    .pipe(
+      tap(x => {
+        console.log('traerfavoritos', x);
+      })
+    );
   }
 
   getMyFavorites(userid): Observable<any>{
@@ -599,7 +702,7 @@ export class ApiProvider {
   }
 
   //---TRAER_MIS_REFUGIO----------
-  getMyRefugios(userid){
+  getMyRefugios(userid) :Observable<any>{
     return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traermisrefugios.php?usuarioid="+userid)
     .pipe(
       tap(x => {
@@ -609,7 +712,7 @@ export class ApiProvider {
   }
 
   //---TRAER_PERROS_POR_REFUGIO----------
-  getMyDogRefugios(refugioid){
+  getMyDogRefugios(refugioid) :Observable<any>{
     return this.httpClient.get("http://ctrlztest.com.ar/lupacan/apirest/traerperrosporrefugio.php?refugioid="+refugioid)
     .pipe(
       tap(x => {
@@ -658,13 +761,13 @@ export class ApiProvider {
   }
 
   //---------------LOCALIDADES----------------
-  getLocalidades(catId){
+  getLocalidades(catId) :Observable<any>{
     return this.httpClient.get(
       this.ApiUrl + "traerlocalidades.php?categoriaid="+catId
     );
   }
   //-------------------------------------
-  getDogData(dogid){
+  getDogData(dogid) :Observable<any>{
     return this.httpClient.get(
       this.ApiUrl + "traerperroporid.php?perroid="+dogid
     );

@@ -213,7 +213,7 @@ export class AddDogPage {
           }, 2000)
         } else {
           this.msgError = 'Hubo un error, vuelve a intentarlo mas tarde...'
-          this, this.presentToast(this.msgError);
+          this.presentToast(this.msgError);
         }
       })
     } else {

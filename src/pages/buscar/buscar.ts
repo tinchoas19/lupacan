@@ -1,3 +1,4 @@
+import { ServiceDetailPage } from './../service-detail/service-detail';
 import { PhotoSliderPage } from './../photo-slider/photo-slider';
 import { ListDogUserPage } from './../list-dog-user/list-dog-user';
 import { ApiProvider } from './../../providers/api/api';
@@ -13,7 +14,6 @@ export class BuscarPage {
   mostarUsuarios:boolean = false;
   mostrarPerros:boolean = false;
   mostrarLocales:boolean = false;
-
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -71,6 +71,13 @@ export class BuscarPage {
           dogDetail: dog
         })
       },700)
+    })
+  }
+
+  goToPerfilService(item){
+    this.api.getLocalData(item.localid).subscribe(x=>{
+      console.log('datLcal',x);
+      this.navCtrl.push(ServiceDetailPage,{serv:x['data'], busq:true});
     })
   }
 

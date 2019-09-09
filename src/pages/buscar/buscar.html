@@ -28,7 +28,7 @@
     <ion-list-header>
       Servicios
     </ion-list-header>
-    <ion-item *ngFor="let item of items['locales']">
+    <ion-item *ngFor="let item of items['locales']" (click)="goToPerfilService(item)">
       {{item.nombre}}
     </ion-item>
   </ion-list>

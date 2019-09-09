@@ -6,6 +6,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ServiceListPage } from "../service-list/service-list";
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
+import { PublicitarPage } from '../publicitar/publicitar';
 
 declare var google;
 
@@ -18,7 +19,7 @@ export class ServiPage {
 
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
-  servicios: string = "mapa";
+  view: string = "favoritos";
   currentPos: Geoposition;
   map: any;
   dogwalkMarker: any;
@@ -36,6 +37,7 @@ export class ServiPage {
   placesService: any;
   bounds:any;
   locales:any;
+  verMapa:boolean =false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -75,8 +77,8 @@ export class ServiPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ServiPage');
+    //this.createMap();        
     //this.getUserPosition();
-    this.createMap();
   }
 
   createMap(){
@@ -119,7 +121,7 @@ export class ServiPage {
             map: this.maps.map,
             title: local.nombre,
             icon: icon,
-            draggable: true,
+            draggable: false,
             position: { lat: location.lat, lng: location.lng }
           });
           this.location = location;
@@ -131,7 +133,9 @@ export class ServiPage {
   }
 
   getUserPosition() {
-    this.navCtrl.setRoot(this.navCtrl.getActive().component);
+    //this.navCtrl.setRoot(this.navCtrl.getActive().component);
+    this.view = 'mapa';
+    this.createMap();
     /* this.geolocation.getCurrentPosition().then(async (pos: Geoposition) => {
       this.currentPos = pos;
       console.log(this.currentPos);
@@ -210,6 +214,10 @@ export class ServiPage {
         };
       })
     })
+  }
+
+  goToPublicitar(){
+    this.navCtrl.push(PublicitarPage);
   }
 
   createServicio() {

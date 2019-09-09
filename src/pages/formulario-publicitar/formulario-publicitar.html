@@ -1,0 +1,34 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Formulario</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-list no-lines>
+    <ion-list-header no-lines text-center>
+      Mis datos
+    </ion-list-header>
+    <form [formGroup]="myForm">
+      <ion-input type="text" placeholder="Razón Social" class="lupa-shadow" formControlName="razon" [class.invalid]="!myForm.controls.razon.valid && (myForm.controls.razon.dirty || submitAttempt)"></ion-input>
+      <ion-item *ngIf="!myForm.controls.razon.valid  && (myForm.controls.razon.dirty || submitAttempt)">
+        <p>Por favor ingresar un razón social válida.</p>
+      </ion-item>
+      <ion-input type="text" placeholder="Dirección" class="lupa-shadow" formControlName="direcc" [class.invalid]="!myForm.controls.direcc.valid && (myForm.controls.direcc.dirty || submitAttempt)"></ion-input>
+      <ion-item *ngIf="!myForm.controls.direcc.valid  && (myForm.controls.direcc.dirty || submitAttempt)">
+        <p>Por favor ingresar un dirección válida.</p>
+      </ion-item>
+      <ion-input type="text" placeholder="Teléfono" class="lupa-shadow" formControlName="telefono" [class.invalid]="!myForm.controls.telefono.valid && (myForm.controls.telefono.dirty || submitAttempt)"></ion-input>
+      <ion-item *ngIf="!myForm.controls.telefono.valid  && (myForm.controls.telefono.dirty || submitAttempt)">
+        <p>Por favor ingresar un teléfono válido.</p>
+      </ion-item>
+      <ion-input type="text" placeholder="Email" class="lupa-shadow" formControlName="email" [class.invalid]="!myForm.controls.email.valid && (myForm.controls.email.dirty || submitAttempt)"></ion-input>
+      <ion-item *ngIf="!myForm.controls.email.valid  && (myForm.controls.email.dirty || submitAttempt)">
+        <p>Por favor ingresar un email válido ó ya esta registrado.</p>
+      </ion-item>
+    </form>
+    <button ion-button block (click)="registrarme()" class="btn-iniciar lupa-shadow">Adquirir paquete</button>
+  </ion-list>
+</ion-content>

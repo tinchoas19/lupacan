@@ -30,7 +30,7 @@
     <ion-toggle checked="false" [(ngModel)]="checkAsLost"></ion-toggle>
   </ion-row>
   <ion-item no-lines>
-    <ion-icon [color]="isChecked ? 'primary' : 'dark'" name="star" (click)="addToFavorites()" item-end></ion-icon>
+    <add-fav-dog [perroid]="dog.perroid"></add-fav-dog>
   </ion-item>
   <ion-list>
     <ion-grid padding>

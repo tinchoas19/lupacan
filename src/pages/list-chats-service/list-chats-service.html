@@ -1,0 +1,18 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Mis Mensajes</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-list *ngFor="let chat of list_chats">
+    <ion-item (click)="goToChat(chat)">
+      <ion-avatar item-start>
+        <img src="../../assets/imgs/dog.jpg">
+      </ion-avatar>
+      <h2>{{chat.conversandocon}}</h2>
+    </ion-item>
+  </ion-list>
+</ion-content>

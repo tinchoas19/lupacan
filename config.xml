@@ -22,9 +22,10 @@
     <preference name="ShowSplashScreen" value="true" />
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="FadeSplashScreen" value="true" />
-    <preference name="SplashScreenDelay" value="5000" />
+    <preference name="SplashScreenDelay" value="4000" />
     <preference name="AllowInlineMediaPlayback" valule="true" />
     <preference name="MediaPlayRequiredUserAction" value="false" />
+    <preference name="KeyboardDisplayRequiresUserAction" value="false" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
@@ -115,5 +116,6 @@
         <variable name="FACEBOOK_HYBRID_APP_EVENTS" value="false" />
         <variable name="FACEBOOK_ANDROID_SDK_VERSION" value="4.40.0" />
     </plugin>
-    <engine name="android" spec="~7.1.4" />
+    <plugin name="cordova-plugin-inappbrowser" spec="3.1.0" />
+    <engine name="android" spec="7.1.4" />
 </widget>

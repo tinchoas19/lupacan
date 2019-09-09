@@ -9,7 +9,7 @@ page-chat {
     }
       
     .line-breaker {
-        white-space: pre-line; 
+        white-space: pre-line;
     }
     ion-item.item{
         background-color: transparent !important;
@@ -91,7 +91,11 @@ page-chat {
           top: 50px; }
         .message-wrap .message.right .msg-detail .msg-content {
           background-color: #387ef5;
-          float: right; }
+          float: right; 
+          p{
+            color: #fff;
+          }
+        }
           .message-wrap .message.right .msg-detail .msg-content span.triangle {
             background-color: #387ef5;
             border-bottom-width: 0;

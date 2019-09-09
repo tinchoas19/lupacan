@@ -1,3 +1,7 @@
+import { AddFavUserComponent } from './../components/add-fav-user/add-fav-user';
+import { ListChatsServicePage } from './../pages/list-chats-service/list-chats-service';
+import { ListChatsPage } from './../pages/list-chats/list-chats';
+import { FormularioPublicitarPage } from './../pages/formulario-publicitar/formulario-publicitar';
 import { FeedUsuariosPage } from './../pages/feed-usuarios/feed-usuarios';
 import { EditDogUserPage } from './../pages/edit-dog-user/edit-dog-user';
 import { DescuentosPage } from './../pages/descuentos/descuentos';
@@ -71,6 +75,9 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Badge } from '@ionic-native/badge';
 import { UsernameValidator } from './validators/username';
 import { InAppBrowser } from "@ionic-native/in-app-browser";
+import { PublicitarPage } from '../pages/publicitar/publicitar';
+import { AddFavServComponent } from '../components/add-fav-serv/add-fav-serv';
+import { AddFavDogComponent } from '../components/add-fav-dog/add-fav-dog';
 
 @NgModule({
   declarations: [
@@ -113,6 +120,13 @@ import { InAppBrowser } from "@ionic-native/in-app-browser";
     DescuentosPage,
     EditDogUserPage,
     FeedUsuariosPage,
+    PublicitarPage,
+    FormularioPublicitarPage,
+    ListChatsPage,
+    ListChatsServicePage,
+    AddFavServComponent,
+    AddFavDogComponent,
+    AddFavUserComponent,
     RelativeTimePipe
   ],
   imports: [
@@ -173,6 +187,13 @@ import { InAppBrowser } from "@ionic-native/in-app-browser";
     DescuentosPage,
     EditDogUserPage,
     FeedUsuariosPage,
+    PublicitarPage,
+    FormularioPublicitarPage,
+    ListChatsPage,
+    ListChatsServicePage,
+    AddFavServComponent,
+    AddFavDogComponent,
+    AddFavUserComponent,
   ],
   providers: [
     StatusBar,

@@ -1,6 +1,6 @@
 import { ApiProvider } from './../../providers/api/api';
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, AlertController, ToastController } from 'ionic-angular';
 import { Crop } from '@ionic-native/crop';
 import { Base64 } from '@ionic-native/base64';
 import { Camera } from '@ionic-native/camera';
@@ -24,6 +24,7 @@ export class MyProfilePage {
   imagePath: any;
   base64Image: any;
   imgSrc: any;
+  direccionUser: any;
   autocompleteService: any;
   placesService: any;
   query: string = '';
@@ -39,6 +40,7 @@ export class MyProfilePage {
     private base64: Base64,
     public formBuilder: FormBuilder,
     public alertCtrl: AlertController,
+    public toastController: ToastController,
     private storage: Storage,
     private api: ApiProvider,
     public maps: GoogleMapsProvider,
@@ -57,26 +59,37 @@ export class MyProfilePage {
   }
 
   guardarCambio() {
-    if (!this.myForm.valid) {
-      this.submitAttempt = true;
-      this.showAlert();
-    } else {
-      console.log("success!")
-      console.log(this.myForm.value);
-      this.api.updateUser(this.myForm.value, this.userid, this.base64Image).subscribe(x => {
-        console.log('UPDATE_USER', x);
-        /* this.dataUser = JSON.parse(x['_body'])['data']
-        if(this.dataUser > 0){
-          this.dataUserId = this.dataUser;
-          this.storage.set('userId', this.dataUserId);
-          this.presentToasteEx();
-        } */
-      })
-    }
+    /*     if (!this.myForm.valid) {
+          this.submitAttempt = true;
+          this.showAlert();
+        } else { */
+    console.log("success!")
+    console.log(this.myForm.value);
+    this.api.updateUser(this.myForm.value, this.direccionUser, this.userid, this.base64Image).subscribe(x => {
+      console.log('UPDATE_USER', x);
+      let dataUser = JSON.parse(x['_body'])['data']
+      if (dataUser) {
+        //this.dataUserId = this.dataUser;
+        this.storage.set('datauser', dataUser);
+        this.presentToasteEx();
+      }
+    })
   }
 
   ionViewWillEnter() {
     this.verificarData();
+  }
+
+  async presentToasteEx() {
+    const toast = await this.toastController.create({
+      message: "Listo!\n Se actualizo tu perfil.",
+      duration: 2000,
+      showCloseButton: true,
+      position: 'top',
+      cssClass: 'toastExito',
+      closeButtonText: 'x'
+    });
+    toast.present();
   }
 
   showAlert() {
@@ -108,7 +121,7 @@ export class MyProfilePage {
         this.myForm.controls['telefono'].setValue(user.telefono);
         this.myForm.controls['edad'].setValue(user.fechanacimiento);
         this.myForm.controls['email'].setValue(user.email);
-        this.query = user.direccion;
+        this.query = this.direccionUser = user.direccion;
       }
     })
   }
@@ -184,32 +197,33 @@ export class MyProfilePage {
     console.log('ionViewDidLoad MyProfilePage');
   }
 
-  selectPlace(place){
-    console.log('placeSlected', place);  
+  selectPlace(place) {
+    console.log('placeSlected', place);
     this.query = place.description;
+    this.direccionUser = this.query;
     this.places = [];
   }
 
-  searchPlace(){
+  searchPlace() {
     this.saveDisabled = true;
     console.log('query', this.query);
-    if(this.query.length > 0 && !this.searchDisabled) {
-        let config = {
-            types: ['geocode'],
-            input: this.query
+    if (this.query.length > 0 && !this.searchDisabled) {
+      let config = {
+        types: ['geocode'],
+        input: this.query
+      }
+      console.log('query', this, this.query);
+      this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
+        if (status == google.maps.places.PlacesServiceStatus.OK && predictions) {
+          this.places = [];
+          predictions.forEach((prediction) => {
+            this.places.push(prediction);
+          });
+          console.log('places', this.places);
         }
-        console.log('query', this,this.query);
-        this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
-            if(status == google.maps.places.PlacesServiceStatus.OK && predictions){
-                this.places = [];
-                predictions.forEach((prediction) => {
-                    this.places.push(prediction);
-                });
-                console.log('places', this.places);
-            }
-        });
+      });
     } else {
-        this.places = [];
+      this.places = [];
     }
   }
 

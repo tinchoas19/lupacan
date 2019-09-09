@@ -1,12 +1,8 @@
+import { ListDogUserPage } from './../list-dog-user/list-dog-user';
+import { ApiProvider } from './../../providers/api/api';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the FeedUsuariosPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @Component({
   selector: 'page-feed-usuarios',
@@ -14,11 +10,41 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class FeedUsuariosPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  ultimosAgregados:any = [];
+  todosUsers:any = [];
+
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    private api: ApiProvider,
+  ) {
+  }
+
+  ionViewWillEnter(){
+    this.getAllUsers();
+    this.getUltimosAgregados();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FeedUsuariosPage');
+  }
+
+  getUltimosAgregados(){
+    this.api.getUltimosAgregadosUsuarios().subscribe(x=>{
+      this.ultimosAgregados = x['data'];
+      //console.log('ultimos_agre',this.ultimosAgregados[3].imagen);
+    })
+  }
+
+  getAllUsers(){
+    this.api.getAllUsers().subscribe(x=>{
+      console.log('todos',x);
+      this.todosUsers = x['data'];
+    })
+  }
+
+  goToUserDetail(user){
+    this.navCtrl.push(ListDogUserPage,{id : user.usuarioid})
   }
 
 }

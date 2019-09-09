@@ -7,7 +7,7 @@ import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angu
 import { ServiceDetailPage } from "../service-detail/service-detail";
 import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 
-declare var google : any;
+declare var google: any;
 
 @IonicPage()
 @Component({
@@ -18,20 +18,20 @@ export class ServiceListPage {
   
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
-  locationUser:any={};
+  locationUser: any = {};
   private services: any[];
   private filteredServices: any;
   searchDisabled: boolean;
   saveDisabled: boolean;
   location: any;
   private categoryId: any;
-  dataCategory:any;
+  dataCategory: any;
   placesService: any;
-  bounds:any;
-  verFiltro:boolean;
-  verfav:boolean;
-  distanceService:any;
-  services2:any=[];
+  bounds: any;
+  verFiltro: boolean;
+  verfav: boolean;
+  distanceService: any;
+  services2: any = [];
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -42,18 +42,17 @@ export class ServiceListPage {
     public zone: NgZone,
     private storage: Storage,
   ) {
-    console.log('stack_Filtrado',navParams.get('stackFiltrado'));
+    console.log('stack_Filtrado', navParams.get('stackFiltrado'));
     this.getCurrentPosition();
     this.dataCategory = this.navParams.get('cat');
     this.categoryId = this.navParams.get('catId');
-    this.getStore();    
     this.searchDisabled = true;
     this.saveDisabled = true;
     //this.filteredServices = this.services.filter(item => item.categoryId == this.categoryId);
   }
 
 
-  createMap(){
+  createMap() {
     let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then(() => {
       this.placesService = new google.maps.places.PlacesService(this.maps.map);
       this.bounds = new google.maps.LatLngBounds();
@@ -62,8 +61,8 @@ export class ServiceListPage {
     });
   }
 
-  getCurrentPosition(){
-    this.geo.getCurrentPosition().then((pos)=>{
+  getCurrentPosition() {
+    this.geo.getCurrentPosition().then((pos) => {
       this.locationUser.lat = pos.coords.latitude;
       this.locationUser.lng = pos.coords.longitude;
       console.log('position', this.locationUser);
@@ -76,14 +75,14 @@ export class ServiceListPage {
     console.log('place', locales);
     //this.places = [];
     var iconBase = "http://ctrlztest.com.ar/lupacan/apirest/";
-    locales.map(local=>{
+    locales.map(local => {
       let location = {
         lat: null,
         lng: null,
         name: local.direccion
       };
       var icon = {
-        url: iconBase+local.icono,
+        url: iconBase + local.icono,
         fillColor: 'yellow',
         fillOpacity: 0.8,
         scale: 1,
@@ -104,7 +103,7 @@ export class ServiceListPage {
             map: this.maps.map,
             title: local.nombre,
             icon: icon,
-            draggable: true,
+            draggable: false,
             position: { lat: location.lat, lng: location.lng }
           });
           this.location = location;
@@ -115,35 +114,35 @@ export class ServiceListPage {
         origins: [this.locationUser],
         destinations: [local.direccion],
         travelMode: 'DRIVING',
-        unitSystem : google.maps.UnitSystem.Metric,
+        unitSystem: google.maps.UnitSystem.Metric,
         avoidHighways: false,
         avoidTolls: false
-      }, async(response, status)=>{
-        if (status !== 'OK'){
+      }, async (response, status) => {
+        if (status !== 'OK') {
           alert('Error was: ' + status);
-        }else{
-          console.log('data',response)
+        } else {
+          console.log('data', response)
           console.log('respuesta', response['rows'][0]['elements'][0]['distance']['text']);
           local.distanciaUser = await response['rows'][0]['elements'][0]['distance']['text'];
           local.distanciaValue = await response['rows'][0]['elements'][0]['distance']['value'];
         }
-        setTimeout(()=>{
+        setTimeout(() => {
           this.ordenar();  
-        },300);
+        }, 300);
       });
-      console.log('local',local);
+      console.log('local', local);
     })
     this.maps.map.fitBounds(this.bounds);
   }
 
-  ordenar(){
-    this.services2 = this.services.sort(function(a, b) {
+  ordenar() {
+    this.services2 = this.services.sort(function (a, b) {
       
       //console.log(a.nombre + " - "+ a.distance+ " - "+ b.nombre + " - "+b.distance+ "&")
-      if(a.distanciaValue > b.distanciaValue){
+      if (a.distanciaValue > b.distanciaValue) {
         return 1
       }
-      if(a.distanciaValue < b.distanciaValue){
+      if (a.distanciaValue < b.distanciaValue) {
         return -1
       }
       return 0
@@ -152,41 +151,43 @@ export class ServiceListPage {
   }
 
 
-  ionViewWillEnter(){
-    this.createMap();
+  ionViewWillEnter() {
+    this.createMap()
+    this.getStore();
   }
 
-  getStore(){
-    this.storage.get('datauser').then(val=>{
-      this.apiService.getStores(this.categoryId, val['usuarioid']).subscribe(x=>{
+  getStore() {
+    this.storage.get('datauser').then(val => {
+      this.apiService.getStores(this.categoryId, val['usuarioid']).subscribe(x => {
         console.log('dataService', x);
         this.services = x['data'];
+        //this.selectPlace(this.services);
       }) 
     })
   }
 
-  updateFilter(verFiltro){
+  updateFilter(verFiltro) {
     this.verfav = false;
-    if(verFiltro){
-      let filtrosModal = this.modalCtrl.create(FiltrosPage ,{categoriaId: this.categoryId, filtrosDe: 'service', stackFilter: this.services});
+    if (verFiltro) {
+      let filtrosModal = this.modalCtrl.create(FiltrosPage, { categoriaId: this.categoryId, filtrosDe: 'service', stackFilter: this.services });
       filtrosModal.present();
       filtrosModal.onDidDismiss(data => {
         this.services2 = data;
      });
-    }else{
+    } else {
       this.services2 = this.services;
     }
   }
 
-  updateFilterFav(verfav){
+  updateFilterFav(verfav) {
     this.verFiltro = false;
     let originList = this.services;
     console.log(verfav);
-    if(verfav){
-      this.services2 = this.services.filter(x=>{
+    if (verfav) {
+      this.services2 = this.services.filter(x => {
         return x.favorito == "1";
       })
-    }else{
+    } else {
       this.services2 = this.services;
     }
   }
@@ -196,16 +197,16 @@ export class ServiceListPage {
   }
 
   goToService(service) {
-    this.navCtrl.push(ServiceDetailPage, {serv:service, cat:this.dataCategory});
+    this.navCtrl.push(ServiceDetailPage, { serv: service, cat: this.dataCategory });
   }
 
-  goBack(){
+  goBack() {
     this.navCtrl.pop();
   }
 
-  traerPublicidad(){
-    this.apiService.getPublicidad("2").subscribe(x=>{
+  traerPublicidad() {
+    /* this.apiService.getPublicidad("2").subscribe(x=>{
       console.log('publicidad',x);
-    })
+    }) */
   }
 }

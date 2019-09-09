@@ -18,6 +18,7 @@ export class GoogleMapsProvider {
   mapLoaded: any;
   mapLoadedObserver: any;
   currentMarker: any;
+  count:number=1;
   apiKey: string = "AIzaSyAF2VM1_XBDzkcEH5f37EBWpjGtnF15lbQ";
   constructor(public connectivityService: ConnectivityServiceProvider, public geolocation: Geolocation) {
     console.log('Hello GoogleMapsProvider Provider');
@@ -52,16 +53,19 @@ export class GoogleMapsProvider {
             this.enableMap();
           }
 
-          let script = document.createElement("script");
+         let script = document.createElement("script");
           script.id = "googleMaps";
+          var head = document.getElementsByTagName('head')[0];
+          var elem=document.getElementById("googleMaps");
+          if(elem!=null){
+            head.removeChild(elem);
+          }
+      
+    
+          script.src = 'http://maps.google.com/maps/api/js?key=' + this.apiKey + '&callback=mapInit&libraries=places';
+      
 
-          if(this.apiKey){
-            script.src = 'http://maps.google.com/maps/api/js?key=' + this.apiKey + '&callback=mapInit&libraries=places';
-          } /* else {
-            script.src = 'http://maps.google.com/maps/api/js?callback=mapInit';       
-          } */
-
-          document.body.appendChild(script);  
+          head.appendChild(script);
 
         //} 
       } else {

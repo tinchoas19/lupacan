@@ -28,6 +28,7 @@ export class CreateServicePage {
     telefono:"",
     horaA:"",
     horaC:"",
+    localidad:"",
     category:"",
     usuarioid:"", 
     placeid:"",
@@ -142,6 +143,8 @@ export class CreateServicePage {
     this.query = place.description;
     this.tienda.direcc = this.query;
     this.tienda.placeid = place.place_id
+    this.tienda.localidad = place.structured_formatting.secondary_text.split(',')[0];
+    console.log('localidad', this.tienda.localidad);
     this.places = [];
     console.log('placeSlected', place);  
   }
@@ -153,13 +156,11 @@ export class CreateServicePage {
     });
     loading.present();
     let data;
-    console.log('this.catSelected[0]', this.catSelected[0].legth);
-    if(this.catSelected[0].legth > 1){
+    console.log('this.catSelected[0]_data', this.catSelected[0]);    
+    console.log('this.catSelected[0]', this.catSelected[0].length);
+    if(this.catSelected[0].length >= 1){
       this.servicios = this.catSelected[0].map(x=>{ return x.categorialocalid});
-    }else{
-      this.servicios = [];
-      this.servicios.push(this.catSelected[0].categorialocalid)
-    }    
+    }   
     console.log('tienda', this.tienda);
     console.log('servSelec', this.servicios);
     console.log('imagene', this.imagenes);    

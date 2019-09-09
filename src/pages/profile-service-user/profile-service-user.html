@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content>
-  <div class="img-cont">
+  <div *ngIf="dataService" class="img-cont">
     <img style="display: flex; margin: 0 auto;" src="{{apiUrl+dataService.fotos[0].imagen}}" alt="imagen servico">
   </div>
   <div padding class="top-cont">
@@ -29,6 +29,9 @@
     </ion-col>
     <ion-col col-12 padding text-center>
       <button class="btn_tienda" ion-button full round (click)="vercomentarios()">Comentarios</button>
+    </ion-col>
+    <ion-col col-12 padding text-center>
+      <button class="btn_tienda" ion-button full round (click)="vercmensajes()">Mensajes</button>
     </ion-col>
     <ion-col col-12 padding text-center *ngIf="dataService.premium == '0'">
       <button color="primary" ion-button full round (click)="localPremium()">Premium</button>

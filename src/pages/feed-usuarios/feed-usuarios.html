@@ -15,17 +15,17 @@
           <h2 text-center>Ultimos agregados</h2>
         </ion-col>
       </ion-row>
-      <!-- <ion-slides pager>
-    <ion-slide>
-      <ion-row>
-        <ion-col col-3 *ngFor="let dog of users" (click)="goToDogDetail(dog)">
-          <div class="dog-name">{{dog.nombre}}</div>
-          <img *ngIf="dog.fotos[0].fotourl" src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
-          <img *ngIf="!dog.fotos[0].fotourl" src="assets/imgs/1.jpg" alt="{{dog.nombre}}">
-        </ion-col>
-      </ion-row>
-    </ion-slide>
-  </ion-slides> -->
+      <ion-slides pager>
+        <ion-slide *ngIf="ultimosAgregados">
+          <ion-row>
+            <ion-col col-3 *ngFor="let user of ultimosAgregados; let i = index" (click)="goToUserDetail(user)">
+              <!-- <div class="dog-name">{{user.nombre}}</div> -->
+              <img *ngIf="user.imagen != ''" src="http://ctrlztest.com.ar/lupacan/apirest/{{user.imagen}}">
+              <img *ngIf="user.imagen == ''" src="assets/imgs/1.jpg">
+            </ion-col>
+          </ion-row>
+        </ion-slide>
+      </ion-slides>
       <ion-row justify-content-center class="checks">
         <ion-col col-4>
           <ion-item no-lines>
@@ -46,12 +46,13 @@
           </ion-item>
         </ion-col>
       </ion-row>
-      <!-- <ion-row *ngIf="!mostrarMapa" style="margin-top: 7%;">
-    <ion-col col-4 *ngFor="let dog of filteredDogs" (click)="goToDogDetail(dog)">
-      <div class="dog-name">{{dog.nombre}}</div>
-      <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
-    </ion-col>
-  </ion-row> -->
+      <ion-row *ngIf="!mostrarMapa" style="margin-top: 7%;">
+        <ion-col col-4 *ngFor="let user of todosUsers" (click)="goToUserDetail(user)">
+          <div class="dog-name">{{user.nombre}}</div>
+          <img *ngIf="user.imagen != ''" src="http://ctrlztest.com.ar/lupacan/apirest/{{user.imagen}}">
+          <img *ngIf="user.imagen == ''" src="assets/imgs/1.jpg">
+        </ion-col>
+      </ion-row>
       <ion-row no-padding [ngClass]="mostrarMapa ? 'active' : 'inactive'">
         <div #pleaseConnect id="please-connect">
           <p>Please connect to the Internet...</p>

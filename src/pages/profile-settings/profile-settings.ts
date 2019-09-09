@@ -1,3 +1,4 @@
+import { ListChatsPage } from './../list-chats/list-chats';
 import { RefugioPage } from './../refugio/refugio';
 import { MyFavoritesPage } from './../my-favorites/my-favorites';
 import { Storage } from '@ionic/storage';
@@ -64,7 +65,7 @@ export class ProfileSettingsPage {
   }
 
   goToConversaciones(){
-    console.log('traer Conversaciones');
+    this.navCtrl.push(ListChatsPage);
   }
 
   ionViewDidLoad() {

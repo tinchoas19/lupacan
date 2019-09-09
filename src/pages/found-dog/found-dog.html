@@ -9,51 +9,113 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-list-header>
+    <ion-list-header no-lines text-center>
       Datos del perro encontrado
     </ion-list-header>
-    <ion-item>
-      <ion-label color="primary" stacked>Nombre</ion-label>
-      <ion-input type="text" placeholder="Nombre" required [(ngModel)]="nombre"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>Apellido</ion-label>
-      <ion-input type="text" placeholder="Apellido" [(ngModel)]="apellido"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>Raza</ion-label>
-      <ion-input type="text" placeholder="Raza" [(ngModel)]="raza"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>Color</ion-label>
-      <ion-input type="text" placeholder="Color" [(ngModel)]="color"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>Email</ion-label>
-      <ion-input type="email" placeholder="Email" [(ngModel)]="email"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>Tamaño</ion-label>
-      <ion-input type="text" placeholder="Tamaño" [(ngModel)]="size"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>Sexo</ion-label>
-      <ion-select [(ngModel)]="sexo">
-        <ion-option value="1">Macho</ion-option>
-        <ion-option value="2">Hembra</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>Direccion </ion-label>
-      <ion-input type="text" placeholder="Direccion" [(ngModel)]="direccion"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>Fecha</ion-label>
-      <ion-datetime placeholder="Jan 24 2019" displayFormat="MMM DD YYYY" [(ngModel)]="fecha"></ion-datetime>
-    </ion-item>
-
+    <ion-row style="margin-top: 7%;">
+      <ion-col *ngIf="!img1" col-4 class="lupa-shadow add-photo" (click)="getImage(1)">
+        <ion-icon name="camera"></ion-icon>
+        Subir fotos
+      </ion-col>
+      <ion-col *ngIf="img1" col-4 class="lupa-shadow add-photo">
+        <img src="{{imageFileName1}}">
+      </ion-col>
+      <ion-col *ngIf="!img2" col-4 class="lupa-shadow add-photo" (click)="getImage(2)">
+        <ion-icon name="camera"></ion-icon>
+        Subir fotos
+      </ion-col>
+      <ion-col *ngIf="img2" col-4 class="lupa-shadow add-photo">
+        <img src="{{imageFileName2}}">
+      </ion-col>
+      <ion-col *ngIf="!img3" col-4 class="lupa-shadow add-photo" (click)="getImage(3)">
+        <ion-icon name="camera"></ion-icon>
+        Subir fotos
+      </ion-col>
+      <ion-col *ngIf="img3" col-4 class="lupa-shadow add-photo">
+        <img src="{{imageFileName3}}">
+      </ion-col>
+    </ion-row>
+    <form [formGroup]="myForm">
+      <ion-row style="width: 100%;">
+        <ion-col col-12>
+          <ion-item>
+            <ion-label stacked>Características</ion-label>
+            <ion-textarea placeholder="Descripción..." formControlName="direccion" [class.invalid]="!myForm.controls.direccion.valid && (myForm.controls.direccion.dirty || submitAttempt)"></ion-textarea>
+          </ion-item>
+          <ion-item no-lines *ngIf="!myForm.controls.direccion.valid  && (myForm.controls.direccion.dirty || submitAttempt)">
+            <p>Por favor ingresar al menos una breve descripción.</p>
+          </ion-item>
+        </ion-col>
+        <ion-item no-padding style="height: 3.6rem !important; border-radius: 1.8rem !important;box-shadow: 0px 0px 37px -1px rgba(0, 0, 0, 0.3)!important;">
+          <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Fecha" formControlName="edad" [class.invalid]="!myForm.controls.edad.valid && (myForm.controls.edad.dirty || submitAttempt)"></ion-datetime>
+        </ion-item>
+        <ion-item no-lines *ngIf="!myForm.controls.edad.valid  && (myForm.controls.edad.dirty || submitAttempt)">
+          <p>Por favor ingresar una fecha.</p>
+        </ion-item>
+      </ion-row>
+    </form>
+    <ion-col padding>
+      <ion-list radio-group class="sexo" [(ngModel)]="dog.gender">
+        Sexo
+        <div>
+          <ion-radio checked="true" value="1"></ion-radio>
+          &nbsp;hembra
+        </div>
+        <div>
+          <ion-radio value="2"></ion-radio>
+          &nbsp;macho
+        </div>
+      </ion-list>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label stacked>Tamaño</ion-label>
+        <ion-select [(ngModel)]="dog.size">
+          <ion-option value="small">Chico</ion-option>
+          <ion-option value="medium">Mediano</ion-option>
+          <ion-option value="large">Grande</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label stacked>Raza</ion-label>
+          <ion-select [(ngModel)]="dog.raza" placeholder="Mestizo">
+            <ion-option *ngFor="let raza of razas" value="{{raza.razaid}}">{{raza.nombre}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label stacked>Color</ion-label>
+          <ion-select [(ngModel)]="dog.color" placeholder="Color">
+            <ion-option *ngFor="let color of colores" value="{{color.colorid}}">{{color.nombre}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12 padding>
+        <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" placeholder="Donde lo encontraste?"></ion-searchbar>
+      </ion-col>
+      <ion-col padding style="padding-top: 0px!important;">
+        <ion-list class="list_map">
+          <ion-item *ngFor="let place of places" (touchstart)="selectPlace(place)">
+            <p>{{place.description}}</p>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+      <ion-col col-12 [ngClass]="mostrarMapa ? 'active' : 'inactive'">
+        <div #pleaseConnect id="please-connect">
+          <p>Please connect to the Internet...</p>
+        </div>
+        <div #map id="map" style="width: 100% !important; height: 200px !important;">
+          <ion-spinner></ion-spinner>
+        </div>
+      </ion-col>
+    </ion-row>
   </ion-list>
-  <button ion-button full
-    (click)="publicar(nombre, apellido, raza, color, email, size, sexo, direccion, fecha)">Publicar
-    datos</button>
+  <button ion-button full (click)="publicar()">Publicar datos
+  </button>
 </ion-content>

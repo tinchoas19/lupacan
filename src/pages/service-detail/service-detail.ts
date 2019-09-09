@@ -5,6 +5,7 @@ import { Component, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, ToastController } from 'ionic-angular';
 import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 import { PhotoSliderPage } from '../photo-slider/photo-slider';
+import { ChatPage } from '../chat/chat';
 
 
 
@@ -22,10 +23,13 @@ export class ServiceDetailPage {
   saveDisabled: boolean;
   location: any;
   placesService: any;
-  comentarios:any;
-  dejarcomment:boolean;
-  seguidores:any;
-  isChecked :boolean;
+  comentarios: any;
+  dejarcomment: boolean;
+  seguidores: any;
+  isChecked: boolean;
+  usuarioid: any;
+  desdeBusq: boolean = false;
+  userId:any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -40,11 +44,12 @@ export class ServiceDetailPage {
     this.dataCategory = this.navParams.get('cat');
     this.searchDisabled = true;
     this.saveDisabled = true;
-    console.log("mi servicio: ", this.service.perros);
+    console.log("mi servicio: ", this.service);
     this.dejarcomment = false;
+    this.navParams.data.busq ? this.desdeBusq = true : this.desdeBusq = false;
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.getComments();
   }
 
@@ -53,24 +58,24 @@ export class ServiceDetailPage {
     console.log('ionViewDidLoad ServiceDetailPage');
   }
 
-  dejarComment(){
+  dejarComment() {
     this.dejarcomment = !this.dejarcomment;
   }
 
-  sendComment(comment){
-    this.storage.get('datauser').then(val=>{
-      if(val != null){
-        this.api.postComment(this.service['localid'], val['usuarioid'], comment).subscribe(x=>{
-          console.log('dataComment',x);
+  sendComment(comment) {
+    this.storage.get('datauser').then(val => {
+      if (val != null) {
+        this.api.postComment(this.service['localid'], val['usuarioid'], comment).subscribe(x => {
+          console.log('dataComment', x);
           let result = JSON.parse(x['_body'])['data']
-          if(result == 'sent'){
+          if (result == 'sent') {
             this.presentToasteEx();
             this.dejarcomment = false;
-          }else{
+          } else {
             this.presentToasteError();
           }
         })
-      }else{
+      } else {
         this.presentToasteError();
       }
     })
@@ -83,56 +88,34 @@ export class ServiceDetailPage {
     });
   }
 
-  getComments(){
-    this.api.getComments(this.service['localid']).subscribe(x=>{
-      this.comentarios = x['data'];
-    })
-  }
-
-  goToDogDetail(dog){
-    this.navCtrl.push(PhotoSliderPage,{chatid: "8",dogDetail: dog, isMyDogs: false});
-  }
-  
-  addToFavorites(){
-     this.storage.get('datauser').then(val=>{
-      if(val != null){
-        if(this.isChecked){
-          this.api.addFavoriteLocal(val.usuarioid, this.service.localid, 0).subscribe(x=>{
-            console.log('fav',x);
-            let data = JSON.parse(x['_body'])['data'];
-            if(data){
-              this.errorToast();
-            }
-          });
-          this.isChecked = false;
-        }else{
-        console.log('remove_Fav => (userid, dogid)');      
-        this.api.addFavoriteLocal(val.usuarioid, this.service.localid, 1).subscribe(x=>{
-          console.log('fav',x);
-          let data = JSON.parse(x['_body'])['data'];
-          if(data){
-            this.exitoToast();
-          }
-        });
-          this.isChecked = true;
-        }
+  getComments() {
+    this.storage.get('datauser').then(val => {
+      if (val != null) {
+        this.userId = val['usuarioid'];
+        this.api.getComments(this.service['localid']).subscribe(x => {
+          this.comentarios = x['data'];
+        })
       }
     })
   }
 
-  getSeguidores(){
-    this.api.getSeguidores(this.service['localid']).subscribe(x=>{
+  goToDogDetail(dog) {
+    this.navCtrl.push(PhotoSliderPage, { chatid: "8", dogDetail: dog, isMyDogs: false });
+  }
+
+  getSeguidores() {
+    this.api.getSeguidores(this.service['localid']).subscribe(x => {
       this.seguidores = x['data'];
       let verseguidores = this.modalCtrl.create(ListCommentLocalPage, { seguidores: this.seguidores });
       verseguidores.present();
     })
   }
 
-  verComments(){
+  verComments() {
     let vercomments = this.modalCtrl.create(ListCommentLocalPage, { comments: this.comentarios });
     vercomments.present();
   }
-  
+
   selectPlace(local) {
     console.log('place', local);
     //this.places = [];
@@ -176,10 +159,19 @@ export class ServiceDetailPage {
     this.navCtrl.pop();
   }
 
+  goToMsjPrivado() {
+    this.storage.get('datauser').then(val => {
+      if (val != null) {
+        this.navCtrl.push(ChatPage, { origenid: val['usuarioid'], tipoorigen: 'usuario', destinoid: this.service['localid'], tipodestino: 'tienda', conversandocon: this.service['nombre'] });
+      }
+    })
+    //this.navCtrl.push()
+  }
+
   async presentToasteError() {
     const toast = await this.toastController.create({
       message: "Hubo un error!\n Vuleve a intentarlo.",
-      duration:2000,
+      duration: 2000,
       showCloseButton: true,
       position: 'top',
       cssClass: 'toastError',
@@ -191,7 +183,7 @@ export class ServiceDetailPage {
   async presentToasteEx() {
     const toast = await this.toastController.create({
       message: "Listo!\n Se registro tu comentario.",
-      duration:2000,
+      duration: 2000,
       showCloseButton: true,
       position: 'top',
       cssClass: 'toastExito',
@@ -203,7 +195,7 @@ export class ServiceDetailPage {
   async errorToast() {
     const toast = await this.toastController.create({
       message: "Dejaste de seguir a este Comercio!",
-      duration:2000,
+      duration: 2000,
       showCloseButton: true,
       position: 'top',
       cssClass: 'toastError',
@@ -215,7 +207,7 @@ export class ServiceDetailPage {
   async exitoToast() {
     const toast = await this.toastController.create({
       message: "Listo!\n Comenzaste a seguir a este comercio.",
-      duration:2000,
+      duration: 2000,
       showCloseButton: true,
       position: 'top',
       cssClass: 'toastExito',

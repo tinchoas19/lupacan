@@ -59,9 +59,9 @@ export class HomePage {
   }
 
   traerPublicidad(){
-    this.api.getPublicidad("1").subscribe(x=>{
+    /* this.api.getPublicidad("1").subscribe(x=>{
       console.log('publicidad',x);
-    })
+    }) */
   }
 
   

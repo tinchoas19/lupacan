@@ -3,81 +3,35 @@
   <ion-navbar no-border-bottom>
     <ion-title>{{pageData.title}}</ion-title>
   </ion-navbar>
-  <!--  <ion-toolbar no-border-top>
-    <ion-segment [(ngModel)]="segment" color="secondary">
-      <ion-segment-button value="dog">
-        Perros
-      </ion-segment-button>
-      <ion-segment-button value="users">
-        Usuarios
-      </ion-segment-button>
-      <ion-segment-button value="services">
-        Servicios
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar> -->
 </ion-header>
 
 
 <ion-content padding>
   <div>
     <ion-grid no-padding>
-      <!--   <ion-row no-padding>
-        <ion-col col-3>
-          <ion-item float-left>
-            <ion-label color="primary" stacked>Raza</ion-label>
-            <ion-select [(ngModel)]="employee" placeholder="Mestizo">
-              <ion-option *ngFor="let raza of razas">{{raza.name}}</ion-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
-        <ion-col col-3>
-          <ion-item>
-            <ion-label color="primary" stacked>Buscar Ciudad</ion-label>
-            <ion-select [(ngModel)]="employee" placeholder="Buscar Ciudad,Provincia,País">
-              <ion-option *ngFor="let raza of razas">{{raza.name}}</ion-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
-        <ion-col col-3>
-          <ion-item>
-            <ion-label color="primary" stacked>Sexo</ion-label>
-            <ion-select [(ngModel)]="gender">
-              <ion-option value="f">Hembra</ion-option>
-              <ion-option value="m">Macho</ion-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
-        <ion-col col-3>
-          <ion-item>
-            <ion-label color="primary" stacked>Nombre</ion-label>
-            <ion-input type="text" placeholder="Nombre"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row justify-content-center>
-        <ion-col style="text-align: center;">
-          <button ion-button round color="primary">Buscar</button>
-        </ion-col>
-      </ion-row> -->
-
       <ion-row>
         <ion-col>
           <h2 text-center>Ultimos agregados</h2>
         </ion-col>
       </ion-row>
-      <ion-slides pager>
-        <ion-slide>
-          <ion-row>
-            <ion-col col-3 *ngFor="let dog of dogs" (click)="goToDogDetail(dog)">
+      <ion-row *ngIf="dogs.length > 0" justify-content-center>
+        <ion-col col-1 text-center (click)="prev()">
+          <ion-icon text-center name="arrow-dropleft-circle"></ion-icon>
+        </ion-col>
+        <ion-col col-10 text-center>
+          <ion-slides class="slide_ultimos" pager="false" #slideWithNav2 slidesPerView="4">
+            <ion-slide *ngFor="let dog of dogs">
               <div class="dog-name">{{dog.nombre}}</div>
-              <img *ngIf="dog.fotos[0].fotourl" src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
-              <img *ngIf="!dog.fotos[0].fotourl" src="assets/imgs/1.jpg" alt="{{dog.nombre}}">
-              <!--div [style.width.px]="10" [style.height.px]="10" [style.background-color]="dog.isOnline ? 'green' : 'gray'"></div-->
-            </ion-col>
-          </ion-row>
-        </ion-slide>
-      </ion-slides>
+              <img class="img_slide_ultimo" *ngIf="dog.fotos[0].fotourl" src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}"
+                alt="{{dog.nombre}}" (click)="goToDogDetail(dog)">
+              <img *ngIf="!dog.fotos[0].fotourl" src="assets/imgs/1.jpg" alt="{{dog.nombre}}" (click)="goToDogDetail(dog)">
+            </ion-slide>
+          </ion-slides>
+        </ion-col>
+        <ion-col col-1 text-center (click)="next()">
+          <ion-icon text-center name="arrow-dropright-circle"></ion-icon>
+        </ion-col>
+      </ion-row>
       <ion-row justify-content-center class="btn_nav">
         <ion-col text-center col-4>
           <button text-center ion-button block color="primary">Perros</button>
@@ -114,7 +68,7 @@
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="!mostrarMapa" style="margin-top: 7%;">
+      <ion-row *ngIf="filteredDogs.length > 0 && !mostrarMapa" style="margin-top: 7%;">
         <ion-col col-4 *ngFor="let dog of filteredDogs" (click)="goToDogDetail(dog)">
           <div class="dog-name">{{dog.nombre}}</div>
           <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
@@ -134,59 +88,5 @@
         </div>
       </ion-row>
     </ion-grid>
-    <!--  <ion-grid *ngSwitchCase="'users'">
-      <ion-row no-padding>
-        <ion-col col-6>
-          <ion-item>
-            <ion-label color="primary" stacked>Buscar Ciudad</ion-label>
-            <ion-select [(ngModel)]="employee" placeholder="Buscar Ciudad,Provincia,País">
-              <ion-option *ngFor="let raza of razas">{{raza.name}}</ion-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
-        <ion-col col-6>
-          <ion-item>
-            <ion-label color="primary" stacked>Nombre</ion-label>
-            <ion-input type="text" placeholder="Nombre"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row justify-content-center>
-        <ion-col style="text-align: center;">
-          <button ion-button round color="primary">Buscar</button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <ion-grid *ngSwitchCase="'services'">
-      <ion-row no-padding>
-        <ion-col col-4>
-          <ion-item>
-            <ion-label color="primary" stacked>Buscar Ciudad</ion-label>
-            <ion-select [(ngModel)]="employee" placeholder="Buscar Ciudad,Provincia,País">
-              <ion-option *ngFor="let raza of razas">{{raza.name}}</ion-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
-        <ion-col col-4>
-          <ion-item>
-            <ion-label color="primary" stacked>Tipo de Servicio</ion-label>
-            <ion-select [(ngModel)]="employee" placeholder="Tipo de Servicio">
-              <ion-option *ngFor="let raza of razas">{{raza.name}}</ion-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
-        <ion-col col-4>
-          <ion-item>
-            <ion-label color="primary" stacked>Nombre</ion-label>
-            <ion-input type="text" placeholder="Nombre"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row justify-content-center>
-        <ion-col style="text-align: center;">
-          <button ion-button round color="primary">Buscar</button>
-        </ion-col>
-      </ion-row>
-    </ion-grid> -->
   </div>
 </ion-content>

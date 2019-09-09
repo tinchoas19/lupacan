@@ -68,31 +68,6 @@ export class PhotoSliderPage {
     })
   }
 
-  //add Favorites
-  addToFavorites(){
-    console.log('add_Fav => (userid, dogid)');
-    if(this.isChecked){
-      this.api.favorite(this.userid, this.dog.perroid, 0).subscribe(x=>{
-        console.log('fav',x);
-        let data = JSON.parse(x['_body'])['data'];
-        if(data){
-          this.presentToasteError();
-        }
-      });
-      this.isChecked = false;
-    }else{
-    console.log('remove_Fav => (userid, dogid)');      
-    this.api.favorite(this.userid, this.dog.perroid, 1).subscribe(x=>{
-      console.log('fav',x);
-      let data = JSON.parse(x['_body'])['data'];
-      if(data){
-        this.presentToasteEx();
-      }
-    });
-      this.isChecked = true;
-    }
-  }
-
   controlData(){
     this.storage.get('datauser').then(val=>{
       if(val){
@@ -125,7 +100,7 @@ export class PhotoSliderPage {
   }
   //Chat
   goToChat(){
-    this.navCtrl.push(ChatPage,{dog:this.dog});
+    this.navCtrl.push(ChatPage,{origenid:this.userid, tipoorigen: 'usuario', destinoid: this.dog['usuarioid'], tipodestino: 'usuario', conversandocon: this.dog['usuarionombre']});
   }
   //Position
   getCurrentPosition(){
@@ -192,7 +167,9 @@ export class PhotoSliderPage {
       }else{
         console.log('data',response)
         console.log('respuesta', response['rows'][0]['elements'][0]['distance']['text']);
-        this.distanciaPerro = await response['rows'][0]['elements'][0]['distance']['text'];
+        if(response['rows'][0]['elements'][0]['status'] == 'NOT_FOUND'){
+          this.distanciaPerro = 'Fuera del area';          
+        }else this.distanciaPerro = await response['rows'][0]['elements'][0]['distance']['text'];
         /*x.duration = await response['rows'][0]['elements'][0]['duration']['text'];
         x.distanceVal = await response['rows'][0]['elements'][0]['duration']['value']; */
         //console.log('duration', x.duration);

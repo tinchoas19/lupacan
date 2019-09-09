@@ -13,7 +13,7 @@
       </ion-slide>
     </ion-slides>
   </ion-row>
-  <ion-row justify-content-center style="margin-top: 5%;">
+  <ion-row *ngIf="!desdeBusq" justify-content-center style="margin-top: 5%;">
     <ion-col col-12 text-center>
       <h3 text-center color="primary">{{dataCategory.nombre}}</h3>
     </ion-col>
@@ -36,8 +36,9 @@
   <ion-grid>
     <ion-row>
       <ion-col col-12>
-        <ion-icon style="font-size: 3rem;" float-right [color]="isChecked ? 'danger' : 'dark'" name="heart" (click)="addToFavorites()"></ion-icon>
-        <ion-badge *ngIf="service.premium != null" color="primary" float-left>
+        <add-fav-serv [usuarioid]="userId" [localid]="service.localid"></add-fav-serv>
+        <!-- <ion-icon style="font-size: 3rem;" float-right [color]="isChecked ? 'danger' : 'dark'" name="heart" (click)="addToFavorites()"></ion-icon> -->
+        <ion-badge *ngIf="service.premium != null && service.descuento != null" color="primary" float-left>
           <p>{{service.descuento}}%</p>
         </ion-badge>
       </ion-col>
@@ -55,6 +56,9 @@
       </ion-col>
       <ion-col col-6>
         Direccion: {{service.direccion}}
+      </ion-col>
+      <ion-col col-6>
+        <ion-icon style="font-size: 3rem;" float-right name="chatbubbles" (click)="goToMsjPrivado()"></ion-icon>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -89,12 +93,14 @@
         <button text-center ion-button outline color="primary" (click)="getSeguidores()">Ver seguidores</button>
       </ion-col>
     </ion-row>
-    <ion-row *ngIf="service.perros.length > 1" style="margin-top: 7%;">
-      <h4 text-center>Perros en este Refugio</h4>
-      <ion-col col-4 *ngFor="let dog of service.perros" (click)="goToDogDetail(dog[0])">
-        <div class="dog-name">{{dog[0].nombre}}</div>
-        <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog[0].fotos[0].fotourl}}" alt="{{dog.nombre}}">
-      </ion-col>
-    </ion-row>
+    <div *ngIf="service.perros">
+      <ion-row *ngIf="service.perros.length > 1" style="margin-top: 7%;">
+        <h4 text-center>Perros en este Refugio</h4>
+        <ion-col col-4 *ngFor="let dog of service.perros" (click)="goToDogDetail(dog[0])">
+          <div class="dog-name">{{dog[0].nombre}}</div>
+          <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog[0].fotos[0].fotourl}}" alt="{{dog.nombre}}">
+        </ion-col>
+      </ion-row>
+    </div>
   </ion-grid>
 </ion-content>

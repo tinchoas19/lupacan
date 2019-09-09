@@ -1,3 +1,4 @@
+import { ListChatsServicePage } from './../list-chats-service/list-chats-service';
 import { DescuentosPage } from './../descuentos/descuentos';
 import { SlidePremiumPage } from './../slide-premium/slide-premium';
 import { AddDogPage } from './../add-dog/add-dog';
@@ -70,6 +71,10 @@ export class ProfileServiceUserPage {
 
   vercomentarios(){
     this.expanded = !this.expanded;
+  }
+
+  vercmensajes(){
+    this.navCtrl.push(ListChatsServicePage,{localid: this.dataService['localid']})
   }
 
   verDescuentos(){
