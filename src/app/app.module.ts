@@ -78,6 +78,7 @@ import { InAppBrowser } from "@ionic-native/in-app-browser";
 import { PublicitarPage } from '../pages/publicitar/publicitar';
 import { AddFavServComponent } from '../components/add-fav-serv/add-fav-serv';
 import { AddFavDogComponent } from '../components/add-fav-dog/add-fav-dog';
+import { Diagnostic } from '@ionic-native/diagnostic';
 
 @NgModule({
   declarations: [
@@ -213,6 +214,7 @@ import { AddFavDogComponent } from '../components/add-fav-dog/add-fav-dog';
     Base64,
     BarcodeScanner,
     Push,
+    Diagnostic,
     Geolocation,
     Badge,
     ConnectivityServiceProvider,

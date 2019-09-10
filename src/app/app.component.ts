@@ -13,7 +13,8 @@ import { Storage } from "@ionic/storage";
 import { MenuPage } from "../pages/menu/menu";
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { Badge } from '@ionic-native/badge';
-
+import { Diagnostic } from '@ionic-native/diagnostic';
+import { IntervalProvider } from '../providers/interval/interval';
 @Component({
   templateUrl: "app.html"
 })
@@ -21,10 +22,10 @@ export class MyApp {
   rootPage: any;
   userName: string;
   email: string;
-  imagen:any;
+  imagen: any;
   @ViewChild(Nav) nav: Nav;
   @ViewChild(Nav) navChild: Nav;
-
+  public isLocationEnabled: boolean = false;
   constructor(
     platform: Platform,
     statusBar: StatusBar,
@@ -35,14 +36,17 @@ export class MyApp {
     public storage: Storage,
     private api: ApiProvider,
     private badge: Badge,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    private _DIAGNOSTIC: Diagnostic,
+    private interval: IntervalProvider,
   ) {
     platform.ready().then(() => {
       this.pushSetup();
+      this.isLocationAvailable();
       storage.get('datauser').then(val => {
         if (val != null) {
           console.log('components', val);
-          this.imagen = "http://ctrlztest.com.ar/lupacan/apirest/"+val['imagen']
+          this.imagen = "http://ctrlztest.com.ar/lupacan/apirest/" + val['imagen']
           this.userName = val['nombre'];
           this.email = val['email'];
           this.rootPage = MenuPage;
@@ -81,18 +85,18 @@ export class MyApp {
 
     pushObject.on('notification').subscribe((notification: any) => {
       console.log('Received a notification', notification);
-      this.storage.get('datauser').then(user=>{
-        if(user!=null){
-          this.api.getNotificacionesSinLeer(user['usuarioid']).subscribe(x=>{
-            console.log('misNot',x['data']);
+      this.storage.get('datauser').then(user => {
+        if (user != null) {
+          this.api.getNotificacionesSinLeer(user['usuarioid']).subscribe(x => {
+            console.log('misNot', x['data']);
             let numberNot = Number(x['data']);
-            console.log('misNot_Parse',numberNot);            
-            this.badge.set(numberNot+1);
+            console.log('misNot_Parse', numberNot);
+            this.badge.set(numberNot + 1);
           })
         }
       })
       if (notification.foreground) {
-        alert ("'" + notification.message +"'");
+        alert("'" + notification.message + "'");
       }
       console.log('perroID {params}-> ' + notification.additionalData.params);
       //if user using app and push notification comes
@@ -109,9 +113,9 @@ export class MyApp {
             handler: () => {
               //TODO: Your logic here
               console.log('ir a dogPage');
-              this.api.getDogData(notification.additionalData.params.perroid).subscribe(dog=>{
+              this.api.getDogData(notification.additionalData.params.perroid).subscribe(dog => {
                 let dataDog = dog['data'];
-                this.nav.push(DogPage,{ dogDetail: dataDog});
+                this.nav.push(DogPage, { dogDetail: dataDog });
               })
             }
           }]
@@ -122,20 +126,46 @@ export class MyApp {
         //TODO: Your logic on click of push notification directly
         //this.nav.push(MenuPage, { message: notification.message });
         console.log('Push notification clicked');
-      }      
+      }
     });
 
-    
+
     pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
   }
 
-  
+  isLocationAvailable() {
+    console.log('entro_diagnostic');
+
+    this._DIAGNOSTIC.isLocationAvailable()
+      .then((isAvailable) => {
+        console.log('isAvailable',isAvailable);
+        if(isAvailable){
+          this.interval.toggleInterval();
+        }else{
+          this.showAlert();
+        }
+      })
+      .catch((error: any) => {
+        console.dir('Location is:' + error);
+      });
+  }
+
+  showAlert() {
+    const alert = this.alertCtrl.create({
+      title: 'Ubicación',
+      subTitle: 'Para poder usar LupaCan, debes tener activada la ubicación del celular. Por favor!',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+
   goToMyProfile() {
     this.nav.push(MyProfilePage);
   }
 
   logOut() {
-    this.storage.set('userData', null);
+    this.storage.set('datauser', null);
     this.menuCtrl.close();
     var nav = this.app.getRootNav();
     nav.setRoot(LoginPage);

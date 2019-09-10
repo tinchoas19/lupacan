@@ -50,6 +50,12 @@ export class ServiPage {
     this.searchDisabled = true;
     this.saveDisabled = true;
   }
+
+  cat(){
+    this.traerLocales();
+    this.traerCategorias();
+    this.view = "favoritos"
+  }
   
   ionViewWillEnter() {
     this.traerLocales();

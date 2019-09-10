@@ -15,7 +15,7 @@ declare var google: any;
   templateUrl: 'service-list.html',
 })
 export class ServiceListPage {
-  
+
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
   locationUser: any = {};
@@ -33,9 +33,9 @@ export class ServiceListPage {
   distanceService: any;
   services2: any = [];
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
-    private apiService: ApiProvider, 
+    private apiService: ApiProvider,
     public modalCtrl: ModalController,
     public maps: GoogleMapsProvider,
     private geo: Geolocation,
@@ -43,7 +43,6 @@ export class ServiceListPage {
     private storage: Storage,
   ) {
     console.log('stack_Filtrado', navParams.get('stackFiltrado'));
-    this.getCurrentPosition();
     this.dataCategory = this.navParams.get('cat');
     this.categoryId = this.navParams.get('catId');
     this.searchDisabled = true;
@@ -62,13 +61,48 @@ export class ServiceListPage {
   }
 
   getCurrentPosition() {
-    this.geo.getCurrentPosition().then((pos) => {
-      this.locationUser.lat = pos.coords.latitude;
-      this.locationUser.lng = pos.coords.longitude;
-      console.log('position', this.locationUser);
-    }).catch((error) => {
-      console.log('Error getting location', error);
-    });
+    this.storage.get('locatioUser').then(val => {
+      if (val != null) {
+        this.locationUser.lat = val.lat;
+        this.locationUser.lng = val.lng;
+        console.log('locationUser', val);
+      } else {
+        this.geo.getCurrentPosition().then((pos) => {
+          this.locationUser.lat = pos.coords.latitude;
+          this.locationUser.lng = pos.coords.longitude;
+          console.log('position', this.locationUser);
+        }).catch((error) => {
+          console.log('Error getting location', error);
+        });
+      }
+    })
+  }
+
+  createMarkUser() {
+    this.storage.get('datauser').then(val => {
+      var iconBase = "http://ctrlztest.com.ar/lupacan/apirest/";
+      if (val != null) {
+        var icon = {
+          url: iconBase + val.imagen,
+          fillColor: 'yellow',
+          fillOpacity: 0.8,
+          scale: 1,
+          strokeColor: 'gold',
+          strokeWeight: 14,
+          size: new google.maps.Size(40, 40),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(0, 40)
+        };
+        this.maps.map.setCenter({ lat: this.locationUser.lat, lng: this.locationUser.lng });
+        var marker = new google.maps.Marker({
+          map: this.maps.map,
+          //title: local.nombre,
+          icon: icon,
+          draggable: false,
+          position: { lat: this.locationUser.lat, lng: this.locationUser.lng }
+        });
+      }
+    })
   }
 
   selectPlace(locales) {
@@ -93,12 +127,13 @@ export class ServiceListPage {
         anchor: new google.maps.Point(0, 40)
       };
       this.placesService.getDetails({ placeId: local.placeid }, (details) => {
+        console.log('details_list_serv', details)
         this.zone.run(() => {
           location.name = details.name;
           location.lat = details.geometry.location.lat();
           location.lng = details.geometry.location.lng();
           this.saveDisabled = false;
-          this.maps.map.setCenter({ lat: location.lat, lng: location.lng });
+          //this.maps.map.setCenter({ lat: this.locationUser.lat, lng: this.locationUser.lng });
           var marker = new google.maps.Marker({
             map: this.maps.map,
             title: local.nombre,
@@ -107,9 +142,10 @@ export class ServiceListPage {
             position: { lat: location.lat, lng: location.lng }
           });
           this.location = location;
-          this.bounds.extend({ lat: location.lat, lng: location.lng });
+          //this.bounds.extend({ lat: location.lat, lng: location.lng });
         });
       });
+      this.createMarkUser();
       this.distanceService.getDistanceMatrix({
         origins: [this.locationUser],
         destinations: [local.direccion],
@@ -127,17 +163,17 @@ export class ServiceListPage {
           local.distanciaValue = await response['rows'][0]['elements'][0]['distance']['value'];
         }
         setTimeout(() => {
-          this.ordenar();  
+          this.ordenar();
         }, 300);
       });
       console.log('local', local);
     })
-    this.maps.map.fitBounds(this.bounds);
+    //this.maps.map.fitBounds(this.bounds);
   }
 
   ordenar() {
     this.services2 = this.services.sort(function (a, b) {
-      
+
       //console.log(a.nombre + " - "+ a.distance+ " - "+ b.nombre + " - "+b.distance+ "&")
       if (a.distanciaValue > b.distanciaValue) {
         return 1
@@ -162,7 +198,7 @@ export class ServiceListPage {
         console.log('dataService', x);
         this.services = x['data'];
         //this.selectPlace(this.services);
-      }) 
+      })
     })
   }
 
@@ -173,7 +209,7 @@ export class ServiceListPage {
       filtrosModal.present();
       filtrosModal.onDidDismiss(data => {
         this.services2 = data;
-     });
+      });
     } else {
       this.services2 = this.services;
     }
@@ -193,6 +229,7 @@ export class ServiceListPage {
   }
 
   ionViewDidLoad() {
+    this.getCurrentPosition();
     console.log('ionViewDidLoad ServiceListPage');
   }
 

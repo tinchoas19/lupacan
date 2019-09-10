@@ -8,7 +8,8 @@
 
 <ion-content>
   <div *ngIf="dataService" class="img-cont">
-    <img style="display: flex; margin: 0 auto;" src="{{apiUrl+dataService.fotos[0].imagen}}" alt="imagen servico">
+    <img *ngIf="dataService.imagenes.length >0" style="display: flex; margin: 0 auto;" src="{{apiUrl+dataService.imagenes[0].imagen}}" alt="imagen servico">
+    <img *ngIf="!(dataService.imagenes.length >0)" style="display: flex; margin: 0 auto;" src="../../assets/imgs/vet.jpg" alt="imagen servico">
   </div>
   <div padding class="top-cont">
     <ion-row justify-content-center>

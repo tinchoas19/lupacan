@@ -3,12 +3,6 @@ import { Platform } from 'ionic-angular';
 import { ConnectivityServiceProvider } from './../connectivity-service/connectivity-service';
 import { Geolocation } from '@ionic-native/geolocation';
 
-/*
-  Generated class for the GoogleMapsProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class GoogleMapsProvider {
   mapElement: any;
@@ -100,17 +94,16 @@ export class GoogleMapsProvider {
 
         let mapOptions = {
           center: latLng,
-          zoom: 15,
+          zoom: 12,
           mapTypeId: google.maps.MapTypeId.ROADMAP,
-          streetViewControl: false,
-          disableDefaultUI: false,
-          fullscreenControl: false,
-          // zoomControl: true,
+          streetViewControl: true,
+          disableDefaultUI: true,
+          fullscreenControl: true,
+          zoomControl: true,
           mapTypeControl: false,
-          scaleControl: false,
-          rotateControl: false,
-          // disableDoubleClickZoom: true,
-          draggable: false
+          scaleControl: true,
+          rotateControl: true,
+          disableDoubleClickZoom: false,
         }
 
         this.map = new google.maps.Map(this.mapElement, mapOptions);
