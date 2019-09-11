@@ -50,7 +50,8 @@
       <ion-grid>
         <ion-row>
           <ion-col col-5 no-padding class="service-img">
-            <img src="http://ctrlztest.com.ar/lupacan/apirest/{{serv.imagenes[0].imagen}}" alt="">
+            <img *ngIf="serv.imagenes.length >0" src="http://ctrlztest.com.ar/lupacan/apirest/{{serv.imagenes[0].imagen}}" alt="">
+            <img *ngIf="!(serv.imagenes.length >0)" src="../../assets/imgs/vet.jpg" alt="">
           </ion-col>
           <ion-col col-7>
             <h2>{{serv.nombre}}</h2>

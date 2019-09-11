@@ -33,6 +33,7 @@ export class FeedPage {
   public pageData: any = {};
   verFiltro: boolean;
   verMapa: boolean;
+  verFav:boolean;
   filtrosActive: boolean;
   mostrarMapa: boolean;
   placesService: any;
@@ -116,21 +117,21 @@ export class FeedPage {
             location.lat = details.geometry.location.lat();
             location.lng = details.geometry.location.lng();
             this.saveDisabled = false;
-            this.maps.map.setCenter({ lat: location.lat, lng: location.lng });
+            //this.maps.map.setCenter({ lat: location.lat, lng: location.lng });
             var marker = new google.maps.Marker({
               map: this.maps.map,
               title: dog.nombre,
               icon: icon,
-              draggable: true,
+              draggable: false,
               position: { lat: location.lat, lng: location.lng }
             });
           }
           this.location = location;
-          this.bounds.extend(this.location);
+          //this.bounds.extend(this.location);
         });
       });
     })
-    this.maps.map.fitBounds(this.bounds);
+    //this.maps.map.fitBounds(this.bounds);
   }
 
   openSelectRaza() {
@@ -156,6 +157,7 @@ export class FeedPage {
       this.verMapa = false;
       this.filtrosActive = true;
       this.mostrarMapa = false;
+      this.verFav =false;
       let filtrosModal = this.modalCtrl.create(FiltrosPage, { categoriaId: null, filtrosDe: 'perros', stackFilter: this.filteredDogs });
       filtrosModal.present();
       filtrosModal.onDidDismiss(data => {
@@ -166,12 +168,21 @@ export class FeedPage {
       this.filteredDogs = this.dogs;
     }
   }
+  
+  filtrarFavoritos(){
+    if(this.verFav){
+      this.filteredDogs = this.filteredDogs.filter(dog=>{
+        return dog.favorito == '1';
+      })
+    }else{
+      this.filteredDogs = this.dogs;
+    }
+  }
 
   updateVerMapa() {
     //this.verFiltro = !this.verFiltro;
     console.log('Cucumbers new state:' + this.verMapa);
     if (this.verMapa) {
-      this.createMap();
       this.verFiltro = false;
       this.mostrarMapa = true;
     } else {
@@ -207,7 +218,7 @@ export class FeedPage {
           break;
       }
       console.log('filtered', this.filteredDogs);
-      //this.createMap();
+      this.createMap();
     });
   }
 

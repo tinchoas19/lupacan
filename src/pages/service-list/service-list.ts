@@ -116,7 +116,7 @@ export class ServiceListPage {
         name: local.direccion
       };
       var icon = {
-        url: iconBase + local.icono,
+        url: iconBase + this.navParams.data.cat.icono,
         fillColor: 'yellow',
         fillOpacity: 0.8,
         scale: 1,

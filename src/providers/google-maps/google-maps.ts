@@ -14,7 +14,10 @@ export class GoogleMapsProvider {
   currentMarker: any;
   count:number=1;
   apiKey: string = "AIzaSyAF2VM1_XBDzkcEH5f37EBWpjGtnF15lbQ";
-  constructor(public connectivityService: ConnectivityServiceProvider, public geolocation: Geolocation) {
+  constructor(
+    public connectivityService: ConnectivityServiceProvider, 
+    public geolocation: Geolocation
+  ) {
     console.log('Hello GoogleMapsProvider Provider');
   }
 

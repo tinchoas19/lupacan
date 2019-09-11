@@ -118,20 +118,22 @@ export class ServiPage {
       };
       this.placesService.getDetails({ placeId: local.placeid }, (details) => {
         this.zone.run(() => {
-          location.name = details.name;
-          location.lat = details.geometry.location.lat();
-          location.lng = details.geometry.location.lng();
-          this.saveDisabled = false;
-          this.maps.map.setCenter({ lat: location.lat, lng: location.lng });
-          var marker = new google.maps.Marker({
-            map: this.maps.map,
-            title: local.nombre,
-            icon: icon,
-            draggable: false,
-            position: { lat: location.lat, lng: location.lng }
-          });
-          this.location = location;
-          this.bounds.extend(marker.position);
+          if(details){
+            location.name = details.name;
+            location.lat = details.geometry.location.lat();
+            location.lng = details.geometry.location.lng();
+            this.saveDisabled = false;
+            this.maps.map.setCenter({ lat: location.lat, lng: location.lng });
+            var marker = new google.maps.Marker({
+              map: this.maps.map,
+              title: local.nombre,
+              icon: icon,
+              draggable: false,
+              position: { lat: location.lat, lng: location.lng }
+            });
+            this.location = location;
+            this.bounds.extend(marker.position);
+          }
         });
       });
     })

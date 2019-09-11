@@ -46,7 +46,13 @@ export class ApiProvider {
     private httpClient: HttpClient,
     private storage: Storage,
     private events: Events
-  ) { }
+  ) { 
+    this.storage.get('datauser').then(val=>{
+      if(val!=null){
+        this.usuarioId = val['usuarioid'];
+      }
+    })
+  }
 
   //--------LOGIN--------
   validarUsuario(firebaseUser,usuario, pass) : Observable<any>{

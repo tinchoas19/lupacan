@@ -58,7 +58,7 @@
         <ion-col col-4>
           <ion-item no-lines>
             <ion-label>Favoritos</ion-label>
-            <ion-checkbox color="primary"></ion-checkbox>
+            <ion-checkbox color="primary" [(ngModel)]="verFav" (ionChange)="filtrarFavoritos()"></ion-checkbox>
           </ion-item>
         </ion-col>
         <ion-col col-4>
