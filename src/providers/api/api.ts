@@ -433,6 +433,37 @@ export class ApiProvider {
         console.log('vuelta_LocalPremium', x);
       }));
   }
+  //-------- PUBLICIDAD -----------
+  getPaquetesPublicidad(): Observable<any> {
+    return this.httpClient.get(
+      this.ApiUrl + "traerpaquetespublicidad.php"
+    );
+  }
+
+  comprarPublicidad(form,paqueteid,userid,precio): Observable<any>{
+    console.log('t', form);
+    console.log('ser', precio);
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    var body = JSON.stringify({
+      paqueteid : paqueteid,
+      razonsocial : form.razon,
+      email : form.email,
+      direccion : form.direcc,
+      telefono : form.telefono,
+      precio : precio,
+      usuarioid: userid
+    });
+      
+    console.log('body_compraPublicidad', body);
+
+    return this.httpPost.post(this.ApiUrl + "comprarpublicidad.php", body, options).pipe(
+      tap(x => {
+        console.log('comprarpublicidad', x);
+      }));
+  }
   //-------- BANNERS -----------
   getPublicidad(tipo, localidadid): Observable<any> {
     return this.httpClient.get(

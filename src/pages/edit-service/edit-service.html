@@ -9,7 +9,7 @@
 
 <ion-content>
   <ion-row no-padding (click)="addPerfilPhoto()">
-    <img *ngIf="imagenEdit" text-center src="http://ctrlztest.com.ar/lupacan/apirest/{{service['fotos'][0]['imagen']}}">
+    <img *ngIf="imagenEdit" text-center src="http://ctrlztest.com.ar/lupacan/apirest/{{service['imagenes'][0]['imagen']}}">
     <img *ngIf="!imagenEdit" text-center [src]="getTrustImg(imagePath)">
   </ion-row>
   <ion-list>

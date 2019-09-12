@@ -1,6 +1,6 @@
 <ion-header padding>
   <ion-navbar>
-    <ion-title>Veterinaria</ion-title>
+    <ion-title>{{service.nombre}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -26,10 +26,17 @@
       <ion-spinner></ion-spinner>
     </div>
   </ion-row>
-  <ion-row style="margin-top: 5%;">
+  <ion-row *ngIf="service.imagenes.length > 0" style="margin-top: 5%;">
     <ion-slides pager>
       <ion-slide *ngFor="let dog of [1,2,3]">
         <img src="http://ctrlztest.com.ar/lupacan/apirest/{{service.imagenes[0].imagen}}" alt="">
+      </ion-slide>
+    </ion-slides>
+  </ion-row>
+  <ion-row *ngIf="!(service.imagenes.length > 0)" style="margin-top: 5%;">
+    <ion-slides pager>
+      <ion-slide *ngFor="let dog of [1,2,3]">
+        <img src="../../assets/imgs/vet.jpg" alt="">
       </ion-slide>
     </ion-slides>
   </ion-row>
@@ -57,7 +64,7 @@
       <ion-col col-6>
         Direccion: {{service.direccion}}
       </ion-col>
-      <ion-col col-6>
+      <ion-col col-6 *ngIf="service.premium == 1">
         <ion-icon style="font-size: 3rem;" float-right name="chatbubbles" (click)="goToMsjPrivado()"></ion-icon>
       </ion-col>
     </ion-row>
@@ -74,7 +81,7 @@
         <ion-icon name="chatbubbles"></ion-icon>
       </ion-col> -->
     </ion-row>
-    <ion-row justify-content-center>
+    <ion-row justify-content-center *ngIf="service.premium == 1">
       <ion-col col-12 text-center>
         <button text-center ion-button color="primary" (click)="dejarComment()">Deja tu comentario</button>
       </ion-col>

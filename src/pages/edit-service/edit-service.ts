@@ -38,7 +38,7 @@ export class EditServicePage {
   ) {
     this.service = this.navParams.data;
     console.log('service',this.service)
-    this.imageToEdit =  "http://ctrlztest.com.ar/lupacan/apirest/"+this.navParams.data['fotos'][0]['imagen'];
+    this.imageToEdit =  "http://ctrlztest.com.ar/lupacan/apirest/"+this.navParams.data['imagenes'][0]['imagen'];
     this.horarioapertura = this.service.horarioapertura;
     this,this.horariocierre = this.service.horariocierre;
     console.log('this.imageToEdit',this.imageToEdit);

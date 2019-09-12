@@ -101,7 +101,6 @@ export class GoogleMapsProvider {
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           streetViewControl: true,
           disableDefaultUI: true,
-          fullscreenControl: true,
           zoomControl: true,
           mapTypeControl: false,
           scaleControl: true,

@@ -234,7 +234,7 @@ export class ServiceListPage {
   }
 
   goToService(service) {
-    this.navCtrl.push(ServiceDetailPage, { serv: service, cat: this.dataCategory });
+    this.navCtrl.push(ServiceDetailPage, { serv: service, cat: this.dataCategory, icon: this.navParams.data.cat.icono});
   }
 
   goBack() {

@@ -126,7 +126,7 @@ export class ServiceDetailPage {
       name: local.direccion
     };
     var icon = {
-      url: iconBase + local.icono,
+      url: iconBase + this.navParams.data.icon,
       fillColor: 'yellow',
       fillOpacity: 0.8,
       scale: 1,
