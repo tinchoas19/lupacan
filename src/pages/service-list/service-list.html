@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <!-- <ion-title>{{category.categoryName}}</ion-title> -->
+    <ion-title text-center class="lupa-title">{{dataCategory.nombre}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -12,11 +12,11 @@
       </ion-slide>
     </ion-slides>
   </ion-row>
-  <ion-row justify-content-center style="margin-top: 5%;">
+  <!-- <ion-row justify-content-center style="margin-top: 5%;">
     <ion-col col-12 text-center>
       <h3 text-center color="primary">{{dataCategory.nombre}}</h3>
     </ion-col>
-  </ion-row>
+  </ion-row> -->
   <ion-row justify-content-center>
     <div #pleaseConnect id="please-connect">
       <p>Please connect to the Internet...</p>
@@ -48,24 +48,24 @@
     </ion-row>
     <ion-card class="lupa-shadow" *ngFor="let serv of services2" (click)="goToService(serv)">
       <ion-grid>
-        <ion-row>
+        <ion-row class="list_serv">
           <ion-col col-5 no-padding class="service-img">
             <img *ngIf="serv.imagenes.length >0" src="http://ctrlztest.com.ar/lupacan/apirest/{{serv.imagenes[0].imagen}}" alt="">
             <img *ngIf="!(serv.imagenes.length >0)" src="../../assets/imgs/vet.jpg" alt="">
           </ion-col>
-          <ion-col col-7>
+          <ion-col col-7 no-padding class="col_data">
             <h2>{{serv.nombre}}</h2>
-            <ion-col col-12>
-              <ion-badge *ngIf="serv.descuento != null" color="primary" float-right>
+            <ion-col col-12 *ngIf="serv.descuento != null">
+              <ion-badge color="primary" float-right>
                 <p>Con Descuentos!</p>
               </ion-badge>
             </ion-col>
-            <ion-col col-12>
+            <ion-col col-12 no-padding>
               <p>
                 <ion-icon name="pin"></ion-icon> {{serv.direccion}}
               </p>
             </ion-col>
-            <ion-col col-12>
+            <ion-col col-12 no-padding>
               <p>Horarios: {{serv.horarioapertura}}hrs a {{serv.horariocierre}}hrs</p>
             </ion-col>
             <p>

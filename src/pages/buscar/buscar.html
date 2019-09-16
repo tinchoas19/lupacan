@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Buscar</ion-title>
+    <ion-title text-center>Buscar</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -8,24 +8,24 @@
   <ion-row style="padding-top: 0px;" justify-content-center padding>
     <ion-searchbar style="padding-top: 0px;" padding placeholder="Buscar..." [(ngModel)]="txtbusqueda" (ionInput)="getItems($event)"></ion-searchbar>
   </ion-row>
-  <ion-list *ngIf="mostarUsuarios" no-lines>
-    <ion-list-header text-center>
+  <ion-list *ngIf="mostarUsuarios" no-lines class="_list">
+    <ion-list-header text-center class="label-title" >
       Usuarios
     </ion-list-header>
     <ion-item *ngFor="let item of items['usuarios']" (click)="goToPerfilUser(item)">
       {{item.nombre}}
     </ion-item>
   </ion-list>
-  <ion-list *ngIf="mostrarPerros" text-center no-lines>
-    <ion-list-header>
+  <ion-list *ngIf="mostrarPerros" text-center no-lines class="_list">
+    <ion-list-header class="label-title" >
       Perros
     </ion-list-header>
     <ion-item *ngFor="let item of items['perros']" (click)="goToPerfilDog(item)">
       {{item.nombre}}
     </ion-item>
   </ion-list>
-  <ion-list *ngIf="mostrarLocales" text-center no-lines>
-    <ion-list-header>
+  <ion-list *ngIf="mostrarLocales" text-center no-lines class="_list">
+    <ion-list-header class="label-title" >
       Servicios
     </ion-list-header>
     <ion-item *ngFor="let item of items['locales']" (click)="goToPerfilService(item)">

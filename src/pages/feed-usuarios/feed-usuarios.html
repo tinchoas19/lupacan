@@ -6,7 +6,6 @@
 
 </ion-header>
 
-
 <ion-content padding>
   <div>
     <ion-grid no-padding>
@@ -15,17 +14,22 @@
           <h2 text-center>Ultimos agregados</h2>
         </ion-col>
       </ion-row>
-      <ion-slides pager>
-        <ion-slide *ngIf="ultimosAgregados">
-          <ion-row>
-            <ion-col col-3 *ngFor="let user of ultimosAgregados; let i = index" (click)="goToUserDetail(user)">
+      <ion-row *ngIf="ultimosAgregados.length > 0" justify-content-center>
+        <ion-col col-1 text-center (click)="prev()">
+          <ion-icon text-center name="arrow-dropleft-circle"></ion-icon>
+        </ion-col>
+        <ion-col col-10 text-center>
+          <ion-slides class="slide_ultimos" pager="false" #slideWithNav2 slidesPerView="4">
+            <ion-slide *ngFor="let user of ultimosAgregados; let i = index" (click)="goToUserDetail(user)">
               <!-- <div class="dog-name">{{user.nombre}}</div> -->
               <img *ngIf="user.imagen != ''" src="http://ctrlztest.com.ar/lupacan/apirest/{{user.imagen}}">
-              <img *ngIf="user.imagen == ''" src="assets/imgs/1.jpg">
-            </ion-col>
-          </ion-row>
-        </ion-slide>
-      </ion-slides>
+              <img *ngIf="user.imagen == ''" src="assets/imgs/1.jpg"></ion-slide>
+          </ion-slides>
+        </ion-col>
+        <ion-col col-1 text-center (click)="next()">
+          <ion-icon text-center name="arrow-dropright-circle"></ion-icon>
+        </ion-col>
+      </ion-row>
       <ion-row justify-content-center class="checks">
         <ion-col col-4>
           <ion-item no-lines>
@@ -64,3 +68,13 @@
     </ion-grid>
   </div>
 </ion-content>
+<ion-footer no-shadow no-border>
+  <ion-row class="ft_icons">
+    <ion-col style="padding-right: 25px !important;" (click)="goServicios()">
+      <ion-icon float-right name="contact"></ion-icon>
+    </ion-col>
+    <ion-col style="padding-left: 25px !important;">
+      <ion-icon color="primary" name="contact"></ion-icon>
+    </ion-col>
+  </ion-row>
+</ion-footer>

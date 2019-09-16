@@ -1,7 +1,7 @@
 import { ListDogUserPage } from './../list-dog-user/list-dog-user';
 import { ApiProvider } from './../../providers/api/api';
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, Slides } from 'ionic-angular';
 
 
 @Component({
@@ -9,7 +9,7 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'feed-usuarios.html',
 })
 export class FeedUsuariosPage {
-
+  @ViewChild('slideWithNav2') slideWithNav2: Slides;
   ultimosAgregados:any = [];
   todosUsers:any = [];
 
@@ -18,6 +18,14 @@ export class FeedUsuariosPage {
     public navParams: NavParams,
     private api: ApiProvider,
   ) {
+  }
+
+  next() {
+    this.slideWithNav2.slideNext(500);
+  }
+
+  prev() {
+    this.slideWithNav2.slidePrev(500);
   }
 
   ionViewWillEnter(){
@@ -45,6 +53,10 @@ export class FeedUsuariosPage {
 
   goToUserDetail(user){
     this.navCtrl.push(ListDogUserPage,{id : user.usuarioid})
+  }
+
+  goServicios(){
+    this.navCtrl.pop();
   }
 
 }

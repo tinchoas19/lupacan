@@ -1,12 +1,12 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Configuracion</ion-title>
+    <ion-title text-center>Configuracion</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list inset>
-    <ion-list-header text-center>
+  <ion-list inset class="_list">
+    <ion-list-header class="label-title" text-center>
       Mis datos
     </ion-list-header>
     <button ion-item (click)="goToMyDogs()">
@@ -19,8 +19,8 @@
       Encontre un perro
     </button>
   </ion-list>
-  <ion-list inset>
-    <ion-list-header text-center>
+  <ion-list inset class="_list">
+    <ion-list-header class="label-title" text-center>
       Mis servicios
     </ion-list-header>
     <button ion-item (click)="goToMyServices()">
@@ -30,8 +30,8 @@
       Crear un servicio
     </button>
   </ion-list>
-  <ion-list inset>
-    <ion-list-header text-center>
+  <ion-list inset class="_list">
+    <ion-list-header class="label-title" text-center>
       Mis Refugios
     </ion-list-header>
    <!--  <button ion-item (click)="goToRefugios()">
@@ -41,8 +41,8 @@
       Crear un refugio
     </button>
   </ion-list>
-  <ion-list inset>
-    <ion-list-header text-center>
+  <ion-list inset class="_list">
+    <ion-list-header class="label-title" text-center>
       Mis Notificaciones
     </ion-list-header>
     <button ion-item (click)="goToNotificaciones()">
@@ -50,16 +50,16 @@
       <ion-badge item-end color="danger">{{numberBadge}}</ion-badge>
     </button>
   </ion-list>
-  <ion-list inset>
-    <ion-list-header text-center>
+  <ion-list inset class="_list">
+    <ion-list-header class="label-title" text-center>
       Mis Favoritos
     </ion-list-header>
     <button ion-item (click)="goToFavoritos()">
       Mis Favoritos
     </button>
   </ion-list>
-  <ion-list inset>
-    <ion-list-header text-center>
+  <ion-list inset class="_list">
+    <ion-list-header class="label-title" text-center>
       Mis Conversaciones
     </ion-list-header>
     <button ion-item (click)="goToConversaciones()">

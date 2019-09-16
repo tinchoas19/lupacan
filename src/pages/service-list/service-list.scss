@@ -9,7 +9,7 @@ page-service-list {
     .grid{
         padding: 0;
         .col[col-7]{
-            padding: 0.8em;
+            //padding: 0.8em;
         }
     }
     .checks{
@@ -24,7 +24,16 @@ page-service-list {
             }
         }
     }
+    .list_serv{
+        .col_data{
+            padding: 0px 10px!important;
+            h2{
+                padding-top: 10px;
+            }
+        }
+    }
     .card{
+        border-radius: 7px;
         margin: 2rem auto;
         p{
             font-size: 0.8em;

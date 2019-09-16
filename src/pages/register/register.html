@@ -47,7 +47,7 @@
             <ion-item *ngIf="!myForm.controls.direccion.valid  && (myForm.controls.direccion.dirty || submitAttempt)">
               <p>Por favor ingresar una dirección válido.</p>
             </ion-item> -->
-          <ion-item no-padding style="height: 3.6rem !important; border-radius: 1.8rem !important;box-shadow: 0px 0px 37px -1px rgba(0, 0, 0, 0.3)!important;">
+          <ion-item class="fecha_nac">
             <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Fecha de nacimiento" formControlName="edad" [class.invalid]="!myForm.controls.edad.valid && (myForm.controls.edad.dirty || submitAttempt)"></ion-datetime>
           </ion-item>
           <ion-item *ngIf="!myForm.controls.edad.valid  && (myForm.controls.edad.dirty || submitAttempt)">

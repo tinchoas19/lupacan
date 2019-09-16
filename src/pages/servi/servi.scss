@@ -1,14 +1,51 @@
 page-servi {
+  ion-segment.seg_fav{
+    .first{
+        color: white;
+        font-size: 1.2rem;
+        font-weight: 600;
+        border-radius: 20px;
+        //border-bottom-left-radius: 20px;
+        background: #7e7e7e;
+        margin-right: 10px;
+    }
+    .second{
+        margin-left: 10px;
+        color: white;
+        font-size: 1.2rem;
+        font-weight: 600;
+        border-radius: 20px;
+        //border-bottom-right-radius: 20px;
+        background: #7e7e7e;            
+    }
+  }
+  ion-segment-button.second.segment-button.segment-activated{
+    background: #ffc600 !important;
+    color: white !important;
+  }
+  ion-segment-button.med.segment-button.segment-activated{
+      background: #ffc600 !important;
+      color: white !important;
+  }
+  ion-segment-button.first.segment-button.segment-activated{
+      background: #ffc600 !important;
+      color: white !important;
+  }
   .category{
+    border-radius: 7px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 18vh;
+    height: 17vh;
     font-size: 0.8em;
     img{
       max-width: 60px;
+      margin-bottom: 5px;
     }
+  }
+  .col_cat{
+    padding: 7px;
   }
   button{
     span{

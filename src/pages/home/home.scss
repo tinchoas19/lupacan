@@ -9,18 +9,22 @@ page-home {
         .home-row{
             padding:0 16px 16px 16px;
             .home-col{
+                font-size: 1.1rem;
+                font-weight: 600;
                 width: 100%;
                 align-items: center;
                 justify-content: center;
                 flex-direction: column;
                 border-radius: 7px;
                 img{
+                    margin: 7px;                    
                     max-height: 48px;
                 }
             }
             .dir-row{
                 flex-direction: row;
                 img{
+                    margin: 5px;
                     max-height: 70px;
                 }
             }

@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar no-border-bottom>
-    <ion-title>{{pageData.title}}</ion-title>
+    <ion-title text-center class="lupa-title">{{pageData.title}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -11,7 +11,7 @@
     <ion-grid no-padding>
       <ion-row>
         <ion-col>
-          <h2 text-center>Ultimos agregados</h2>
+          <h2 text-center><strong>Últimos agregados</strong></h2>
         </ion-col>
       </ion-row>
       <ion-row *ngIf="dogs.length > 0" justify-content-center>
@@ -32,7 +32,7 @@
           <ion-icon text-center name="arrow-dropright-circle"></ion-icon>
         </ion-col>
       </ion-row>
-      <ion-row justify-content-center class="btn_nav">
+     <!--  <ion-row justify-content-center class="btn_nav">
         <ion-col text-center col-4>
           <button text-center ion-button block color="primary">Perros</button>
         </ion-col>
@@ -42,12 +42,12 @@
         <ion-col text-center col-4>
           <button text-center ion-button outline color="primary" (click)="goServices()">Servicios</button>
         </ion-col>
-      </ion-row>
-      <ion-row style="margin-top: 7%;">
+      </ion-row> -->
+      <!-- <ion-row style="margin-top: 7%;">
         <ion-col>
           <h2 text-center>{{pageData.title}}</h2>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <ion-row justify-content-center class="checks">
         <ion-col col-4>
           <ion-item no-lines>
@@ -90,3 +90,13 @@
     </ion-grid>
   </div>
 </ion-content>
+<ion-footer no-shadow no-border>
+  <ion-row class="ft_icons">
+    <ion-col style="padding-right: 25px !important;">
+      <ion-icon float-right color="primary" name="contact"></ion-icon>
+    </ion-col>
+    <ion-col style="padding-left: 25px !important;" (click)="goUsuarios()">
+      <ion-icon name="contact"></ion-icon>
+    </ion-col>
+  </ion-row>
+</ion-footer>
