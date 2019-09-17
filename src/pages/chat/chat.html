@@ -34,7 +34,7 @@
       <ion-spinner name="dots" *ngIf="msg.status === 'pending'"></ion-spinner>
       <div class="msg-detail">
         <div class="msg-info">
-          <p>{{ msg.userName }} {{ msg.time | relativeTime }}</p>
+          <p>{{ msg.userName }} {{ msg.time | date: 'dd/MM/yyyy H:mm' }}</p>
         </div>
         <div class="msg-content">
           <span class="triangle"></span>

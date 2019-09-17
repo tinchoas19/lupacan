@@ -63,9 +63,9 @@
           <ion-item>
             <ion-label stacked>Estado</ion-label>
             <ion-select [(ngModel)]="dog.estado">
-              <ion-option value="comunidad">Es mio y está en casa</ion-option>
+              <ion-option value="comunidad">Es mío y está en casa</ion-option>
               <ion-option value="adopcion">Para dar en adopción</ion-option>
-              <ion-option value="perdidos">Lo perdí y aun no lo encuentro</ion-option>
+              <ion-option value="perdidos">Lo perdí</ion-option>
             </ion-select>
           </ion-item>
         </ion-col>
@@ -132,7 +132,7 @@
       </ion-row> -->
       <ion-row>
         <ion-col col-12 padding>
-          <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" placeholder="Direccion"></ion-searchbar>
+          <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" placeholder="Dirección"></ion-searchbar>
         </ion-col>
         <ion-col padding style="padding-top: 0px!important;">
           <ion-list class="list_map">

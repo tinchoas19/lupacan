@@ -16,7 +16,7 @@
       </ion-row>
       <ion-row *ngIf="ultimosAgregados.length > 0" justify-content-center>
         <ion-col col-1 text-center (click)="prev()">
-          <ion-icon text-center name="arrow-dropleft-circle"></ion-icon>
+          <ion-icon text-center name="arrow-back"></ion-icon>
         </ion-col>
         <ion-col col-10 text-center>
           <ion-slides class="slide_ultimos" pager="false" #slideWithNav2 slidesPerView="4">
@@ -27,7 +27,7 @@
           </ion-slides>
         </ion-col>
         <ion-col col-1 text-center (click)="next()">
-          <ion-icon text-center name="arrow-dropright-circle"></ion-icon>
+          <ion-icon text-center name="arrow-forward"></ion-icon>
         </ion-col>
       </ion-row>
       <ion-row justify-content-center class="checks">

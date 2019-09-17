@@ -1,13 +1,13 @@
 <ion-header padding>
   <ion-navbar>
-    <ion-title>{{service.nombre}}</ion-title>
+    <ion-title text-center class="lupa-title">{{service.nombre}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
   <ion-row justify-content-center>
-    <ion-slides autoplay="3000" loop="true" speed="800" pager>
+    <ion-slides autoplay="3000" loop="true" speed="800">
       <ion-slide *ngFor="let image of [1,2,3,4,5]">
         <img class="img_banner" src="https://www.portaldetuciudad.com/imagenes/3/empresas/Clinica-Veterinaria-Inmaculada-Acevedo_690775-1.jpg">
       </ion-slide>

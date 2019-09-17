@@ -77,7 +77,7 @@ export class BuscarPage {
   goToPerfilService(item){
     this.api.getLocalData(item.localid).subscribe(x=>{
       console.log('datLcal',x);
-      this.navCtrl.push(ServiceDetailPage,{serv:x['data'], busq:true});
+      this.navCtrl.push(ServiceDetailPage,{serv:x['data'], icon: x['data']['categorias'][0]['icono'], busq:true});
     })
   }
 

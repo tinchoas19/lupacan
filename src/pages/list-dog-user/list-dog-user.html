@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Perros de {{nombreUser}}</ion-title>
+    <ion-title text-center class="lupa-title">{{nombreUser}}</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="goToChat()">
         <ion-icon name="chatbubbles"></ion-icon>
@@ -27,8 +27,8 @@
         <ion-icon name="call"></ion-icon>{{telefonoUser}}</p>
     </ion-col> -->
   </ion-row>
-  <ion-list *ngIf="misPerros.length > 0">
-    <ion-list-header no-lines>
+  <ion-list *ngIf="misPerros.length > 0" class="_list">
+    <ion-list-header no-lines class="labe-title">
       Mis Perros
     </ion-list-header>
     <ion-item *ngFor="let dog of misPerros" (click)="goToDogDetail(dog)">

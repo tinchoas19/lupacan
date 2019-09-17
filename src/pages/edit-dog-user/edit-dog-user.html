@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Editar mi perro</ion-title>
+    <ion-title text-center class="lupa-title">Editar {{dog.nombre}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -44,7 +44,7 @@
         <ion-col>
           <ion-item>
             <ion-label stacked>Raza</ion-label>
-            <ion-select [(ngModel)]="dog.raza" placeholder="Mestizo">
+            <ion-select [(ngModel)]="dog.raza">
               <ion-option *ngFor="let raza of razas" value="{{raza.razaid}}">{{raza.nombre}}</ion-option>
             </ion-select>
           </ion-item>
@@ -52,7 +52,7 @@
         <ion-col>
           <ion-item>
             <ion-label stacked>Color</ion-label>
-            <ion-select [(ngModel)]="dog.color" placeholder="Color">
+            <ion-select [(ngModel)]="dog.color">
               <ion-option *ngFor="let color of colores" value="{{color.colorid}}">{{color.nombre}}</ion-option>
             </ion-select>
           </ion-item>

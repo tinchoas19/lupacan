@@ -1,11 +1,11 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Mis Chats</ion-title>
+    <ion-title text-center class="lupa-title">Mis Chats</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-list *ngFor="let chat of list_chats">
+  <ion-list *ngFor="let chat of list_chats" class="_list">
     <ion-item (click)="goToChat(chat)">
       <ion-avatar item-start>
         <img src="../../assets/imgs/dog.jpg">

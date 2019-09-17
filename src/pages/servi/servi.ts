@@ -20,6 +20,8 @@ export class ServiPage {
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
   view: string = "favoritos";
+  locationUser: any = {};
+  location: any;
   currentPos: Geoposition;
   map: any;
   dogwalkMarker: any;
@@ -27,7 +29,6 @@ export class ServiPage {
   infoWindows: any = [];
   searchDisabled: boolean;
   saveDisabled: boolean;
-  location: any;
   private categories: any[];
   private categoras: any[];
   private services: any[];
@@ -60,7 +61,7 @@ export class ServiPage {
   ionViewWillEnter() {
     this.traerLocales();
     this.traerCategorias();
-    //this.getUserPosition();
+    this.getCurrentPosition();
   }
 
   traerLocales() {
@@ -84,7 +85,6 @@ export class ServiPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ServiPage');
     //this.createMap();        
-    //this.getUserPosition();
   }
 
   createMap(){
@@ -123,7 +123,7 @@ export class ServiPage {
             location.lat = details.geometry.location.lat();
             location.lng = details.geometry.location.lng();
             this.saveDisabled = false;
-            this.maps.map.setCenter({ lat: location.lat, lng: location.lng });
+            //this.maps.map.setCenter({ lat: location.lat, lng: location.lng });
             var marker = new google.maps.Marker({
               map: this.maps.map,
               title: local.nombre,
@@ -137,7 +137,8 @@ export class ServiPage {
         });
       });
     })
-    this.maps.map.fitBounds(this.bounds);
+    this.createMarkUser();
+    //this.maps.map.fitBounds(this.bounds);
   }
 
   getUserPosition() {
@@ -221,6 +222,51 @@ export class ServiPage {
           console.log('Geocode was not successful for the following reason: ' + status);
         };
       })
+    })
+  }
+
+  getCurrentPosition() {
+    this.storage.get('locatioUser').then(val => {
+      if (val != null) {
+        this.locationUser.lat = val.lat;
+        this.locationUser.lng = val.lng;
+        console.log('locationUser', val);
+      } else {
+        this.geolocation.getCurrentPosition().then((pos) => {
+          this.locationUser.lat = pos.coords.latitude;
+          this.locationUser.lng = pos.coords.longitude;
+          console.log('position', this.locationUser);
+        }).catch((error) => {
+          console.log('Error getting location', error);
+        });
+      }
+    })
+  }
+
+  createMarkUser() {
+    this.storage.get('datauser').then(val => {
+      var iconBase = "http://ctrlztest.com.ar/lupacan/apirest/";
+      if (val != null) {
+        var icon = {
+          url: iconBase + val.imagen,
+          fillColor: 'yellow',
+          fillOpacity: 0.8,
+          scale: 1,
+          strokeColor: 'gold',
+          strokeWeight: 14,
+          size: new google.maps.Size(40, 40),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(0, 40)
+        };
+        this.maps.map.setCenter({ lat: this.locationUser.lat, lng: this.locationUser.lng });
+        var marker = new google.maps.Marker({
+          map: this.maps.map,
+          //title: local.nombre,
+          icon: icon,
+          draggable: false,
+          position: { lat: this.locationUser.lat, lng: this.locationUser.lng }
+        });
+      }
     })
   }
 

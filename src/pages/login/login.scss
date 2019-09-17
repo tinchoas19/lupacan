@@ -3,9 +3,14 @@ page-login {
         width: 100%;
     }
     .button{
-        background: #fff;
+        //background: #fff;
         span{
             color: #7e7e7e;
+        }
+    }
+    .btn_face{
+        span{
+            color: #fff !important;
         }
     }
     .text-input{

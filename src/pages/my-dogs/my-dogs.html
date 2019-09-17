@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Todos mis perritos</ion-title>
+    <ion-title text-center class="lupa-title">Todos</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -9,29 +9,29 @@
 
 <ion-content padding>
 
-  <ion-list>
-    <ion-list-header>
+  <ion-list class="._list">
+    <ion-list-header text-center class="label-title">
       Mis perros
     </ion-list-header>
     <ion-item *ngFor="let dog of myDogs" (click)="goToDogDetail(dog)">
       <ion-thumbnail item-start>
         <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
       </ion-thumbnail>
-      <h2>{{dog.nombre}}</h2>
-      <p>{{dog.color}}</p>
+      <strong><h2>{{dog.nombre}}</h2></strong>
+      <p>{{dog.descripcion}}</p>
     </ion-item>
   </ion-list>
 
-  <ion-list>
-    <ion-list-header>
+  <ion-list *ngIf="foundDogs" class="._list">
+    <ion-list-header text-center class="label-title">
       Perros encontrados
     </ion-list-header>
     <ion-item *ngFor="let dog of foundDogs" (click)="goToDogDetail(dog)">
       <ion-thumbnail item-start>
         <img src="./assets/imgs/" alt="{{dog.nombre}}">
       </ion-thumbnail>
-      <h2>{{dog.nombre}}</h2>
-      <p>{{dog.color}}</p>
+      <strong><h2>{{dog.nombre}}</h2></strong>
+      <p>{{dog.descripcion}}</p>
     </ion-item>   
   </ion-list>
 
