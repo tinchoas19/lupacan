@@ -25,7 +25,7 @@ export class AddFavDogComponent implements OnInit {
     this.storage.get('datauser').then(x=>{
       if(x!=null){
         this.userid =x['usuarioid'];
-        this.api.getFavLocal(this.userid, this.perroid).subscribe(x => {
+        this.api.getFavDog(this.userid, this.perroid).subscribe(x => {
           console.log('x_fav_dog',x);
           if (x['data']) {
             this.isChecked = true;
@@ -76,7 +76,7 @@ export class AddFavDogComponent implements OnInit {
 
   async presentToasteEx() {
     const toast = await this.toastController.create({
-      message: "Listo!\n Se agrego a tus favoritos.",
+      message: "Listo!\n Se agregó a tus favoritos.",
       duration:2000,
       showCloseButton: true,
       position: 'top',

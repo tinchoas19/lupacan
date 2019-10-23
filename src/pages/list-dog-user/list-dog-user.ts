@@ -36,7 +36,7 @@ export class ListDogUserPage {
       this.services.getUser(this.idUser).subscribe(x=>{
         console.log('datUser', x);
         this.user = x['data'];
-        if (this.user.imagen == "" && this.user.facebookid != "") {
+        if (this.user.facebookid != "") {
           this.imgSrc = "https://graph.facebook.com/" + this.user.facebookid + "/picture?type=large";
         } else if (this.user.imagen != "") {
           this.imgSrc = "http://ctrlztest.com.ar/lupacan/apirest/" + this.user.imagen
@@ -90,7 +90,7 @@ export class ListDogUserPage {
   goToChat(){
     this.storage.get('datauser').then(val=>{
       if(val!=null){
-        this.navCtrl.push(ChatPage,{origenid:val['usuarioid'], tipoorigen: 'usuario', destinoid: this.idUser, tipodestino: 'usuario', conversandocon: this.nombreUser});
+        this.navCtrl.push(ChatPage,{userChat: this.user ,origenid:val['usuarioid'], tipoorigen: 'usuario', destinoid: this.idUser, tipodestino: 'usuario', conversandocon: this.nombreUser});
       }
     })
   }

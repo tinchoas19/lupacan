@@ -21,5 +21,11 @@ page-service-detail {
     .plus{
         color: color($colors, primary);
     }
+    .col-link{
+        a{
+            text-decoration-line: underline;
+            color: #7e7e7e;
+        }
+    }
     
 }

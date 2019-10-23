@@ -1,7 +1,8 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title text-center class="lupa-title">Agregar servicio</ion-title>
+    <ion-title *ngIf="!refugio" text-center class="lupa-title">Agregar servicio</ion-title>
+    <ion-title *ngIf="refugio" text-center class="lupa-title">Agregar refugio</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -12,8 +13,11 @@
     <img text-center [src]="getTrustImg(imagePath)">
   </ion-row>
   <ion-list class="_list">
-    <ion-list-header text-center class="label_title">
+    <ion-list-header *ngIf="!refugio" text-center class="label_title">
       Datos del servicio
+    </ion-list-header>
+    <ion-list-header *ngIf="refugio" text-center class="label_title">
+      Datos del refugio
     </ion-list-header>
     <ion-item>
       <ion-label color="primary" stacked>Nombre</ion-label>
@@ -27,14 +31,136 @@
       <ion-label color="primary" stacked>Email</ion-label>
       <ion-input type="email" [(ngModel)]="tienda.email" placeholder="Email"></ion-input>
     </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>Horario apertura</ion-label>
-      <ion-datetime [(ngModel)]="tienda.horaA" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
+    <ion-row justify-content-center *ngFor="let dia of dias; let i = index;" [ngClass]="{ 'horarios': dia.desabilitar == false,'disabled': dia.desabilitar == true }">
+      <ion-col col-3 text-center>
+        <ion-label>{{dia.dia}}</ion-label>
+      </ion-col>
+      <ion-col col-3 text-center>
+        <ion-label color="primary" stacked>Apertura</ion-label>
+        <ion-datetime [disabled]="dia.desabilitar" [(ngModel)]="dia.abre" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45" (ionChange)="apertura(dia)"></ion-datetime>
+      </ion-col>
+      <ion-col col-3 text-center>
+        <ion-label color="primary" stacked>Cierre</ion-label>
+        <ion-datetime [disabled]="dia.desabilitar" [(ngModel)]="dia.cierra" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45" (ionChange)="cierre(dia)"></ion-datetime>
+      </ion-col>
+      <ion-col col-3 text-center>
+        <ion-item no-lines no-padding>
+          <ion-toggle [(ngModel)]="dia.desabilitar" checked="false" (ionChange)="noAbre(dia,$event)"></ion-toggle>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <!-- <ion-row class="horarios" justify-content-center>
+      <ion-col col-3>
+        <ion-label>Martes :</ion-label>
+      </ion-col>
+      <ion-col col-3>
+        <ion-label color="primary" stacked>Apertura</ion-label>
+        <ion-datetime [(ngModel)]="tienda.horarios.marAbre" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
+      </ion-col>
+      <ion-col col-3>
+        <ion-label color="primary" stacked>Cierre</ion-label>
+        <ion-datetime [(ngModel)]="tienda.horarios.marCierra" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
+      </ion-col>
+      <ion-col col-3>
+        <ion-item no-lines no-padding>
+          <ion-toggle checked="false"></ion-toggle>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row class="horarios" justify-content-center>
+      <ion-col col-3>
+        <ion-label>Miércoles :</ion-label>
+      </ion-col>
+      <ion-col col-3>
+        <ion-label color="primary" stacked>Apertura</ion-label>
+        <ion-datetime [(ngModel)]="tienda.horarios.mieAbre" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
+      </ion-col>
+      <ion-col col-3>
+        <ion-label color="primary" stacked>Cierre</ion-label>
+        <ion-datetime [(ngModel)]="tienda.horarios.mieCierra" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
+      </ion-col>
+      <ion-col col-3>
+        <ion-item no-lines no-padding>
+          <ion-toggle checked="false"></ion-toggle>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row class="horarios" justify-content-center>
+      <ion-col col-3>
+        <ion-label>Jueves :</ion-label>
+      </ion-col>
+      <ion-col col-3>
+        <ion-label color="primary" stacked>Apertura</ion-label>
+        <ion-datetime [(ngModel)]="tienda.horarios.jueAbre" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
+      </ion-col>
+      <ion-col col-3>
+        <ion-label color="primary" stacked>Cierre</ion-label>
+        <ion-datetime [(ngModel)]="tienda.horarios.jueCierra" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
+      </ion-col>
+      <ion-col col-3>
+        <ion-item no-lines no-padding>
+          <ion-toggle checked="false"></ion-toggle>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row class="horarios" justify-content-center>
+      <ion-col col-3>
+        <ion-label>Viernes :</ion-label>
+      </ion-col>
+      <ion-col col-3>
+        <ion-label color="primary" stacked>Apertura</ion-label>
+        <ion-datetime [(ngModel)]="tienda.horarios.vieAbre" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
+      </ion-col>
+      <ion-col col-3>
+        <ion-label color="primary" stacked>Cierre</ion-label>
+        <ion-datetime [(ngModel)]="tienda.horarios.vieCierra" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
+      </ion-col>
+      <ion-col col-3>
+        <ion-item no-lines no-padding>
+          <ion-toggle checked="false"></ion-toggle>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row class="horarios" justify-content-center>
+      <ion-col col-3>
+        <ion-label>Sábado :</ion-label>
+      </ion-col>
+      <ion-col col-3>
+        <ion-label color="primary" stacked>Apertura</ion-label>
+        <ion-datetime [(ngModel)]="tienda.horarios.sabAbre" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
+      </ion-col>
+      <ion-col col-3>
+        <ion-label color="primary" stacked>Cierre</ion-label>
+        <ion-datetime [(ngModel)]="tienda.horarios.sabCierra" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
+      </ion-col>
+      <ion-col col-3>
+        <ion-item no-lines no-padding>
+          <ion-toggle checked="false"></ion-toggle>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row class="horarios" justify-content-center>
+      <ion-col col-3>
+        <ion-label>Domingo :</ion-label>
+      </ion-col>
+      <ion-col col-3>
+        <ion-label color="primary" stacked>Apertura</ion-label>
+        <ion-datetime [(ngModel)]="tienda.horarios.domAbre" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
+      </ion-col>
+      <ion-col col-3>
+        <ion-label color="primary" stacked>Cierre</ion-label>
+        <ion-datetime [(ngModel)]="tienda.horarios.domCierra" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
+      </ion-col>
+      <ion-col col-3>
+        <ion-item no-lines no-padding>
+          <ion-toggle checked="false"></ion-toggle>
+        </ion-item>
+      </ion-col>
+    </ion-row> -->
+    <!-- <ion-item>
     </ion-item>
     <ion-item>
-      <ion-label color="primary" stacked>Horario cierre</ion-label>
-      <ion-datetime [(ngModel)]="tienda.horaC" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
-    </ion-item>
+    </ion-item> -->
     <!-- <ion-item>
       <ion-label color="primary" stacked>Categoria</ion-label>
       <ion-select [(ngModel)]="tienda.category" multiple="true" cancelText="Cancelar" okText="Ok">

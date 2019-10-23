@@ -6,7 +6,8 @@
 
 <ion-content padding>
   <ion-row justify-content-center>
-    <ion-list>
+    <p text-center *ngIf=msj>Sin notificaciones por el momento!</p>
+    <ion-list *ngIf=!msj>
       <ion-item *ngFor="let not of notificaciones; let i=index">
         <ion-col col-12>
           <h4 color="primary" float-left>Usuario</h4>

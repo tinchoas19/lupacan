@@ -1,7 +1,7 @@
 import { Storage } from '@ionic/storage';
 import { ApiProvider, usuario, ChatMessage } from './../../providers/api/api';
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, NavParams, Events, Content, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, Events, Content, LoadingController, Navbar } from 'ionic-angular';
 
 @Component({
   selector: 'page-chat',
@@ -9,8 +9,11 @@ import { NavController, NavParams, Events, Content, LoadingController } from 'io
 })
 export class ChatPage {
 
+  imageChatCon: any;
+  imagenUser: any;
   @ViewChild(Content) content: Content;
   @ViewChild('chat_input') messageInput: ElementRef;
+  @ViewChild(Navbar) navBar: Navbar;
   showEmojiPicker = false;
   editorMsg = '';
   dataTienda: any = [];
@@ -26,8 +29,9 @@ export class ChatPage {
   origentipo: string;
   origenid: any;
   destinoid: any;
-  nombreUser:string;
-  idUser:any;
+  nombreUser: string;
+  idUser: any;
+  buscarChats: any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -36,39 +40,62 @@ export class ChatPage {
     private storage: Storage
   ) {
     //this.dataUserLogueado();
+    this.mostrarimgChatCon(this.navParams.data)
   }
 
-  misDatos(){
-    this.storage.get('datauser').then(val=>{
-      if(val!=null){
+  misDatos() {
+    this.storage.get('datauser').then(val => {
+      if (val != null) {
+        console.log('vaaal', val);
         this.nombreUser = val['nombre'];
         this.idUser = val['usuarioid']
+        if (val.facebookid != '0') {
+          this.imagenUser = "https://graph.facebook.com/" + val.facebookid + "/picture?type=large";
+        } else if (val.imagen != "") {
+          this.imagenUser = "http://ctrlztest.com.ar/lupacan/apirest/" + val.imagen
+        } else {
+          this.imagenUser = 'assets/imgs/1.jpg';
+        }
       }
     })
   }
 
-  traerChats(params) {
-    this.misDatos();
-    console.log('params', params);
-    this.services.getChat(params.origenid, params.origentipo, params.destinoid, params.destinotipo).subscribe(x => {
-      console.log('dataChat', x);
-      if(x['data']){
-        x['data'].map(message=>{
+  mostrarimgChatCon(params) {
+    if (params.userChat.facebookid != '0') {
+      this.imageChatCon = "https://graph.facebook.com/" + params.userChat.facebookid + "/picture?type=large";
+    } else if (params.userChat.facebookid.imagen != "") {
+      this.imageChatCon = "http://ctrlztest.com.ar/lupacan/apirest/" + params.userChat.imagen
+    } else {
+      this.imageChatCon = 'assets/imgs/1.jpg';
+    }
+  }
+
+  interval() {
+    this.buscarChats = setInterval(() => {
+      this.traerNoLeidos(this.navParams.data);
+    }, 2000)
+  }
+
+  traerNoLeidos(params) {
+    this.services.getChatNoLeidos(params.origenid, params.origentipo, params.destinoid, params.destinotipo).subscribe(x => {
+      console.log('ChatNoLeidos', x);
+      if (x['data'] != null) {
+        x['data'].map(message => {
           let chatCon = "";
           let origen = "";
-          if(message.origenlocalid != null){
+          if (message.origenlocalid != null) {
             origen = message.origenlocalid;
-          }else{
+          } else {
             origen = message.origenusuarioid;
-          } 
+          }
           let destino = "";
-          if(origen == params.origenid){
+          if (origen == params.origenid) {
             chatCon = this.nombreUser;
             destino = params.destinoid;
-          }else{
-            chatCon =params.conversandocon;
+          } else {
+            chatCon = params.conversandocon;
             destino = params.origenid;
-          } 
+          }
           let newMsg: ChatMessage = {
             messageId: message.chatmensajeid,
             userId: origen,
@@ -85,122 +112,58 @@ export class ChatPage {
     })
   }
 
-  /* controlParams(params) {
-    if (params.dog && params.chatde) {
-      this.imgDog = this.navParams.data.dog['fotos'][0].fotourl;
-      this.dataDog = this.navParams.data.dog;
-      if (params.chatde == 'usuario') {
-        console.log('1');
-        this.destinoTipo = 'usuario';
-        this.origentipo = 'usuario';
-        this.origenid = params.origenid;
-        this.user = {
-          id: params.chatid['usuarioid2'] ? params.chatid['usuarioid2'] : params.chatid['localid'],
-          name: params.chatid['conversandocon']
-        }
-        this.destinoid = this.user.id;
-        console.log(this.user);
-        
-      } else {
-        console.log('2');
-        this.destinoTipo = 'usuario';
-        this.origentipo = 'usuario';
-        this.origenid = params.origenid;        
-        this.user = {
-          id: params.chatid['usuarioid1'],
-          name: params.chatid['conversandocon']
-        }
-        this.destinoid = this.user.id;
-    }
-    if (params.chatid && params.chatde) {
-      console.log('chatid', params.chatid);
-      this.nombreChat = params.chatid['conversandocon'];
+  traerChats(params) {
+    this.misDatos();
+    console.log('params', params);
+    this.services.getChat(params.origenid, params.origentipo, params.destinoid, params.destinotipo).subscribe(x => {
+      console.log('dataChat', x);
+      if (x['data']) {
+        x['data'].map(message => {
+          let chatCon = "";
+          let origen = "";
+          if (message.origenlocalid != null) {
+            origen = message.origenlocalid;
+          } else {
+            origen = message.origenusuarioid;
+          }
+          let destino = "";
+          if (origen == params.origenid) {
+            chatCon = this.nombreUser;
+            destino = params.destinoid;
+          } else {
+            chatCon = params.conversandocon;
+            destino = params.origenid;
+          }
+          let newMsg: ChatMessage = {
+            messageId: message.chatmensajeid,
+            userId: origen,
+            userName: chatCon,
+            time: message.fechayhora,
+            message: message.mensaje,
+            status: 'success',
+            destinoId: destino,
+          };
 
-      if (params.chatde == 'usuario') {
-        console.log('1');
-        this.destinoTipo = params.chatid['usuarioid2'] ? 'usuario' : 'tienda';
-        this.origentipo = 'usuario';
-        this.origenid = params.origenid;
-        this.user = {
-          id: params.chatid['usuarioid2'] ? params.chatid['usuarioid2'] : params.chatid['localid'],
-          name: params.chatid['conversandocon']
-        }
-        this.destinoid = this.user.id;
-        console.log(this.user);
-        
-      } else {
-        console.log('2');
-        this.destinoTipo = 'usuario';
-        this.origentipo = 'usuario';
-        this.origenid = params.origenid;        
-        this.user = {
-          id: params.chatid['usuarioid1'],
-          name: params.chatid['conversandocon']
-        }
-        this.destinoid = this.user.id;        
-        console.log(this.user);
-        
+          this.pushNewMsg(newMsg);
+        })
       }
-    }
-      this.cargarMensajes(params.chatid['chatid']);
-      console.log('sad', this.user);
-    }
-  }
-
-  cargarMensajes(chatid) {
-    let loading = this.loadingCtrl.create({
-      content: 'Espere por favor...'
-    });
-    loading.present();
-    this.services.getChat(chatid).subscribe(msj => {
-      console.log('msj', msj);
-      msj['data'].map(message => {
-        console.log("origenusuario", message.origenusuarioid);
-        console.log("origentienda", message.origenlocalid);
-        let origen = "";
-        if (message.origenusuarioid != null)
-          origen = message.origenusuarioid;
-        if (message.origenlocalid != null)
-          origen = message.origenlocalid;
-
-        let destino = "";
-        if (message.origenusuarioid == null)
-          destino = message.origenlocalid;
-        if (message.origenlocalid == null)
-          destino = message.origenusuarioid;
-
-        let newMsg: ChatMessage = {
-          messageId: message.chatmensajeid,
-          userId: origen,
-          userName: this.user.name,
-          time: message.fechayhora,
-          message: message.mensaje,
-          status: 'success',
-          destinoId: destino,
-        };
-        //console.log('new_msj', newMsg);
-        let restultadoDestino = "";
-        if (this.navParams.data.chatde  == "tienda")
-          restultadoDestino = (this.user.id == message.origenusuarioid ? message.origenlocalid : message.origenusuarioid);
-        else
-          restultadoDestino = (this.user.id == message.origenusuarioid ? message.origenlocalid : (message.origenusuarioid == null ? message.origenlocalid : msj.origenusuarioid));
-        this.toUser = (restultadoDestino != null ? restultadoDestino : this.toUser);
-        console.log("destino usuario", this.toUser);
-        this.pushNewMsg(newMsg);
-      })
-      loading.dismiss();
-      console.log('sad', this.msgList);
     })
   }
- 
-  */
+
+
   ionViewWillEnter() {
     //this.controlParams(this.navParams.data);
     this.traerChats(this.navParams.data);
+    this.interval();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChatPage');
+  }
+
+  doYourStuff() {
+    clearInterval(this.buscarChats);
+    this.navCtrl.pop();  // remember to put this to add the back button behavior
   }
 
   onFocus() {
@@ -233,7 +196,7 @@ export class ChatPage {
       destinoId: this.navParams.data.destinoid,
     };
 
-    this.pushNewMsg(newMsg);
+    //this.pushNewMsg(newMsg);
     this.editorMsg = '';
 
     if (!this.showEmojiPicker) {
@@ -251,10 +214,10 @@ export class ChatPage {
 
   pushNewMsg(msg: ChatMessage) {
     console.log('msg_push', msg);
-      //const userId = this.user.id,
-      //toUserId = this.toUser;
+    //const userId = this.user.id,
+    //toUserId = this.toUser;
     // Verify user relationships
-      this.msgList.push(msg);
+    this.msgList.push(msg);
     /* if (msg.userId == userId && msg.destinoId == toUserId) {
     } else if (msg.destinoId == userId && msg.userId == toUserId) {
       this.msgList.push(msg);

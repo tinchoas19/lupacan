@@ -1,3 +1,4 @@
+import { Storage } from '@ionic/storage';
 import { Component, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { NavController, NavParams, LoadingController, ToastController, Platform, ViewController } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
@@ -10,6 +11,7 @@ import { ApiProvider } from '../../providers/api/api';
   templateUrl: 'edit-dog-user.html',
 })
 export class EditDogUserPage {
+  dataCreate: any;
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
   latitude: number;
@@ -22,19 +24,26 @@ export class EditDogUserPage {
   saveDisabled: boolean;
   location: any;
   msgError: any;
+  selected_raza:any;
+  selected_color:any;
+  selected_estado:any;
+  selected_genero:any;
+  selected_esterilizado:any;
   dog: any = {
+    perroid: this.navParams.data.dataDog.perroid,
     usuarioid: '',
     nombre: '',
-    nacimiento: '',
-    gender: '',
-    raza: '',
+    nacimiento: '' || this.navParams.data.dataDog.fechanacimiento,
+    gender: '' ,
+    raza: '' ,
+    esterilizado:'' || this.navParams.data.dataDog.esterilizado,
     color: '',
-    estado: '',
-    size: '',
     descripcion: '',
-    direccion:'',
-    placeid:''
+    direccion:'' ,
+    placeid:'' || this.navParams.data.dataDog.placeid
   };
+  razas: any = [];
+  colores: any = [];
   
   constructor(
     public navCtrl: NavController, 
@@ -43,21 +52,94 @@ export class EditDogUserPage {
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     public zone: NgZone,
+    private storage: Storage,
     public maps: GoogleMapsProvider, public platform: Platform, public viewCtrl: ViewController,
     private services: ApiProvider,
   ) {
+    this.initializeItems(this.navParams.data.dataDog);
     this.searchDisabled = true;
     this.saveDisabled = true;
     //this.navParams.data.dataDog=this.dog;
     console.log('dog_edit',this.navParams.data.dataDog);
     this.editarImagenes(this.navParams.data.dataDog.fotos);
-    this.dog.nombre = this.navParams.data.dataDog.nombre;
-    //this.dog.nacimiento = this.navParams.data.dataDog.fechanacimiento;
-    this.dog.raza = this.navParams.data.dataDog.raza;
-    this.dog.color = this.navParams.data.dataDog.color;
-    this.dog.descripcion = this.navParams.data.dataDog.descripcion;
   }
 
+  initializeItems(params) {
+    this.storage.get('datauser').then(x => {
+      if (x) this.dog['usuarioid'] = x['usuarioid'];
+      console.log('ja', this.dog.usuarioid)
+    })
+    this.services.getBreed().subscribe(data => {
+      console.log('raza', data);
+      this.razas = data['data']['colores'];
+      this.colores = data['data']['razas'];
+      this.razas.map(raza=>{                   
+        if(params.raza == raza.nombre){
+          this.dog.raza = raza.razaid
+        }
+      })
+      this.colores.map(color=>{
+        if(params.color == color.nombre){
+          this.dog.color = color.colorid
+        }
+      })
+      this.select(this.razas,this.colores);
+    })
+  }
+
+  select(razas,colores){
+    razas.map(raza=>{
+      if(raza.nombre == this.navParams.data.dataDog.raza){
+        this.dog.estado = this.selected_raza = raza.nombre;
+      }
+    })
+    colores.map(color=>{
+      if(color.nombre == this.navParams.data.dataDog.color){
+        this.selected_color = color.colorid;
+      }
+    })
+    this.controlParams(this.navParams.data.dataDog);
+  }
+
+  controlParams(params){
+    if(params.generoid == '0'){
+      this.dog.gender = params.generoid;
+      this.selected_genero = false;
+    }else{
+      this.dog.gender = params.generoid;      
+      this.selected_genero = true;
+    }
+    if(params.estado == '1'){
+      this.selected_estado = 'comunidad';
+    }
+    if(params.estado == '2'){
+      this.selected_estado = 'perdidos';
+    }
+    if(params.estado == '3'){
+      this.selected_estado = 'encontrado';
+    }
+    if(params.estado == '4'){
+      this.selected_estado = 'adopcion';
+    }
+    this.controlEsterilizado(params)
+    this.dog.direccion = this.query = params.perrodireccion;
+    this.dog.nacimiento = params.fechanacimiento;
+    this.dog.nombre = params.nombre;
+    //this.dog.nacimiento = params.fechanacimiento;
+    this.selected_raza = params.raza;
+    this.dog.color = params.color;
+    this.dog.descripcion = params.descripcion;
+  }
+
+  controlEsterilizado(param){
+    if(param.esterilizado == "1"){
+      this.dog.esterilizado = param.esterilizado;
+      this.selected_esterilizado = true;
+    }else{
+      this.dog.esterilizado = param.esterilizado;
+      this.selected_esterilizado = false;
+    }
+  }
 
   selectPlace(place) {
     console.log('place', place);
@@ -123,35 +205,27 @@ export class EditDogUserPage {
 
     if (this.dog.nombre == "") {
       ret = false;
-      msg += "Debe completar el nombre\n";
+      msg += "Debe completar el nombre \n";
     }
     if (this.dog.nacimiento == "") {
       ret = false;
-      msg += "Debe completar la fecha de nacimiento";
+      msg += "Debe completar la fecha de nacimiento \n";
     }
     if (this.dog.gender == "") {
       ret = false;
-      msg += "Debe escoger un genero";
+      msg += "Debe escoger un genero \n";
     }
     if (this.dog.raza == "") {
       ret = false;
-      msg += "Debe escoger una raza";
+      msg += "Debe escoger una raza \n";
     }
     if (this.dog.color == "") {
       ret = false;
-      msg += "Debe completar su color";
-    }
-    if (this.dog.estado == "") {
-      ret = false;
-      msg += "Debe completar su estado";
-    }
-    if (this.dog.size == "") {
-      ret = false;
-      msg += "Debe escoger un tamaño";
+      msg += "Debe completar su color \n";
     }
     if (this.dog.descripcion == "") {
       ret = false;
-      msg += "Debe completar la descripcion";
+      msg += "Debe completar la descripcion \n";
     }
 
     this.msgError = msg;
@@ -270,21 +344,29 @@ export class EditDogUserPage {
 
   edit(){
     console.log('dog', this.dog);
+    console.log('dog', this.galleryDog);    
     if (this.validacion()) {
-      /* this.services.createDog(this.dog, this.galleryDog).subscribe(x => {
+      this.services.updateDog(this.dog, this.galleryDog).subscribe(x => {
+          let loading = this.loadingCtrl.create({
+            content: 'Esper por favor...',
+            spinner: 'circles'
+          });
+          loading.present();
         console.log('createDog', x);
         this.dataCreate = JSON.parse(x['_body'])['data'];
         if (this.dataCreate == 'inserted') {
-          this.msgError = 'Se agrego con Exito!'
+          this.msgError = 'Listo!'
+          loading.dismiss();
           this, this.presentToast(this.msgError);
           setTimeout(() => {
             this.navCtrl.pop();
           }, 2000)
         } else {
           this.msgError = 'Hubo un error, vuelve a intentarlo mas tarde...'
+          loading.dismiss();
           this, this.presentToast(this.msgError);
         }
-      }) */
+      })
     } else {
       this.presentToast(this.msgError);
     }

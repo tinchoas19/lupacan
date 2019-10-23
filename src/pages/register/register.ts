@@ -8,7 +8,8 @@ import {
   NavParams,
   AlertController,
   Platform,
-  ToastController
+  ToastController,
+  LoadingController
 } from "ionic-angular";
 import { AddDogPage } from "../add-dog/add-dog";
 import { MisionPage } from "../mision/mision";
@@ -36,7 +37,7 @@ export class RegisterPage {
   private win: any = window;
   facebookid:any;
   imagePath:any;
-  base64Image: any;
+  base64Image: any = null;
   dataUserId:any;
   imgFacebook:boolean=false;
   imgSrc:any;
@@ -61,6 +62,7 @@ export class RegisterPage {
     private storage: Storage,
     public toastController: ToastController,
     public maps: GoogleMapsProvider,
+    public loadingCtrl: LoadingController
   ) {
     this.searchDisabled = true;
     this.saveDisabled = true;
@@ -70,7 +72,7 @@ export class RegisterPage {
       telefono:['',Validators.required],      
       direccion:['', Validators.required],//Contener letras y espacios, y tener menos de 30 caracteres.
       edad:['',Validators.required],
-      email:['',Validators.compose([Validators.maxLength(30),Validators.required,Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]), usernameValidator.checkUsername.bind(usernameValidator)],
+      email:['',Validators.compose([Validators.required,Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]), usernameValidator.checkUsername.bind(usernameValidator)],
       password:['',Validators.required]
     })
   }
@@ -86,7 +88,6 @@ export class RegisterPage {
   }
 
   ionViewWillEnter(){
-    this.facebookid = 0;
     this.registroFb(this.navParams.data);
     this.getFirebaseUser();
   }
@@ -134,11 +135,19 @@ export class RegisterPage {
 
   registrarme() {
     this.submitAttempt = true;
-    if(!this.myForm.valid){
+    console.log('base64', this.base64Image);
+    console.log(!this.myForm.value);    
+    if(!this.myForm.valid || this.base64Image == null){
       this.showAlert();
     }else{
+      let loading = this.loadingCtrl.create({
+        spinner: 'hide',
+        content: 'Espere por favor...'
+      });
+      loading.present();
       console.log("success!")
       console.log(this.myForm.value);
+      loading.dismiss();      
       this.api.createUser(this.myForm.value, this.base64Image,this.facebookid, this.firebaseUserId).subscribe(x=>{
         console.log('VUELTA_API_CREATEUSER', x);
         this.dataUser = JSON.parse(x['_body'])['data']
@@ -148,12 +157,14 @@ export class RegisterPage {
           this.api.getUser(this.dataUserId).subscribe(dataUser=>{
             console.log('dataUser_login',dataUser);
             this.storage.set('datauser', dataUser['data']);
+            loading.dismiss();
             this.presentToasteEx();
             setTimeout(()=>{
               this.navCtrl.setRoot(MenuPage, dataUser['data']);
             },700)
           })
         }else{
+          loading.dismiss();
           this.presentToasteError();
         }
       })
@@ -198,7 +209,7 @@ export class RegisterPage {
   showAlert() {
     const alert = this.alertCtrl.create({
       title: "Error!",
-      subTitle: "Por favor, revisá los campos!",
+      subTitle: "Por favor, revisá los campos!.No olvides cargar una imagen a tu perfil!",
       buttons: ["Ok"]
     });
     alert.present();
@@ -206,7 +217,7 @@ export class RegisterPage {
 
   async presentToasteError() {
     const toast = await this.toastController.create({
-      message: "Hubo un error!\n Vuleve a intentarlo.",
+      message: "Hubo un error!\n Vuleve a intentarlo. No olvides cargar una imagen a tu perfil!",
       duration:2000,
       showCloseButton: true,
       position: 'top',

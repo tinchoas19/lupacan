@@ -31,11 +31,26 @@
             Sexo
             <div>
               <ion-radio checked="true" value="hembra"></ion-radio>
-              &nbsp;hembra
+              &nbsp;Hembra
             </div>
             <div>
               <ion-radio value="macho"></ion-radio>
-              &nbsp;macho
+              &nbsp;Macho
+            </div>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col padding>
+          <ion-list radio-group class="sexo" [(ngModel)]="dog.esterilizado">
+            Esterelizado
+            <div>
+              <ion-radio checked="true" value="1"></ion-radio>
+              &nbsp;Si
+            </div>
+            <div>
+              <ion-radio value="0"></ion-radio>
+              &nbsp;No
             </div>
           </ion-list>
         </ion-col>
@@ -59,7 +74,7 @@
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col *ngIf="!perroRefugio">
+        <!-- <ion-col *ngIf="!perroRefugio">
           <ion-item>
             <ion-label stacked>Estado</ion-label>
             <ion-select [(ngModel)]="dog.estado">
@@ -68,8 +83,8 @@
               <ion-option value="perdidos">Lo perdí</ion-option>
             </ion-select>
           </ion-item>
-        </ion-col>
-        <ion-col>
+        </ion-col> -->
+        <!-- <ion-col>
           <ion-item>
             <ion-label stacked>Tamaño</ion-label>
             <ion-select [(ngModel)]="dog.size">
@@ -78,7 +93,7 @@
               <ion-option value="large">Grande</ion-option>
             </ion-select>
           </ion-item>
-        </ion-col>
+        </ion-col> -->
       </ion-row>
       <ion-row>
         <ion-col col-12>

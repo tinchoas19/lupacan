@@ -41,10 +41,9 @@ export class AddDogPage {
     nombre: '',
     nacimiento: '',
     gender: '',
+    esterilizado:'',
     raza: '',
     color: '',
-    estado: '',
-    size: '',
     descripcion: '',
     direccion:'',
     placeid:''
@@ -59,7 +58,10 @@ export class AddDogPage {
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     public zone: NgZone,
-    public maps: GoogleMapsProvider, public platform: Platform, public geolocation: Geolocation, public viewCtrl: ViewController,
+    public maps: GoogleMapsProvider,
+    public platform: Platform, 
+    public geolocation: Geolocation, 
+    public viewCtrl: ViewController,
     private services: ApiProvider,
     private storage: Storage,
     private DomSanitizer: DomSanitizer
@@ -178,17 +180,26 @@ export class AddDogPage {
 
   irAHome() {
     console.log('dog', this.dog);
+    console.log('fotos', this.galleryDog.length);
     if (this.validacion()) {
+      let loading = this.loadingCtrl.create({
+        spinner: 'circles',
+        content: 'Espere por favor...'
+      });
+    
+      loading.present();
       this.services.createDog(this.dog, this.galleryDog).subscribe(x => {
         console.log('createDog', x);
         this.dataCreate = JSON.parse(x['_body'])['data'];
         if (this.dataCreate == 'inserted') {
+          loading.dismiss();
           this.msgError = 'Se agrego con Exito!'
           this, this.presentToast(this.msgError);
           setTimeout(() => {
             this.navCtrl.pop();
           }, 2000)
         } else {
+          loading.dismiss();
           this.msgError = 'Hubo un error, vuelve a intentarlo mas tarde...'
           this, this.presentToast(this.msgError);
         }
@@ -227,35 +238,32 @@ export class AddDogPage {
 
     if (this.dog.nombre == "") {
       ret = false;
-      msg += "Debe completar el nombre\n";
+      msg += "Debe completar el nombre \n";
     }
     if (this.dog.nacimiento == "") {
       ret = false;
-      msg += "Debe completar la fecha de nacimiento";
+      msg += "Debe completar la fecha de nacimiento \n";
     }
     if (this.dog.gender == "") {
       ret = false;
-      msg += "Debe escoger un genero";
+      msg += "Debe escoger un genero \n";
     }
     if (this.dog.raza == "") {
       ret = false;
-      msg += "Debe escoger una raza";
+      msg += "Debe escoger una raza \n";
     }
     if (this.dog.color == "") {
       ret = false;
-      msg += "Debe completar su color";
-    }
-    if (this.dog.estado == "") {
-      ret = false;
-      msg += "Debe completar su estado";
-    }
-    if (this.dog.size == "") {
-      ret = false;
-      msg += "Debe escoger un tamaño";
+      msg += "Debe completar su color \n";
     }
     if (this.dog.descripcion == "") {
       ret = false;
-      msg += "Debe completar la descripcion";
+      msg += "Debe completar la descripcion \n";
+    }
+
+    if (this.galleryDog.length === 0) {
+      ret = false;
+      msg += "Por favor nos gustaria que agregues una foto \n";
     }
 
     this.msgError = msg;

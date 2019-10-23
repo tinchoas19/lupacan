@@ -1,3 +1,6 @@
+import { ApiProvider } from './../../providers/api/api';
+import { MyFavoritesPage } from './../my-favorites/my-favorites';
+import { CreateServicePage } from './../create-service/create-service';
 import { MyServicesPage } from './../my-services/my-services';
 import { Component, ViewChild } from "@angular/core";
 import { Platform, NavController, MenuController, App, IonicPage, NavParams, LoadingController } from "ionic-angular";
@@ -20,11 +23,14 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     templateUrl: "menu.html"
 })
 export class MenuPage {
+    expand2: boolean = false;
     rootPage= MainPage;
     userName: string;
     email: string;
     imagen: any;
     dataUser:any;
+    mostrar:boolean = false;
+    expand1:boolean = false;
     @ViewChild(Nav) nav: Nav;
 
     constructor(
@@ -34,9 +40,19 @@ export class MenuPage {
         public menuCtrl: MenuController,
         private barcodeScanner: BarcodeScanner,
         public loadingCtrl : LoadingController,
+        private api: ApiProvider,
         private storage: Storage
     ) {
+        this.getStorage();
         console.log("params", this.navParams.data);
+    }
+
+    openItem(){
+        this.expand1 = !this.expand1;
+    }
+
+    openItem2(){
+        this.expand2 = !this.expand2;
     }
 
     goToMyProfile() {
@@ -44,7 +60,19 @@ export class MenuPage {
     }
 
     goToMyServices() {
-        this.nav.push(MyServicesPage);
+        this.navCtrl.push(MyServicesPage,false);
+    }
+
+    goToMyRefugios(){     
+        this.navCtrl.push(MyServicesPage,true);
+    }
+    
+    goToCreateRefugio(){
+        this.navCtrl.push(CreateServicePage, {refugio:true});
+    }
+
+    goToMyFavRefugio(){
+        this.navCtrl.push(MyFavoritesPage);        
     }
 
     goToMyDogs(){
@@ -52,13 +80,16 @@ export class MenuPage {
     }
 
     ionViewWillEnter(){
-        this.getStorage();
+        
     }
 
     getStorage(){
         this.storage.get('datauser').then(val=>{
             console.log('valMnu', val);
             this.dataUser = val;
+            if(this.dataUser.mostrartelefono > 0){
+                this.mostrar = true;
+            }else this.mostrar = false;
             console.log('userHome', this.dataUser);
             if(this.dataUser.imagen == "" && this.dataUser.facebookid != ""){
                 this.imagen = "https://graph.facebook.com/"+this.dataUser.facebookid+"/picture?type=large";                           
@@ -68,6 +99,44 @@ export class MenuPage {
                 this.imagen = '../../assets/imgs/1.jpg';                        
             }
         })
+    }
+
+    ocultarTelefono(event,dataUser){
+        if(event.checked){
+            this.api.mostrarTelefono(dataUser.usuarioid, 1).subscribe(x=>{
+                console.log('x',x);
+                let data = JSON.parse(x['_body'])['status_message'];
+                if(data = 'event created'){
+                    this.api.getUser(dataUser.usuarioid).subscribe(y=>{
+                        this.storage.set('datauser', y['data']);
+                    })
+                    this.ionViewWillEnter();
+                }
+            })
+        }else{
+            this.api.mostrarTelefono(dataUser.usuarioid, 0).subscribe(x=>{
+                console.log('x',x);
+                let data = JSON.parse(x['_body'])['status_message'];
+                if(data = 'event created'){
+                    this.api.getUser(dataUser.usuarioid).subscribe(y=>{
+                        this.storage.set('datauser', y['data']);
+                    })
+                    this.ionViewWillEnter();
+                }
+            })
+        }
+    }
+
+    goToAddServices(){
+        this.navCtrl.push(CreateServicePage);
+    }
+
+    goToMyFavServices(){
+        this.navCtrl.push(MyFavoritesPage,'locales');
+    }
+
+    goToMyFavRefugios(){
+        this.navCtrl.push(MyFavoritesPage,'refugios');
     }
 
     logOut() {

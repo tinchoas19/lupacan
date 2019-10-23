@@ -21,6 +21,29 @@ export class CreateServicePage {
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
   private win: any = window;
+  dias:any=[
+    {
+      i: 0, dia:'Lunes', abre:"", cierra:"" , desabilitar:false
+    },
+    {
+      i: 1, dia:'Martes',  abre:"", cierra:"", desabilitar:false
+    },
+    {
+      i: 2, dia:'Miércoles',  abre:"", cierra:"" , desabilitar:false
+    },
+    {
+      i: 3, dia:'Jueves',  abre:"", cierra:"" , desabilitar:false
+    },
+    {
+      i: 4, dia:'Viernes',  abre:"", cierra:"" , desabilitar:false
+    },
+    {
+      i: 5, dia:'Sábado',  abre:"", cierra:"" , desabilitar:false
+    },
+    {
+      i: 6, dia:'Domingo',  abre:"", cierra:"" , desabilitar:false
+    }
+  ];
   tienda:any={
     nombre:"",
     direcc:"",
@@ -30,9 +53,12 @@ export class CreateServicePage {
     horaC:"",
     localidad:"",
     category:"",
+    horarios:this.dias,
     usuarioid:"", 
     placeid:"",
   }
+  
+  lun:boolean=false;
   imagenes:any=[];
   imagePath:any;
   base64Image:any;
@@ -71,6 +97,36 @@ export class CreateServicePage {
     
   }
 
+  apertura(dia){
+    if(dia.i == 0){
+      this.dias.map(day=>{
+        day.abre = dia.abre;
+      })
+    }
+    console.log('aper',dia);
+  }
+
+  cierre(dia){
+    if(dia.i == 0){
+      this.dias.map(day=>{
+        day.cierra = dia.cierra;
+      })
+    }
+    console.log('aper',dia);
+  }
+
+  noAbre(dia,event){
+    if(event.checked){
+      dia.desavilitar = true;
+      dia.abre = "0";
+      dia.cierra = "0";
+    }else{
+      dia.abre = "";
+      dia.cierra = "";
+      dia.desabilitar = false;
+    }
+  }
+  
 
   ionViewWillEnter(){
     
@@ -162,8 +218,8 @@ export class CreateServicePage {
       this.servicios = this.catSelected[0].map(x=>{ return x.categorialocalid});
     }   
     console.log('tienda', this.tienda);
-    console.log('servSelec', this.servicios);
-    console.log('imagene', this.imagenes);    
+    //console.log('servSelec', this.servicios);
+    //console.log('imagene', this.imagenes);    
     this.api.createService(this.tienda, this.servicios, this.imagenes).subscribe(x=>{
       console.log('VUELTA_API_CREATESERVICE', x);
       data = JSON.parse(x['_body'])['status_message'];
@@ -179,6 +235,8 @@ export class CreateServicePage {
         },500);
       }
     })
+    console.log('dias', this.tienda);
+    
   }
 
   searchPlace(){

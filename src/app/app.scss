@@ -182,10 +182,17 @@ h1{
     box-shadow: 0px 0px 21px -1px rgba(0,0,0,0.3);
 }
 
+.toast-message {
+    white-space: pre;
+  }
+
 ._list{
     .item{
         font-size: 1.3rem;
     }
+}
+ion-footer{
+    background-color: #ffffff;
 }
 .label-title{
    font-size: 1.6rem;

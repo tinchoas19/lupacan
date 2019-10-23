@@ -12,4 +12,17 @@ page-create-service {
         box-shadow: none !important;
         border: 1px solid color($colors, primary);
     }
+    .horarios{
+        padding: 0 16px;
+        .col{
+            padding: 0px !important;
+        }
+    }
+    .disabled {
+        opacity:0.6;
+        padding: 0 16px;
+        .col{
+            padding: 0px !important;
+        }         
+    }
 }

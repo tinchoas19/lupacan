@@ -85,7 +85,7 @@
       <ion-col col-12 text-center>
         <button text-center ion-button color="primary" (click)="dejarComment()">Deja tu comentario</button>
       </ion-col>
-      <ion-col *ngIf="dejarcomment" col-12 text-center padding>
+      <ion-col *ngIf="dejarcomment" col-12 text-center>
         <ion-card>
           <ion-item>
             <ion-textarea [(ngModel)]="message" type="text" placeholder="Comentario..."></ion-textarea>
@@ -93,11 +93,11 @@
           <button float-right ion-button small float-right round (click)="sendComment(message)">Enviar</button>
         </ion-card>
       </ion-col>
-      <ion-col col-6 text-center>
-        <button text-center ion-button outline color="primary" (click)="verComments()">Ver comentarios</button>
+      <ion-col col-6 class="col-link">
+        <a float-left (click)="verComments()"><strong>Ver comentarios</strong></a>
       </ion-col>
-      <ion-col col-6 text-center>
-        <button text-center ion-button outline color="primary" (click)="getSeguidores()">Ver seguidores</button>
+      <ion-col col-6 class="col-link">
+        <a float-right (click)="getSeguidores()"><strong>Ver seguidores</strong></a>
       </ion-col>
     </ion-row>
     <div *ngIf="service.perros">

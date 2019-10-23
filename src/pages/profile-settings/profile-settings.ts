@@ -1,3 +1,7 @@
+import { SaludPage } from './../salud/salud';
+import { MainPage } from './../main/main';
+import { App } from 'ionic-angular';
+import { AddDogPage } from './../add-dog/add-dog';
 import { ListChatsPage } from './../list-chats/list-chats';
 import { RefugioPage } from './../refugio/refugio';
 import { MyFavoritesPage } from './../my-favorites/my-favorites';
@@ -20,14 +24,18 @@ import { MyServicesPage } from '../my-services/my-services';
 })
 export class ProfileSettingsPage {
   numberBadge:any;
+  expand1:boolean=false;
+  expand2:boolean=false;
+  expand3:boolean=false;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private badge: Badge,
     private storage: Storage,
-    private api: ApiProvider
+    private api: ApiProvider,
+    public app: App
   ) {
-    
+    this.expand1=this.expand2=this.expand3=false;
   }
 
   ionViewWillEnter(){
@@ -42,6 +50,15 @@ export class ProfileSettingsPage {
     });
   }
 
+  goToAddDog(){
+    this.navCtrl.push(AddDogPage);
+  }
+
+  goToQr(){
+    let nav = this.app.getRootNav(); 
+    nav.setRoot(MainPage, {tabIndex: 1});
+  }
+
   getNumberNot(){
     this.storage.get('datauser').then(user=>{
       if(user!=null){
@@ -54,6 +71,17 @@ export class ProfileSettingsPage {
         })
       }
     })
+  }
+
+  openItem(event){
+    console.log('event', event);
+    if(event.target.innerText == " Mis Perros"){
+      this.expand1 = !this.expand1;
+    }else if(event.target.innerText == " Callejeritos"){
+      this.expand2 = !this.expand2;
+    }else if(event.target.innerText == " Notificaciones"){
+      this.expand3 = !this.expand3;
+    }
   }
 
   goToFavoritos(){
@@ -71,9 +99,13 @@ export class ProfileSettingsPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfileSettingsPage');
   }
-  goToMyDogs() {
-    this.navCtrl.push(MyDogsPage);
+  goToMyDogs(i) {
+    console.log('i',i);
+    this.navCtrl.push(MyDogsPage,{index:i});
   }
+  /* goToSalud(){
+    this.navCtrl.push(SaludPage);
+  } */
   goToMyProfile() {
     this.navCtrl.push(MyProfilePage);
   }

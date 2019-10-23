@@ -11,6 +11,7 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class ListChatsPage {
 
+  msj: boolean;
   list_chats:any;
   userid:any;
   constructor(
@@ -36,6 +37,20 @@ export class ListChatsPage {
         this.api.getMisChats(val['usuarioid']).subscribe(x=>{
           console.log('mis_chats',x);
           this.list_chats = x['data'];
+          if(x['data']){
+            this.list_chats.map(chat=>{
+              if (chat.facebookid != '0') {
+                chat.imgSrc = "https://graph.facebook.com/" + chat.facebookid + "/picture?type=large";
+              } else if (chat.imagen != "") {
+                chat.imgSrc = "http://ctrlztest.com.ar/lupacan/apirest/" + chat.imagen
+              } else {
+                chat.imgSrc = 'assets/imgs/1.jpg';
+              }
+            })
+            this.msj = true;
+          }else{
+            this.msj = false;
+          }
         })
       }
     })
@@ -51,7 +66,7 @@ export class ListChatsPage {
       destinoid = chat['usuarioid2'];
       tipodestino = 'usuario';
     }
-    this.navCtrl.push(ChatPage,{origenid:chat['usuarioid1'], tipoorigen: 'usuario', destinoid: destinoid, tipodestino: tipodestino, conversandocon: chat['conversandocon']});    
+    this.navCtrl.push(ChatPage,{userChat: chat, origenid:chat['usuarioid1'], tipoorigen: 'usuario', destinoid: destinoid, tipodestino: tipodestino, conversandocon: chat['conversandocon']});    
   }
 
 }

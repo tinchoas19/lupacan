@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title text-center class="lupa-title">Transferir Mascota</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-row style="padding-top: 0px;" justify-content-center padding>
+    <ion-searchbar style="padding-top: 0px;" padding placeholder="Nombre del usuario" [(ngModel)]="txtbusqueda" (ionInput)="getItems($event)"></ion-searchbar>
+  </ion-row>
+  <ion-list *ngIf="items && index == 0" no-lines class="_list">
+    <ion-list-header text-center class="label-title">
+      Usuarios
+    </ion-list-header>
+    <ion-item *ngFor="let item of items" (click)="transferir(item)">
+      <ion-avatar item-start>
+        <img [src]="item.imgSrc">
+      </ion-avatar>
+      <h2>{{item.nombre}}</h2>
+      <p>{{item.email}}</p>
+    </ion-item>
+  </ion-list>
+  <ion-list *ngIf="items && index == 1" no-lines class="_list">
+    <ion-list-header text-center class="label-title">
+      Usuarios
+    </ion-list-header>
+    <ion-item *ngFor="let item of items" (click)="compartirTenencia(item)">
+      <ion-avatar item-start>
+        <img [src]="item.imgSrc">
+      </ion-avatar>
+      <h2>{{item.nombre}}</h2>
+      <p>{{item.email}}</p>
+    </ion-item>
+  </ion-list>
+</ion-content>

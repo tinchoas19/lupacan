@@ -21,6 +21,7 @@ export class ServiPage {
   @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
   view: string = "favoritos";
   locationUser: any = {};
+  servicios:any = "favoritos";
   location: any;
   currentPos: Geoposition;
   map: any;
@@ -161,7 +162,7 @@ export class ServiPage {
 
     let mapOptions = {
       center: latLng,
-      zoom: 15,
+      zoom: 10,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
 

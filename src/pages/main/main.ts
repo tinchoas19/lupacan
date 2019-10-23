@@ -1,10 +1,10 @@
+import { QrCollaresPage } from './../qr-collares/qr-collares';
 import { Storage } from '@ionic/storage';
 import { ApiProvider } from './../../providers/api/api';
 import { BuscarPage } from './../buscar/buscar';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Tabs } from 'ionic-angular';
 import { HomePage } from '../home/home';
-import { ProfileSettingsPage } from '../profile-settings/profile-settings';
 import { AgregarPage } from '../agregar/agregar';
 
 
@@ -14,6 +14,7 @@ import { AgregarPage } from '../agregar/agregar';
   templateUrl: 'main.html',
 })
 export class MainPage {
+  mySelectedIndex: any;
   user:any;
   constructor(
     public navCtrl: NavController, 
@@ -31,11 +32,12 @@ export class MainPage {
         }
       })
     }  */
+    this.mySelectedIndex = navParams.data.tabIndex || 0;
   }
 
 
   public homeTab = HomePage;
-  public cuentaTab = ProfileSettingsPage;
+  public cuentaTab = QrCollaresPage;
   public agregarTab = AgregarPage;
   public buscatTab = BuscarPage;
   

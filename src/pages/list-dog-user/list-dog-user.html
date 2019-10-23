@@ -19,13 +19,13 @@
     <ion-col col-12>
       <h4 text-center style="margin-top: 10px;">{{nombreUser}} {{apellidoUser}}</h4>
     </ion-col>
+    <ion-col col-12 *ngIf="user && user.mostrartelefono == '1'">
+      <p text-center>
+        <ion-icon name="call"></ion-icon>{{user.telefono}}</p>
+    </ion-col>
     <ion-col col-12>
       <add-fav-user [usuariofav]="idUser"></add-fav-user>
     </ion-col>
-    <!-- <ion-col col-12>
-      <p text-center>
-        <ion-icon name="call"></ion-icon>{{telefonoUser}}</p>
-    </ion-col> -->
   </ion-row>
   <ion-list *ngIf="misPerros.length > 0" class="_list">
     <ion-list-header no-lines class="labe-title">

@@ -1,3 +1,4 @@
+import { Badge } from '@ionic-native/badge';
 import { ApiProvider } from './../../providers/api/api';
 import { IntervalProvider } from './../../providers/interval/interval';
 import { Storage } from '@ionic/storage';
@@ -14,6 +15,7 @@ import { AgregarPage } from '../agregar/agregar';
 })
 export class HomePage {
 
+  numberBadge: number;
   usuario:any = 0;
   imgSrc:any=null;
   public pagesData = [
@@ -28,11 +30,11 @@ export class HomePage {
     public navParams: NavParams,
     public alertCtrl: AlertController,
     public menuCtrl: MenuController,
+    private badge: Badge,
     private storage: Storage,
     private api: ApiProvider,
     private interval: IntervalProvider
   ) {
-    this.interval.toggleInterval();
   }
 
 
@@ -42,8 +44,19 @@ export class HomePage {
       if(val){
         this.usuario = val;
         this.imgSrc = "http://ctrlztest.com.ar/lupacan/apirest/"+val['imagen'];
+        this.api.getNotificacionesSinLeer(val['usuarioid']).subscribe(x=>{
+          console.log('misNot',x['data']);
+          let numberNot = Number(x['data']);
+          console.log('misNot_Parse',numberNot);            
+          this.badge.set(numberNot);
+          this.numberBadge = numberNot;
+        })
       }
     })
+  }
+
+  ionViewDidLoad(){
+    this.interval.toggleInterval();    
   }
 
   openMenu() {

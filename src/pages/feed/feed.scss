@@ -44,6 +44,10 @@ page-feed {
         margin-top: 7%; 
         display: none;
     }
+    .img_feed{
+        height: 16vh;
+        width: 30vw;
+    }
     .footer{
         img{
             border: none;
@@ -55,8 +59,19 @@ page-feed {
         }
     }
     .ft_icons{
-        .icon{
-            font-size: 5rem;
+        img{
+            max-width: 40%;
+            filter: drop-shadow(1px 2px 3px #222);
+            -webkit-filter: drop-shadow(1px 2px 3px #222);   
+        }
+    }
+    .col{
+        margin: auto;
+        .swiper-wrapper{
+            height: auto;
+            .slide-zoom{
+                margin: 2px;
+            }
         }
     }
     

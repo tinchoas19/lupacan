@@ -2,6 +2,22 @@ page-home {
     .imgPerfil{
         border-radius: 50%;
     }
+    #notification-button {            
+        position: relative;
+        width: 42px;
+        top:1px;
+        right: 1px;
+        overflow: visible!important;
+    }
+
+
+    #notifications-badge {
+        background-color: red;
+        position: absolute;
+        top: -3px;
+        right: -3px;
+        border-radius: 100%;
+    }
     .home-grid{
         display: flex;
         flex-direction: column;

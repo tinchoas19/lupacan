@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title *ngIf="index == 0">Aceptar Transferencia</ion-title>
+    <ion-title *ngIf="index == 1">Aceptar Tenencia</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-row justify-content-center>
+    <ion-slides style="width: 100% !important;">
+      <ion-slide *ngFor="let img of dataDog.fotos">
+        <img class="circular--square" src="http://ctrlztest.com.ar/lupacan/apirest/{{img.fotourl}}" imageViewer>
+      </ion-slide>
+    </ion-slides>
+  </ion-row>
+  <ion-row justify-content-center>
+    <p text-center text-wrap>Has recibido la invitación de adquirir la tenecia completa de <strong>{{dataDog.nombre}}</strong></p>
+  </ion-row>
+  <ion-row *ngIf="index == 0" padding justify-content-center>
+    <ion-col col-12 text-center>
+      <button ion-button round outline color="primary" (click)="acepta()">Aceptar Transferencia</button>
+    </ion-col>
+    <ion-col col-12 text-center>
+      <button ion-button round outline color="primary" (click)="rechaza()">Rechazar Transferencia</button>      
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="index == 1" padding justify-content-center>
+    <ion-col col-12 text-center>
+      <button ion-button round outline color="primary" (click)="aceptaTenencia()">Aceptar Tenencia</button>
+    </ion-col>
+    <ion-col col-12 text-center>
+      <button ion-button round outline color="primary" (click)="rechazaTenencia()">Rechazar Tenencia</button>      
+    </ion-col>
+  </ion-row>
+</ion-content>

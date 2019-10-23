@@ -1,5 +1,10 @@
 <ion-header no-border no-shadow transparent>
-  <ion-navbar no-border no-shadow transparent>
+  <ion-navbar hideBackButton no-border no-shadow transparent>
+    <ion-buttons left>
+      <button ion-button (click)="doYourStuff()">
+        <ion-icon class="customIcon" name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -21,7 +26,7 @@
       <ion-badge color="light">
         <ion-item no-lines>
           <ion-avatar item-start *ngIf="imgUser">
-            <img src="http://ctrlztest.com.ar/lupacan/apirest/{{imgUser}}">
+            <img [src]="imagenUser">
           </ion-avatar>
           <h2>{{dataUser.nombre}}</h2>
         </ion-item>
@@ -30,7 +35,8 @@
   </div>
   <div class="message-wrap">
     <div *ngFor="let msg of msgList" class="message" [class.left]="msg.userId != idUser" [class.right]="msg.userId == idUser">
-      <img class="user-img" src="http://cactusthemes.com/blog/wp-content/uploads/2018/01/tt_avatar_small.jpg" alt="" />
+      <img *ngIf="msg.userId == idUser" class="user-img" [src]="imagenUser" />
+      <img *ngIf="msg.userId != idUser" class="user-img" [src]="imageChatCon" />
       <ion-spinner name="dots" *ngIf="msg.status === 'pending'"></ion-spinner>
       <div class="msg-detail">
         <div class="msg-info">

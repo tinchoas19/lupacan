@@ -2,29 +2,44 @@
     <ion-header *ngIf="dataUser" text-center>
         <img style="margin-top: 10vw;" [src]="imagen" alt="">
         <h2>{{dataUser.nombre}} {{dataUser.apellido}}</h2>
+        <p>{{dataUser.email}}</p>
     </ion-header>
     <ion-content>
         <ion-list class="left-menu">
             <ion-item>
-                <ion-toggle checked="false"></ion-toggle>
+                <ion-toggle [checked]="mostrar" (ionChange)="ocultarTelefono($event,dataUser)"></ion-toggle>
                 <ion-label>
                     Mostrar mi N° de celular
                 </ion-label>
             </ion-item>
-            <ion-item (click)="goToMyProfile()" menuClose>
-                <img src="assets/imgs/menu01.png" alt=""> &nbsp;Mi perfil
-            </ion-item>
-            <ion-item (click)="goToMyDogs()" menuClose>
+            <ion-list-header color="light" (click)="goToMyProfile()" menuClose>
+                <img src="assets/imgs/menu01.png" alt=""> &nbsp;Editar mis datos
+            </ion-list-header>
+            <!-- <ion-item (click)="goToMyDogs()" menuClose>
                 <img src="assets/imgs/menu02.png" alt=""> &nbsp;Perros agregados
-            </ion-item>
-            <ion-item (click)="goToMyServices()" menuClose>
-                <img src="assets/imgs/menu03.png" alt=""> &nbsp;Servicios agregados
-            </ion-item>
-            <ion-item>
-                <img src="assets/imgs/menu04.png" alt=""> &nbsp;Configuraciones
-            </ion-item>
-            <ion-item (click)="logOut()" menuClose>
+            </ion-item> -->
+            <ion-list-header color="light" (click)="openItem()">
+                <img src="assets/imgs/menu03.png" alt=""> &nbsp;Mis servicios
+            </ion-list-header>
+            <div *ngIf="expand1">
+                <ion-item class="sub-item" (click)="goToMyServices()">Ver actuales</ion-item>
+                <ion-item class="sub-item" (click)="goToAddServices()">Agregar</ion-item>
+                <ion-item class="sub-item" (click)="goToMyFavServices()">Servicios favoritos</ion-item>
+            </div>
+            <ion-list-header color="light" (click)="openItem2()">
+                <img src="assets/imgs/menu02.png" alt=""> &nbsp;Mis refugios
+            </ion-list-header>
+            <div *ngIf="expand2">
+                <ion-item class="sub-item" (click)="goToMyRefugios()">Ver actuales</ion-item>
+                <ion-item class="sub-item" (click)="goToCreateRefugio()">Agregar</ion-item>
+                <ion-item class="sub-item" (click)="goToMyFavRefugios()">Refugios favoritos</ion-item>
+            </div>
+            <ion-list-header color="light" (click)="logOut()" menuClose>
                 <img src="assets/imgs/menu05.png" alt=""> &nbsp;Salir
+            </ion-list-header>
+            <!-- <ion-item>menuClose
+menuClose
+                <img src="assets/imgs/menu04.png" alt=""> &nbsp;Configuraciones
             </ion-item>
             <ion-item (click)="scanCode()" menuClose>
                 <ion-icon name="qr-scanner" style="font-size: 1.8em;"></ion-icon> &nbsp;Scanner QR
@@ -34,7 +49,7 @@
             </ion-item>
             <ion-item>
                 <img src="assets/imgs/menu07.png" alt=""> &nbsp;Soporte
-            </ion-item>
+            </ion-item> -->
         </ion-list>
     </ion-content>
 </ion-menu>

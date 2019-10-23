@@ -20,22 +20,36 @@
       <ion-row>
         <ion-col>
           <ion-item>
-            <ion-datetime [(ngModel)]="dog.nacimiento" displayFormat="DD MMM YYYY" placeholder="Fecha de nacimiento    DD/MM/AA" cancelText="Cancelar"
-              doneText="Ok"></ion-datetime>
+            <ion-datetime [(ngModel)]="dog.nacimiento" displayFormat="DD MMM YYYY" placeholder="DD/MM/AA" cancelText="Cancelar" doneText="Ok"></ion-datetime>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col padding>
-          <ion-list radio-group class="sexo" [(ngModel)]="dog.gender">
+          <ion-list radio-group class="sexo">
             Sexo
             <div>
-              <ion-radio checked="true" value="hembra"></ion-radio>
+              <ion-radio value="hembra" [checked]="selected_genero"></ion-radio>
               &nbsp;hembra
             </div>
             <div>
-              <ion-radio value="macho"></ion-radio>
+              <ion-radio value="macho" [checked]="!(selected_genero)"></ion-radio>
               &nbsp;macho
+            </div>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col padding>
+          <ion-list radio-group class="sexo">
+            Esterelizado
+            <div>
+              <ion-radio checked="true" value="1" [checked]="selected_esterilizado"></ion-radio>
+              &nbsp;Si
+            </div>
+            <div>
+              <ion-radio value="0" [checked]="!(selected_esterilizado)"></ion-radio>
+              &nbsp;No
             </div>
           </ion-list>
         </ion-col>
@@ -44,41 +58,32 @@
         <ion-col>
           <ion-item>
             <ion-label stacked>Raza</ion-label>
-            <ion-select [(ngModel)]="dog.raza">
-              <ion-option *ngFor="let raza of razas" value="{{raza.razaid}}">{{raza.nombre}}</ion-option>
+            <ion-select [(ngModel)]="selected_raza">
+              <ion-option *ngFor="let raza of razas" value="{{raza.nombre}}" [selected]="selected_raza == raza.nombre">{{raza.nombre}}</ion-option>
             </ion-select>
           </ion-item>
         </ion-col>
         <ion-col>
           <ion-item>
             <ion-label stacked>Color</ion-label>
-            <ion-select [(ngModel)]="dog.color">
-              <ion-option *ngFor="let color of colores" value="{{color.colorid}}">{{color.nombre}}</ion-option>
+            <ion-select [(ngModel)]="selected_color">
+              <ion-option *ngFor="let color of colores" value="{{color.colorid}}" [selected]="selected_color == color.colorid">{{color.nombre}}</ion-option>
             </ion-select>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col *ngIf="!perroRefugio">
+        <!-- <ion-col *ngIf="!perroRefugio">
           <ion-item>
             <ion-label stacked>Estado</ion-label>
-            <ion-select [(ngModel)]="dog.estado">
-              <ion-option value="comunidad">Es mio y está en casa</ion-option>
-              <ion-option value="adopcion">Para dar en adopción</ion-option>
-              <ion-option value="perdidos">Lo perdí y aun no lo encuentro</ion-option>
+            <ion-select [(ngModel)]="selected_estado">
+              <ion-option value="comunidad" [selected]="selected_estado == comunidad">Es mio y está en casa</ion-option>
+              <ion-option value="adopcion" [selected]="selected_estado == adopcion">Para dar en adopción</ion-option>
+              <ion-option value="adopcion" [selected]="selected_estado == encontrado">Encontrado</ion-option>
+              <ion-option value="perdidos" [selected]="selected_estado == perdidos">Lo perdí y aun no lo encuentro</ion-option>
             </ion-select>
           </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item>
-            <ion-label stacked>Tamaño</ion-label>
-            <ion-select [(ngModel)]="dog.size">
-              <ion-option value="small">Chico</ion-option>
-              <ion-option value="medium">Mediano</ion-option>
-              <ion-option value="large">Grande</ion-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
+        </ion-col> -->
       </ion-row>
       <ion-row>
         <ion-col col-12>

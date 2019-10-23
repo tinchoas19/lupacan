@@ -205,13 +205,13 @@ export class FeedPage {
       console.log(this.dogs);
       switch (this.pageData.id) {
         case 2:
-          this.filteredDogs = this.dogs.filter(item => item.estaperdido == "1");
+          this.filteredDogs = this.dogs.filter(item => item.estado == "2");
           break;
         case 3:
-          this.filteredDogs = this.dogs.filter(item => item.estaencontrado == "1");
+          this.filteredDogs = this.dogs.filter(item => item.estado == "3");
           break;
         case 4:
-          this.filteredDogs = this.dogs.filter(item => item.estaenadopcion == "1");
+          this.filteredDogs = this.dogs.filter(item => item.estado == "4");
           break;
         default:
           this.filteredDogs = this.dogs;

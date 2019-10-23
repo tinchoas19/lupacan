@@ -9,18 +9,26 @@
 </ion-header>
 
 <ion-content>
-  <ion-row style="height: 300px;">
-    <ion-slides style="width: 100% !important;">
-      <ion-slide *ngFor="let img of dog.fotos">
-        <img style="border-radius: 50%; width: 60%;" src="http://ctrlztest.com.ar/lupacan/apirest/{{img.fotourl}}" imageViewer>
-      </ion-slide>
-    </ion-slides>
+  <ion-row>
+    <ion-col col-1 text-center (click)="prev()">
+      <ion-icon text-center name="arrow-back"></ion-icon>
+    </ion-col>
+    <ion-col col-10 text-center>
+      <ion-slides style="width: 100% !important;" #slideWithNav2>
+        <ion-slide *ngFor="let img of dog.fotos">
+          <img class="circular--square" src="http://ctrlztest.com.ar/lupacan/apirest/{{img.fotourl}}" imageViewer>
+        </ion-slide>
+      </ion-slides>
+    </ion-col>
+    <ion-col col-1 text-center (click)="next()">
+      <ion-icon text-center name="arrow-forward"></ion-icon>
+    </ion-col>
   </ion-row>
-  <ion-row padding style="margin-top: 8%" *ngIf="dog.estaperdido == 1" justify-content-center>
+  <ion-row padding style="margin-top: 8%" *ngIf="dog.estado == 2" justify-content-center>
     <ion-badge color="danger" class="badgePerdido">
       <h3 text-center>Me perdí !</h3>
-      <p text-wrap>Lugar: {{dog.perdidolugar}}</p>
-      <p>Fecha: {{dog.perdidofecha | date : "dd/MM/y" }}</p>
+      <p text-wrap>Lugar: {{dog.estadodireccion}}</p>
+      <p>Fecha: {{dog.estadofecha | date : "dd/MM/y" }}</p>
     </ion-badge>
   </ion-row>
   <ion-row *ngIf="showMyControls && !dog.encontrado && dog.estaperdido != 1">
@@ -37,7 +45,7 @@
       <ion-row justify-content-center>
         <ion-col col-12 text-center>
           <p>
-            <span class="txt-bold">{{dog.nombre}}-{{dog.edad}}</span>
+            <span class="txt-bold">{{dog.nombre}} - {{edad(dog.fechanacimiento)}} años</span>
           </p>
         </ion-col>
         <ion-col col-12 text-center>
@@ -45,25 +53,37 @@
             <span class="txt-bold">{{estado(dog)}}</span>
           </p>
         </ion-col>
-        <ion-col col-12 text-center>
-          <p *ngIf="!perroMio">
+        <ion-col *ngIf="!perroMio" col-12 text-center>
+          <p>
             <span class="txt-bold">Es mi Perro</span>
           </p>
-          <p *ngIf="perroMio">Estas a:
-            <span class="txt-bold">{{distanciaPerro}}</span>
+        </ion-col>
+        <ion-col *ngIf="perroMio" col-12 text-center>
+          <p text-center>Estas a:</p>
+          <p float-left>
+            <span class="txt-bold">
+              <ion-icon name="walk"></ion-icon> {{distanciaPerro}}</span>
+          </p>
+          <p float-right>
+            <span class="txt-bold">
+              <ion-icon name="car"></ion-icon> {{distanciaAuto}}</span>
           </p>
         </ion-col>
       </ion-row>
 
       <div class="doginfo">
         <ion-row>
-          <ion-col>
+          <!-- <ion-col col-12>
             <ion-label stacked>Periodo</ion-label>
-            <p>{{dog.fechanacimiento}}</p>
+            <p>{{edad(dog.fechanacimiento)}} años</p>
+          </ion-col> -->
+          <ion-col col-12 *ngIf="dog.estado == '2'">
+            <ion-label stacked>Lugar donde se extravío</ion-label>
+            <p>{{dog.estadodireccion}}</p>
           </ion-col>
-          <ion-col>
+          <ion-col col-12 *ngIf="!(dog.estado == '2')">
             <ion-label stacked>Lugar</ion-label>
-            <p>{{dog.direccion}}</p>
+            <p>{{dog.perrodireccion}}</p>
           </ion-col>
         </ion-row>
         <div #pleaseConnect id="please-connect">
@@ -89,18 +109,18 @@
             <p>{{dog.color}}</p>
           </ion-col>
         </ion-row>
-        <ion-row *ngIf="dog.perdido">
-          <ion-col>
+        <ion-row *ngIf="dog.estado == '2'">
+          <ion-col col-12>
             <ion-label stacked>Se perdió el:</ion-label>
-            <p>{{dog.fechaPerdido}}</p>
+            <p>{{dog.estadofecha | date : "dd/MM/y" }}</p>
           </ion-col>
-          <ion-col>
+          <ion-col col-12>
             <ion-label stacked>En:</ion-label>
-            <p>{{dog.lugarPerdido}}</p>
+            <p>{{dog.estadodireccion}}</p>
           </ion-col>
         </ion-row>
 
-        <ion-row *ngIf="dog.perdido">
+        <ion-row *ngIf="dog.caracterizticaPerdido && dog.estado == '2'">
           <ion-col>
             <ion-label stacked>Características cuando se perdio:</ion-label>
             <p>{{dog.caracterizticaPerdido}}</p>
@@ -114,7 +134,7 @@
           </ion-col>
         </ion-row>
 
-        <ion-row *ngIf="dog.encontrado">
+        <ion-row *ngIf="dog.estado == '3'">
           <ion-col>
             <ion-label stacked>Se encontró el:</ion-label>
             <p>{{dog.fechaEncontrado}}</p>
@@ -125,31 +145,51 @@
           </ion-col>
         </ion-row>
 
-        <ion-row *ngIf="showMyControls && !dog.encontrado">
-          <ion-col>
-            <ion-label>Está perdido:</ion-label>
-
-          </ion-col>
-          <ion-toggle checked="false" [(ngModel)]="checkAsLost" (ionChange)="showAlert()"></ion-toggle>
-        </ion-row>
-
-        <ion-row *ngIf="thisDogIsLost && dog.perdido">
-          <ion-col>
-            <button ion-button full (click)="iFoundThisDog(dog)">Yo lo encontre!</button>
-          </ion-col>
-        </ion-row>
-
-        <ion-row *ngIf="thisDogIsToBeAddopted && dog.adopcion">
-          <ion-col>
-            <button ion-button full (click)="iWannaThisDog(dog)">Quiero adoptarlo!</button>
-          </ion-col>
-        </ion-row>
-
-        <ion-row *ngIf="dog.estaperdido == 1">
+        <ion-row *ngIf="thisDogIsLost && dog.estado == '2'">
           <ion-col>
             <ion-label>Lo encontré:</ion-label>
           </ion-col>
-          <ion-toggle checked="false" [(ngModel)]="checkAsLost" (ionChange)="showAlert()"></ion-toggle>
+          <ion-toggle checked="false" [(ngModel)]="checkAsLost"></ion-toggle>
+        </ion-row>
+        <ion-row *ngIf="checkAsLost" class="checks">
+          <ion-col col-6>
+            <ion-item no-lines>
+              <ion-label>Ubicación actual</ion-label>
+              <ion-checkbox color="primary" [(ngModel)]="miUbicacion"></ion-checkbox>
+            </ion-item>
+          </ion-col>
+          <ion-col col-6>
+            <ion-item no-lines>
+              <ion-label>En otra ubicación</ion-label>
+              <ion-checkbox color="primary" [(ngModel)]="otraUbicacion"></ion-checkbox>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="miUbicacion && !otraUbicacion">
+          <ion-col col-12 text-center>
+            <button ion-button no-shadow (click)="showAlert(dog)" round color="primary">Reportar encontrado</button>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="otraUbicacion && !miUbicacion">
+          <ion-col col-12>
+            <ion-label stacked>Se perdió en:</ion-label>
+            <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" placeholder="Dirección exacta"></ion-searchbar>
+          </ion-col>
+          <ion-col no-padding style="padding-top: 0px!important;">
+            <ion-list class="list_map">
+              <ion-item *ngFor="let place of places" (touchstart)="getPlace(place)">
+                <p>{{place.description}}</p>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+          <ion-col col-12 text-center *ngIf="otherLocation.lat != null && otherLocation.lng != null">
+            <button ion-button no-shadow (click)="newDogLocation(dog)" round color="primary">Reportar encontrado</button>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="thisDogIsToBeAddopted && dog.estado == '4' && perroMio">
+          <ion-col>
+            <button ion-button full (click)="iWannaThisDog(dog)">Quiero adoptarlo!</button>
+          </ion-col>
         </ion-row>
       </div>
       <ion-row *ngIf="vuelta && dog.usuarionombre" justify-content-center (click)="goToListUser(dog.usuarioid, dog.usuarionombre)">

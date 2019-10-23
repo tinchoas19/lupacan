@@ -10,6 +10,7 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'mis-notificaciones.html',
 })
 export class MisNotificacionesPage {
+  msj: boolean;
   notificaciones:any=[];
   constructor(
     public navCtrl: NavController, 
@@ -31,6 +32,11 @@ export class MisNotificacionesPage {
           console.log('not', x);
           this.notificaciones = x['data'];
           this.badge.clear();
+          if(this.notificaciones.length === 0){
+            this.msj = true;
+          }else{
+            this.msj = false;
+          }
         })
       }
     })

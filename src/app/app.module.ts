@@ -1,3 +1,8 @@
+import { TransferenciaPage } from './../pages/transferencia/transferencia';
+import { BuscarUsuariosPage } from './../pages/buscar-usuarios/buscar-usuarios';
+import { SeccionesSaludPage } from './../pages/secciones-salud/secciones-salud';
+import { SaludPage } from './../pages/salud/salud';
+import { QrCollaresPage } from './../pages/qr-collares/qr-collares';
 import { AddFavUserComponent } from './../components/add-fav-user/add-fav-user';
 import { ListChatsServicePage } from './../pages/list-chats-service/list-chats-service';
 import { ListChatsPage } from './../pages/list-chats/list-chats';
@@ -79,6 +84,7 @@ import { PublicitarPage } from '../pages/publicitar/publicitar';
 import { AddFavServComponent } from '../components/add-fav-serv/add-fav-serv';
 import { AddFavDogComponent } from '../components/add-fav-dog/add-fav-dog';
 import { Diagnostic } from '@ionic-native/diagnostic';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 @NgModule({
   declarations: [
@@ -128,7 +134,12 @@ import { Diagnostic } from '@ionic-native/diagnostic';
     AddFavServComponent,
     AddFavDogComponent,
     AddFavUserComponent,
-    RelativeTimePipe
+    QrCollaresPage,
+    RelativeTimePipe,
+    SaludPage,
+    SeccionesSaludPage,
+    BuscarUsuariosPage,
+    TransferenciaPage,
   ],
   imports: [
     BrowserModule,
@@ -195,12 +206,18 @@ import { Diagnostic } from '@ionic-native/diagnostic';
     AddFavServComponent,
     AddFavDogComponent,
     AddFavUserComponent,
+    QrCollaresPage,
+    SaludPage,
+    SeccionesSaludPage,
+    BuscarUsuariosPage,
+    TransferenciaPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     UsernameValidator,
     PhotoViewer,
+    LocationAccuracy,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ApiProvider,
     FileTransfer,
@@ -220,6 +237,7 @@ import { Diagnostic } from '@ionic-native/diagnostic';
     ConnectivityServiceProvider,
     GoogleMapsProvider,
     Network,
+    
     IntervalProvider
   ]
 })

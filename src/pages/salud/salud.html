@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title text-center class="lupa-title">Salud</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-row justify-content-center padding>
+    <button ion-button block color="primary" icon-start (click)="expand(0)">
+      <ion-icon name="home"></ion-icon>
+      Cuidado
+    </button>
+    <div padding *ngIf="expand1" justify-content-center>
+      <button text-center ion-button block outline icon-start (click)="seccion(0)">
+        <ion-icon name="home"></ion-icon>
+        Vacunación
+      </button>
+      <button ion-button outline icon-start (click)="seccion(1)">
+        <ion-icon name="home"></ion-icon>
+        Tratamientos
+      </button>
+    </div>
+    <button ion-button block color="primary" icon-start (click)="expand(1)">
+      <ion-icon name="home"></ion-icon>
+      Salud
+    </button>
+    <div padding *ngIf="expand2" justify-content-center>
+      <button ion-button block outline icon-start (click)="seccion(2)">
+        <ion-icon name="home"></ion-icon>
+        Alergias
+      </button>
+      <button ion-button block outline icon-start (click)="seccion(3)">
+        <ion-icon name="home"></ion-icon>
+        Cirugias
+      </button>
+      <button ion-button block outline icon-start (click)="seccion(4)">
+        <ion-icon name="home"></ion-icon>
+        Enfermedades
+      </button>
+      <button ion-button outline icon-start (click)="seccion(5)">
+        <ion-icon name="home"></ion-icon>
+        Visitas al veterinario
+      </button>
+    </div>
+  </ion-row>
+</ion-content>

@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Usuarios</ion-title>
+    <ion-title text-center class="lupa-title">Usuarios</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -11,7 +11,7 @@
     <ion-grid no-padding>
       <ion-row>
         <ion-col>
-          <h2 text-center>Ultimos agregados</h2>
+          <h2 text-center><strong>Ultimos agregados</strong></h2>
         </ion-col>
       </ion-row>
       <ion-row *ngIf="ultimosAgregados.length > 0" justify-content-center>
@@ -21,9 +21,8 @@
         <ion-col col-10 text-center>
           <ion-slides class="slide_ultimos" pager="false" #slideWithNav2 slidesPerView="4">
             <ion-slide *ngFor="let user of ultimosAgregados; let i = index" (click)="goToUserDetail(user)">
-              <!-- <div class="dog-name">{{user.nombre}}</div> -->
-              <img *ngIf="user.imagen != ''" src="http://ctrlztest.com.ar/lupacan/apirest/{{user.imagen}}">
-              <img *ngIf="user.imagen == ''" src="assets/imgs/1.jpg"></ion-slide>
+              <img [src]="user.imgSrc">
+            </ion-slide>
           </ion-slides>
         </ion-col>
         <ion-col col-1 text-center (click)="next()">
@@ -40,7 +39,7 @@
         <ion-col col-4>
           <ion-item no-lines>
             <ion-label>Favoritos</ion-label>
-            <ion-checkbox color="primary"></ion-checkbox>
+            <ion-checkbox color="primary" [(ngModel)]="verFav" (ionChange)="filtrarFavoritos()"></ion-checkbox>
           </ion-item>
         </ion-col>
         <ion-col col-4>
@@ -53,8 +52,7 @@
       <ion-row *ngIf="!mostrarMapa" style="margin-top: 7%;">
         <ion-col col-4 *ngFor="let user of todosUsers" (click)="goToUserDetail(user)">
           <div class="dog-name">{{user.nombre}}</div>
-          <img *ngIf="user.imagen != ''" src="http://ctrlztest.com.ar/lupacan/apirest/{{user.imagen}}">
-          <img *ngIf="user.imagen == ''" src="assets/imgs/1.jpg">
+          <img [src]="user.imgSrc">
         </ion-col>
       </ion-row>
       <ion-row no-padding [ngClass]="mostrarMapa ? 'active' : 'inactive'">
@@ -68,13 +66,13 @@
     </ion-grid>
   </div>
 </ion-content>
-<ion-footer no-shadow no-border>
+<ion-footer no-border>
   <ion-row class="ft_icons">
-    <ion-col style="padding-right: 25px !important;" (click)="goServicios()">
-      <ion-icon float-right name="contact"></ion-icon>
+    <ion-col style="padding-right: 25px !important;">
+      <img float-right src="../../assets/imgs/dog-inactive.png" (click)="goServicios()">
     </ion-col>
     <ion-col style="padding-left: 25px !important;">
-      <ion-icon color="primary" name="contact"></ion-icon>
+      <img src="../../assets/imgs/usuarios-active.png">
     </ion-col>
   </ion-row>
 </ion-footer>

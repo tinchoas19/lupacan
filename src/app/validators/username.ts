@@ -8,7 +8,7 @@ export class UsernameValidator {
 
   debouncer: any;
 
-  constructor(public authProvider: ApiProvider){
+  constructor(public authProvider: ApiProvider) {
 
   }
 
@@ -21,19 +21,17 @@ export class UsernameValidator {
       this.debouncer = setTimeout(() => {
 
         this.authProvider.validateUsername(control.value.toLowerCase()).subscribe((res) => {
-            console.log('control.value',control.value);
-            if(res){
-                console.log('res_validateUsername',res);
-                //resolve(null);
-                resolve({
-                    "username taken": true
-                });
+          console.log('control.value', control.value);
+          if (!res['data']) {
+            console.log('res_validateUsername', res['data']);
+            //resolve(null);
+            resolve(true);
           }
         }, (err) => {
-          resolve({'usernameInUse': true});
+          resolve(false);
         });
 
-      }, 1000);      
+      }, 1000);
 
     });
   }

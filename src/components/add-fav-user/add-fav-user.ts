@@ -26,8 +26,8 @@ export class AddFavUserComponent implements OnInit {
     this.storage.get('datauser').then(x => {
       if (x != null) {
         this.userid = x['usuarioid'];
-        this.api.getFavLocal(this.userid, this.usuariofav).subscribe(x => {
-          //console.log('x_fav',x);
+        this.api.getFavUser(this.userid, this.usuariofav).subscribe(x => {
+          console.log('x_fav',x);
           if (x['data']) {
             this.isChecked = true;
           } else {
@@ -40,7 +40,7 @@ export class AddFavUserComponent implements OnInit {
 
   addToFavorites(){
     if (this.isChecked) {
-      this.api.addFavoriteLocal(this.userid, this.usuariofav, 0).subscribe(x => {
+      this.api.addFavoriteUser(this.userid, this.usuariofav, 0).subscribe(x => {
         console.log('fav', x);
         let data = JSON.parse(x['_body'])['data'];
         if (data) {
@@ -50,7 +50,7 @@ export class AddFavUserComponent implements OnInit {
       this.isChecked = false;
     } else {
       console.log('remove_Fav => (userid, dogid)');
-      this.api.addFavoriteLocal(this.userid, this.usuariofav, 1).subscribe(x => {
+      this.api.addFavoriteUser(this.userid, this.usuariofav, 1).subscribe(x => {
         console.log('fav', x);
         let data = JSON.parse(x['_body'])['data'];
         if (data) {

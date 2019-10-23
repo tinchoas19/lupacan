@@ -1,11 +1,11 @@
 <ion-header>
   <ion-navbar>
-    <ion-title text-center>Configuracion</ion-title>
+    <!-- <ion-title text-center>Configuracion</ion-title> -->
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list inset class="_list">
+  <!--  <ion-list inset class="_list">
     <ion-list-header class="label-title" text-center>
       Mis datos
     </ion-list-header>
@@ -34,9 +34,6 @@
     <ion-list-header class="label-title" text-center>
       Mis Refugios
     </ion-list-header>
-   <!--  <button ion-item (click)="goToRefugios()">
-      Mis refugios
-    </button> -->
     <button ion-item (click)="goToCreateRefugio()">
       Crear un refugio
     </button>
@@ -65,5 +62,35 @@
     <button ion-item (click)="goToConversaciones()">
       Mis Conversaciones
     </button>
+  </ion-list> -->
+  <ion-list class="left-menu">
+    <ion-list-header color="light" (click)="openItem($event)">
+      <img src="assets/imgs/menu02.png" alt=""> &nbsp;Mis Perros
+    </ion-list-header>
+    <div >
+      <ion-item class="sub-item" (click)="goToMyDogs(0)">Ver actuales</ion-item>
+      <ion-item class="sub-item" (click)="goToAddDog()">Agregar</ion-item>
+      <ion-item class="sub-item" (click)="goToMyDogs(2)">Salud</ion-item>
+      <ion-item class="sub-item" (click)="goToQr()">Cargar QR o collar</ion-item>
+      <ion-item class="sub-item" (click)="goToMyDogs(1)">Dar en adopción</ion-item>
+      <ion-item class="sub-item" (click)="goToMyDogs(3)">Tenencia compartida</ion-item>
+    </div>
+    <ion-list-header color="light" (click)="openItem($event)">
+      <img src="assets/imgs/menu02.png" alt=""> &nbsp;Callejeritos
+    </ion-list-header>
+    <div >
+      <ion-item class="sub-item" (click)="goToMyRefugios()">Ver actuales</ion-item>
+      <ion-item class="sub-item" (click)="goToCreateRefugio()">Agregar un callejerito</ion-item>
+    </div>
+    <ion-list-header color="light" (click)="openItem($event)">
+      <img src="assets/imgs/menu04.png" alt=""> &nbsp;Notificaciones
+      <ion-badge item-end color="danger">{{numberBadge}}</ion-badge>
+    </ion-list-header>
+    <div >
+      <ion-item class="sub-item" (click)="goToNotificaciones()">Ver notificaciones</ion-item>
+      <ion-item class="sub-item" (click)="goToConversaciones()">Ver chats</ion-item>
+      <ion-item class="sub-item" (click)="goToCreateRefugio()">Ver comentarios</ion-item>
+    </div>
   </ion-list>
+
 </ion-content>

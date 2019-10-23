@@ -1,14 +1,15 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title text-center class="lupa-title">Servicios</ion-title>
+    <ion-title *ngIf="!refugio" text-center class="lupa-title">Mis Servicios</ion-title>
+    <ion-title *ngIf="refugio" text-center class="lupa-title">Mis Refugios</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
-  <ion-list inset class="_list">
+  <ion-list *ngIf="!refugio" inset class="_list">
     <ion-list-header text-center class="label-title">
       Mis Servicios
     </ion-list-header>
@@ -16,12 +17,15 @@
       {{serv.nombre}}
     </button>
   </ion-list>
-  <ion-list inset class="_list">
+  <ion-list *ngIf="refugio" inset class="_list">
     <ion-list-header text-center class="label-title">
       Mis Refugios
     </ion-list-header>
-    <button ion-item *ngFor="let serv of misRefugios" (click)="goToProfileService(serv)">
-      {{serv.nombre}}
-    </button>
+    <div *ngIf="misRefugios.length > 0">
+      <button ion-item *ngFor="let serv of misRefugios" (click)="goToProfileService(serv)">
+        {{serv.nombre}}
+      </button>
+    </div>
+    <p text-center *ngIf="!(misRefugios.length > 0)">Sin refugios agregados!</p>
   </ion-list>
 </ion-content>

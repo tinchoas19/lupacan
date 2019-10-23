@@ -120,6 +120,17 @@ page-menu {
             background: color($colors, primary);
         }
     }
+
+    .sub-item{
+        line-height: 38px;
+        padding-top: 0;
+        padding-bottom: 0;
+        transition: 0.09s all linear;
+        .item-inner{
+            padding-left: 32px;
+            font-size: 14px;
+        }
+    }
     
     .show-page{
         padding: 15vh 2em;

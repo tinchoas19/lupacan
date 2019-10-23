@@ -71,7 +71,7 @@
       <ion-row *ngIf="filteredDogs.length > 0 && !mostrarMapa" style="margin-top: 7%;">
         <ion-col col-4 *ngFor="let dog of filteredDogs" (click)="goToDogDetail(dog)">
           <div class="dog-name">{{dog.nombre}}</div>
-          <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
+          <img class="img_feed" src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
         </ion-col>
       </ion-row>
       <!-- <ion-row *ngIf="pageData.id == 4">
@@ -90,13 +90,13 @@
     </ion-grid>
   </div>
 </ion-content>
-<ion-footer no-shadow no-border>
+<ion-footer no-border>
   <ion-row class="ft_icons">
     <ion-col style="padding-right: 25px !important;">
-      <ion-icon float-right color="primary" name="contact"></ion-icon>
+      <img float-right src="../../assets/imgs/dog-active.png">
     </ion-col>
     <ion-col style="padding-left: 25px !important;" (click)="goUsuarios()">
-      <ion-icon name="contact"></ion-icon>
+      <img src="../../assets/imgs/usuarios-inactive.png">
     </ion-col>
   </ion-row>
 </ion-footer>

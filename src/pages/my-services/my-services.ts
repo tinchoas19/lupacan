@@ -15,32 +15,15 @@ export class MyServicesPage {
   private services: any[];
   misLocales:any=[];
   misRefugios:any=[];
+  refugio:any;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private storage: Storage,
     private api: ApiProvider
   ) {
-    this.services = [
-      {
-        "serviceId": 1,
-        "serviceName": "Vererinaria Patito",
-        "categoryId": 1,
-        "serviceTelephone": "47745698",
-        "serviceAddress": "Lavalle 1514",
-        "serviceEmail": "pets@petshot.com",
-        "serviceServices": [{ "offeredService": "lavado" },{ "offeredService": "limpieza" },{ "offeredService": "barrido" }]
-      },
-      {
-        "serviceId": 2,
-        "serviceName": "Vererinaria Patito2",
-        "categoryId": 1,
-        "serviceTelephone": "47745698",
-        "serviceAddress": "Lavalle 1514",
-        "serviceEmail": "pets@petshot.com",
-        "serviceServices": [{ "offeredService": "lavado" },{ "offeredService": "limpieza" },{ "offeredService": "barrido" }]
-      }
-    ];
+    console.log("params", this.navParams.data);
+    this.refugio = this.navParams.data;
   }
 
   ionViewDidLoad() {

@@ -13,41 +13,65 @@
       <ion-segment-button class="med" value="usuarios">
         USUARIOS
       </ion-segment-button>
-      <ion-segment-button class="second" value="locales">
+      <ion-segment-button class="med" value="locales">
         SERVICIOS
+      </ion-segment-button>
+      <ion-segment-button class="second" value="refugios">
+        REFUGIOS
       </ion-segment-button>
     </ion-segment>
 
     <ion-grid [ngSwitch]="sections">
+      <ion-row *ngIf="sinFavoritos" justify-content-center>
+        <p text-center>Sin favortios por el momento!</p>
+      </ion-row>
       <div *ngSwitchCase="'perros'">
-        <ion-list style="margin-top: 10%;">
-          <ion-item *ngFor="let dog of perros">
-            <ion-avatar item-start>
-              <img src={{url+dog.foto}}>
-            </ion-avatar>
-            <h2>{{dog.nombre}}</h2>
-          </ion-item>
-        </ion-list>
+        <div *ngIf="!sinFavoritos">
+          <ion-list style="margin-top: 10%;">
+            <ion-item *ngFor="let dog of perros">
+              <ion-avatar item-start>
+                <img src={{url+dog.foto}}>
+              </ion-avatar>
+              <h2>{{dog.nombre}}</h2>
+            </ion-item>
+          </ion-list>
+        </div>
       </div>
       <div *ngSwitchCase="'usuarios'">
-        <ion-list style="margin-top: 10%;">
-          <ion-item *ngFor="let user of usuarios">
-            <ion-avatar item-start>
-              <img src={{url+user.imagen}}>
-            </ion-avatar>
-            <h2>{{user.nombre}}</h2>
-          </ion-item>
-        </ion-list>
+        <div *ngIf="!sinFavoritos">
+          <ion-list style="margin-top: 10%;">
+            <ion-item *ngFor="let user of usuarios">
+              <ion-avatar item-start>
+                <img src={{url+user.imagen}}>
+              </ion-avatar>
+              <h2>{{user.nombre}}</h2>
+            </ion-item>
+          </ion-list>
+        </div>
       </div>
       <div *ngSwitchCase="'locales'">
-        <ion-list style="margin-top: 10%;">
-          <ion-item *ngFor="let local of locales">
-            <ion-avatar item-start>
-              <img src={{url+local.imagen}}>
-            </ion-avatar>
-            <h2>{{local.nombre}}</h2>
-          </ion-item>
-        </ion-list>
+        <div *ngIf="!sinFavoritos">
+          <ion-list style="margin-top: 10%;">
+            <ion-item *ngFor="let local of locales">
+              <ion-avatar item-start>
+                <img src={{url+local.imagen}}>
+              </ion-avatar>
+              <h2>{{local.nombre}}</h2>
+            </ion-item>
+          </ion-list>
+        </div>
+      </div>
+      <div *ngSwitchCase="'refugios'">
+        <div *ngIf="!sinFavoritos">
+          <ion-list style="margin-top: 10%;">
+            <ion-item *ngFor="let local of refugios">
+              <ion-avatar item-start>
+                <img src={{url+local.imagen}}>
+              </ion-avatar>
+              <h2>{{local.nombre}}</h2>
+            </ion-item>
+          </ion-list>
+        </div>
       </div>
     </ion-grid>
   </ion-row>

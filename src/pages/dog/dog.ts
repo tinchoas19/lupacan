@@ -1,11 +1,13 @@
+import { BuscarUsuariosPage } from './../buscar-usuarios/buscar-usuarios';
 import { EditDogUserPage } from './../edit-dog-user/edit-dog-user';
-import { ApiProvider } from './../../providers/api/api';
+import { Geolocation } from '@ionic-native/geolocation';
 import { Storage } from '@ionic/storage';
 import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ToastController, Slides } from 'ionic-angular';
 import { PhotoSliderPage } from '../photo-slider/photo-slider';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
+import { ApiProvider } from '../../providers/api/api';
 
 declare var google: any;
 
@@ -17,6 +19,7 @@ declare var google: any;
 export class DogPage {
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
+  @ViewChild('slideWithNav2') slideWithNav2: Slides;
   private dog: any = [];
   public checkAsLost: boolean;
   public thisDogIsLost: boolean = false;
@@ -33,17 +36,21 @@ export class DogPage {
   query: string = '';
   places: any = [];
   autocompleteService: any;
+  locationUser: any = { lat: '', lng: '' };
   otherLocation = {
     lat: null,
     lng: null
   }
   placeidPerdido: any;
+  otraUbicacion:boolean=false;
+  miUbicacion:boolean=false;  
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private photoViewer: PhotoViewer,
     public alertCtrl: AlertController,
     public maps: GoogleMapsProvider,
+    private geo: Geolocation,
     public zone: NgZone,
     private storage: Storage,
     private api: ApiProvider,
@@ -53,10 +60,59 @@ export class DogPage {
     this.saveDisabled = true;
   }
 
+  //Position
+  getCurrentPosition() {
+    this.geo.getCurrentPosition().then((pos) => {
+      this.locationUser.lat = pos.coords.latitude;
+      this.locationUser.lng = pos.coords.longitude;
+      console.log('position', this.locationUser);
+      this.getPlaceid(this.dog['usuarioid'], this.dog['perroid'], pos.coords.latitude, pos.coords.longitude);
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
+  }
+
   //Fullscreeen
   showImg(url) {
     console.log(url);
     this.photoViewer.show('http://ctrlztest.com.ar/lupacan/apirest/upload/10-1.jpg', 'My Dog', { share: false });
+  }
+
+  next() {
+    this.slideWithNav2.slideNext(500);
+  }
+
+  prev() {
+    this.slideWithNav2.slidePrev(500);
+  }
+
+  edad(FechaNacimiento) {
+
+    var fechaNace: any = new Date(FechaNacimiento);
+    var fechaActual: any = new Date()
+
+    var mes = fechaActual.getMonth();
+    var dia = fechaActual.getDate();
+    var año = fechaActual.getFullYear();
+
+    fechaActual.setDate(dia);
+    fechaActual.setMonth(mes);
+    fechaActual.setFullYear(año);
+
+    let edad = Math.floor(((fechaActual - fechaNace) / (1000 * 60 * 60 * 24) / 365));
+
+    return edad;
+  }
+
+  //EstadoDog
+  estado(dog) {
+    if (dog.estado == 2) {
+      return 'Perdido';
+    } else if (dog.estado == 3) {
+      return 'Encontrado'
+    } else {
+      return 'En Casa';
+    }
   }
 
   ionViewWillEnter() {
@@ -73,10 +129,10 @@ export class DogPage {
       this.autocompleteService = new google.maps.places.AutocompleteService();
       this.placesService = new google.maps.places.PlacesService(this.maps.map);
       this.searchDisabled = false;
-      if(this.dog['estaperdido'] != 0){
-        this.selectPlace(this.dog['perdidoplaceid']);
-      }else{
-        this.selectPlace(this.dog['placeid']);        
+      if (this.dog['estado'] == 1 || this.dog['estado'] == 3 || this.dog['estado'] == 4) {
+        this.selectPlace(this.dog['placeid']);
+      } else {
+        this.selectPlace(this.dog['estadoplaceid']);
       }
     });
     console.log('detail', this.dog);
@@ -88,13 +144,46 @@ export class DogPage {
       this.thisDogIsToBeAddopted = true;
   }
 
-  goToEditDog(){
-    this.navCtrl.push(EditDogUserPage,{dataDog:this.dog})
+  goToEditDog() {
+    this.navCtrl.push(EditDogUserPage, { dataDog: this.dog })
   }
 
   ionViewDidLoad() {
     //console.log('detail', this.dog);
     console.log('ionViewDidLoad DogPage');
+  }
+
+  darEnAdopcion(dog){
+    const alert = this.alertCtrl.create({
+      title: 'Dar en adopción!',
+      subTitle: 'Estas seguro de dar en adopción a ' + dog.nombre + '?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'Cancel'
+        },
+        {
+          text: 'Si',
+          handler: data => {
+            this.api.marcarenAdopcion(dog['usuarioid'], dog['perroid']).subscribe(x => {
+              console.log('vueltamarcarEnCasa', x);
+              let data = JSON.parse(x['_body'])['data'];
+              console.log('data', data);
+              if (data == 'updated') {
+                this.api.getDogData(dog['perroid']).subscribe(x => {
+                  console.log('perroid', x);
+                  this.dog = x['data'][0];
+                  this.adopcion(dog);
+                })
+              }
+            })
+          }
+        }
+      ]
+    });
+
+    alert.present();
+
   }
 
   selectPlace(placeid) {
@@ -122,11 +211,50 @@ export class DogPage {
     });
   }
 
+  getPlaceid(usuarioid, perroid, latitude, longitude) {
+    var geocoder = new google.maps.Geocoder();
+    var latlng = { lat: parseFloat(latitude), lng: parseFloat(longitude) };
+    let placeid: any;
+    let address: any;
+    var self = this;
+    geocoder.geocode({ 'location': latlng }, function (results, status) {
+      console.log('relslsl', results);
+      if (status === google.maps.GeocoderStatus.OK) {
+        if (results[1]) {
+          console.log('ksjsjsjs', results[1].place_id);
+          placeid = results[1].place_id;
+          address = results[1].formatted_address;
+          self.api.marcarDogPerdido(usuarioid, perroid, latitude, longitude, placeid, address).subscribe(x => {
+            console.log('vueltaPerdido', x);
+            let data = JSON.parse(x['_body'])['data'];
+            console.log('data', data);
+            if (data == 'updated') {
+              self.checkAsLost = false;
+              self.miUbicacion = false;
+              self.otraUbicacion = false;
+              self.presentToasteEx();
+              self.api.getDogData(perroid).subscribe(x => {
+                console.log('perroid', x);
+                self.dog = x['data'][0];
+              })
+            }
+          });
+        } else {
+          window.alert('No results found');
+        }
+      } else {
+        window.alert('Geocoder failed due to: ' + status);
+      }
+    });
+
+  }
+
   getPlace(place) {
     this.query = place.description;
     this.places = [];
     this.placeidPerdido = place.place_id;
     this.placesService.getDetails({ placeId: place.place_id }, (details) => {
+      console.log('detailaSAs', details);
       this.zone.run(() => {
         this.otherLocation.lat = details.geometry.location.lat();
         this.otherLocation.lng = details.geometry.location.lng();
@@ -135,14 +263,8 @@ export class DogPage {
     console.log('placeSlected', place);
   }
 
-  newDogLocation() {
-    this.api.marcarDogPerdido(this.dog['usuarioid'], this.dog['perroid'], this.otherLocation.lat, this.otherLocation.lng, this.placeidPerdido).subscribe(x => {
-      console.log('vueltaPerdido', x);
-      let data = JSON.parse(x['_body'])['data'];
-      if (data == 'update') {
-        this.presentToasteEx();
-      }
-    })
+  newDogLocation(dog) {
+    this.getPlaceid(dog['usuarioid'], dog['perroid'], this.otherLocation.lat, this.otherLocation.lng);
   }
 
   searchPlace() {
@@ -170,37 +292,39 @@ export class DogPage {
 
   showAlert() {
     this.storage.get('locatioUser').then(location => {
-      this.api.marcarDogPerdido(this.dog['usuarioid'], this.dog['perroid'], location['lat'], location['lng'], this.dog['placeid']).subscribe(x => {
-        console.log('vueltaPerdido', x);
-        let data = JSON.parse(x['_body'])['data'];
-        if (data == 'update') {
-          this.presentToasteEx();
-        }
-      })
+      console.log('loca', location);
+      if (location != null) {
+        this.getPlaceid(this.dog['usuarioid'], this.dog['perroid'], location['lat'], location['lng']);
+      } else {
+        this.getCurrentPosition();
+      }
     })
-    /* const alert = this.alertCtrl.create({
-      title: 'Aviso!',
-      subTitle: 'Ya se publico como perdido. Junto a la comunidad lo vamos a encontrar.',
-      buttons: ['OK']
-    });
-      alert.present(); */
   }
 
-  iFoundThisDog(dog) {
+  enCasa(dog) {
     const alert = this.alertCtrl.create({
-      title: 'Perro encontrado!',
-      subTitle: 'Estas seguro que vos tenes este perro? De ser asi le enviaremos tu email al duenio para que se pongan en contacto.',
+      title: 'Perro en casa!',
+      subTitle: 'Estas seguro de estar con ' + dog.nombre + '?',
       buttons: [
         {
           text: 'No',
-          handler: data => {
-            console.log("no");
-          }
+          role: 'Cancel'
         },
         {
           text: 'Si',
           handler: data => {
-            console.log("si");
+            this.api.marcarEnCasa(dog['usuarioid'], dog['perroid']).subscribe(x => {
+              console.log('vueltamarcarEnCasa', x);
+              let data = JSON.parse(x['_body'])['data'];
+              console.log('data', data);
+              if (data == 'updated') {
+                this.api.getDogData(dog['perroid']).subscribe(x => {
+                  console.log('perroid', x);
+                  this.dog = x['data'][0];
+                  this.perroCasa(dog);
+                })
+              }
+            })
           }
         }
       ]
@@ -235,6 +359,32 @@ export class DogPage {
     });
 
     alert.present();
+  }
+
+  transferir(dog){
+    this.navCtrl.push(BuscarUsuariosPage,{dogTransfer:dog, index: 0});
+  }
+
+  async perroCasa(dog) {
+    const toast = await this.toastController.create({
+      message: "Listo!\n Nos alegra que "+ dog.nombre+" se encuentre de vuelta con su dueño",
+      duration: 3000,
+      showCloseButton: true,
+      position: 'top',
+      closeButtonText: 'x'
+    });
+    toast.present();
+  }
+
+  async adopcion(dog) {
+    const toast = await this.toastController.create({
+      message: "Listo!\n Nos encargaremos de encontrarle \n un nuevo hogar a "+ dog.nombre,
+      duration: 3000,
+      showCloseButton: true,
+      position: 'top',
+      closeButtonText: 'x'
+    });
+    toast.present();
   }
 
   async presentToasteEx() {

@@ -19,10 +19,14 @@ export class IntervalProvider {
 
   toggleInterval() {
     if (this.intervalHandle === null) {
+    console.log('1');
+    
       this.intervalHandle = setInterval(() => {
         this.getCurrentPosition();
-      }, 60000);
+      }, 30000);
     } else {
+      console.log('2');
+      
       clearInterval(this.intervalHandle);
       this.intervalHandle = null;
     }

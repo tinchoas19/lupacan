@@ -3,24 +3,26 @@
     <ion-row>
       <ion-col *ngIf="usuario != 0">
         <ion-buttons float-left (click)="openMenu()">
-          <button *ngIf="usuario.facebookid == '' && usuario.imagen == ''" ion-button icon-only >
+          <button *ngIf="usuario.facebookid == '' && usuario.imagen == ''" ion-button icon-only>
             <ion-icon name="contact"></ion-icon>
           </button>
           <div *ngIf="usuario.imagen != '' && usuario.facebookid == ''">
-            <img class="imgPerfil" style="max-width: 20% !important;" [src]="imgSrc">          
+            <img class="imgPerfil" style="max-width: 20% !important;" [src]="imgSrc">
           </div>
           <div *ngIf="usuario.imagen != '' && usuario.facebookid != ''">
-            <img class="imgPerfil" style="max-width: 20% !important;" [src]="imgSrc">          
+            <img class="imgPerfil" style="max-width: 20% !important;" [src]="imgSrc">
           </div>
           <div *ngIf="usuario.imagen == '' && usuario.facebookid != ''">
-            <img class="imgPerfil" style="max-width: 20% !important;" src="https://graph.facebook.com/{{usuario.facebookid}}/picture?type=large">          
+            <img class="imgPerfil" style="max-width: 20% !important;" src="https://graph.facebook.com/{{usuario.facebookid}}/picture?type=large">
           </div>
         </ion-buttons>
       </ion-col>
-      <ion-col> 
+      <ion-col>
         <ion-buttons float-right>
-          <button ion-button icon-only (click)="goToMySettings()">
-           <ion-icon ios="ios-paw" md="md-paw"></ion-icon>
+          <button id="notification-button" ion-button icon-only (click)="goToMySettings()">
+            <ion-icon ios="ios-paw" md="md-paw">
+              <ion-badge id="notifications-badge" color="danger">{{numberBadge}}</ion-badge>
+            </ion-icon>
           </button>
         </ion-buttons>
       </ion-col>
@@ -29,7 +31,7 @@
 </ion-header>
 
 <ion-content padding>
- <!--ion-grid>
+  <!--ion-grid>
 
     <ion-row>
       <ion-col col-4 offset-4>
@@ -78,42 +80,37 @@
    
  </ion-grid-->
 
- 
 
- <div class="home-grid">
+
+  <div class="home-grid">
     <p text-center>
-        <img src="assets/imgs/main.png" alt="">
-     </p>
+      <img src="assets/imgs/main.png" alt="">
+    </p>
     <div class="home-row">
       <div (click)="goToPerdidos()" class="home-col lupa-shadow" margin-end>
-        <img src="assets/imgs/home_ico_1.png" alt="">
-        Perdidos
+        <img src="assets/imgs/home_ico_1.png" alt=""> Perdidos
       </div>
       <div (click)="goToEncontrar()" class="home-col lupa-shadow">
-        <img src="assets/imgs/home_ico_2.png" alt="">
-        Encontrados
+        <img src="assets/imgs/home_ico_2.png" alt=""> Encontrados
       </div>
     </div>
     <div class="home-row">
       <div (click)="goToComunidad()" class="home-col lupa-shadow dir-row">
-        <img src="assets/imgs/home_ico_3.png" alt="">
-        Comunidad
+        <img src="assets/imgs/home_ico_3.png" alt=""> Comunidad
       </div>
     </div>
     <div class="home-row">
       <div (click)="goToAdopcion()" class="home-col lupa-shadow" margin-end>
-        <img src="assets/imgs/home_ico_4.png" alt="">
-        Adocpión
+        <img src="assets/imgs/home_ico_4.png" alt=""> Adopción
       </div>
       <div (click)="goToServicios()" class="home-col lupa-shadow">
-        <img src="assets/imgs/home_ico_5.png" alt="">
-        Servicios
+        <img src="assets/imgs/home_ico_5.png" alt=""> Servicios
       </div>
     </div>
     <ion-row justify-content-center padding>
       <img class="publ_img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRi5RNCbLXvL8CBQOuL8vZxRDcYs55tDzeDXhU8VkgJuTKNS1rd_w">
     </ion-row>
- </div>
+  </div>
 </ion-content>
 
 <!--ion-footer class="lupa-menu">

@@ -1,0 +1,26 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title text-center>Medallas QR y Collares</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-row style="padding-top: 0px;" justify-content-center padding>
+    <ion-searchbar style="padding-top: 0px;" padding placeholder="Código del collar" [(ngModel)]="txtbusqueda" (ionInput)="getItems($event)"></ion-searchbar>
+  </ion-row>
+  <ion-list *ngIf="dogScan" no-lines class="_list">
+    <ion-item (click)="goToIntDog(dogScan)">
+      <ion-avatar item-start>
+        <img src="{{url+dogScan.fotos[0].fotourl}}">
+      </ion-avatar>
+      <h2>{{dogScan.nombre}}</h2>
+      <p>{{dogScan.raza}}.</p>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-footer padding justify-content-center no-border no-shadow>
+  <button ion-button block color="primary" (click)="scanCode()">Scannear QR</button>
+</ion-footer>

@@ -1,12 +1,6 @@
-
-<ion-header>
-
-</ion-header>
-
-
-<ion-tabs>
+<ion-tabs [selectedIndex]="mySelectedIndex">
   <ion-tab tabIcon="home" tabTitle="Inicio" [root]="homeTab" [rootParams]="{data: user}"></ion-tab>
-  <ion-tab tabIcon="person" tabTitle="Mi Cuenta" [root]="cuentaTab"></ion-tab>
+  <ion-tab tabIcon="qr-scanner" tabTitle="QR y Collares" [root]="cuentaTab"></ion-tab>
   <ion-tab tabIcon="search" tabTitle="Búsqueda" [root]="buscatTab"></ion-tab>
   <ion-tab tabIcon="add" tabTitle="Agregar" [root]="agregarTab"></ion-tab>
 </ion-tabs>

@@ -8,37 +8,93 @@
 
 
 <ion-content padding>
+  <div *ngIf="index == 0">
 
-  <ion-list class="._list">
-    <ion-list-header text-center class="label-title">
-      Mis perros
-    </ion-list-header>
-    <ion-item *ngFor="let dog of myDogs" (click)="goToDogDetail(dog)">
-      <ion-thumbnail item-start>
-        <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
-      </ion-thumbnail>
-      <strong><h2>{{dog.nombre}}</h2></strong>
-      <p>{{dog.descripcion}}</p>
-    </ion-item>
-  </ion-list>
+    <ion-list class="._list">
+      <ion-list-header text-center class="label-title">
+        Mis perros
+      </ion-list-header>
+      <ion-item *ngFor="let dog of myDogs" (click)="goToDogDetail(dog)">
+        <ion-thumbnail item-start>
+          <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
+        </ion-thumbnail>
+        <strong>
+          <h2>{{dog.nombre}}</h2>
+        </strong>
+        <p>{{dog.descripcion}}</p>
+      </ion-item>
+    </ion-list>
 
-  <ion-list *ngIf="foundDogs" class="._list">
-    <ion-list-header text-center class="label-title">
-      Perros encontrados
-    </ion-list-header>
-    <ion-item *ngFor="let dog of foundDogs" (click)="goToDogDetail(dog)">
-      <ion-thumbnail item-start>
-        <img src="./assets/imgs/" alt="{{dog.nombre}}">
-      </ion-thumbnail>
-      <strong><h2>{{dog.nombre}}</h2></strong>
-      <p>{{dog.descripcion}}</p>
-    </ion-item>   
-  </ion-list>
+    <ion-list *ngIf="foundDogs" class="._list">
+      <ion-list-header text-center class="label-title">
+        Perros encontrados
+      </ion-list-header>
+      <ion-item *ngFor="let dog of foundDogs" (click)="goToDogDetail(dog)">
+        <ion-thumbnail item-start>
+          <img src="./assets/imgs/" alt="{{dog.nombre}}">
+        </ion-thumbnail>
+        <strong>
+          <h2>{{dog.nombre}}</h2>
+        </strong>
+        <p>{{dog.descripcion}}</p>
+      </ion-item>
+    </ion-list>
 
-  <ion-row>
-    <ion-col>
+    <ion-row>
+      <ion-col>
         <button ion-button full (click)="addNewDog()">Agregar un perro!</button>
-    </ion-col>
-  </ion-row>
+      </ion-col>
+    </ion-row>
+  </div>
+  <div *ngIf="index == 1">
+    <ion-list class="._list">
+      <ion-list-header text-center class="label-title">
+        Mis perros
+      </ion-list-header>
+      <ion-item *ngFor="let dog of myDogs" (click)="darEnAdopcion(dog)">
+        <ion-thumbnail item-start>
+          <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
+        </ion-thumbnail>
+        <strong>
+          <h2>{{dog.nombre}}</h2>
+        </strong>
+        <p>{{dog.descripcion}}</p>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div *ngIf="index == 2">
+      <ion-list class="._list">
+        <ion-list-header text-center class="label-title">
+          Mis perros
+        </ion-list-header>
+        <ion-item *ngFor="let dog of myDogs" (click)="goToSalud(dog)">
+          <ion-thumbnail item-start>
+            <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
+          </ion-thumbnail>
+          <strong>
+            <h2>{{dog.nombre}}</h2>
+          </strong>
+          <p>{{dog.descripcion}}</p>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <div *ngIf="index == 3">
+      <ion-list class="._list">
+        <ion-list-header text-center class="label-title">
+          Mis perros
+        </ion-list-header>
+        <ion-item *ngFor="let dog of myDogs" (click)="addTenencia(dog)">
+          <ion-thumbnail item-start>
+            <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
+          </ion-thumbnail>
+          <strong>
+            <h2>{{dog.nombre}}</h2>
+          </strong>
+          <p>{{dog.descripcion}}</p>
+        </ion-item>
+      </ion-list>
+    </div>
 
 </ion-content>
