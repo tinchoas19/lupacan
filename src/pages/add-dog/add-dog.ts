@@ -291,6 +291,7 @@ export class AddDogPage {
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       saveToPhotoAlbum: false,
       allowEdit: true,
+      correctOrientation: true,
       targetWidth: 400,
       targetHeight: 400
     };

@@ -43,7 +43,7 @@ export class HomePage {
       console.log('usuarioHome', val);
       if(val){
         this.usuario = val;
-        this.imgSrc = "http://ctrlztest.com.ar/lupacan/apirest/"+val['imagen'];
+        this.imgSrc = "https://ctrlztest.com.ar/lupacan/apirest/"+val['imagen'];
         this.api.getNotificacionesSinLeer(val['usuarioid']).subscribe(x=>{
           console.log('misNot',x['data']);
           let numberNot = Number(x['data']);

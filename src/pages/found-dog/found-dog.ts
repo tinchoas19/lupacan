@@ -155,6 +155,7 @@ export class FoundDogPage {
       sourceType: this.camera.PictureSourceType.CAMERA,
       saveToPhotoAlbum: false,
       allowEdit: true,
+      correctOrientation: true,
       targetWidth: 400,
       targetHeight: 400
     };

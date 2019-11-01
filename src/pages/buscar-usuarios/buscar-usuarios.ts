@@ -50,7 +50,7 @@ export class BuscarUsuariosPage {
             if (user.facebookid != '0') {
               user.imgSrc = "https://graph.facebook.com/" + user.facebookid + "/picture?type=large";
             } else if (user.imagen != "") {
-              user.imgSrc = "http://ctrlztest.com.ar/lupacan/apirest/" + user.imagen
+              user.imgSrc = "https://ctrlztest.com.ar/lupacan/apirest/" + user.imagen
             } else {
               user.imgSrc = 'assets/imgs/1.jpg';
             }

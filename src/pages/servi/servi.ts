@@ -17,6 +17,7 @@ declare var google;
 })
 export class ServiPage {
 
+  imgSrc: string;
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
   view: string = "favoritos";
@@ -99,7 +100,7 @@ export class ServiPage {
   selectPlace(locales) {
     console.log('place', locales);
     //this.places = [];
-    var iconBase = "http://ctrlztest.com.ar/lupacan/apirest/";
+    var iconBase = "https://ctrlztest.com.ar/lupacan/apirest/";
     locales.map(local=>{
       let location = {
         lat: null,
@@ -246,10 +247,19 @@ export class ServiPage {
 
   createMarkUser() {
     this.storage.get('datauser').then(val => {
-      var iconBase = "http://ctrlztest.com.ar/lupacan/apirest/";
+      var iconBase = "https://ctrlztest.com.ar/lupacan/apirest/";
       if (val != null) {
+        if (val != null) {
+          if (val.imagen == "" && val.facebookid != "") {
+            this.imgSrc = "https://graph.facebook.com/" + val.facebookid + "/picture?type=large";
+          } else if (val.imagen != "") {
+            this.imgSrc = "https://ctrlztest.com.ar/lupacan/apirest/" + val.imagen
+          } else {
+            this.imgSrc = '../../assets/imgs/1.jpg';
+          }
+        }
         var icon = {
-          url: iconBase + val.imagen,
+          url: this.imgSrc,
           fillColor: 'yellow',
           fillOpacity: 0.8,
           scale: 1,

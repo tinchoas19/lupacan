@@ -1,0 +1,43 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons left>
+      <button ion-button icon-left (click)="cerrar()">Cerrar
+      </button>
+    </ion-buttons>
+    <ion-title>Vacuna</ion-title>
+    <ion-buttons right>
+      <button ion-button icon-left (click)="guardar()">Guardar
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label>Vacuna:</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-select [(ngModel)]="vacuna" placeholder="Seleccionar vacuna">
+        <ion-option value="antirrabica">Antirrabica</ion-option>
+        <ion-option value="bordetella">Bordetella</ion-option>
+        <ion-option value="antirrabica">Parvovirus</ion-option>
+        <ion-option value="bordetella">Moquillo</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Fecha de aplicación</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-datetime></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Comprobante:</ion-label>
+    </ion-item>
+    <ion-col col-6>
+      <img src="../../assets/imgs/1.jpg">
+    </ion-col>
+  </ion-list>
+</ion-content>

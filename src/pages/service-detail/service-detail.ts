@@ -17,6 +17,7 @@ import { ChatPage } from '../chat/chat';
 export class ServiceDetailPage {
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
+  sections:any = 'info';
   dataCategory: any;
   private service: any;
   searchDisabled: boolean;
@@ -49,12 +50,13 @@ export class ServiceDetailPage {
     this.navParams.data.busq ? this.desdeBusq = true : this.desdeBusq = false;
   }
 
+
   ionViewWillEnter() {
     this.getComments();
   }
 
   ionViewDidLoad() {
-    this.createMap();
+    //this.createMap();
     console.log('ionViewDidLoad ServiceDetailPage');
   }
 
@@ -71,6 +73,7 @@ export class ServiceDetailPage {
           if (result == 'sent') {
             this.presentToasteEx();
             this.dejarcomment = false;
+            this.ionViewWillEnter();
           } else {
             this.presentToasteError();
           }
@@ -79,6 +82,15 @@ export class ServiceDetailPage {
         this.presentToasteError();
       }
     })
+  }
+
+  getUserPosition() {
+    this.sections = 'mapa';
+    this.createMap();
+  }
+
+  cat(){
+    this.sections = 'info';
   }
 
   createMap() {
@@ -92,6 +104,7 @@ export class ServiceDetailPage {
     this.storage.get('datauser').then(val => {
       if (val != null) {
         this.userId = val['usuarioid'];
+        console.log('user',this.userId);
         this.api.getComments(this.service['localid']).subscribe(x => {
           this.comentarios = x['data'];
         })
@@ -119,7 +132,7 @@ export class ServiceDetailPage {
   selectPlace(local) {
     console.log('place', local);
     //this.places = [];
-    var iconBase = "http://ctrlztest.com.ar/lupacan/apirest/";
+    var iconBase = "https://ctrlztest.com.ar/lupacan/apirest/";
     let location = {
       lat: null,
       lng: null,

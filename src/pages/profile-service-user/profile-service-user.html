@@ -25,7 +25,7 @@
     </ion-row>
   </div>
   <ion-row class="info_tienda" padding justify-content-center>
-    <ion-col col-12 padding text-center>
+    <ion-col *ngIf="dataService.usuarioid == userId" col-12 padding text-center>
       <button class="btn_tienda" ion-button full round (click)="goToService()">Editar</button>
     </ion-col>
     <ion-col col-12 padding text-center *ngIf="!(dataService.premium == '0')">
@@ -34,13 +34,13 @@
     <ion-col col-12 padding text-center *ngIf="!(dataService.premium == '0')">
       <button class="btn_tienda" ion-button full round (click)="vercmensajes()">Mensajes</button>
     </ion-col>
-    <ion-col col-12 padding text-center *ngIf="dataService.premium == '0'">
+    <ion-col col-12 padding text-center *ngIf="dataService.premium == '0' && dataService.usuarioid == userId">
       <button color="primary" ion-button full round (click)="localPremium()">Premium</button>
     </ion-col>
     <ion-col col-12 padding text-center *ngIf="!(dataService.premium == '0')">
       <button color="primary" ion-button full round (click)="verDescuentos()">Descuentos</button>
     </ion-col>
-    <ion-col *ngIf="dataService.refugio" col-12 padding text-center>
+    <ion-col *ngIf="dataService.refugio && dataService.usuarioid == userId" col-12 padding text-center>
       <button class="btn_tienda" ion-button full round (click)="addDog()">Agregar Perro</button>
     </ion-col>
   </ion-row>
@@ -82,7 +82,7 @@
     </ion-col>
     <ion-col col-4 *ngFor="let dog of dogsRefugio" (click)="goToDogDetail(dog)">
       <div class="dog-name">{{dog.nombre}}</div>
-      <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
+      <img class="img_feed" src="https://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
     </ion-col>
   </ion-row>
 </ion-content>

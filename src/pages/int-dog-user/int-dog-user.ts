@@ -56,7 +56,7 @@ export class IntDogUserPage {
   
   //FullScreen
   showImg(url){
-    this.photoViewer.show('http://ctrlztest.com.ar/lupacan/apirest/'+url, 'My Dog', {share: false}); 
+    this.photoViewer.show('https://ctrlztest.com.ar/lupacan/apirest/'+url, 'My Dog', {share: false}); 
   }
 
   //Mapa

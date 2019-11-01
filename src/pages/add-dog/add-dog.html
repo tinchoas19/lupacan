@@ -30,11 +30,11 @@
           <ion-list radio-group class="sexo" [(ngModel)]="dog.gender">
             Sexo
             <div>
-              <ion-radio checked="true" value="hembra"></ion-radio>
+              <ion-radio checked="true" value="0"></ion-radio>
               &nbsp;Hembra
             </div>
             <div>
-              <ion-radio value="macho"></ion-radio>
+              <ion-radio value="1"></ion-radio>
               &nbsp;Macho
             </div>
           </ion-list>
@@ -59,7 +59,7 @@
         <ion-col>
           <ion-item>
             <ion-label stacked>Raza</ion-label>
-            <ion-select [(ngModel)]="dog.raza" placeholder="Mestizo">
+            <ion-select [(ngModel)]="dog.raza" placeholder="Seleccionar">
               <ion-option *ngFor="let raza of razas" value="{{raza.razaid}}">{{raza.nombre}}</ion-option>
             </ion-select>
           </ion-item>
@@ -67,7 +67,7 @@
         <ion-col>
           <ion-item>
             <ion-label stacked>Color</ion-label>
-            <ion-select [(ngModel)]="dog.color" placeholder="Color">
+            <ion-select [(ngModel)]="dog.color" placeholder="Seleccionar">
               <ion-option *ngFor="let color of colores" value="{{color.colorid}}">{{color.nombre}}</ion-option>
             </ion-select>
           </ion-item>

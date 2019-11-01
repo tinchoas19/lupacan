@@ -75,7 +75,7 @@ export class DogPage {
   //Fullscreeen
   showImg(url) {
     console.log(url);
-    this.photoViewer.show('http://ctrlztest.com.ar/lupacan/apirest/upload/10-1.jpg', 'My Dog', { share: false });
+    this.photoViewer.show('https://ctrlztest.com.ar/lupacan/apirest/upload/10-1.jpg', 'My Dog', { share: false });
   }
 
   next() {

@@ -1,3 +1,4 @@
+import { MenuPage } from './../menu/menu';
 import { Storage } from '@ionic/storage';
 import { Component, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { NavController, NavParams, LoadingController, ToastController, Platform, ViewController } from 'ionic-angular';
@@ -90,7 +91,7 @@ export class EditDogUserPage {
   select(razas,colores){
     razas.map(raza=>{
       if(raza.nombre == this.navParams.data.dataDog.raza){
-        this.dog.estado = this.selected_raza = raza.nombre;
+        this.selected_raza = raza.razaid;
       }
     })
     colores.map(color=>{
@@ -127,7 +128,7 @@ export class EditDogUserPage {
     this.dog.nombre = params.nombre;
     //this.dog.nacimiento = params.fechanacimiento;
     this.selected_raza = params.raza;
-    this.dog.color = params.color;
+    this.dog.color = this.selected_color;
     this.dog.descripcion = params.descripcion;
   }
 
@@ -253,6 +254,7 @@ export class EditDogUserPage {
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       saveToPhotoAlbum: false,
       allowEdit: true,
+      correctOrientation: true,
       targetWidth: 400,
       targetHeight: 400
     };
@@ -300,7 +302,7 @@ export class EditDogUserPage {
     
     if(imageParams.length > 0){
       let index = 1;
-      let url = 'http://ctrlztest.com.ar/lupacan/apirest/'
+      let url = 'https://ctrlztest.com.ar/lupacan/apirest/'
       console.log('entro');
       imageParams.map(img=>{
         switch(index){
@@ -355,12 +357,13 @@ export class EditDogUserPage {
         console.log('createDog', x);
         this.dataCreate = JSON.parse(x['_body'])['data'];
         if (this.dataCreate == 'inserted') {
-          this.msgError = 'Listo!'
+          this.msgError = 'Listo!\n Se editó tu mascota.'
           loading.dismiss();
           this, this.presentToast(this.msgError);
           setTimeout(() => {
-            this.navCtrl.pop();
-          }, 2000)
+            //this.navCtrl.pop();
+            this.navCtrl.setRoot(MenuPage);
+          }, 500)
         } else {
           this.msgError = 'Hubo un error, vuelve a intentarlo mas tarde...'
           loading.dismiss();

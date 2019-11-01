@@ -1,3 +1,13 @@
 page-edit-service {
-
+    .add-photo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+        .icon {
+          font-size: 4em;
+          color: #f0c52e;
+        }
+      }
 }

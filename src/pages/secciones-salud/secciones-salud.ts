@@ -1,5 +1,6 @@
+import { ModalSaludPage } from './../modal-salud/modal-salud';
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 
 @Component({
   selector: 'page-secciones-salud',
@@ -10,7 +11,11 @@ export class SeccionesSaludPage {
   descripcion: string;
   title: string;
   index:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public modalCtrl: ModalController
+  ) {
     this.index = this.navParams.data.index || 0;
     console.log('index', this.index);
     this.controlSecc(this.index);
@@ -41,6 +46,11 @@ export class SeccionesSaludPage {
       this.descripcion = 'En esta sección podrás registrar todas las enfermedades que tuvo o tiene tu mascota.'
       this.recordatorio = true;
     }
+  }
+
+  openModal(title){
+    let profileModal = this.modalCtrl.create(ModalSaludPage, { title: title });
+    profileModal.present();
   }
 
 }

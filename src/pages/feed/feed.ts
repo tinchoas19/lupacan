@@ -89,7 +89,7 @@ export class FeedPage {
   selectPlace(dogs) {
     console.log('place', dogs);
     //this.places = [];
-    var iconBase = "http://ctrlztest.com.ar/lupacan/apirest/";
+    var iconBase = "https://ctrlztest.com.ar/lupacan/apirest/";
     dogs.map(dog => {
       let location = {
         lat: null,

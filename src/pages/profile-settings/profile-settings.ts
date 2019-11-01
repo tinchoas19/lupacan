@@ -112,6 +112,9 @@ export class ProfileSettingsPage {
   goToIFindADog() {
     this.navCtrl.push(FoundDogPage);
   }
+  goToMyFavDog(){
+    this.navCtrl.push(MyFavoritesPage,'perros');
+}
   goToCreateService(){
     this.navCtrl.push(CreateServicePage);
   }

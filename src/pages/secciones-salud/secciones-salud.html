@@ -2,7 +2,7 @@
   <ion-navbar>
     <ion-title text-center class="lupa-title">{{title}}</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only>
+      <button ion-button icon-only (click)="openModal(title)">
         <ion-icon name="add"></ion-icon>
       </button>
     </ion-buttons>

@@ -246,6 +246,7 @@ export class RegisterPage {
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       encodingType: this.camera.EncodingType.JPEG,
       allowEdit: true,
+      correctOrientation: true,
     };
 
     this.camera.getPicture(options)

@@ -66,7 +66,7 @@ export class FeedUsuariosPage {
         if (user.facebookid != '0') {
           user.imgSrc = "https://graph.facebook.com/" + user.facebookid + "/picture?type=large";
         } else if (user.imagen != "") {
-          user.imgSrc = "http://ctrlztest.com.ar/lupacan/apirest/" + user.imagen
+          user.imgSrc = "https://ctrlztest.com.ar/lupacan/apirest/" + user.imagen
         } else {
           user.imgSrc = 'assets/imgs/1.jpg';
         }
@@ -85,7 +85,7 @@ export class FeedUsuariosPage {
             if (user.facebookid != '0') {
               user.imgSrc = "https://graph.facebook.com/" + user.facebookid + "/picture?type=large";
             } else if (user.imagen != "") {
-              user.imgSrc = "http://ctrlztest.com.ar/lupacan/apirest/" + user.imagen
+              user.imgSrc = "https://ctrlztest.com.ar/lupacan/apirest/" + user.imagen
             } else {
               user.imgSrc = 'assets/imgs/1.jpg';
             }
@@ -128,7 +128,7 @@ export class FeedUsuariosPage {
     let placeid: any;
     let address: any;
     var self = this;
-    var iconBase = "http://ctrlztest.com.ar/lupacan/apirest/";
+    var iconBase = "https://ctrlztest.com.ar/lupacan/apirest/";
 
     users.map(user => {
       if (user.direccion != "") {

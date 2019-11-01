@@ -175,8 +175,8 @@
         </ion-select>
       </button>
     </ion-row>
-    <ion-row *ngIf="!refugio" padding style="margin-top: 3%;" justify-content-center>
-      <ion-list *ngFor="let select of catSelected[0]; let i = index;">
+    <ion-row *ngIf="!refugio && catSelected" padding style="margin-top: 3%;" justify-content-center>
+      <ion-list *ngFor="let select of catSelected; let i = index;">
         <button class="btn_catSelected" ion-button round icon-end>{{select.nombre}}
           <span (click)="eliminarCategoria(i)">
             <ion-icon name="close"></ion-icon>
@@ -207,7 +207,7 @@
     </ion-item> -->
     <ion-row style="margin: 8% 0 15% 0;">
       <ion-col col-12 no-padding>
-        <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" placeholder="Direccion"></ion-searchbar>
+        <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" placeholder="Dirección"></ion-searchbar>
       </ion-col>
       <ion-col no-padding style="padding-top: 0px!important; margin-bottom: 5%;">
         <ion-list class="list_map">

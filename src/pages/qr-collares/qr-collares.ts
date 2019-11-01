@@ -18,7 +18,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 export class QrCollaresPage {
 
   dogScan: any = null;
-  url: string = "http://ctrlztest.com.ar/lupacan/apirest/";
+  url: string = "https://ctrlztest.com.ar/lupacan/apirest/";
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,

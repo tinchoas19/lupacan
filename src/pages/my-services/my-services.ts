@@ -2,7 +2,7 @@ import { ApiProvider } from './../../providers/api/api';
 import { Storage } from '@ionic/storage';
 import { ProfileServiceUserPage } from './../profile-service-user/profile-service-user';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { EditServicePage } from '../edit-service/edit-service';
 
 
@@ -17,13 +17,17 @@ export class MyServicesPage {
   misRefugios:any=[];
   refugio:any;
   constructor(
+    public events: Events,
     public navCtrl: NavController, 
     public navParams: NavParams,
     private storage: Storage,
     private api: ApiProvider
   ) {
     console.log("params", this.navParams.data);
-    this.refugio = this.navParams.data;
+    this.refugio = this.navParams.data.refugio;    
+    this.events.subscribe('edit-service', ()=>{
+      this.refugio = false
+    });
   }
 
   ionViewDidLoad() {
@@ -40,7 +44,7 @@ export class MyServicesPage {
           let data = x['data'];
           data.map(local=>{
             local.categorias.map(cat=>{
-              if(cat.categorialocalid == '9'){
+              if(cat.categoriaid == '9'){
                 local.refugio = true;
               }else{
                 local.refugio = false;

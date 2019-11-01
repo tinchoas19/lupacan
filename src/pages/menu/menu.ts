@@ -3,7 +3,7 @@ import { MyFavoritesPage } from './../my-favorites/my-favorites';
 import { CreateServicePage } from './../create-service/create-service';
 import { MyServicesPage } from './../my-services/my-services';
 import { Component, ViewChild } from "@angular/core";
-import { Platform, NavController, MenuController, App, IonicPage, NavParams, LoadingController } from "ionic-angular";
+import { Platform, NavController, MenuController, App, IonicPage, NavParams, LoadingController, Events } from "ionic-angular";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { Nav } from "ionic-angular";
@@ -34,6 +34,7 @@ export class MenuPage {
     @ViewChild(Nav) nav: Nav;
 
     constructor(
+        private events: Events,
         public navCtrl: NavController,
         public navParams: NavParams,
         private appCtrl: App,
@@ -45,6 +46,9 @@ export class MenuPage {
     ) {
         this.getStorage();
         console.log("params", this.navParams.data);
+        this.events.subscribe('new-service', ()=>{
+            this.goToMyServices();
+        });
     }
 
     openItem(){
@@ -60,7 +64,7 @@ export class MenuPage {
     }
 
     goToMyServices() {
-        this.navCtrl.push(MyServicesPage,false);
+        this.navCtrl.push(MyServicesPage,{refugio:false});
     }
 
     goToMyRefugios(){     
@@ -94,7 +98,7 @@ export class MenuPage {
             if(this.dataUser.imagen == "" && this.dataUser.facebookid != ""){
                 this.imagen = "https://graph.facebook.com/"+this.dataUser.facebookid+"/picture?type=large";                           
             }else if(this.dataUser.imagen != ""){
-                this.imagen = "http://ctrlztest.com.ar/lupacan/apirest/"+this.dataUser.imagen        
+                this.imagen = "https://ctrlztest.com.ar/lupacan/apirest/"+this.dataUser.imagen        
             }else{
                 this.imagen = '../../assets/imgs/1.jpg';                        
             }
@@ -141,6 +145,7 @@ export class MenuPage {
 
     logOut() {
         this.storage.set('userData', null);
+        this.storage.set('datauser', null);        
         this.menuCtrl.close();
         var nav = this.appCtrl.getRootNav();
         nav.setRoot(LoginPage);

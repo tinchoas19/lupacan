@@ -16,7 +16,7 @@
     <ion-col col-10 text-center>
       <ion-slides style="width: 100% !important;" #slideWithNav2>
         <ion-slide *ngFor="let img of dog.fotos">
-          <img class="circular--square" src="http://ctrlztest.com.ar/lupacan/apirest/{{img.fotourl}}" imageViewer>
+          <img class="circular--square" src="https://ctrlztest.com.ar/lupacan/apirest/{{img.fotourl}}" imageViewer>
         </ion-slide>
       </ion-slides>
     </ion-col>
@@ -37,7 +37,7 @@
     </ion-col>
     <ion-toggle checked="false" [(ngModel)]="checkAsLost"></ion-toggle>
   </ion-row>
-  <ion-item no-lines>
+  <ion-item no-lines *ngIf="perroMio">
     <add-fav-dog [perroid]="dog.perroid"></add-fav-dog>
   </ion-item>
   <ion-list>
@@ -135,13 +135,13 @@
         </ion-row>
 
         <ion-row *ngIf="dog.estado == '3'">
-          <ion-col>
+          <ion-col col-12>
             <ion-label stacked>Se encontró el:</ion-label>
-            <p>{{dog.fechaEncontrado}}</p>
+            <p>{{dog.estadofecha | date : "dd/MM/y" }}</p>
           </ion-col>
-          <ion-col>
+          <ion-col col-12>
             <ion-label stacked>En:</ion-label>
-            <p>{{dog.lugarEncontrado}}</p>
+            <p>{{dog.estadodireccion}}</p>
           </ion-col>
         </ion-row>
 
@@ -192,8 +192,11 @@
           </ion-col>
         </ion-row>
       </div>
-      <ion-row *ngIf="vuelta && dog.usuarionombre" justify-content-center (click)="goToListUser(dog.usuarioid, dog.usuarionombre)">
+      <ion-row *ngIf="vuelta && dog.refugioid == '0'" justify-content-center (click)="goToListUser(dog.usuarioid, dog.usuarionombre)">
         <p text-center style="color: #ffca61; font-weight: 600;font-size: 1.3em;">Ver otros perros de {{dog.usuarionombre}}</p>
+      </ion-row>
+      <ion-row *ngIf="vuelta && dog.refugioid != '0' && dataRefugio" justify-content-center (click)="goToRefugio()">
+        <p text-center style="color: #ffca61; font-weight: 600;font-size: 1.3em;">Ver otros perros de {{dataRefugio.nombre}}</p>
       </ion-row>
     </ion-grid>
   </ion-list>

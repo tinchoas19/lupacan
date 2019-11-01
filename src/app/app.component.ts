@@ -51,25 +51,25 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-      /*this.storage.get('datauser').then(val => {
+      this.storage.get('datauser').then(val => {
         if (val != null) {
           console.log('components', val);
-          this.imagen = "http://ctrlztest.com.ar/lupacan/apirest/" + val['imagen']
+          this.imagen = "https://ctrlztest.com.ar/lupacan/apirest/" + val['imagen']
           this.userName = val['nombre'];
           this.email = val['email'];
           this.rootPage = MenuPage;
 
-          this.api.updateFirebase(val['usuarioid'],registration['registrationId']).subscribe(x=>{
+          /*  this.api.updateFirebase(val['usuarioid'],registration['registrationId']).subscribe(x=>{
            console.log('updateFirebase',x);
            let data = JSON.parse(x['_body'])['data'];
            if(data == 'inserted'){
              this.rootPage = MenuPage;
            }
-         })
+         })  */
         } else {
           this.rootPage = LoginPage;
         }
-      }) */
+      })
     });
   }
 
@@ -92,10 +92,10 @@ export class MyApp {
       console.log('Device registered', registration);
       console.log('_id', registration['registrationId']);
       this.storage.set('firebaseUserId', registration['registrationId']);
-      this.storage.get('datauser').then(val => {
+      /* this.storage.get('datauser').then(val => {
         if (val != null) {
           console.log('components', val);
-          this.imagen = "http://ctrlztest.com.ar/lupacan/apirest/" + val['imagen']
+          this.imagen = "https://ctrlztest.com.ar/lupacan/apirest/" + val['imagen']
           this.userName = val['nombre'];
           this.email = val['email'];
           this.rootPage = MenuPage;
@@ -110,7 +110,7 @@ export class MyApp {
         } else {
           this.rootPage = LoginPage;
         }
-      })
+      }) */
       //this.services._id = registration['registrationId'];
     });
 

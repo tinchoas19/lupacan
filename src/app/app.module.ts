@@ -1,3 +1,4 @@
+import { ModalSaludPage } from './../pages/modal-salud/modal-salud';
 import { TransferenciaPage } from './../pages/transferencia/transferencia';
 import { BuscarUsuariosPage } from './../pages/buscar-usuarios/buscar-usuarios';
 import { SeccionesSaludPage } from './../pages/secciones-salud/secciones-salud';
@@ -140,6 +141,7 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy';
     SeccionesSaludPage,
     BuscarUsuariosPage,
     TransferenciaPage,
+    ModalSaludPage,
   ],
   imports: [
     BrowserModule,
@@ -211,6 +213,7 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy';
     SeccionesSaludPage,
     BuscarUsuariosPage,
     TransferenciaPage,
+    ModalSaludPage,
   ],
   providers: [
     StatusBar,
@@ -237,7 +240,6 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy';
     ConnectivityServiceProvider,
     GoogleMapsProvider,
     Network,
-    
     IntervalProvider
   ]
 })

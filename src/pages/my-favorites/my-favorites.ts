@@ -17,7 +17,7 @@ export class MyFavoritesPage {
   refugios:any;
   sections:any;
   data:any;
-  url:string="http://ctrlztest.com.ar/lupacan/apirest/";
+  url:string="https://ctrlztest.com.ar/lupacan/apirest/";
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -36,6 +36,8 @@ export class MyFavoritesPage {
     } 
     else if(this.data == 'refugios'){
       this.sections = 'refugios';
+    }else if(this.data == 'perros'){
+      this.sections = 'perros';
     }else{
       this.sections = 'usuarios';
     }

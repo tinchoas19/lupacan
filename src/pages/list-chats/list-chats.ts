@@ -42,7 +42,7 @@ export class ListChatsPage {
               if (chat.facebookid != '0') {
                 chat.imgSrc = "https://graph.facebook.com/" + chat.facebookid + "/picture?type=large";
               } else if (chat.imagen != "") {
-                chat.imgSrc = "http://ctrlztest.com.ar/lupacan/apirest/" + chat.imagen
+                chat.imgSrc = "https://ctrlztest.com.ar/lupacan/apirest/" + chat.imagen
               } else {
                 chat.imgSrc = 'assets/imgs/1.jpg';
               }

@@ -1,3 +1,4 @@
+import { Storage } from '@ionic/storage';
 import { ApiProvider } from './../../providers/api/api';
 import { Component, Input, OnInit } from '@angular/core';
 import { ToastController } from 'ionic-angular';
@@ -9,26 +10,39 @@ import { ToastController } from 'ionic-angular';
 
 export class AddFavServComponent implements OnInit {
 
-  @Input() usuarioid: any;
+  usuarioid: any;
   @Input() localid: any;
   isChecked: boolean;
   constructor(
     private api: ApiProvider,
     public toastController: ToastController,
+    public storage: Storage,
   ) {
     console.log('Hello AddFavServComponent Component');
     this.isChecked = false;
+    
+  }
+
+  cargarUser(){
+    this.storage.get('datauser').then(val=>{
+      if(val!=null){
+        this.usuarioid = val['usuarioid'];
+        this.api.getFavLocal(this.usuarioid, this.localid).subscribe(x => {
+          console.log('x_fav_serv',x);
+          if (x['data']) {
+            this.isChecked = true;
+          } else {
+            this.isChecked = false;
+          }
+        })
+      }
+    })
   }
 
   ngOnInit(): void {
-    this.api.getFavLocal(this.usuarioid, this.localid).subscribe(x => {
-      //console.log('x_fav',x);
-      if (x['data']) {
-        this.isChecked = true;
-      } else {
-        this.isChecked = false;
-      }
-    })
+    this.cargarUser();
+    console.log('user:',this.usuarioid);
+    console.log('localid:',this.localid);
   }
 
   addToFavorites() {

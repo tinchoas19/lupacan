@@ -7,6 +7,7 @@ import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ModalController, ToastController, Slides } from 'ionic-angular';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
+import { ProfileServiceUserPage } from '../profile-service-user/profile-service-user';
 
 declare var google: any;
 
@@ -16,6 +17,7 @@ declare var google: any;
   templateUrl: 'photo-slider.html',
 })
 export class PhotoSliderPage {
+  dataRefugio: any = null;
   distanciaAuto: any = "Calculando...";
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
@@ -110,6 +112,8 @@ export class PhotoSliderPage {
       return 'Perdido';
     } else if (dog.estado == 3) {
       return 'Encontrado'
+    } else if (dog.estado == 4) {
+      return 'En Adopción'
     } else {
       return 'En Casa';
     }
@@ -131,7 +135,11 @@ export class PhotoSliderPage {
 
   //FullScreen
   showImg(url) {
-    this.photoViewer.show('http://ctrlztest.com.ar/lupacan/apirest/upload/10-1.jpg', 'My Dog', { share: false });
+    this.photoViewer.show('https://ctrlztest.com.ar/lupacan/apirest/upload/10-1.jpg', 'My Dog', { share: false });
+  }
+
+  goToRefugio() {
+    this.navCtrl.push(ProfileServiceUserPage, this.dataRefugio);
   }
 
 
@@ -147,6 +155,7 @@ export class PhotoSliderPage {
       this.vuelta = true;
     }
     this.dog = this.navParams.data.dogDetail;
+    this.controlRefugio(this.dog);
     console.log('detail', this.dog);
     this.showMyControls = this.navParams.data.isMyDogs;
     this.pageId = this.navParams.data.pageId;
@@ -156,13 +165,29 @@ export class PhotoSliderPage {
       this.thisDogIsToBeAddopted = true;
   }
 
+  controlRefugio(dog) {
+    if (dog.refugioid != "0") {
+      this.api.getLocalData(dog.refugioid).subscribe(x => {
+        this.dataRefugio = x['data'];
+          this.dataRefugio.categorias.map(cat => {
+            if (cat.categoriaid == '9') {
+              this.dataRefugio.refugio = true;
+            } else {
+              this.dataRefugio.refugio = false;
+            }
+          })
+        console.log('reef', this.dataRefugio);
+      })
+    }
+  }
+
   createMap() {
     let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then(() => {
       this.placesService = new google.maps.places.PlacesService(this.maps.map);
       this.distanceService = new google.maps.DistanceMatrixService;
       if (this.dog['estado'] == 1 || this.dog['estado'] == 3 || this.dog['estado'] == 4) {
         this.selectPlace(this.dog['placeid']);
-        this.getDistance(this.dog['perrodireccion'])        
+        this.getDistance(this.dog['perrodireccion'])
       } else {
         this.selectPlace(this.dog['estadoplaceid']);
         this.getDistance(this.dog['estadodireccion'])
@@ -198,8 +223,8 @@ export class PhotoSliderPage {
       avoidHighways: false,
       avoidTolls: false
     }, (response, status) => {
-      console.log('dataaaaaa',response);
-      console.log('dataaaaaaSTAUS',status);      
+      console.log('dataaaaaa', response);
+      console.log('dataaaaaaSTAUS', status);
       if (status !== 'OK') {
         alert('Error was: ' + status);
       } else {
@@ -207,12 +232,12 @@ export class PhotoSliderPage {
         //console.log('respuesta', response['rows'][0]['elements'][0]['distance']['text']);
         if (response['rows'][0]['elements'][0]['status'] == 'NOT_FOUND') {
           this.distanciaPerro = 'Fuera del area';
-          this.distanciaAuto  = 'Fuera del area';
-        } else{
-          console.log('distancia',this.distanciaPerro);
+          this.distanciaAuto = 'Fuera del area';
+        } else {
+          console.log('distancia', this.distanciaPerro);
           this.distanciaAuto = response['rows'][0]['elements'][0]['duration']['text'];
           this.distanciaPerro = response['rows'][0]['elements'][0]['distance']['text'];
-        } 
+        }
       }
     });//Aca termina de resolver una distancia
   }
@@ -222,9 +247,9 @@ export class PhotoSliderPage {
   }
 
   showAlert(dog) {
-    this.getPlaceid(this.userid, dog['perroid'],this.locationUser.lat, this.locationUser.lng);
+    this.getPlaceid(this.userid, dog['perroid'], this.locationUser.lat, this.locationUser.lng);
   }
-  
+
   getPlace(place) {
     this.query = place.description;
     this.places = [];
@@ -246,8 +271,8 @@ export class PhotoSliderPage {
   getPlaceid(usuarioid, perroid, latitude, longitude) {
     var geocoder = new google.maps.Geocoder();
     var latlng = { lat: parseFloat(latitude), lng: parseFloat(longitude) };
-    let placeid:any;
-    let address:any;
+    let placeid: any;
+    let address: any;
     var self = this;
     geocoder.geocode({ 'location': latlng }, function (results, status) {
       console.log('relslsl', results);
@@ -256,12 +281,12 @@ export class PhotoSliderPage {
           console.log('ksjsjsjs', results[1].place_id);
           placeid = results[1].place_id;
           address = results[1].formatted_address;
-          self.api.marcarDogEncontrado(usuarioid, perroid,address, placeid).subscribe(x => {
+          self.api.marcarDogEncontrado(usuarioid, perroid, address, placeid).subscribe(x => {
             console.log('vueltaEncontrado', x);
             let data = JSON.parse(x['_body'])['data'];
             if (data == 'updated') {
-             self.foundDog();
-             self.ionViewWillEnter();
+              self.foundDog();
+              self.ionViewWillEnter();
             }
           });
         } else {
@@ -271,7 +296,7 @@ export class PhotoSliderPage {
         window.alert('Geocoder failed due to: ' + status);
       }
     });
-    
+
   }
 
   selectPlace(placeid) {
@@ -345,7 +370,7 @@ export class PhotoSliderPage {
           text: 'Si',
           handler: data => {
             console.log("si");
-            this.api.quieroAdoptar(this.userid, dog.perroid).subscribe(data=>{
+            this.api.quieroAdoptar(this.userid, dog.perroid).subscribe(data => {
               console.log('dataAdoptar', data);
             })
           }

@@ -14,7 +14,7 @@ export class FormularioPublicitarPage {
 
   public myForm: FormGroup;
   public submitAttempt: boolean = false;
-  url: string = "http://estareservado.ctrlztest.com.ar/"
+  url: string = "https://estareservado.ctrlztest.com.ar/"
   urlMP: any;
   options: InAppBrowserOptions = {
     location: "no", //Or 'no'
@@ -73,7 +73,7 @@ export class FormularioPublicitarPage {
   // ***********************************************************
   // ---------------- CIFRADO DE CHECKOUT
   // ***********************************************************
-  web: string = "http://ctrlztest.com.ar/lupacan/mercadopago/?";
+  web: string = "https://ctrlztest.com.ar/lupacan/mercadopago/?";
   valorEntrada: any = this.navParams.data.paq.precio;
   priceParam: string = btoa("price=");
   priceAgain: string = "NgUhtRF";
@@ -115,7 +115,7 @@ export class FormularioPublicitarPage {
         let browser = this.iab.create(this.urlMP, '_blank', this.options);
         browser.on('loadstart').subscribe((event: InAppBrowserEvent) => {
           console.log('event_mp', event);
-          var okUrl = 'http://ctrlztest.com.ar/lupacan/mercadopago/thankyou.php';
+          var okUrl = 'https://ctrlztest.com.ar/lupacan/mercadopago/thankyou.php';
           if (event.url == okUrl) {
             browser.close();//This will close InAppBrowser Automatically when closeUrl Started
             this.api.comprarPublicidad(this.myForm.value, this.paqueteSelected['paquetepublicidadid'], val['usuarioid'], this.paqueteSelected['precio']).subscribe(x => {
@@ -124,7 +124,7 @@ export class FormularioPublicitarPage {
               this.viewCtrl.dismiss();
             });
           }
-          var errorUrl = 'http://ctrlztest.com.ar/lupacan/mercadopago/errorpayment.php';
+          var errorUrl = 'https://ctrlztest.com.ar/lupacan/mercadopago/errorpayment.php';
           if (event.url == errorUrl) {
             browser.close();//This will close InAppBrowser Automatically when closeUrl Started
             //alert('Compra Error');

@@ -114,10 +114,10 @@ export class SlidePremiumPage {
           var okUrl = 'http://ctrlztest.com.ar/lupacan/mercadopago/thankyou.php';
           if (event.url == okUrl) {
             browser.close();//This will close InAppBrowser Automatically when closeUrl Started
-            this.api.localPremium(this.localid).subscribe(x => {
+            /* this.api.localPremium(this.localid).subscribe(x => {
               console.log('x_vuelta_premium', x);
               alert('Compra Success');
-            });
+            }); */
           }
           var errorUrl = 'http://ctrlztest.com.ar/lupacan/mercadopago/errorpayment.php';
           if (event.url == errorUrl) {

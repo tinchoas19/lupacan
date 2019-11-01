@@ -18,96 +18,114 @@
       <h3 text-center color="primary">{{dataCategory.nombre}}</h3>
     </ion-col>
   </ion-row>
-  <ion-row justify-content-center>
-    <div #pleaseConnect id="please-connect">
-      <p>Please connect to the Internet...</p>
-    </div>
-    <div #map id="map" style="width: 100% !important; height: 200px;">
-      <ion-spinner></ion-spinner>
-    </div>
-  </ion-row>
-  <ion-row *ngIf="service.imagenes.length > 0" style="margin-top: 5%;">
-    <ion-slides pager>
-      <ion-slide *ngFor="let dog of [1,2,3]">
-        <img src="http://ctrlztest.com.ar/lupacan/apirest/{{service.imagenes[0].imagen}}" alt="">
-      </ion-slide>
-    </ion-slides>
-  </ion-row>
-  <ion-row *ngIf="!(service.imagenes.length > 0)" style="margin-top: 5%;">
-    <ion-slides pager>
-      <ion-slide *ngFor="let dog of [1,2,3]">
-        <img src="../../assets/imgs/vet.jpg" alt="">
-      </ion-slide>
-    </ion-slides>
-  </ion-row>
-  <ion-grid>
-    <ion-row>
-      <ion-col col-12>
-        <add-fav-serv [usuarioid]="userId" [localid]="service.localid"></add-fav-serv>
-        <!-- <ion-icon style="font-size: 3rem;" float-right [color]="isChecked ? 'danger' : 'dark'" name="heart" (click)="addToFavorites()"></ion-icon> -->
-        <ion-badge *ngIf="service.premium != null && service.descuento != null" color="primary" float-left>
-          <p>{{service.descuento}}%</p>
-        </ion-badge>
-      </ion-col>
-      <ion-col col-6>
-        <p text-center>{{service.nombre}}</p>
-      </ion-col>
-      <ion-col col-6>
-        <p text-center>
-          <ion-icon name="star" class="plus"></ion-icon>
-          <ion-icon name="star" class="plus"></ion-icon>
-          <ion-icon name="star"></ion-icon>
-          <ion-icon name="star"></ion-icon>
-          <ion-icon name="star"></ion-icon>
-        </p>
-      </ion-col>
-      <ion-col col-6>
-        Direccion: {{service.direccion}}
-      </ion-col>
-      <ion-col col-6 *ngIf="service.premium == 1">
-        <ion-icon style="font-size: 3rem;" float-right name="chatbubbles" (click)="goToMsjPrivado()"></ion-icon>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col col-6>
-        Telefono: {{service.telefono}}
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col col-6>
-        Email: {{service.email}}
-      </ion-col>
-      <!-- <ion-col col-6>
-        <ion-icon name="chatbubbles"></ion-icon>
-      </ion-col> -->
-    </ion-row>
-    <ion-row justify-content-center *ngIf="service.premium == 1">
-      <ion-col col-12 text-center>
-        <button text-center ion-button color="primary" (click)="dejarComment()">Deja tu comentario</button>
-      </ion-col>
-      <ion-col *ngIf="dejarcomment" col-12 text-center>
-        <ion-card>
-          <ion-item>
-            <ion-textarea [(ngModel)]="message" type="text" placeholder="Comentario..."></ion-textarea>
-          </ion-item>
-          <button float-right ion-button small float-right round (click)="sendComment(message)">Enviar</button>
-        </ion-card>
-      </ion-col>
-      <ion-col col-6 class="col-link">
-        <a float-left (click)="verComments()"><strong>Ver comentarios</strong></a>
-      </ion-col>
-      <ion-col col-6 class="col-link">
-        <a float-right (click)="getSeguidores()"><strong>Ver seguidores</strong></a>
-      </ion-col>
-    </ion-row>
-    <div *ngIf="service.perros">
-      <ion-row *ngIf="service.perros.length > 1" style="margin-top: 7%;">
-        <h4 text-center>Perros en este Refugio</h4>
-        <ion-col col-4 *ngFor="let dog of service.perros" (click)="goToDogDetail(dog[0])">
-          <div class="dog-name">{{dog[0].nombre}}</div>
-          <img src="http://ctrlztest.com.ar/lupacan/apirest/{{dog[0].fotos[0].fotourl}}" alt="{{dog.nombre}}">
-        </ion-col>
+  <ion-segment class="seg_fav" mode="md" [(ngModel)]="sections" color="primary">
+    <ion-segment-button class="first" value="info" (click)="cat()">
+      INFO
+    </ion-segment-button>
+    <ion-segment-button class="second" value="mapa" (click)="getUserPosition()">
+      MAPA
+    </ion-segment-button>
+  </ion-segment>
+  <ion-grid [ngSwitch]="sections">
+
+    <!-- MAP -->
+    <div [hidden]="sections!='mapa'">
+      <ion-row justify-content-center>
+        <div #pleaseConnect id="please-connect">
+          <p>Please connect to the Internet...</p>
+        </div>
+        <div #map id="map" style="width: 100% !important; height: 200px;">
+          <ion-spinner></ion-spinner>
+        </div>
       </ion-row>
+    </div>
+
+    <!-- INFO SERVICE -->
+    <div [hidden]="sections!='info'">
+      <ion-row *ngIf="service.imagenes.length > 0" style="margin-top: 5%;">
+        <ion-slides pager>
+          <ion-slide *ngFor="let dog of [1,2,3]">
+            <img src="https://ctrlztest.com.ar/lupacan/apirest/{{service.imagenes[0].imagen}}" alt="">
+          </ion-slide>
+        </ion-slides>
+      </ion-row>
+      <ion-row *ngIf="!(service.imagenes.length > 0)" style="margin-top: 5%;">
+        <ion-slides pager>
+          <ion-slide *ngFor="let dog of [1,2,3]">
+            <img src="../../assets/imgs/vet.jpg" alt="">
+          </ion-slide>
+        </ion-slides>
+      </ion-row>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-12>
+            <add-fav-serv *ngIf="!(userId == service.usuarioid)" [localid]="service.localid"></add-fav-serv>
+            <!-- <ion-icon style="font-size: 3rem;" float-right [color]="isChecked ? 'danger' : 'dark'" name="heart" (click)="addToFavorites()"></ion-icon> -->
+            <ion-badge *ngIf="service.premium != null && service.descuento != null" color="primary" float-left>
+              <p>{{service.descuento}}%</p>
+            </ion-badge>
+          </ion-col>
+          <ion-col col-12>
+            <h1 text-center>{{service.nombre}}</h1>
+          </ion-col>
+          <ion-col col-12 text-center>
+            <p text-center>
+              <ion-icon name="star" class="plus"></ion-icon>
+              <ion-icon name="star" class="plus"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+            </p>
+          </ion-col>
+          <ion-col col-12>
+            <strong><p>Dirección:</p></strong> {{service.direccion}}
+          </ion-col>
+          <ion-col col-12 *ngIf="service.premium == 1">
+            <ion-icon style="font-size: 3rem;" float-right name="chatbubbles" (click)="goToMsjPrivado()"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-12>
+            <strong><p>Teléfono:</p></strong> {{service.telefono}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-6>
+            <strong><p>Email:</p></strong> {{service.email}}
+          </ion-col>
+          <!-- <ion-col col-6>
+            <ion-icon name="chatbubbles"></ion-icon>
+          </ion-col> -->
+        </ion-row>
+        <ion-row justify-content-center *ngIf="service.premium == 1">
+          <ion-col col-12 text-center>
+            <button text-center ion-button color="primary" (click)="dejarComment()">Deja tu comentario</button>
+          </ion-col>
+          <ion-col *ngIf="dejarcomment" col-12 text-center>
+            <ion-card>
+              <ion-item>
+                <ion-textarea [(ngModel)]="message" type="text" placeholder="Comentario..."></ion-textarea>
+              </ion-item>
+              <button float-right ion-button small float-right round (click)="sendComment(message)">Enviar</button>
+            </ion-card>
+          </ion-col>
+          <ion-col col-6 class="col-link">
+            <a float-left (click)="verComments()"><strong>Ver comentarios</strong></a>
+          </ion-col>
+          <ion-col col-6 class="col-link">
+            <a float-right (click)="getSeguidores()"><strong>Ver seguidores</strong></a>
+          </ion-col>
+        </ion-row>
+        <div *ngIf="service.perros">
+          <ion-row *ngIf="service.perros.length > 1" style="margin-top: 7%;">
+            <h4 text-center>Perros en este Refugio</h4>
+            <ion-col col-4 *ngFor="let dog of service.perros" (click)="goToDogDetail(dog[0])">
+              <div class="dog-name">{{dog[0].nombre}}</div>
+              <img src="https://ctrlztest.com.ar/lupacan/apirest/{{dog[0].fotos[0].fotourl}}" alt="{{dog.nombre}}">
+            </ion-col>
+          </ion-row>
+        </div>
+      </ion-grid>
     </div>
   </ion-grid>
 </ion-content>

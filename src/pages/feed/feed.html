@@ -22,7 +22,7 @@
           <ion-slides class="slide_ultimos" pager="false" #slideWithNav2 slidesPerView="4">
             <ion-slide *ngFor="let dog of dogs">
               <div class="dog-name">{{dog.nombre}}</div>
-              <img class="img_slide_ultimo" *ngIf="dog.fotos[0].fotourl" src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}"
+              <img class="img_slide_ultimo" *ngIf="dog.fotos[0].fotourl" src="https://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}"
                 alt="{{dog.nombre}}" (click)="goToDogDetail(dog)">
               <img *ngIf="!dog.fotos[0].fotourl" src="assets/imgs/1.jpg" alt="{{dog.nombre}}" (click)="goToDogDetail(dog)">
             </ion-slide>
@@ -71,7 +71,7 @@
       <ion-row *ngIf="filteredDogs.length > 0 && !mostrarMapa" style="margin-top: 7%;">
         <ion-col col-4 *ngFor="let dog of filteredDogs" (click)="goToDogDetail(dog)">
           <div class="dog-name">{{dog.nombre}}</div>
-          <img class="img_feed" src="http://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
+          <img class="img_feed" src="https://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
         </ion-col>
       </ion-row>
       <!-- <ion-row *ngIf="pageData.id == 4">

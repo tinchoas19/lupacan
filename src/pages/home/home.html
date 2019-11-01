@@ -21,7 +21,7 @@
         <ion-buttons float-right>
           <button id="notification-button" ion-button icon-only (click)="goToMySettings()">
             <ion-icon ios="ios-paw" md="md-paw">
-              <ion-badge id="notifications-badge" color="danger">{{numberBadge}}</ion-badge>
+              <ion-badge *ngIf="numberBadge > '0'" id="notifications-badge" color="danger">{{numberBadge}}</ion-badge>
             </ion-icon>
           </button>
         </ion-buttons>

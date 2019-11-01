@@ -10,12 +10,15 @@ import { NavController, NavParams, ViewController } from 'ionic-angular';
 export class DescuentosPage {
 
   misDescuentos:any=[];
+  categorias:any;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private api: ApiProvider,
     public viewCtrl: ViewController
   ) {
+    this.categorias = this.navParams.data.categorias;
+    console.log('cat', this.categorias);
     
   }
 

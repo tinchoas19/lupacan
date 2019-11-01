@@ -58,15 +58,15 @@
         <ion-col>
           <ion-item>
             <ion-label stacked>Raza</ion-label>
-            <ion-select [(ngModel)]="selected_raza">
-              <ion-option *ngFor="let raza of razas" value="{{raza.nombre}}" [selected]="selected_raza == raza.nombre">{{raza.nombre}}</ion-option>
+            <ion-select [(ngModel)]="dog.raza">
+              <ion-option *ngFor="let raza of razas" value="{{raza.razaid}}" [selected]="selected_raza == raza.razaid">{{raza.nombre}}</ion-option>
             </ion-select>
           </ion-item>
         </ion-col>
         <ion-col>
           <ion-item>
             <ion-label stacked>Color</ion-label>
-            <ion-select [(ngModel)]="selected_color">
+            <ion-select [(ngModel)]="dog.color">
               <ion-option *ngFor="let color of colores" value="{{color.colorid}}" [selected]="selected_color == color.colorid">{{color.nombre}}</ion-option>
             </ion-select>
           </ion-item>
@@ -137,7 +137,7 @@
       </ion-row> -->
       <ion-row>
         <ion-col col-12 padding>
-          <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" placeholder="Direccion"></ion-searchbar>
+          <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" placeholder="Dirección"></ion-searchbar>
         </ion-col>
         <ion-col padding style="padding-top: 0px!important;">
           <ion-list class="list_map">

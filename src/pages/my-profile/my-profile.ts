@@ -72,6 +72,9 @@ export class MyProfilePage {
         //this.dataUserId = this.dataUser;
         this.storage.set('datauser', dataUser);
         this.presentToasteEx();
+        setTimeout(()=>{
+          this.navCtrl.pop();
+        },500)
       }
     })
   }
@@ -110,7 +113,7 @@ export class MyProfilePage {
         if (user.imagen == "" && user.facebookid != "") {
           this.imgSrc = "https://graph.facebook.com/" + user.facebookid + "/picture?type=large";
         } else if (user.imagen != "") {
-          this.imgSrc = "http://ctrlztest.com.ar/lupacan/apirest/" + user.imagen
+          this.imgSrc = "https://ctrlztest.com.ar/lupacan/apirest/" + user.imagen
         } else {
           this.imgSrc = '../../assets/imgs/1.jpg';
         }
@@ -133,6 +136,7 @@ export class MyProfilePage {
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       encodingType: this.camera.EncodingType.JPEG,
       allowEdit: true,
+      correctOrientation: true,
     };
 
     this.camera.getPicture(options)

@@ -16,6 +16,8 @@ declare var google: any;
 })
 export class ServiceListPage {
 
+  hayLocales: boolean = false;
+  imgSrc: string;
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
   locationUser: any = {};
@@ -80,18 +82,22 @@ export class ServiceListPage {
 
   createMarkUser() {
     this.storage.get('datauser').then(val => {
-      var iconBase = "http://ctrlztest.com.ar/lupacan/apirest/";
+      var iconBase = "https://ctrlztest.com.ar/lupacan/apirest/";
       if (val != null) {
+        if (val.imagen == "" && val.facebookid != "") {
+          this.imgSrc = "https://graph.facebook.com/" + val.facebookid + "/picture?type=large";
+        } else if (val.imagen != "") {
+          this.imgSrc = "https://ctrlztest.com.ar/lupacan/apirest/" + val.imagen
+        } else {
+          this.imgSrc = '../../assets/imgs/1.jpg';
+        }
         var icon = {
-          url: iconBase + val.imagen,
-          fillColor: 'yellow',
-          fillOpacity: 0.8,
-          scale: 1,
-          strokeColor: 'gold',
-          strokeWeight: 14,
-          size: new google.maps.Size(40, 40),
-          origin: new google.maps.Point(0, 0),
-          anchor: new google.maps.Point(0, 40)
+          //path: google.maps.SymbolPath.CIRCLE,
+          fillColor: '#488aff',
+		      fillOpacity: 1,
+          scale: 10,
+          strokeWeight:3,
+          strokeColor:"#fff",
         };
         this.maps.map.setCenter({ lat: this.locationUser.lat, lng: this.locationUser.lng });
         var marker = new google.maps.Marker({
@@ -108,7 +114,7 @@ export class ServiceListPage {
   selectPlace(locales) {
     console.log('place', locales);
     //this.places = [];
-    var iconBase = "http://ctrlztest.com.ar/lupacan/apirest/";
+    var iconBase = "https://ctrlztest.com.ar/lupacan/apirest/";
     locales.map(local => {
       let location = {
         lat: null,
@@ -188,7 +194,6 @@ export class ServiceListPage {
 
 
   ionViewWillEnter() {
-    this.createMap()
     this.getStore();
   }
 
@@ -197,6 +202,12 @@ export class ServiceListPage {
       this.apiService.getStores(this.categoryId, val['usuarioid']).subscribe(x => {
         console.log('dataService', x);
         this.services = x['data'];
+        if(this.services.length>0){
+          this.createMap()
+          this.hayLocales = false;
+        }else{
+          this.hayLocales = true;        
+        }
         //this.selectPlace(this.services);
       })
     })
@@ -234,7 +245,7 @@ export class ServiceListPage {
   }
 
   goToService(service) {
-    this.navCtrl.push(ServiceDetailPage, { serv: service, cat: this.dataCategory, icon: this.navParams.data.cat.icono});
+    this.navCtrl.push(ServiceDetailPage, { serv: service, cat: this.dataCategory, icon: this.navParams.data.cat.icono });
   }
 
   goBack() {

@@ -40,7 +40,8 @@ export class ChatPage {
     private storage: Storage
   ) {
     //this.dataUserLogueado();
-    this.mostrarimgChatCon(this.navParams.data)
+    //this.mostrarimgChatCon(this.navParams.data)
+    this.imageChatCon = this.navParams.data.userChat.imgSrc;
   }
 
   misDatos() {
@@ -52,7 +53,7 @@ export class ChatPage {
         if (val.facebookid != '0') {
           this.imagenUser = "https://graph.facebook.com/" + val.facebookid + "/picture?type=large";
         } else if (val.imagen != "") {
-          this.imagenUser = "http://ctrlztest.com.ar/lupacan/apirest/" + val.imagen
+          this.imagenUser = "https://ctrlztest.com.ar/lupacan/apirest/" + val.imagen
         } else {
           this.imagenUser = 'assets/imgs/1.jpg';
         }
@@ -64,7 +65,7 @@ export class ChatPage {
     if (params.userChat.facebookid != '0') {
       this.imageChatCon = "https://graph.facebook.com/" + params.userChat.facebookid + "/picture?type=large";
     } else if (params.userChat.facebookid.imagen != "") {
-      this.imageChatCon = "http://ctrlztest.com.ar/lupacan/apirest/" + params.userChat.imagen
+      this.imageChatCon = "https://ctrlztest.com.ar/lupacan/apirest/" + params.userChat.imagen
     } else {
       this.imageChatCon = 'assets/imgs/1.jpg';
     }

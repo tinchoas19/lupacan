@@ -39,7 +39,7 @@ export class ListDogUserPage {
         if (this.user.facebookid != "") {
           this.imgSrc = "https://graph.facebook.com/" + this.user.facebookid + "/picture?type=large";
         } else if (this.user.imagen != "") {
-          this.imgSrc = "http://ctrlztest.com.ar/lupacan/apirest/" + this.user.imagen
+          this.imgSrc = "https://ctrlztest.com.ar/lupacan/apirest/" + this.user.imagen
         } else {
           this.imgSrc = 'assets/imgs/1.jpg';
         }
@@ -62,7 +62,7 @@ export class ListDogUserPage {
         if (this.user.imagen == "" && this.user.facebookid != "0") {
           this.imgSrc = "https://graph.facebook.com/" + this.user.facebookid + "/picture?type=large";
         } else if (this.user.imagen != "") {
-          this.imgSrc = "http://ctrlztest.com.ar/lupacan/apirest/" + this.user.imagen
+          this.imgSrc = "https://ctrlztest.com.ar/lupacan/apirest/" + this.user.imagen
         } else {
           this.imgSrc = 'assets/imgs/1.jpg';
         }
