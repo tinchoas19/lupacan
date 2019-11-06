@@ -104,7 +104,7 @@ export class LoginPage {
 
                 // => Open user session and redirect to the next page
               //this.navCtrl.push(RegisterPage,{userFb:user, fbId: fb_id});
-              this.services.validarUserFb(fb_id, this.firebaseUserId,name,email).subscribe(x=>{
+              this.services.validarUserFb(fb_id, this.firebaseUserId,name,email,birthday).subscribe(x=>{
                 console.log('dataFB',x);
                 this.services.getUser(x['data']['usuarioid']).subscribe(user=>{
                   console.log('fbbbbb', user);

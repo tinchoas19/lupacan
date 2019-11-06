@@ -9,39 +9,45 @@ import { NavController, NavParams, ViewController } from 'ionic-angular';
 })
 export class DescuentosPage {
 
-  misDescuentos:any=[];
-  categorias:any;
+  minDate: string;
+  misDescuentos: any = [];
+  categorias: any;
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     private api: ApiProvider,
     public viewCtrl: ViewController
   ) {
     this.categorias = this.navParams.data.categorias;
     console.log('cat', this.categorias);
-    
+    this.minDate = new Date().toISOString();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DescuentosPage');
   }
 
-  ionViewWillEnter(){
-    this.api.descuentosLocal(this.navParams.data['localid']).subscribe(x=>{
-      console.log('descuentosLocal',x);
+  ionViewWillEnter() {
+    this.api.descuentosLocal(this.navParams.data['localid']).subscribe(x => {
+      console.log('descuentosLocal', x);
       this.misDescuentos = x['data'];
-      console.log('this.misDescuentos',this.misDescuentos)
+      console.log('this.misDescuentos', this.misDescuentos)
     })
   }
 
-  crearDescuentos(){
-    console.log('descuentos_creados',this.misDescuentos);
-    this.misDescuentos.map(des=>{
-      this.api.actualizarDescuentoLocal(this.navParams.data['localid'],des.categoriaid, des.descuento, des.fechavencimiento).subscribe(x=>{
-        console.log('actualizarDescuento',x);
+  crearDescuentos() {
+    console.log('descuentos_creados', this.misDescuentos);
+    this.misDescuentos.map(des => {
+      this.api.actualizarDescuentoLocal(this.navParams.data['localid'], des.categoriaid, des.descuento, des.fechavencimiento).subscribe(x => {
+        console.log('actualizarDescuento', x);
       })
       this.viewCtrl.dismiss();
     })
+  }
+
+  cerrar(){
+    //let result = "se cerró";
+    this.viewCtrl.dismiss();
   }
 
 }

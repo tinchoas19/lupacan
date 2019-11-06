@@ -95,7 +95,7 @@ export class CreateServicePage {
   ) {
     this.searchDisabled = true;
     this.saveDisabled = true;
-    this.imagePath = "assets/imgs/vet.jpg";
+    this.imagePath = null;
 
   }
 
@@ -215,7 +215,7 @@ export class CreateServicePage {
     });
     loading.present();
     let data;
-    if(this.catSelected != null && this.imagePath != "assets/imgs/vet.jpg"){
+    if(this.catSelected != null){
       if (this.catSelected.length > 0) {
         this.servicios = this.catSelected.map(x => { return x.categorialocalid });
         //console.log('imagene', this.imagenes);    
@@ -336,7 +336,7 @@ export class CreateServicePage {
   async presentToasteError() {
     const toast = await this.toastController.create({
       message: "Hubo un error!\n Vuleve a intentarlo.",
-      duration: 2000,
+      duration: 2500,
       showCloseButton: true,
       position: 'top',
       cssClass: 'toastError',
@@ -347,8 +347,8 @@ export class CreateServicePage {
 
   async presentToasteErrorCat() {
     const toast = await this.toastController.create({
-      message: "Debes seleccionar al menos una categoria y\n por favor no te olvides\n de agregar una foto!",
-      duration: 2000,
+      message: "Debes seleccionar al menos una categoria!",
+      duration: 2500,
       showCloseButton: true,
       position: 'top',
       cssClass: 'toastError',
@@ -360,7 +360,7 @@ export class CreateServicePage {
   async presentToasteEx() {
     const toast = await this.toastController.create({
       message: "Listo!\n Servicio agregado.",
-      duration: 2000,
+      duration: 2500,
       showCloseButton: true,
       position: 'top',
       cssClass: 'toastExito',

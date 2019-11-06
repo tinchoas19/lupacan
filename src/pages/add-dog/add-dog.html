@@ -8,50 +8,84 @@
 
 
 <ion-content>
+  <ion-row justify-content-center padding>
+    <ion-col text-center>
+      <ion-item>
+        <ion-label stacked>Estado</ion-label>
+        <ion-select [(ngModel)]="dog.estado" placeholder="Seleccionar" (ionChange)="onAccountTypeChange()">
+          <ion-option value="1">Es mío y está en casa</ion-option>
+          <ion-option value="3">Para dar en adopción</ion-option>
+          <ion-option value="2">Lo perdí</ion-option>
+          <ion-option value="5">Callejerito</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
   <ion-list>
-    <ion-grid>
-      <ion-row>
+    <ion-grid padding>
+      <ion-row *ngIf="dog.estado == '5'">
         <ion-col>
           <ion-item>
-            <ion-input [(ngModel)]="dog.nombre" type="text" placeholder="Nombre"></ion-input>
+            <ion-label stacked>Código collar</ion-label>
+            <ion-input [(ngModel)]="dog.codigo" type="text"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
           <ion-item>
-            <ion-datetime [(ngModel)]="dog.nacimiento" displayFormat="DD MMM YYYY" placeholder="Fecha de nacimiento    DD/MM/AA" cancelText="Cancelar"
-              doneText="Ok"></ion-datetime>
+            <ion-label stacked>Nombre</ion-label>
+            <ion-input [(ngModel)]="dog.nombre" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="dog.estado != 2 && dog.estado != 5">
+        <ion-col>
+          <ion-item no-lines style="height: 64px!important;">
+            <ion-label stacked>Fecha Nacimiento</ion-label>
+            <ion-datetime [(ngModel)]="dog.nacimiento" displayFormat="DD MMM YYYY" placeholder="dd/mm/aaaa" cancelText="Cancelar" doneText="Ok"></ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="dog.estado == '2'">
+        <ion-col>
+          <ion-item no-lines style="height: 64px!important;">
+            <ion-label stacked>Fecha Nacimiento</ion-label>
+            <ion-datetime [(ngModel)]="dog.nacimiento" displayFormat="DD MMM YYYY" placeholder="dd/mm/aaaa" cancelText="Cancelar" doneText="Ok"></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item no-lines style="height: 64px!important;">
+            <ion-label stacked>Fecha Perdido</ion-label>
+            <ion-datetime [(ngModel)]="dog.estadofecha" displayFormat="DD MMM YYYY" placeholder="dd/mm/aaaa" cancelText="Cancelar" doneText="Ok"></ion-datetime>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col padding>
-          <ion-list radio-group class="sexo" [(ngModel)]="dog.gender">
-            Sexo
-            <div>
+        <ion-col col-6>
+          <ion-list no-lines radio-group [(ngModel)]="dog.gender">
+            <ion-list-header>Sexo</ion-list-header>
+            <ion-item>
+              <ion-label>Hembra</ion-label>
               <ion-radio checked="true" value="0"></ion-radio>
-              &nbsp;Hembra
-            </div>
-            <div>
+            </ion-item>
+            <ion-item>
+              <ion-label>Macho</ion-label>
               <ion-radio value="1"></ion-radio>
-              &nbsp;Macho
-            </div>
+            </ion-item>
           </ion-list>
         </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col padding>
-          <ion-list radio-group class="sexo" [(ngModel)]="dog.esterilizado">
-            Esterelizado
-            <div>
+        <ion-col col-6>
+          <ion-list radio-group [(ngModel)]="dog.esterilizado">
+            <ion-list-header>Esterilizado</ion-list-header>
+            <ion-item>
+              <ion-label>Si</ion-label>
               <ion-radio checked="true" value="1"></ion-radio>
-              &nbsp;Si
-            </div>
-            <div>
+            </ion-item>
+            <ion-item>
+              <ion-label>No</ion-label>
               <ion-radio value="0"></ion-radio>
-              &nbsp;No
-            </div>
+            </ion-item>
           </ion-list>
         </ion-col>
       </ion-row>
@@ -59,8 +93,7 @@
         <ion-col>
           <ion-item>
             <ion-label stacked>Raza</ion-label>
-            <ion-select [(ngModel)]="dog.raza" placeholder="Seleccionar">
-              <ion-option *ngFor="let raza of razas" value="{{raza.razaid}}">{{raza.nombre}}</ion-option>
+            <ion-select [placeholder]="selectRaza" (click)="presentModal()" #mySelect>
             </ion-select>
           </ion-item>
         </ion-col>

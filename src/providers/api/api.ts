@@ -74,9 +74,9 @@ export class ApiProvider {
       );
   }
 
-  validarUserFb(id, firebaseusuarioid, userName, userEmail): Observable<any> {
+  validarUserFb(id, firebaseusuarioid, userName, userEmail, nac): Observable<any> {
     console.log('yendo a valida fb', id);
-    return this.httpClient.get("https://ctrlztest.com.ar/lupacan/apirest/validarusuariofb.php?facebookid=" + id + "&firebaseusuarioid=" + firebaseusuarioid + "&nombre=" + userName + "&email=" + userEmail)
+    return this.httpClient.get("https://ctrlztest.com.ar/lupacan/apirest/validarusuariofb.php?facebookid=" + id + "&firebaseusuarioid=" + firebaseusuarioid + "&nombre=" + userName + "&email=" + userEmail + "&fechanacimiento=" +nac)
       .pipe(
         tap(x => {
           console.log('validar fbId', x);
@@ -1050,6 +1050,7 @@ export class ApiProvider {
 
     let options = new RequestOptions({ headers: headers, withCredentials: true });
     var body = JSON.stringify({
+      estado: dog.estado,
       nombre: dog.nombre,
       descripcion: dog.descripcion,
       generoid: dog.gender,
@@ -1060,7 +1061,11 @@ export class ApiProvider {
       colorid: dog.color,
       usuarioid: dog.usuarioid,
       placeid: dog.placeid,
-      fotos: fotos
+      fotos: fotos,
+      codigo : dog.codigo,
+      estadodireccion: dog.estadodireccion,
+      estadoplaceid: dog.estadoplaceid,
+      estadofecha: dog.estadofecha
     });
 
     console.log('body', body);

@@ -1,4 +1,27 @@
 page-create-service {
+    .carga-img-productos {
+    
+        .contenedor-img-azul {
+            background-color: color($colors, primary);
+            border-radius: 10px;
+            height: 248px;
+        } 
+    }
+    .empezar-anadir {
+        padding: 27px 35px;
+        font-size: 1.6rem;
+        text-align: center;
+        margin: 0!important;
+        color: #fff;
+
+        span {
+          display: block;
+          font-size: 7rem;
+          .icon{
+              color: #fff;
+          }
+        }
+      }
     .searchbar-input {
         padding: 6px 55px;
         background-position: left 8px center;

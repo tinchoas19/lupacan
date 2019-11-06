@@ -1,6 +1,11 @@
 <ion-header>
   <ion-navbar>
-    <ion-title text-center>Descuentos</ion-title>
+    <ion-buttons left>
+      <button ion-button icon-left (click)="cerrar()">
+        <ion-icon name="close" showWhen="android,windows,core,mobileweb"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title text-center class="lupa-title">Descuentos</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -24,7 +29,7 @@
       <ion-col col-12>
         <ion-item no-padding>
           <ion-label stocked>Fecha vecimiento</ion-label>
-          <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="cat.fechavencimiento"></ion-datetime>
+          <ion-datetime displayFormat="DD/MM/YYYY" min="{{minDate}}" max="2050-12-31" [(ngModel)]="cat.fechavencimiento"></ion-datetime>
         </ion-item>
       </ion-col>
     </ion-list>

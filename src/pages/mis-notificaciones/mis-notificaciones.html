@@ -7,16 +7,21 @@
 <ion-content padding>
   <ion-row justify-content-center>
     <p text-center *ngIf=msj>Sin notificaciones por el momento!</p>
-    <ion-list *ngIf=!msj>
-      <ion-item *ngFor="let not of notificaciones; let i=index">
-        <ion-col col-12>
-          <h4 color="primary" float-left>Usuario</h4>
-          <p text-wrap>{{not.texto}}</p>
-        </ion-col>
-        <ion-col col-12>
-          <p float-right style="font-size: 0.8rem;">{{not.fecha | date: 'dd/MM/yy h:mm a'}}</p>
-        </ion-col>
-      </ion-item>
-    </ion-list>
+    <div *ngIf=!msj>
+      <ion-list *ngFor="let not of listaFechas; let i=index">
+        <ion-list-header text-center style="margin-bottom: 0px !important;">
+          {{dia(not.fecha)}} {{mostrarDia(not.fecha)}}
+        </ion-list-header>
+        <ion-item *ngFor="let noti of not.listaEventos">
+          <ion-col col-12>
+            <h4 color="primary" float-left>Usuario</h4>
+            <p text-wrap>{{noti.texto}}</p>
+          </ion-col>
+          <ion-col col-12>
+            <p float-right style="font-size: 0.8rem;">{{noti.fecha | date: 'h:mm a'}}</p>
+          </ion-col>
+        </ion-item>
+      </ion-list>
+    </div>
   </ion-row>
 </ion-content>

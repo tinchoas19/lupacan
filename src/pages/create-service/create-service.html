@@ -9,8 +9,22 @@
 
 
 <ion-content>
-  <ion-row no-padding (click)="addPerfilPhoto()">
+  <!-- <ion-row no-padding (click)="addPerfilPhoto()">
     <img text-center [src]="getTrustImg(imagePath)">
+  </ion-row> -->
+  <ion-row justify-content-center class="carga-img-productos">
+    <ion-col col-12 (click)="addPerfilPhoto()">
+      <div *ngIf="!imagePath" class="contenedor-img-azul">
+        <p class="empezar-anadir">Toca para añadir una foto a tu servicio!
+          <span>
+            <ion-icon name="add"></ion-icon>
+          </span>
+        </p>
+      </div>
+      <div *ngIf="imagePath">
+        <img text-center [src]="getTrustImg(imagePath)">
+      </div>
+    </ion-col>
   </ion-row>
   <ion-list class="_list">
     <ion-list-header *ngIf="!refugio" text-center class="label_title">
@@ -49,124 +63,6 @@
         </ion-item>
       </ion-col>
     </ion-row>
-    <!-- <ion-row class="horarios" justify-content-center>
-      <ion-col col-3>
-        <ion-label>Martes :</ion-label>
-      </ion-col>
-      <ion-col col-3>
-        <ion-label color="primary" stacked>Apertura</ion-label>
-        <ion-datetime [(ngModel)]="tienda.horarios.marAbre" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
-      </ion-col>
-      <ion-col col-3>
-        <ion-label color="primary" stacked>Cierre</ion-label>
-        <ion-datetime [(ngModel)]="tienda.horarios.marCierra" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
-      </ion-col>
-      <ion-col col-3>
-        <ion-item no-lines no-padding>
-          <ion-toggle checked="false"></ion-toggle>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row class="horarios" justify-content-center>
-      <ion-col col-3>
-        <ion-label>Miércoles :</ion-label>
-      </ion-col>
-      <ion-col col-3>
-        <ion-label color="primary" stacked>Apertura</ion-label>
-        <ion-datetime [(ngModel)]="tienda.horarios.mieAbre" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
-      </ion-col>
-      <ion-col col-3>
-        <ion-label color="primary" stacked>Cierre</ion-label>
-        <ion-datetime [(ngModel)]="tienda.horarios.mieCierra" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
-      </ion-col>
-      <ion-col col-3>
-        <ion-item no-lines no-padding>
-          <ion-toggle checked="false"></ion-toggle>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row class="horarios" justify-content-center>
-      <ion-col col-3>
-        <ion-label>Jueves :</ion-label>
-      </ion-col>
-      <ion-col col-3>
-        <ion-label color="primary" stacked>Apertura</ion-label>
-        <ion-datetime [(ngModel)]="tienda.horarios.jueAbre" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
-      </ion-col>
-      <ion-col col-3>
-        <ion-label color="primary" stacked>Cierre</ion-label>
-        <ion-datetime [(ngModel)]="tienda.horarios.jueCierra" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
-      </ion-col>
-      <ion-col col-3>
-        <ion-item no-lines no-padding>
-          <ion-toggle checked="false"></ion-toggle>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row class="horarios" justify-content-center>
-      <ion-col col-3>
-        <ion-label>Viernes :</ion-label>
-      </ion-col>
-      <ion-col col-3>
-        <ion-label color="primary" stacked>Apertura</ion-label>
-        <ion-datetime [(ngModel)]="tienda.horarios.vieAbre" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
-      </ion-col>
-      <ion-col col-3>
-        <ion-label color="primary" stacked>Cierre</ion-label>
-        <ion-datetime [(ngModel)]="tienda.horarios.vieCierra" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
-      </ion-col>
-      <ion-col col-3>
-        <ion-item no-lines no-padding>
-          <ion-toggle checked="false"></ion-toggle>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row class="horarios" justify-content-center>
-      <ion-col col-3>
-        <ion-label>Sábado :</ion-label>
-      </ion-col>
-      <ion-col col-3>
-        <ion-label color="primary" stacked>Apertura</ion-label>
-        <ion-datetime [(ngModel)]="tienda.horarios.sabAbre" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
-      </ion-col>
-      <ion-col col-3>
-        <ion-label color="primary" stacked>Cierre</ion-label>
-        <ion-datetime [(ngModel)]="tienda.horarios.sabCierra" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
-      </ion-col>
-      <ion-col col-3>
-        <ion-item no-lines no-padding>
-          <ion-toggle checked="false"></ion-toggle>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row class="horarios" justify-content-center>
-      <ion-col col-3>
-        <ion-label>Domingo :</ion-label>
-      </ion-col>
-      <ion-col col-3>
-        <ion-label color="primary" stacked>Apertura</ion-label>
-        <ion-datetime [(ngModel)]="tienda.horarios.domAbre" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
-      </ion-col>
-      <ion-col col-3>
-        <ion-label color="primary" stacked>Cierre</ion-label>
-        <ion-datetime [(ngModel)]="tienda.horarios.domCierra" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45"></ion-datetime>
-      </ion-col>
-      <ion-col col-3>
-        <ion-item no-lines no-padding>
-          <ion-toggle checked="false"></ion-toggle>
-        </ion-item>
-      </ion-col>
-    </ion-row> -->
-    <!-- <ion-item>
-    </ion-item>
-    <ion-item>
-    </ion-item> -->
-    <!-- <ion-item>
-      <ion-label color="primary" stacked>Categoria</ion-label>
-      <ion-select [(ngModel)]="tienda.category" multiple="true" cancelText="Cancelar" okText="Ok">
-        <ion-option *ngFor="let cat of categorias" value="{{cat.categorialocalid}}">{{cat.nombre}}</ion-option>
-      </ion-select>
-    </ion-item> -->
     <ion-row justify-content-center style="margin-top: 3%;">
       <button class="btn_categorias" ion-button round [disabled]="refugio">Categorias
         <ion-select [(ngModel)]="tienda.category" okText="Ok" cancelText="Cancelar" multiple="true" [selectOptions]="selectOptions"

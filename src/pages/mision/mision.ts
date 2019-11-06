@@ -1,14 +1,9 @@
+import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { AddDogPage } from '../add-dog/add-dog';
-
-/**
- * Generated class for the MisionPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { ApiProvider } from '../../providers/api/api';
 
 @IonicPage()
 @Component({
@@ -17,7 +12,18 @@ import { AddDogPage } from '../add-dog/add-dog';
 })
 export class MisionPage {
   slides: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  items: any[];
+  displayProperty: string;
+  selectedItem: any;
+  searchQuery: string;
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private services: ApiProvider,
+    private storage: Storage,
+    public viewCtrl: ViewController
+  ) {
+    this.initializeItems();
     this.slides = [
       {
         title: "Mision",
@@ -35,15 +41,49 @@ export class MisionPage {
         image: "assets/img/ica-slidebox-img-3.png",
       }
     ];
-  
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MisionPage');
   }
 
-  irAInicio(){
+  irAInicio() {
     this.navCtrl.push(AddDogPage);
+  }
+
+  initializeItems() {
+    this.services.getBreed().subscribe(data => {
+      console.log('raza', data);
+      this.items = data['data']['colores'];
+    })
+  }
+
+  getItems(ev: any) {
+
+    // set val to the value of the searchbar
+    let val = ev.target.value;
+
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.items = this.items.filter((item) => {
+        return (item['nombre'].toLowerCase().indexOf(val.toLowerCase()) > -1);
+      });
+    } else {
+      // Reset items back to all of the items
+      this.initializeItems();
+    }
+  }
+
+  select(i){
+    let data = i;
+    this.viewCtrl.dismiss(data);
+  }
+
+
+  dismiss() {
+    this.viewCtrl.dismiss();
+    //this.navCtrl.dismiss(this.selectedItem);
   }
 
 }

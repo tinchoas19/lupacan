@@ -1,12 +1,22 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Slides</ion-title>
+    <ion-title>Razas</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="dismiss()">
+        <ion-icon name="close" showWhen="android,windows,core,mobileweb"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="tutorial-page">
-
-  <ion-slides pager>
+  <ion-searchbar (ionInput)="getItems($event)" placeholder="Buscar raza.."></ion-searchbar>
+  <ion-list inset>
+    <ion-item *ngFor="let item of items">
+      <ion-label (click)="select(item)">{{item.nombre}}</ion-label>
+    </ion-item>
+  </ion-list>
+  <!-- <ion-slides pager>
     <ion-slide *ngFor="let slide of slides">
       <ion-toolbar>
         <ion-buttons end>
@@ -27,5 +37,5 @@
         <ion-icon name="arrow-forward"></ion-icon>
       </button>
     </ion-slide>
-  </ion-slides>
+  </ion-slides> -->
 </ion-content>
