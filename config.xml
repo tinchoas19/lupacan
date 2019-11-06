@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.controlz.lupacan" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>lupacan</name>
+    <name>LupaCan</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
     <content src="index.html" />
@@ -116,9 +116,12 @@
         <variable name="FACEBOOK_HYBRID_APP_EVENTS" value="false" />
         <variable name="FACEBOOK_ANDROID_SDK_VERSION" value="4.40.0" />
     </plugin>
-    <plugin name="cordova-plugin-inappbrowser" spec="3.1.0" />
     <engine name="android" spec="7.1.4" />
     <plugin name="cordova.plugins.diagnostic" spec="5.0.0">
         <variable name="ANDROID_SUPPORT_VERSION" value="28.+" />
     </plugin>
+    <plugin name="cordova-plugin-request-location-accuracy" spec="2.3.0">
+        <variable name="PLAY_SERVICES_LOCATION_VERSION" value="16.+" />
+    </plugin>
+    <plugin name="cordova-plugin-inappbrowser" spec="3.1.0" />
 </widget>
