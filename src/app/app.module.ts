@@ -90,6 +90,7 @@ import { Diagnostic } from '@ionic-native/diagnostic';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { ComDogsPage } from '../pages/com-dogs/com-dogs';
 import { CuidadoPage } from '../pages/cuidado/cuidado';
+import { PerfilCallejeritoPage } from '../pages/perfil-callejerito/perfil-callejerito';
 
 @NgModule({
   declarations: [
@@ -147,6 +148,7 @@ import { CuidadoPage } from '../pages/cuidado/cuidado';
     ComDogsPage,
     ComUsersPage,
     ComunidadPage,
+    PerfilCallejeritoPage,
     CuidadoPage,
     TransferenciaPage,
     ModalSaludPage,
@@ -223,6 +225,7 @@ import { CuidadoPage } from '../pages/cuidado/cuidado';
     ComDogsPage,
     ComUsersPage,
     ComunidadPage,
+    PerfilCallejeritoPage,
     CuidadoPage,
     TransferenciaPage,
     ModalSaludPage,

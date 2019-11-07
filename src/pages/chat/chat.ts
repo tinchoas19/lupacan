@@ -41,7 +41,32 @@ export class ChatPage {
   ) {
     //this.dataUserLogueado();
     //this.mostrarimgChatCon(this.navParams.data)
-    this.imageChatCon = this.navParams.data.userChat.imgSrc;
+    this.cargarImg(this.navParams.data.destinoid);
+  }
+
+  cargarImg(idUser){
+    if(this.navParams.data.userChat){
+      this.navParams.data.userChat.imgSrc
+    }else{
+      if(this.navParams.data.tipodestino == 'usuario'){
+        this.services.getUser(idUser).subscribe(data=>{
+          console.log('dataUser',data);
+          let info = data['data'];
+          if (info.facebookid != '0') {
+            this.imageChatCon = "https://graph.facebook.com/" + info.facebookid + "/picture?type=large";
+          } else if (info.facebookid.imagen != "") {
+            this.imageChatCon = "https://ctrlztest.com.ar/lupacan/apirest/" + info.imagen
+          } else {
+            this.imageChatCon = 'assets/imgs/1.jpg';
+          }
+        })
+      }else{
+        this.services.getLocalData(idUser).subscribe(data=>{
+          console.log('dataTienda',data);
+          this.imageChatCon = "https://ctrlztest.com.ar/lupacan/apirest/"+data['data']['imagenes'][0].imagen;
+        })
+      }
+    }
   }
 
   misDatos() {
@@ -59,16 +84,6 @@ export class ChatPage {
         }
       }
     })
-  }
-
-  mostrarimgChatCon(params) {
-    if (params.userChat.facebookid != '0') {
-      this.imageChatCon = "https://graph.facebook.com/" + params.userChat.facebookid + "/picture?type=large";
-    } else if (params.userChat.facebookid.imagen != "") {
-      this.imageChatCon = "https://ctrlztest.com.ar/lupacan/apirest/" + params.userChat.imagen
-    } else {
-      this.imageChatCon = 'assets/imgs/1.jpg';
-    }
   }
 
   interval() {

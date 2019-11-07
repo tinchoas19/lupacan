@@ -53,7 +53,7 @@
             <span class="txt-bold">{{estado(dog)}}</span>
           </p>
         </ion-col>
-        <ion-col *ngIf="!perroMio" col-12 text-center>
+        <ion-col *ngIf="!perroMio && dog.estado != '5'" col-12 text-center>
           <p>
             <span class="txt-bold">Es mi Perro</span>
           </p>

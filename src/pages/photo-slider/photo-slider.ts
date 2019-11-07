@@ -114,6 +114,8 @@ export class PhotoSliderPage {
       return 'Encontrado'
     } else if (dog.estado == 4) {
       return 'En Adopción'
+    }else if (dog.estado == 5) {
+      return 'Callejerito'
     } else {
       return 'En Casa';
     }
