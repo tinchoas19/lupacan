@@ -77,11 +77,11 @@
               <ion-icon name="star"></ion-icon>
             </p>
           </ion-col>
-          <ion-col col-12>
-            <strong><p>Dirección:</p></strong> {{service.direccion}}
-          </ion-col>
           <ion-col col-12 *ngIf="service.premium == 1">
             <ion-icon style="font-size: 3rem;" float-right name="chatbubbles" (click)="goToMsjPrivado()"></ion-icon>
+          </ion-col>
+          <ion-col col-12>
+            <strong><p>Dirección:</p></strong> {{service.direccion}}
           </ion-col>
         </ion-row>
         <ion-row>

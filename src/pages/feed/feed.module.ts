@@ -4,10 +4,10 @@ import { FeedPage } from './feed';
 
 @NgModule({
   declarations: [
-    FeedPage,
+    //FeedPage,
   ],
   imports: [
-    IonicPageModule.forChild(FeedPage),
+    //IonicPageModule.forChild(FeedPage),
   ],
 })
 export class FeedPageModule {}

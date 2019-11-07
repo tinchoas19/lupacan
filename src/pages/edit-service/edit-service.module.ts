@@ -4,10 +4,10 @@ import { EditServicePage } from './edit-service';
 
 @NgModule({
   declarations: [
-    EditServicePage,
+    //EditServicePage,
   ],
   imports: [
-    IonicPageModule.forChild(EditServicePage),
+    //IonicPageModule.forChild(EditServicePage),
   ],
 })
 export class EditServicePageModule {}

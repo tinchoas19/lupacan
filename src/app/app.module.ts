@@ -1,3 +1,5 @@
+import { ComunidadPage } from './../pages/comunidad/comunidad';
+import { ComUsersPage } from './../pages/com-users/com-users';
 import { ModalSaludPage } from './../pages/modal-salud/modal-salud';
 import { TransferenciaPage } from './../pages/transferencia/transferencia';
 import { BuscarUsuariosPage } from './../pages/buscar-usuarios/buscar-usuarios';
@@ -86,6 +88,8 @@ import { AddFavServComponent } from '../components/add-fav-serv/add-fav-serv';
 import { AddFavDogComponent } from '../components/add-fav-dog/add-fav-dog';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
+import { ComDogsPage } from '../pages/com-dogs/com-dogs';
+import { CuidadoPage } from '../pages/cuidado/cuidado';
 
 @NgModule({
   declarations: [
@@ -140,6 +144,10 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy';
     SaludPage,
     SeccionesSaludPage,
     BuscarUsuariosPage,
+    ComDogsPage,
+    ComUsersPage,
+    ComunidadPage,
+    CuidadoPage,
     TransferenciaPage,
     ModalSaludPage,
   ],
@@ -212,6 +220,10 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy';
     SaludPage,
     SeccionesSaludPage,
     BuscarUsuariosPage,
+    ComDogsPage,
+    ComUsersPage,
+    ComunidadPage,
+    CuidadoPage,
     TransferenciaPage,
     ModalSaludPage,
   ],

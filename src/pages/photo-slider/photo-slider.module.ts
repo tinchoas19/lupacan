@@ -4,10 +4,10 @@ import { PhotoSliderPage } from './photo-slider';
 
 @NgModule({
   declarations: [
-    PhotoSliderPage,
+    //PhotoSliderPage,
   ],
   imports: [
-    IonicPageModule.forChild(PhotoSliderPage),
+    //IonicPageModule.forChild(PhotoSliderPage),
   ],
 })
 export class PhotoSliderPageModule {}

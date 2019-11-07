@@ -12,6 +12,10 @@ export class DescuentosPage {
   minDate: string;
   misDescuentos: any = [];
   categorias: any;
+  categoriaid:any;
+  descuento:any;
+  fechavencimiento:any;
+  mostrar:boolean = false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -37,12 +41,26 @@ export class DescuentosPage {
 
   crearDescuentos() {
     console.log('descuentos_creados', this.misDescuentos);
-    this.misDescuentos.map(des => {
-      this.api.actualizarDescuentoLocal(this.navParams.data['localid'], des.categoriaid, des.descuento, des.fechavencimiento).subscribe(x => {
-        console.log('actualizarDescuento', x);
-      })
-      this.viewCtrl.dismiss();
+    this.api.actualizarDescuentoLocal(this.navParams.data['localid'], this.categoriaid, this.descuento, this.fechavencimiento).subscribe(x => {
+      console.log('actualizarDescuento', x);
     })
+    this.viewCtrl.dismiss();
+  }
+
+  changeCat(categoriaid){
+    console.log('<<aaa<<', categoriaid);
+    if(this.misDescuentos.length > 0){
+      this.misDescuentos.map(des=>{
+        if(des.categoriaid == categoriaid){
+          this.mostrar = true;
+          this.descuento = des.descuento;
+          this.fechavencimiento = des.fechavencimiento;
+        }else{
+          this.mostrar = true;
+          this.descuento = this.fechavencimiento = "";
+        } 
+      })
+    }
   }
 
   cerrar(){

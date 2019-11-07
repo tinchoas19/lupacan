@@ -4,10 +4,10 @@ import { ComUsersPage } from './com-users';
 
 @NgModule({
   declarations: [
-    ComUsersPage,
+    //ComUsersPage,
   ],
   imports: [
-    IonicPageModule.forChild(ComUsersPage),
+    //IonicPageModule.forChild(ComUsersPage),
   ],
 })
 export class ComUsersPageModule {}

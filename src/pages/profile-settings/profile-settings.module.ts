@@ -4,10 +4,10 @@ import { ProfileSettingsPage } from './profile-settings';
 
 @NgModule({
   declarations: [
-    ProfileSettingsPage,
+    //ProfileSettingsPage,
   ],
   imports: [
-    IonicPageModule.forChild(ProfileSettingsPage),
+    //IonicPageModule.forChild(ProfileSettingsPage),
   ],
 })
 export class ProfileSettingsPageModule {}

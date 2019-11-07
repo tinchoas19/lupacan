@@ -4,10 +4,10 @@ import { FoundDogPage } from './found-dog';
 
 @NgModule({
   declarations: [
-    FoundDogPage,
+    //FoundDogPage,
   ],
   imports: [
-    IonicPageModule.forChild(FoundDogPage),
+    //IonicPageModule.forChild(FoundDogPage),
   ],
 })
 export class FoundDogPageModule {}

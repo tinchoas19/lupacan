@@ -4,10 +4,10 @@ import { AgregarPage } from './agregar';
 
 @NgModule({
   declarations: [
-    AgregarPage,
+    //AgregarPage,
   ],
   imports: [
-    IonicPageModule.forChild(AgregarPage),
+    //IonicPageModule.forChild(AgregarPage),
   ],
 })
 export class AgregarPageModule {}

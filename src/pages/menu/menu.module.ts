@@ -4,10 +4,10 @@ import { MenuPage } from './menu';
 
 @NgModule({
   declarations: [
-    MenuPage,
+    //MenuPage,
   ],
   imports: [
-    IonicPageModule.forChild(MenuPage),
+    //IonicPageModule.forChild(MenuPage),
   ],
 })
 export class MenuPageModule {}

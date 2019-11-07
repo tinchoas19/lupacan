@@ -4,10 +4,10 @@ import { CreateServicePage } from './create-service';
 
 @NgModule({
   declarations: [
-    CreateServicePage,
+    //CreateServicePage,
   ],
   imports: [
-    IonicPageModule.forChild(CreateServicePage),
+    //IonicPageModule.forChild(CreateServicePage),
   ],
 })
 export class CreateServicePageModule {}

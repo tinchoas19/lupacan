@@ -4,10 +4,10 @@ import { ModalOfferedServicesPage } from './modal-offered-services';
 
 @NgModule({
   declarations: [
-    ModalOfferedServicesPage,
+    //ModalOfferedServicesPage,
   ],
   imports: [
-    IonicPageModule.forChild(ModalOfferedServicesPage),
+    //IonicPageModule.forChild(ModalOfferedServicesPage),
   ],
 })
 export class ModalOfferedServicesPageModule {}

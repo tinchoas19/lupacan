@@ -106,6 +106,9 @@ export class ProfileSettingsPage {
   /* goToSalud(){
     this.navCtrl.push(SaludPage);
   } */
+  goToMyServices() {
+    this.navCtrl.push(MyServicesPage,{refugio:false});
+  }
   goToMyProfile() {
     this.navCtrl.push(MyProfilePage);
   }
@@ -120,9 +123,6 @@ export class ProfileSettingsPage {
   }
   goToCreateRefugio(){
     this.navCtrl.push(CreateServicePage, {refugio:true});    
-  }
-  goToMyServices(){
-    this.navCtrl.push(MyServicesPage);
   }
   goToNotificaciones(){
     this.navCtrl.push(MisNotificacionesPage);

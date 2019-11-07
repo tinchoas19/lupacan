@@ -8,11 +8,11 @@
 
 
 <ion-content>
-  <ion-row justify-content-center padding>
+  <ion-row *ngIf="!perroRefugio" justify-content-center padding>
     <ion-col text-center>
       <ion-item>
         <ion-label stacked>Estado</ion-label>
-        <ion-select [(ngModel)]="dog.estado" placeholder="Seleccionar" (ionChange)="onAccountTypeChange()">
+        <ion-select [(ngModel)]="dog.estado" placeholder="Seleccionar" (ionChange)="onAccountTypeChange(dog.estado)">
           <ion-option value="1">Es mío y está en casa</ion-option>
           <ion-option value="3">Para dar en adopción</ion-option>
           <ion-option value="2">Lo perdí</ion-option>
@@ -105,28 +105,6 @@
             </ion-select>
           </ion-item>
         </ion-col>
-      </ion-row>
-      <ion-row>
-        <!-- <ion-col *ngIf="!perroRefugio">
-          <ion-item>
-            <ion-label stacked>Estado</ion-label>
-            <ion-select [(ngModel)]="dog.estado">
-              <ion-option value="comunidad">Es mío y está en casa</ion-option>
-              <ion-option value="adopcion">Para dar en adopción</ion-option>
-              <ion-option value="perdidos">Lo perdí</ion-option>
-            </ion-select>
-          </ion-item>
-        </ion-col> -->
-        <!-- <ion-col>
-          <ion-item>
-            <ion-label stacked>Tamaño</ion-label>
-            <ion-select [(ngModel)]="dog.size">
-              <ion-option value="small">Chico</ion-option>
-              <ion-option value="medium">Mediano</ion-option>
-              <ion-option value="large">Grande</ion-option>
-            </ion-select>
-          </ion-item>
-        </ion-col> -->
       </ion-row>
       <ion-row>
         <ion-col col-12>

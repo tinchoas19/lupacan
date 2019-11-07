@@ -83,8 +83,12 @@ export class AddDogPage {
     this.initializeItems();
   }
 
-  onAccountTypeChange(){
-    this.query = "";
+  onAccountTypeChange(estado){
+    if(estado == '1' || estado == '3'){
+      this.dog.estafecha = this.query = "";
+    }else{
+      this.query = "";
+    }
   }
 
   searchQuery: string = "";
@@ -134,6 +138,7 @@ export class AddDogPage {
 
   selectPlace(place) {
     console.log('place', place);
+    console.log('estado', this.dog.estado);    
     if(this.dog.estado == '2' || this.dog.estado == '5'){
       this.dog.direccion = this.dog.placeid = "";
       this.dog.estadodireccion = place.description;
@@ -215,7 +220,7 @@ export class AddDogPage {
   irAHome() {
     console.log('dog', this.dog);
     console.log('fotos', this.galleryDog.length);
-    if (this.validacion()) {
+    if (this.validacion(this.dog.estado)) {
       let loading = this.loadingCtrl.create({
         spinner: 'circles',
         content: 'Espere por favor...'
@@ -244,9 +249,10 @@ export class AddDogPage {
   }
 
   addDogRefugio(){
+    this.dog.estado = '3';
     console.log('dog', this.dog);
     console.log('refugioid', this.refugioid);
-    if (this.validacion()) {
+    if (this.validacion(this.dog.estado)) {
       this.services.addDogRefugio(this.dog, this.galleryDog, this.refugioid).subscribe(x => {
         console.log('createDog', x);
         this.dataCreate = JSON.parse(x['_body'])['data'];
@@ -266,10 +272,11 @@ export class AddDogPage {
     }
   }
 
-  validacion() {
+  validacion(estado) {
     let ret = true;
     let msg = "";
-    if(this.dog.estado != '5' || this.dog.estado != '2'){
+    switch (estado) {
+      case '1':
       if (this.dog.nombre == "") {
         ret = false;
         msg += "Debe completar el nombre \n";
@@ -304,8 +311,77 @@ export class AddDogPage {
       }
       this.msgError = msg;
       return ret;
-
-    }else if(this.dog.estado == '5'){
+      case '2':
+      if (this.dog.nombre == "") {
+        ret = false;
+        msg += "Debe agregarle un nombre \n";
+      }
+      if (this.dog.gender == "") {
+        ret = false;
+        msg += "Debe escoger un género \n";
+      }
+      if (this.dog.raza == "") {
+        ret = false;
+        msg += "Debe escoger una raza \n";
+      }
+      if (this.dog.color == "") {
+        ret = false;
+        msg += "Debe completar su color \n";
+      }
+      if (this.dog.descripcion == "") {
+        ret = false;
+        msg += "Debe completar la descripción \n";
+      }
+      if (this.dog.estadodireccion == "") {
+        ret = false;
+        msg += "Debe completar una dirección \n";
+      }
+      if (this.dog.estadofecha == "") {
+        ret = false;
+        msg += "Debe completar una fecha de perdido \n";
+      }
+      if (this.galleryDog.length === 0) {
+        ret = false;
+        msg += "Por favor nos gustaria que agregues una foto \n";
+      }
+      this.msgError = msg;
+      return ret;
+      case '3':
+      if (this.dog.nombre == "") {
+        ret = false;
+        msg += "Debe completar el nombre \n";
+      }
+      if (this.dog.nacimiento == "") {
+        ret = false;
+        msg += "Debe completar la fecha de nacimiento \n";
+      }
+      if (this.dog.gender == "") {
+        ret = false;
+        msg += "Debe escoger un género \n";
+      }
+      if (this.dog.raza == "") {
+        ret = false;
+        msg += "Debe escoger una raza \n";
+      }
+      if (this.dog.color == "") {
+        ret = false;
+        msg += "Debe completar su color \n";
+      }
+      if (this.dog.descripcion == "") {
+        ret = false;
+        msg += "Debe completar la descripción \n";
+      }
+      if (this.dog.direccion == "") {
+        ret = false;
+        msg += "Debe completar una dirección \n";
+      }
+      if (this.galleryDog.length === 0) {
+        ret = false;
+        msg += "Por favor nos gustaria que agregues una foto \n";
+      }
+      this.msgError = msg;
+      return ret;
+      case '5':
       if (this.dog.codigo == "") {
         ret = false;
         msg += "Debe ingresar el código del collar\n";
@@ -340,41 +416,8 @@ export class AddDogPage {
       }
       this.msgError = msg;
       return ret;
-    }else if(this.dog.estado == '2'){
-      if (this.dog.nombre == "") {
-        ret = false;
-        msg += "Debe agregarle un nombre \n";
-      }
-      if (this.dog.gender == "") {
-        ret = false;
-        msg += "Debe escoger un género \n";
-      }
-      if (this.dog.raza == "") {
-        ret = false;
-        msg += "Debe escoger una raza \n";
-      }
-      if (this.dog.color == "") {
-        ret = false;
-        msg += "Debe completar su color \n";
-      }
-      if (this.dog.descripcion == "") {
-        ret = false;
-        msg += "Debe completar la descripción \n";
-      }
-      if (this.dog.estadodireccion == "") {
-        ret = false;
-        msg += "Debe completar una dirección \n";
-      }
-      if (this.dog.estadofecha == "") {
-        ret = false;
-        msg += "Debe completar una dirección \n";
-      }
-      if (this.galleryDog.length === 0) {
-        ret = false;
-        msg += "Por favor nos gustaria que agregues una foto \n";
-      }
-      this.msgError = msg;
-      return ret;
+      default:
+      break;
     }
   }
 

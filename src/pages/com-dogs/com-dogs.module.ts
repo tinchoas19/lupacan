@@ -4,10 +4,10 @@ import { ComDogsPage } from './com-dogs';
 
 @NgModule({
   declarations: [
-    ComDogsPage,
+    //ComDogsPage,
   ],
   imports: [
-    IonicPageModule.forChild(ComDogsPage),
+    //IonicPageModule.forChild(ComDogsPage),
   ],
 })
 export class ComDogsPageModule {}

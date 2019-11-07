@@ -59,7 +59,7 @@ export class MyApp {
           this.email = val['email'];
           this.rootPage = MenuPage;
 
-          /*  this.api.updateFirebase(val['usuarioid'],registration['registrationId']).subscribe(x=>{
+           /* this.api.updateFirebase(val['usuarioid'],registration['registrationId']).subscribe(x=>{
            console.log('updateFirebase',x);
            let data = JSON.parse(x['_body'])['data'];
            if(data == 'inserted'){

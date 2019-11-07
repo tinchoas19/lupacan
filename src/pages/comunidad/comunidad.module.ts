@@ -4,10 +4,10 @@ import { ComunidadPage } from './comunidad';
 
 @NgModule({
   declarations: [
-    ComunidadPage,
+    //ComunidadPage,
   ],
   imports: [
-    IonicPageModule.forChild(ComunidadPage),
+    //IonicPageModule.forChild(ComunidadPage),
   ],
 })
 export class ComunidadPageModule {}
