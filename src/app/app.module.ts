@@ -90,6 +90,7 @@ import { Diagnostic } from '@ionic-native/diagnostic';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { ComDogsPage } from '../pages/com-dogs/com-dogs';
 import { CuidadoPage } from '../pages/cuidado/cuidado';
+import { PerfilCallejeritoPage } from '../pages/perfil-callejerito/perfil-callejerito';
 
 declare var google: any;
 
@@ -149,6 +150,7 @@ declare var google: any;
     ComDogsPage,
     ComUsersPage,
     ComunidadPage,
+    PerfilCallejeritoPage,
     CuidadoPage,
     TransferenciaPage,
     ModalSaludPage,
@@ -225,6 +227,7 @@ declare var google: any;
     ComDogsPage,
     ComUsersPage,
     ComunidadPage,
+    PerfilCallejeritoPage,
     CuidadoPage,
     TransferenciaPage,
     ModalSaludPage,

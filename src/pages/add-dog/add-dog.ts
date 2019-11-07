@@ -3,11 +3,14 @@ import { GoogleMapsProvider } from './../../providers/google-maps/google-maps';
 import { Storage } from '@ionic/storage';
 import { ApiProvider, usuario } from './../../providers/api/api';
 import { Component, ViewChild, ElementRef, NgZone } from "@angular/core";
-import { IonicPage, NavController, NavParams, Platform, ViewController, ModalController, Select } from "ionic-angular";
+import { IonicPage, NavController, NavParams, Platform, ViewController, ModalController, Select, AlertController } from "ionic-angular";
 import { HomePage } from "../home/home";
 import { LoadingController, ToastController } from "ionic-angular";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Geolocation } from '@ionic-native/geolocation';
+import { Crop } from "@ionic-native/crop";
+import { Base64 } from "@ionic-native/base64";
+
 //import { GoogleMaps } from '../../providers/google-maps';
 
 import {
@@ -37,37 +40,40 @@ export class AddDogPage {
   searchDisabled: boolean;
   saveDisabled: boolean;
   location: any;
-
+  private win: any = window;
   dog: any = {
     usuarioid: '',
     nombre: '',
     nacimiento: '',
     gender: '',
-    esterilizado:'',
+    esterilizado: '',
     raza: '',
     color: '',
     descripcion: '',
-    direccion:'',
-    placeid:'',
+    direccion: '',
+    placeid: '',
     codigo: '',
     estadodireccion: '',
-    estadoplaceid:'',
-    estadofecha:''
+    estadoplaceid: '',
+    estadofecha: ''
   };
-  perroRefugio:boolean;
-  refugioid:any;
-  selectRaza : string;
+  perroRefugio: boolean;
+  refugioid: any;
+  selectRaza: string;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private transfer: FileTransfer,
     private camera: Camera,
+    public crop: Crop,
+    private base64: Base64,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     public zone: NgZone,
+    public alertCtrl: AlertController,
     public maps: GoogleMapsProvider,
-    public platform: Platform, 
-    public geolocation: Geolocation, 
+    public platform: Platform,
+    public geolocation: Geolocation,
     public viewCtrl: ViewController,
     private services: ApiProvider,
     private storage: Storage,
@@ -83,10 +89,12 @@ export class AddDogPage {
     this.initializeItems();
   }
 
-  onAccountTypeChange(estado){
-    if(estado == '1' || estado == '3'){
+  onAccountTypeChange(estado) {
+    if (estado == '1' || estado == '3') {
       this.dog.estafecha = this.query = "";
-    }else{
+      this.galleryDog = [];
+    } else {
+      this.galleryDog = [];
       this.query = "";
     }
   }
@@ -128,22 +136,22 @@ export class AddDogPage {
     modal.present();
     modal.onDidDismiss(data => {
       console.log(data);
-      if(data){
+      if (data) {
         this.selectRaza = data.nombre
         this.dog.raza = data.razaid;
-      }else this.selectRaza = 'Seleccionar';
+      } else this.selectRaza = 'Seleccionar';
       console.log('dog', this.dog);
     });
   }
 
   selectPlace(place) {
     console.log('place', place);
-    console.log('estado', this.dog.estado);    
-    if(this.dog.estado == '2' || this.dog.estado == '5'){
+    console.log('estado', this.dog.estado);
+    if (this.dog.estado == '2' || this.dog.estado == '5') {
       this.dog.direccion = this.dog.placeid = "";
       this.dog.estadodireccion = place.description;
       this.dog.estadoplaceid = place.place_id;
-    }else{
+    } else {
       this.dog.estadodireccion = this.dog.estadoplaceid = "";
       this.query = place.description;
       this.dog.direccion = place.description;
@@ -179,36 +187,36 @@ export class AddDogPage {
     });
   }
 
-  
-  searchPlace(){
+
+  searchPlace() {
     this.saveDisabled = true;
-    if(this.query.length > 0 && !this.searchDisabled) {
-        let config = {
-            types: ['geocode'],
-            input: this.query
+    if (this.query.length > 0 && !this.searchDisabled) {
+      let config = {
+        types: ['geocode'],
+        input: this.query
+      }
+      console.log('query', this, this.query);
+      this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
+        if (status == google.maps.places.PlacesServiceStatus.OK && predictions) {
+          this.places = [];
+          predictions.forEach((prediction) => {
+            this.places.push(prediction);
+          });
+          console.log('places', this.places);
         }
-        console.log('query', this,this.query);
-        this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
-            if(status == google.maps.places.PlacesServiceStatus.OK && predictions){
-                this.places = [];
-                predictions.forEach((prediction) => {
-                    this.places.push(prediction);
-                });
-                console.log('places', this.places);
-            }
-        });
+      });
     } else {
-        this.places = [];
+      this.places = [];
     }
   }
 
-  save(){
+  save() {
     this.viewCtrl.dismiss(this.location);
   }
 
-  close(){
-      this.viewCtrl.dismiss();
-  }   
+  close() {
+    this.viewCtrl.dismiss();
+  }
 
 
   irAAgregar() {
@@ -225,7 +233,7 @@ export class AddDogPage {
         spinner: 'circles',
         content: 'Espere por favor...'
       });
-    
+
       loading.present();
       this.services.createDog(this.dog, this.galleryDog).subscribe(x => {
         console.log('createDog', x);
@@ -248,7 +256,7 @@ export class AddDogPage {
     }
   }
 
-  addDogRefugio(){
+  addDogRefugio() {
     this.dog.estado = '3';
     console.log('dog', this.dog);
     console.log('refugioid', this.refugioid);
@@ -277,158 +285,158 @@ export class AddDogPage {
     let msg = "";
     switch (estado) {
       case '1':
-      if (this.dog.nombre == "") {
-        ret = false;
-        msg += "Debe completar el nombre \n";
-      }
-      if (this.dog.nacimiento == "") {
-        ret = false;
-        msg += "Debe completar la fecha de nacimiento \n";
-      }
-      if (this.dog.gender == "") {
-        ret = false;
-        msg += "Debe escoger un género \n";
-      }
-      if (this.dog.raza == "") {
-        ret = false;
-        msg += "Debe escoger una raza \n";
-      }
-      if (this.dog.color == "") {
-        ret = false;
-        msg += "Debe completar su color \n";
-      }
-      if (this.dog.descripcion == "") {
-        ret = false;
-        msg += "Debe completar la descripción \n";
-      }
-      if (this.dog.direccion == "") {
-        ret = false;
-        msg += "Debe completar una dirección \n";
-      }
-      if (this.galleryDog.length === 0) {
-        ret = false;
-        msg += "Por favor nos gustaria que agregues una foto \n";
-      }
-      this.msgError = msg;
-      return ret;
+        if (this.dog.nombre == "") {
+          ret = false;
+          msg += "Debe completar el nombre \n";
+        }
+        if (this.dog.nacimiento == "") {
+          ret = false;
+          msg += "Debe completar la fecha de nacimiento \n";
+        }
+        if (this.dog.gender == "") {
+          ret = false;
+          msg += "Debe escoger un género \n";
+        }
+        if (this.dog.raza == "") {
+          ret = false;
+          msg += "Debe escoger una raza \n";
+        }
+        if (this.dog.color == "") {
+          ret = false;
+          msg += "Debe completar su color \n";
+        }
+        if (this.dog.descripcion == "") {
+          ret = false;
+          msg += "Debe completar la descripción \n";
+        }
+        if (this.dog.direccion == "") {
+          ret = false;
+          msg += "Debe completar una dirección \n";
+        }
+        if (this.galleryDog.length === 0) {
+          ret = false;
+          msg += "Por favor nos gustaria que agregues una foto \n";
+        }
+        this.msgError = msg;
+        return ret;
       case '2':
-      if (this.dog.nombre == "") {
-        ret = false;
-        msg += "Debe agregarle un nombre \n";
-      }
-      if (this.dog.gender == "") {
-        ret = false;
-        msg += "Debe escoger un género \n";
-      }
-      if (this.dog.raza == "") {
-        ret = false;
-        msg += "Debe escoger una raza \n";
-      }
-      if (this.dog.color == "") {
-        ret = false;
-        msg += "Debe completar su color \n";
-      }
-      if (this.dog.descripcion == "") {
-        ret = false;
-        msg += "Debe completar la descripción \n";
-      }
-      if (this.dog.estadodireccion == "") {
-        ret = false;
-        msg += "Debe completar una dirección \n";
-      }
-      if (this.dog.estadofecha == "") {
-        ret = false;
-        msg += "Debe completar una fecha de perdido \n";
-      }
-      if (this.galleryDog.length === 0) {
-        ret = false;
-        msg += "Por favor nos gustaria que agregues una foto \n";
-      }
-      this.msgError = msg;
-      return ret;
+        if (this.dog.nombre == "") {
+          ret = false;
+          msg += "Debe agregarle un nombre \n";
+        }
+        if (this.dog.gender == "") {
+          ret = false;
+          msg += "Debe escoger un género \n";
+        }
+        if (this.dog.raza == "") {
+          ret = false;
+          msg += "Debe escoger una raza \n";
+        }
+        if (this.dog.color == "") {
+          ret = false;
+          msg += "Debe completar su color \n";
+        }
+        if (this.dog.descripcion == "") {
+          ret = false;
+          msg += "Debe completar la descripción \n";
+        }
+        if (this.dog.estadodireccion == "") {
+          ret = false;
+          msg += "Debe completar una dirección \n";
+        }
+        if (this.dog.estadofecha == "") {
+          ret = false;
+          msg += "Debe completar una fecha de perdido \n";
+        }
+        if (this.galleryDog.length === 0) {
+          ret = false;
+          msg += "Por favor nos gustaria que agregues una foto \n";
+        }
+        this.msgError = msg;
+        return ret;
       case '3':
-      if (this.dog.nombre == "") {
-        ret = false;
-        msg += "Debe completar el nombre \n";
-      }
-      if (this.dog.nacimiento == "") {
-        ret = false;
-        msg += "Debe completar la fecha de nacimiento \n";
-      }
-      if (this.dog.gender == "") {
-        ret = false;
-        msg += "Debe escoger un género \n";
-      }
-      if (this.dog.raza == "") {
-        ret = false;
-        msg += "Debe escoger una raza \n";
-      }
-      if (this.dog.color == "") {
-        ret = false;
-        msg += "Debe completar su color \n";
-      }
-      if (this.dog.descripcion == "") {
-        ret = false;
-        msg += "Debe completar la descripción \n";
-      }
-      if (this.dog.direccion == "") {
-        ret = false;
-        msg += "Debe completar una dirección \n";
-      }
-      if (this.galleryDog.length === 0) {
-        ret = false;
-        msg += "Por favor nos gustaria que agregues una foto \n";
-      }
-      this.msgError = msg;
-      return ret;
+        if (this.dog.nombre == "") {
+          ret = false;
+          msg += "Debe completar el nombre \n";
+        }
+        if (this.dog.nacimiento == "") {
+          ret = false;
+          msg += "Debe completar la fecha de nacimiento \n";
+        }
+        if (this.dog.gender == "") {
+          ret = false;
+          msg += "Debe escoger un género \n";
+        }
+        if (this.dog.raza == "") {
+          ret = false;
+          msg += "Debe escoger una raza \n";
+        }
+        if (this.dog.color == "") {
+          ret = false;
+          msg += "Debe completar su color \n";
+        }
+        if (this.dog.descripcion == "") {
+          ret = false;
+          msg += "Debe completar la descripción \n";
+        }
+        if (this.dog.direccion == "") {
+          ret = false;
+          msg += "Debe completar una dirección \n";
+        }
+        if (this.galleryDog.length === 0) {
+          ret = false;
+          msg += "Por favor nos gustaria que agregues una foto \n";
+        }
+        this.msgError = msg;
+        return ret;
       case '5':
-      if (this.dog.codigo == "") {
-        ret = false;
-        msg += "Debe ingresar el código del collar\n";
-      }
-      if (this.dog.nombre == "") {
-        ret = false;
-        msg += "Debe agregarle un nombre \n";
-      }
-      if (this.dog.gender == "") {
-        ret = false;
-        msg += "Debe escoger un género \n";
-      }
-      if (this.dog.raza == "") {
-        ret = false;
-        msg += "Debe escoger una raza \n";
-      }
-      if (this.dog.color == "") {
-        ret = false;
-        msg += "Debe completar su color \n";
-      }
-      if (this.dog.descripcion == "") {
-        ret = false;
-        msg += "Debe completar la descripción \n";
-      }
-      if (this.dog.estadodireccion == "") {
-        ret = false;
-        msg += "Debe completar una dirección \n";
-      }
-      if (this.galleryDog.length === 0) {
-        ret = false;
-        msg += "Por favor nos gustaria que agregues una foto \n";
-      }
-      this.msgError = msg;
-      return ret;
+        if (this.dog.codigo == "") {
+          ret = false;
+          msg += "Debe ingresar el código del collar\n";
+        }
+        if (this.dog.nombre == "") {
+          ret = false;
+          msg += "Debe agregarle un nombre \n";
+        }
+        if (this.dog.gender == "") {
+          ret = false;
+          msg += "Debe escoger un género \n";
+        }
+        if (this.dog.raza == "") {
+          ret = false;
+          msg += "Debe escoger una raza \n";
+        }
+        if (this.dog.color == "") {
+          ret = false;
+          msg += "Debe completar su color \n";
+        }
+        if (this.dog.descripcion == "") {
+          ret = false;
+          msg += "Debe completar la descripción \n";
+        }
+        if (this.dog.estadodireccion == "") {
+          ret = false;
+          msg += "Debe completar una dirección \n";
+        }
+        if (this.galleryDog.length === 0) {
+          ret = false;
+          msg += "Por favor nos gustaria que agregues una foto \n";
+        }
+        this.msgError = msg;
+        return ret;
       default:
-      break;
+        break;
     }
   }
 
   // ************* SUBIR IMAGENES
   galleryDog: any = [];
   imageURI: any;
-  img1:boolean=false;
-  img2:boolean=false;
-  img3:boolean=false;
-  img4:boolean=false;
-  img5:boolean=false;
+  img1: boolean = false;
+  img2: boolean = false;
+  img3: boolean = false;
+  img4: boolean = false;
+  img5: boolean = false;
   imageFileName1: any;
   imageFileName2: any;
   imageFileName3: any;
@@ -450,38 +458,123 @@ export class AddDogPage {
       .getPicture(options)
       .then(imageData => {
         console.log("IMAGE DATA IS", imageData);
-        switch(index){
+        switch (index) {
           case 1:
             this.imageFileName1 = 'data:image/jpeg;base64,' + imageData;
             this.img1 = true;
             this.galleryDog.push(this.imageFileName1);
-          break;
+            break;
           case 2:
             this.imageFileName2 = 'data:image/jpeg;base64,' + imageData;
             this.img2 = true;
             this.galleryDog.push(this.imageFileName2);
-          break;
+            break;
           case 3:
             this.imageFileName3 = 'data:image/jpeg;base64,' + imageData;
             this.img3 = true;
             this.galleryDog.push(this.imageFileName3);
-          break;
+            break;
           case 4:
             this.imageFileName4 = 'data:image/jpeg;base64,' + imageData;
             this.img4 = true;
             this.galleryDog.push(this.imageFileName4);
-          break;
+            break;
           case 5:
             this.imageFileName5 = 'data:image/jpeg;base64,' + imageData;
             this.img5 = true;
             this.galleryDog.push(this.imageFileName5);
-          break;
+            break;
         }
         //this.uploadFile();
       })
       .catch(e => {
         console.log("Error while picking from gallery", e);
       });
+  }
+
+  abrirCamara(index) {
+    const options: CameraOptions = {
+      quality: 30,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: this.camera.PictureSourceType.CAMERA,
+      correctOrientation: true
+    };
+
+    this.camera.getPicture(options).then(
+      imageData => {
+        console.log("fileUri_camara", imageData);
+        console.log("IMAGE DATA IS", imageData);
+        switch (index) {
+          case 1:
+            this.imageFileName1 = 'data:image/jpeg;base64,' + imageData;
+            this.img1 = true;
+            this.galleryDog.push(this.imageFileName1);
+            break;
+          case 2:
+            this.imageFileName2 = 'data:image/jpeg;base64,' + imageData;
+            this.img2 = true;
+            this.galleryDog.push(this.imageFileName2);
+            break;
+          case 3:
+            this.imageFileName3 = 'data:image/jpeg;base64,' + imageData;
+            this.img3 = true;
+            this.galleryDog.push(this.imageFileName3);
+            break;
+          case 4:
+            this.imageFileName4 = 'data:image/jpeg;base64,' + imageData;
+            this.img4 = true;
+            this.galleryDog.push(this.imageFileName4);
+            break;
+          case 5:
+            this.imageFileName5 = 'data:image/jpeg;base64,' + imageData;
+            this.img5 = true;
+            this.galleryDog.push(this.imageFileName5);
+            break;
+        }
+        //this.uploadFile();
+          /* Using cordova-plugin-crop starts here */
+          //this.cropPicture(fileUri);
+      },
+      err => {
+        console.log("err en getPicture", err);
+      }
+    );
+  }
+
+  toBase64(filePath) {
+    this.base64.encodeFile(filePath).then((base64File: string) => {
+      this.galleryDog.push(base64File);
+      console.log('galeryBase64', this.galleryDog);
+    })
+  }
+
+  getTrustImg(fileUri) {
+    console.log("fn_muestra", fileUri);
+    let path = this.win.Ionic.WebView.convertFileSrc(fileUri);
+    return path;
+  }
+
+  cropPicture(path) {
+    console.log("path_crop", path);
+    let option = {
+      quality: 100,
+      targetHeight: 100,
+      targetWidth: 100
+    };
+
+    this.crop.crop(path, option).then(
+      newImageCrop => {
+        //this.imagePath = newImageCrop;
+        console.log("imagen_cropeanda", newImageCrop);
+        //this.fileUriBox.push(newImageCrop);
+        this.toBase64(newImageCrop);
+      },
+      error => {
+        console.log("error_Crop", error);
+      }
+    );
   }
 
 

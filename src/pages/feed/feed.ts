@@ -33,7 +33,7 @@ export class FeedPage {
   public pageData: any = {};
   verFiltro: boolean;
   verMapa: boolean;
-  verFav:boolean;
+  verFav: boolean;
   filtrosActive: boolean;
   mostrarMapa: boolean;
   placesService: any;
@@ -107,12 +107,13 @@ export class FeedPage {
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(0, 40)
       };
-      this.placesService.getDetails({ placeId: dog.placeid }, (details) => {
+      let placeid = dog.placeid ? dog.placeid : dog.estadoplaceid;
+      this.placesService.getDetails({ placeId: placeid }, (details) => {
         this.zone.run(() => {
-          console.log('details',details);
-          if(details == null){
+          console.log('details', details);
+          if (details == null) {
             console.log('detail_null', dog);
-          }else{
+          } else {
             location.name = details.name;
             location.lat = details.geometry.location.lat();
             location.lng = details.geometry.location.lng();
@@ -157,7 +158,7 @@ export class FeedPage {
       this.verMapa = false;
       this.filtrosActive = true;
       this.mostrarMapa = false;
-      this.verFav =false;
+      this.verFav = false;
       let filtrosModal = this.modalCtrl.create(FiltrosPage, { categoriaId: null, filtrosDe: 'perros', stackFilter: this.filteredDogs });
       filtrosModal.present();
       filtrosModal.onDidDismiss(data => {
@@ -168,13 +169,13 @@ export class FeedPage {
       this.filteredDogs = this.dogs;
     }
   }
-  
-  filtrarFavoritos(){
-    if(this.verFav){
-      this.filteredDogs = this.filteredDogs.filter(dog=>{
+
+  filtrarFavoritos() {
+    if (this.verFav) {
+      this.filteredDogs = this.filteredDogs.filter(dog => {
         return dog.favorito == '1';
       })
-    }else{
+    } else {
       this.filteredDogs = this.dogs;
     }
   }
@@ -211,7 +212,10 @@ export class FeedPage {
           this.filteredDogs = this.dogs.filter(item => item.estado == "3");
           break;
         case 4:
-          this.filteredDogs = this.dogs.filter(item => item.estado == "4");
+          this.filteredDogs = this.dogs.filter(item => item.estado == "4" || item.estado == "5");
+          break;
+        case 5:
+          this.filteredDogs = this.dogs.filter(item => item.estado == "5");
           break;
         default:
           this.filteredDogs = this.dogs;

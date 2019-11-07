@@ -22,7 +22,8 @@ export class HomePage {
     { id: 1, title: "Comunidad" },
     { id: 2, title: "Perdidos" },
     { id: 3, title: "Encontrados" },
-    { id: 4, title: "Adopcion" }
+    { id: 4, title: "Adopción" },
+    { id: 5, title: "Callejeritos" }
   ]
 
   constructor(
@@ -77,7 +78,9 @@ export class HomePage {
     }) */
   }
 
-  
+  goToCallejeritos(){
+    this.navCtrl.push(FeedPage,this.pagesData[4]);
+  }
   goToComunidad() {
     this.navCtrl.push(FeedPage,this.pagesData[0]);
   }

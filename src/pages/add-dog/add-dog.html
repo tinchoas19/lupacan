@@ -114,48 +114,84 @@
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row style="margin-top: 7%;">
-        <ion-col *ngIf="!img1" col-4 class="lupa-shadow add-photo" (click)="getImage(1)">
-          <ion-icon name="camera"></ion-icon>
-          Subir fotos
-        </ion-col>
-        <ion-col *ngIf="img1" col-4 class="lupa-shadow add-photo">
-          <img src="{{imageFileName1}}">
-        </ion-col>
-        <ion-col *ngIf="!img2" col-4 class="lupa-shadow add-photo" (click)="getImage(2)">
-          <ion-icon name="camera"></ion-icon>
-          Subir fotos
-        </ion-col>
-        <ion-col *ngIf="img2" col-4 class="lupa-shadow add-photo">
-          <img src="{{imageFileName2}}">
-        </ion-col>
-        <ion-col *ngIf="!img3" col-4 class="lupa-shadow add-photo" (click)="getImage(3)">
-          <ion-icon name="camera"></ion-icon>
-          Subir fotos
-        </ion-col>
-        <ion-col *ngIf="img3" col-4 class="lupa-shadow add-photo">
-          <img src="{{imageFileName3}}">
-        </ion-col>
-        <ion-col *ngIf="!img4" col-4 class="lupa-shadow add-photo" (click)="getImage(4)">
-          <ion-icon name="camera"></ion-icon>
-          Subir fotos
-        </ion-col>
-        <ion-col *ngIf="img4" col-4 class="lupa-shadow add-photo">
-          <img src="{{imageFileName4}}">
-        </ion-col>
-        <ion-col *ngIf="!img5" col-4 class="lupa-shadow add-photo" (click)="getImage(5)">
-          <ion-icon name="camera"></ion-icon>
-          Subir fotos
-        </ion-col>
-        <ion-col *ngIf="img5" col-4 class="lupa-shadow add-photo">
-          <img src="{{imageFileName5}}">
-        </ion-col>
-      </ion-row>
-      <!-- <ion-row>
-        <ion-col col-3 *ngFor="let img of galleryDog">
-          <img src="{{ img }}" *ngIf="img" alt="Ionic File" />
-        </ion-col>
-      </ion-row> -->
+      <div *ngIf="dog.estado != '5'">
+        <ion-row style="margin-top: 7%;">
+          <ion-col *ngIf="!img1" col-4 class="lupa-shadow add-photo" (click)="getImage(1)">
+            <ion-icon name="camera"></ion-icon>
+            Subir fotos
+          </ion-col>
+          <ion-col *ngIf="img1" col-4 class="lupa-shadow add-photo">
+            <img src="{{imageFileName1}}">
+          </ion-col>
+          <ion-col *ngIf="!img2" col-4 class="lupa-shadow add-photo" (click)="getImage(2)">
+            <ion-icon name="camera"></ion-icon>
+            Subir fotos
+          </ion-col>
+          <ion-col *ngIf="img2" col-4 class="lupa-shadow add-photo">
+            <img src="{{imageFileName2}}">
+          </ion-col>
+          <ion-col *ngIf="!img3" col-4 class="lupa-shadow add-photo" (click)="getImage(3)">
+            <ion-icon name="camera"></ion-icon>
+            Subir fotos
+          </ion-col>
+          <ion-col *ngIf="img3" col-4 class="lupa-shadow add-photo">
+            <img src="{{imageFileName3}}">
+          </ion-col>
+          <ion-col *ngIf="!img4" col-4 class="lupa-shadow add-photo" (click)="getImage(4)">
+            <ion-icon name="camera"></ion-icon>
+            Subir fotos
+          </ion-col>
+          <ion-col *ngIf="img4" col-4 class="lupa-shadow add-photo">
+            <img src="{{imageFileName4}}">
+          </ion-col>
+          <ion-col *ngIf="!img5" col-4 class="lupa-shadow add-photo" (click)="getImage(5)">
+            <ion-icon name="camera"></ion-icon>
+            Subir fotos
+          </ion-col>
+          <ion-col *ngIf="img5" col-4 class="lupa-shadow add-photo">
+            <img src="{{imageFileName5}}">
+          </ion-col>
+        </ion-row>
+      </div>
+      <div *ngIf="dog.estado == '5'">
+        <ion-row style="margin-top: 7%;">
+          <ion-col *ngIf="!img1" col-4 class="lupa-shadow add-photo" (click)="abrirCamara(1)">
+            <ion-icon name="camera"></ion-icon>
+            Subir fotos
+          </ion-col>
+          <ion-col *ngIf="img1" col-4 class="lupa-shadow add-photo">
+              <img src="{{imageFileName1}}">
+          </ion-col>
+          <ion-col *ngIf="!img2" col-4 class="lupa-shadow add-photo" (click)="abrirCamara(2)">
+            <ion-icon name="camera"></ion-icon>
+            Subir fotos
+          </ion-col>
+          <ion-col *ngIf="img2" col-4 class="lupa-shadow add-photo">
+              <img src="{{imageFileName2}}">
+          </ion-col>
+          <ion-col *ngIf="!img3" col-4 class="lupa-shadow add-photo" (click)="abrirCamara(3)">
+            <ion-icon name="camera"></ion-icon>
+            Subir fotos
+          </ion-col>
+          <ion-col *ngIf="img3" col-4 class="lupa-shadow add-photo">
+              <img src="{{imageFileName3}}">
+          </ion-col>
+          <ion-col *ngIf="!img4" col-4 class="lupa-shadow add-photo" (click)="abrirCamara(4)">
+            <ion-icon name="camera"></ion-icon>
+            Subir fotos
+          </ion-col>
+          <ion-col *ngIf="img4" col-4 class="lupa-shadow add-photo">
+              <img src="{{imageFileName4}}">
+          </ion-col>
+          <ion-col *ngIf="!img5" col-4 class="lupa-shadow add-photo" (click)="abrirCamara(5)">
+            <ion-icon name="camera"></ion-icon>
+            Subir fotos
+          </ion-col>
+          <ion-col *ngIf="img5" col-4 class="lupa-shadow add-photo">
+              <img src="{{imageFileName5}}">
+          </ion-col>
+        </ion-row>
+      </div>
       <ion-row>
         <ion-col col-12 padding>
           <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" placeholder="Dirección"></ion-searchbar>
