@@ -5,66 +5,8 @@
 </ion-header>
 
 <ion-content>
-  <!--  <ion-list inset class="_list">
-    <ion-list-header class="label-title" text-center>
-      Mis datos
-    </ion-list-header>
-    <button ion-item (click)="goToMyDogs()">
-      Mis perros
-    </button>
-    <button ion-item (click)="goToMyProfile()">
-      Mi perfil
-    </button>
-    <button ion-item (click)="goToIFindADog()">
-      Encontre un perro
-    </button>
-  </ion-list>
-  <ion-list inset class="_list">
-    <ion-list-header class="label-title" text-center>
-      Mis servicios
-    </ion-list-header>
-    <button ion-item (click)="goToMyServices()">
-      Mis servicios
-    </button>
-    <button ion-item (click)="goToCreateService()">
-      Crear un servicio
-    </button>
-  </ion-list>
-  <ion-list inset class="_list">
-    <ion-list-header class="label-title" text-center>
-      Mis Refugios
-    </ion-list-header>
-    <button ion-item (click)="goToCreateRefugio()">
-      Crear un refugio
-    </button>
-  </ion-list>
-  <ion-list inset class="_list">
-    <ion-list-header class="label-title" text-center>
-      Mis Notificaciones
-    </ion-list-header>
-    <button ion-item (click)="goToNotificaciones()">
-      Mis Notificaciones
-      <ion-badge item-end color="danger">{{numberBadge}}</ion-badge>
-    </button>
-  </ion-list>
-  <ion-list inset class="_list">
-    <ion-list-header class="label-title" text-center>
-      Mis Favoritos
-    </ion-list-header>
-    <button ion-item (click)="goToFavoritos()">
-      Mis Favoritos
-    </button>
-  </ion-list>
-  <ion-list inset class="_list">
-    <ion-list-header class="label-title" text-center>
-      Mis Conversaciones
-    </ion-list-header>
-    <button ion-item (click)="goToConversaciones()">
-      Mis Conversaciones
-    </button>
-  </ion-list> -->
   <ion-list class="left-menu">
-    <ion-list-header color="light" (click)="openItem($event)">
+    <ion-list-header class="header-items" (click)="openItem($event)">
       <img src="assets/imgs/menu02.png" alt=""> &nbsp;Mis Perros
     </ion-list-header>
     <div >
@@ -76,14 +18,14 @@
       <ion-item class="sub-item" (click)="goToMyDogs(1)">Dar en adopción</ion-item>
       <ion-item class="sub-item" (click)="goToMyDogs(3)">Tenencia compartida</ion-item>
     </div>
-    <ion-list-header color="light" (click)="openItem($event)">
+    <ion-list-header class="header-items" (click)="openItem($event)">
       <img src="assets/imgs/menu02.png" alt=""> &nbsp;Callejeritos
     </ion-list-header>
     <div >
       <ion-item class="sub-item" (click)="goToMyRefugios()">Ver actuales</ion-item>
       <ion-item class="sub-item" (click)="goToCreateRefugio()">Agregar un callejerito</ion-item>
     </div>
-    <ion-list-header color="light" (click)="openItem($event)">
+    <ion-list-header class="header-items" (click)="openItem($event)">
       <img src="assets/imgs/menu04.png" alt=""> &nbsp;Notificaciones
       <ion-badge item-end color="danger">{{numberBadge}}</ion-badge>
     </ion-list-header>

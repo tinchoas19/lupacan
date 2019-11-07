@@ -1,13 +1,14 @@
 page-home {
     .imgPerfil{
         border-radius: 50%;
+        padding-top: 3px;
     }
     #notification-button {            
-        position: relative;
+        /*position: relative;
         width: 42px;
         top:1px;
         right: 1px;
-        overflow: visible!important;
+        overflow: visible!important;*/
     }
 
 
@@ -26,15 +27,17 @@ page-home {
             padding:0 16px 16px 16px;
             .home-col{
                 font-size: 1.1rem;
-                font-weight: 600;
+                font-weight: 400;
+                height: 90px;
                 width: 100%;
                 align-items: center;
                 justify-content: center;
                 flex-direction: column;
                 border-radius: 7px;
                 img{
-                    margin: 7px;                    
-                    max-height: 8vh;
+                    margin: 0 0 8px;
+                    max-width: 7vh;
+                    height: auto;
                 }
             }
             .dir-row{

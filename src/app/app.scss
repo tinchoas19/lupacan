@@ -15,6 +15,13 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+
+/*Font*/
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700&display=swap');
+
+//Colores
+$lupa-amarillo: #F1C969;
+
 item-ios{
     color: #7e7e7e;
 }
@@ -67,7 +74,7 @@ h1{
 
 .menu-inner{
     .header{
-        background: color($colors, primary);
+        background: $lupa-amarillo;
         img{
             width: 80px;
             height: 80px;
@@ -177,9 +184,9 @@ h1{
 }
 
 .lupa-shadow{
-    -webkit-box-shadow: 0px 0px 21px -1px rgba(0,0,0,0.3);
-    -moz-box-shadow: 0px 0px 21px -1px rgba(0,0,0,0.3);
-    box-shadow: 0px 0px 21px -1px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0px 2px 26px 3px rgba(0,0,0,0.1);
+    -moz-box-shadow: 0px 2px 26px 3px rgba(0,0,0,0.1);
+    box-shadow: 0px 2px 26px 3px rgba(0,0,0,0.1);
 }
 
 .toast-message {
@@ -191,6 +198,13 @@ h1{
         font-size: 1.3rem;
     }
 }
+
+ion-header {
+    &.header {
+        padding: 5px 16px 0;
+    }
+}
+
 ion-footer{
     background-color: #ffffff;
 }

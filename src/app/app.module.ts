@@ -91,6 +91,8 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { ComDogsPage } from '../pages/com-dogs/com-dogs';
 import { CuidadoPage } from '../pages/cuidado/cuidado';
 
+declare var google: any;
+
 @NgModule({
   declarations: [
     MyApp,
