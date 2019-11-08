@@ -7,7 +7,7 @@
 
 <ion-content no-padding>
   <!--ion-searchbar (ionInput)="getItems($event)" ></ion-searchbar-->
-  <ion-segment padding class="seg_fav" mode="md" [(ngModel)]="servicios">
+  <ion-segment padding-horizontal class="seg_fav" mode="md" [(ngModel)]="servicios">
     <ion-segment-button class="first lupa-shadow" value="favoritos" (click)="cat()">
       Categorias
     </ion-segment-button>
@@ -17,9 +17,9 @@
   </ion-segment>
 
   <div [ngSwitch]="servicios">
-    <div [hidden]="view!='favoritos'" padding style="padding-top: 0px!important;">
+    <div [hidden]="view!='favoritos'" padding>
       <ion-grid *ngIf="showCategories">
-        <ion-row padding-vertical>
+        <ion-row padding-bottom>
           <ion-col class="col_cat" col-4 *ngFor="let cat of categoras" (click)="goToCategory(cat, cat.categorialocalid)">
             <div class="category lupa-shadow">
               <img src="https://ctrlztest.com.ar/lupacan/apirest/{{cat.icono}}" alt=""> {{cat.nombre}}
