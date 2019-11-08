@@ -21,6 +21,7 @@
 
 //Colores
 $lupa-amarillo: #F1C969;
+$lupa-gray: #7E7E7E;
 
 item-ios{
     color: #7e7e7e;
@@ -48,15 +49,23 @@ h1{
     font-weight: 700;
 }
 
-.button{
-    box-shadow: none;
-    border-radius: 1.8rem;
-    text-transform: none;
-    height: 3.6rem;
+.button,
+.segment-button {
+    height: 3.2rem!important;
+    color: #fff!important;
+    font-size: 1.2rem;
+    border-radius: 20px;
+    height: 3.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: capitalize!important;
+
     span{
-        color: #707070;
+        color: #fff;
     }
 }
+
 .btn-iniciar{
     background: color($colors, secondary)!important;
     span{
@@ -148,45 +157,20 @@ h1{
     background: rgba(0, 0, 0, 0.5);
 }
 
-@font-face{
-    font-family: Montserrat;
-    font-weight: 400;
-    src: url('../assets/fonts/montserrat.woff2') format('woff2');
-}
-
-@font-face{
-    font-family: Montserrat;
-    font-weight: 300;
-    src: url('../assets/fonts/montserrat-light.woff2') format('woff2');
-}
-
-@font-face{
-    font-family: Montserrat;
-    font-weight: 700;
-    src: url('../assets/fonts/montserrat-bold.woff2') format('woff2');
-}
-
-@font-face{
-    font-family: Montserrat;
-    font-weight: 800;
-    src: url('../assets/fonts/montserrat-extrabold.woff2') format('woff2');
-}
-
-*{
-    font-family: Montserrat;
+* {
+    font-family: 'Montserrat', sans-serif;
     color: #7e7e7e;
 }
 
-.lupa-title{
+.lupa-title {
     color: #838383;
     padding-left: 0px;
-    padding-right: 50px;
 }
 
-.lupa-shadow{
-    -webkit-box-shadow: 0px 2px 26px 3px rgba(0,0,0,0.1);
-    -moz-box-shadow: 0px 2px 26px 3px rgba(0,0,0,0.1);
-    box-shadow: 0px 2px 26px 3px rgba(0,0,0,0.1);
+.lupa-shadow {
+    -webkit-box-shadow: 0px 3px 16px 3px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 3px 16px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 3px 16px 3px rgba(0, 0, 0, 0.1);
 }
 
 .toast-message {
@@ -200,12 +184,28 @@ h1{
 }
 
 ion-header {
+
     &.header {
-        padding: 5px 16px 0;
+        padding: 5px 0 0;
+
+        ion-navbar {
+            
+            .back-button {
+                display: block;
+            }
+        }
+
+        ion-title {
+
+            .toolbar-title {
+                width: 85%;
+                color: #7e7e7e;
+            }
+        }
     }
 }
 
-ion-footer{
+ion-footer {
     background-color: #ffffff;
 }
 .label-title{

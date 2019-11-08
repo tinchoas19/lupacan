@@ -1,14 +1,16 @@
 page-home {
+
+    ion-header {
+        &.header {
+            padding: 5px 16px 0;
+        }
+    }
+
     .imgPerfil{
         border-radius: 50%;
         padding-top: 3px;
     }
     #notification-button {            
-        /*position: relative;
-        width: 42px;
-        top:1px;
-        right: 1px;
-        overflow: visible!important;*/
     }
 
 

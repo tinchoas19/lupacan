@@ -1,60 +1,49 @@
 page-servi {
-  ion-segment.seg_fav{
-    .first{
-        color: white;
-        font-size: 1.2rem;
-        font-weight: 600;
-        border-radius: 20px;
-        //border-bottom-left-radius: 20px;
-        background: #7e7e7e;
-        margin-right: 10px;
-    }
-    .second{
-        margin-left: 10px;
-        color: white;
-        font-size: 1.2rem;
-        font-weight: 600;
-        border-radius: 20px;
-        //border-bottom-right-radius: 20px;
-        background: #7e7e7e;            
-    }
+
+  ion-segment {
+
+    &.seg_fav {
+      margin-top: 15px;
+
+      .segment-button {
+        background: $lupa-gray;
+
+        &.first {
+          margin-right: 10px;
+        }
+
+        &.second {
+            margin-left: 10px;   
+        }
+
+        &.segment-activated{
+          background: $lupa-amarillo;
+        }
+      }
   }
-  ion-segment-button.second.segment-button.segment-activated{
-    background: #ffc600 !important;
-    color: white !important;
-  }
-  ion-segment-button.med.segment-button.segment-activated{
-      background: #ffc600 !important;
-      color: white !important;
-  }
-  ion-segment-button.first.segment-button.segment-activated{
-      background: #ffc600 !important;
-      color: white !important;
-  }
-  .category{
+}
+
+  .category {
     border-radius: 7px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 17vh;
-    font-size: 0.8em;
-    img{
-      max-width: 60px;
-      margin-bottom: 5px;
+    font-size: 0.7em;
+    padding: 10px;
+    text-align: center;
+    min-height: 14vh;
+
+    img {
+      max-width: 40px;
+      margin-bottom: 10px;
     }
   }
-  .col_cat{
+
+  .col_cat {
     padding: 7px;
   }
-  button{
-    span{
-      color: #fff;
-    }
-  }
-  .btn-dark{
-    background: color($colors, dark);
-  }
+
   .scroll {
     height: 100%
   }
@@ -64,11 +53,19 @@ page-servi {
     height: 100%;
   }
 
-  .active{
+  .active {
     margin-top: 7%;         
   }
-  .inactive{
+
+  .inactive {
     margin-top: 7%; 
     display: none;
+  }
+
+  .publicite-btn {
+
+    span {
+      color: #fff;
+    }
   }
 }

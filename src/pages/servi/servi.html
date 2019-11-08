@@ -1,19 +1,17 @@
 <ion-header>
-
   <ion-navbar>
     <ion-title text-center class="lupa-title">Servicios</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content no-padding>
   <!--ion-searchbar (ionInput)="getItems($event)" ></ion-searchbar-->
   <ion-segment padding class="seg_fav" mode="md" [(ngModel)]="servicios">
-    <ion-segment-button class="first" value="favoritos" (click)="cat()">
+    <ion-segment-button class="first lupa-shadow" value="favoritos" (click)="cat()">
       Categorias
     </ion-segment-button>
-    <ion-segment-button class="second" value="mapa" (click)="getUserPosition()">
+    <ion-segment-button class="second lupa-shadow" value="mapa" (click)="getUserPosition()">
       Ver en mapa
     </ion-segment-button>
   </ion-segment>
@@ -30,7 +28,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <button ion-button block class="lupa-shadow" (click)="goToPublicitar()">Publicite gratis aquí</button>
+            <button ion-button block class="lupa-shadow publicite-btn" (click)="goToPublicitar()">Publicite gratis aquí</button>
           </ion-col>
         </ion-row>
       </ion-grid>

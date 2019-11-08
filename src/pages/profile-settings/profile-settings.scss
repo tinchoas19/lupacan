@@ -1,43 +1,49 @@
 page-profile-settings {
     .left-menu {
+        
         img {
             max-width: 30px;
         }
 
         .header-items {
             background: $lupa-amarillo;
+            margin-bottom: 0;
 
             .item-inner {
                 font-weight: 700;
                 font-size: 1.6rem;
             }
 
-            .sub-item {
-                line-height: 38px;
-                padding-top: 0;
-                padding-bottom: 0;
-                transition: 0.09s all linear;
-                .item-inner{
-                    padding-left: 32px;
-                    font-size: 14px;
-                    
-                }
-            }
         }
 
-        
-
         .item {
+
             .item-inner {
+                padding: 0;
+
                 .label {
                     display: flex;
                     align-items: center;
                     justify-content: center;
                 }
-                border: none;
             }
-            img{
+
+            img {
                 max-width: 30px;
+            }
+        }
+
+        .sub-items-wrapper {
+
+            .sub-item {
+                line-height: 18px;
+
+                &:last-child {
+
+                    .item-inner {
+                        border: none;
+                    }
+                }
             }
         }
     }

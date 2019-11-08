@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <!-- <ion-title text-center>Configuracion</ion-title> -->
+    <ion-title text-center>Menú</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -9,7 +9,7 @@
     <ion-list-header class="header-items" (click)="openItem($event)">
       <img src="assets/imgs/menu02.png" alt=""> &nbsp;Mis Perros
     </ion-list-header>
-    <div >
+    <div class="sub-items-wrapper">
       <ion-item class="sub-item" (click)="goToMyDogs(0)">Ver actuales</ion-item>
       <ion-item class="sub-item" (click)="goToAddDog()">Agregar</ion-item>
       <ion-item class="sub-item" (click)="goToMyFavDog()">Favoritos</ion-item>
@@ -21,7 +21,7 @@
     <ion-list-header class="header-items" (click)="openItem($event)">
       <img src="assets/imgs/menu02.png" alt=""> &nbsp;Callejeritos
     </ion-list-header>
-    <div >
+    <div class="sub-items-wrapper">
       <ion-item class="sub-item" (click)="goToMyRefugios()">Ver actuales</ion-item>
       <ion-item class="sub-item" (click)="goToCreateRefugio()">Agregar un callejerito</ion-item>
     </div>
@@ -29,7 +29,7 @@
       <img src="assets/imgs/menu04.png" alt=""> &nbsp;Notificaciones
       <ion-badge item-end color="danger">{{numberBadge}}</ion-badge>
     </ion-list-header>
-    <div >
+    <div class="sub-items-wrapper">
       <ion-item class="sub-item" (click)="goToNotificaciones()">Ver notificaciones</ion-item>
       <ion-item class="sub-item" (click)="goToConversaciones()">Ver chats</ion-item>
       <ion-item class="sub-item" (click)="goToMyServices()">Ver comentarios</ion-item>
