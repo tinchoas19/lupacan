@@ -6,97 +6,90 @@
 </ion-header>
 
 
-<ion-content padding>
-  <div>
-    <ion-grid no-padding>
-      <ion-row>
-        <ion-col>
-          <h2 text-center><strong>Últimos agregados</strong></h2>
-        </ion-col>
-      </ion-row>
-      <ion-row *ngIf="dogs.length > 0" justify-content-center>
-        <ion-col col-1 text-center (click)="prev()">
-          <ion-icon text-center name="arrow-back"></ion-icon>
-        </ion-col>
-        <ion-col col-10 text-center>
-          <ion-slides class="slide_ultimos" pager="false" #slideWithNav2 slidesPerView="4">
-            <ion-slide *ngFor="let dog of dogs">
-              <div class="dog-name">{{dog.nombre}}</div>
-              <img class="img_slide_ultimo" *ngIf="dog.fotos[0].fotourl" src="https://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}"
-                alt="{{dog.nombre}}" (click)="goToDogDetail(dog)">
-              <img *ngIf="!dog.fotos[0].fotourl" src="assets/imgs/1.jpg" alt="{{dog.nombre}}" (click)="goToDogDetail(dog)">
-            </ion-slide>
-          </ion-slides>
-        </ion-col>
-        <ion-col col-1 text-center (click)="next()">
-          <ion-icon text-center name="arrow-forward"></ion-icon>
-        </ion-col>
-      </ion-row>
-     <!--  <ion-row justify-content-center class="btn_nav">
-        <ion-col text-center col-4>
-          <button text-center ion-button block color="primary">Perros</button>
-        </ion-col>
-        <ion-col text-center col-4>
-          <button text-center ion-button outline color="primary" (click)="goUsuarios()">Usuarios</button>
-        </ion-col>
-        <ion-col text-center col-4>
-          <button text-center ion-button outline color="primary" (click)="goServices()">Servicios</button>
-        </ion-col>
-      </ion-row> -->
-      <!-- <ion-row style="margin-top: 7%;">
-        <ion-col>
-          <h2 text-center>{{pageData.title}}</h2>
-        </ion-col>
-      </ion-row> -->
-      <ion-row justify-content-center class="checks">
-        <ion-col col-4>
-          <ion-item no-lines>
-            <ion-label>Filtros</ion-label>
-            <ion-checkbox color="primary" [(ngModel)]="verFiltro" (ionChange)="updateCucumber()"></ion-checkbox>
-          </ion-item>
-        </ion-col>
-        <ion-col col-4>
-          <ion-item no-lines>
-            <ion-label>Favoritos</ion-label>
-            <ion-checkbox color="primary" [(ngModel)]="verFav" (ionChange)="filtrarFavoritos()"></ion-checkbox>
-          </ion-item>
-        </ion-col>
-        <ion-col col-4>
-          <ion-item float-right no-lines>
-            <ion-label>Ver en mapa</ion-label>
-            <ion-checkbox color="primary" [(ngModel)]="verMapa" (ionChange)="updateVerMapa()"></ion-checkbox>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row *ngIf="filteredDogs.length > 0 && !mostrarMapa" style="margin-top: 7%;">
-        <ion-col col-4 *ngFor="let dog of filteredDogs" (click)="goToDogDetail(dog)">
-          <div class="dog-name">{{dog.nombre}}</div>
-          <img class="img_feed" src="https://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" alt="{{dog.nombre}}">
-        </ion-col>
-      </ion-row>
-      <!-- <ion-row *ngIf="pageData.id == 4">
-        <ion-col>
-          <button ion-button full (click)="goToRefugios()">Colabora con un refugio</button>
-        </ion-col>
-      </ion-row> -->
-      <ion-row no-padding [ngClass]="mostrarMapa ? 'active' : 'inactive'">
-        <div #pleaseConnect id="please-connect">
-          <p>Please connect to the Internet...</p>
+<ion-content padding class="principal-feed">
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col>
+        <h2 class="feed-title">Últimos agregados</h2>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="dogs.length > 0" justify-content-center>
+      <ion-col col-1 text-center (click)="prev()">
+        <ion-icon text-center name="arrow-back"></ion-icon>
+      </ion-col>
+      <ion-col col-10 text-center>
+        <ion-slides class="slide_ultimos" pager="false" #slideWithNav2 slidesPerView="3">
+          <ion-slide *ngFor="let dog of dogs" col-4>
+              <div class="img-slide-wrapper" [ngStyle]="{background: 'url(https://ctrlztest.com.ar/lupacan/apirest/' + dog.fotos[0].fotourl + ')', 'background-size':  'cover' , 'background-position':  'center' }" (click)="goToDogDetail(dog)">
+                
+              </div>
+            <div class="img-slide-text">
+              <p class="dog-name">{{dog.nombre}}</p>
+            </div>
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
+      <ion-col col-1 text-center (click)="next()">
+        <ion-icon text-center name="arrow-forward"></ion-icon>
+      </ion-col>
+    </ion-row>
+
+    <ion-row justify-content-center class="checks">
+      <ion-col col-12>
+        <h3>Opciones de visualización</h3>
+      </ion-col>
+      <ion-col col-4>
+        <ion-item no-lines>
+          <ion-label>Filtros</ion-label>
+          <ion-checkbox color="primary" [(ngModel)]="verFiltro" (ionChange)="updateCucumber()"></ion-checkbox>
+        </ion-item>
+      </ion-col>
+      <ion-col col-4>
+        <ion-item no-lines>
+          <ion-label>Favoritos</ion-label>
+          <ion-checkbox color="primary" [(ngModel)]="verFav" (ionChange)="filtrarFavoritos()"></ion-checkbox>
+        </ion-item>
+      </ion-col>
+      <ion-col col-4>
+        <ion-item float-right no-lines>
+          <ion-label>Ver en mapa</ion-label>
+          <ion-checkbox color="primary" [(ngModel)]="verMapa" (ionChange)="updateVerMapa()"></ion-checkbox>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="filteredDogs.length > 0 && !mostrarMapa" class="cuadricula-imagenes">
+      <ion-col col-4 *ngFor="let dog of filteredDogs" (click)="goToDogDetail(dog)">
+        <div class="wrapper-img-cuadricula" [ngStyle]="{background: 'url(https://ctrlztest.com.ar/lupacan/apirest/' + dog.fotos[0].fotourl + ')', 'background-size':  'cover' , 'background-position':  'center' }" (click)="goToDogDetail(dog)">
         </div>
-        <div #map id="map" style="width: 100% !important; height: 500px !important;">
-          <ion-spinner></ion-spinner>
+        <div class="wrapper-txt-cuadricula">
+          <p class="dog-name">{{dog.nombre}}</p>
         </div>
-      </ion-row>
-    </ion-grid>
-  </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row no-padding [ngClass]="mostrarMapa ? 'active' : 'inactive'">
+      <div #pleaseConnect id="please-connect">
+        <p>Please connect to the Internet...</p>
+      </div>
+      <div #map id="map" style="width: 100% !important; height: 500px !important;">
+        <ion-spinner></ion-spinner>
+      </div>
+    </ion-row>
+
+  </ion-grid>
 </ion-content>
+
 <ion-footer no-border>
   <ion-row class="ft_icons">
-    <ion-col style="padding-right: 25px !important;">
-      <img float-right src="../../assets/imgs/dog-active.png">
+    <ion-col col-6 text-center>
+      <img src="../../assets/imgs/dog-active.png">
+      <p>Perros</p>
     </ion-col>
-    <ion-col style="padding-left: 25px !important;" (click)="goUsuarios()">
+    <ion-col col-6 text-center (click)="goUsuarios()">
       <img src="../../assets/imgs/usuarios-inactive.png">
+      <p>Usuarios</p>
     </ion-col>
   </ion-row>
 </ion-footer>

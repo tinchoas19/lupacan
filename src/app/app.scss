@@ -19,6 +19,7 @@
 /*Font*/
 @import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700&display=swap');
 
+
 //Colores
 $lupa-amarillo: #F1C969;
 $lupa-gray: #7E7E7E;
@@ -253,3 +254,6 @@ h2 {
         white-space: pre-line;
     }  
 }
+
+/*Partials*/
+@import "partials/principal-feed.scss";
