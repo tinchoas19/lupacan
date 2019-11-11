@@ -1,0 +1,149 @@
+.internas-perro {
+
+    p,
+    ion-label {
+        margin: 0;
+    }
+
+    ion-slides {
+        width: 100% !important;
+
+        .doginfo {
+
+            p {
+                border-bottom: 1px solid #7e7e7e;
+                margin: 0;
+                font-weight: 600;
+            }
+        }
+
+        .circular--square {
+            margin: 5%;
+            height: 25vh;
+            width: 50vw;
+            border-radius: 50%;
+            box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.3);
+            z-index: -1;
+          }
+
+    }
+
+    .title-item {
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+
+    .lugar-extravio {
+
+        &.title-item {
+            margin-bottom: 5px;
+        }
+  
+    }
+
+    .nombre-perro {
+
+        p {
+            color: $lupa-light-gray;
+            text-align: center;
+            font-weight: 600;
+            margin: 0;
+            font-size: 1.6rem;
+
+            span {
+                font-weight: 400;
+            }
+
+            .fav-icon {
+                display: inline-block;
+                vertical-align: middle;
+                margin-left: 15px;
+
+                ion-icon {
+                    font-size: 1.5em;
+                    line-height: 1px;
+                }
+            }
+        }   
+    }
+
+    .badgePerdido {
+        width: 100%;
+        padding: 10px;
+
+        h3 {
+            color: #fff;
+            margin: 0;
+            font-weight: 400;
+            font-size: 2rem;
+        }
+
+        p {
+            color: #fff;
+            margin: 8px 0 0;
+            font-weight: 300;
+            font-size: 1.3rem;
+            padding: 0 7px;
+        }
+    }
+
+    .estado-distancia {
+        margin-top: 10px;
+
+        p {
+            margin: 0;
+        }
+    }
+
+
+    .ver-relacionados {
+        text-align: center;
+        color: $lupa-amarillo;
+        font-size: 1.8rem;
+        font-weight: 600;
+    }
+
+
+    .col {
+        margin: auto;
+    }
+
+    .checks {
+        
+        p {
+            font-size: 1.1rem;
+
+            ion-checkbox {
+                vertical-align: bottom;
+                margin-left: 5px;
+            }
+        }
+    }
+
+    .button {
+        span {
+            color: #fff;
+        }
+    }
+
+    #map {
+      height: 100%;
+      width: 100%;
+      opacity: 1;
+      transition: opacity 150ms ease-in;
+      display: block;
+      &.show-map {
+          opacity: 1;
+      }
+      div div div a div{
+          display: none !important;
+      }
+    }
+
+    .dire-exacta {
+        padding: 8px 0;
+    }
+
+    
+    
+}

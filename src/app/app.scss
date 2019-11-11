@@ -22,6 +22,7 @@
 
 //Colores
 $lupa-amarillo: #F1C969;
+$lupa-light-gray: #A1A1A1;
 $lupa-gray: #7E7E7E;
 
 item-ios{
@@ -201,6 +202,7 @@ ion-header {
             .toolbar-title {
                 width: 85%;
                 color: #7e7e7e;
+                text-align: center;
             }
         }
     }
@@ -255,6 +257,18 @@ h2 {
     }  
 }
 
+.separacion-bloques {
+    margin: 15px 0 0;
+}
+
+.btn-no-flex {
+
+    button {
+        display: inline-block;
+    }
+}
+
 /*Partials*/
 @import "partials/principal-feed.scss";
 @import "partials/listas.scss";
+@import "partials/internas-perro.scss";
