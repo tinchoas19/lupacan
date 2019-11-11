@@ -17,6 +17,7 @@ declare var google: any;
   templateUrl: 'dog.html',
 })
 export class DogPage {
+  checkEnCasa: boolean;
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
   @ViewChild('slideWithNav2') slideWithNav2: Slides;
@@ -302,36 +303,39 @@ export class DogPage {
   }
 
   enCasa(dog) {
-    const alert = this.alertCtrl.create({
-      title: 'Perro en casa!',
-      subTitle: 'Estas seguro de estar con ' + dog.nombre + '?',
-      buttons: [
-        {
-          text: 'No',
-          role: 'Cancel'
-        },
-        {
-          text: 'Si',
-          handler: data => {
-            this.api.marcarEnCasa(dog['usuarioid'], dog['perroid']).subscribe(x => {
-              console.log('vueltamarcarEnCasa', x);
-              let data = JSON.parse(x['_body'])['data'];
-              console.log('data', data);
-              if (data == 'updated') {
-                this.api.getDogData(dog['perroid']).subscribe(x => {
-                  console.log('perroid', x);
-                  this.dog = x['data'][0];
-                  this.perroCasa(dog);
-                })
-              }
-            })
+    if(this.checkEnCasa){
+      const alert = this.alertCtrl.create({
+        title: 'Perro en casa!',
+        subTitle: 'Estas seguro de estar con ' + dog.nombre + '?',
+        buttons: [
+          {
+            text: 'No',
+            role: 'Cancel',
+            handler: data => {
+              this.checkEnCasa = false;
+            }
+          },
+          {
+            text: 'Si',
+            handler: data => {
+              this.api.marcarEnCasa(dog['usuarioid'], dog['perroid']).subscribe(x => {
+                console.log('vueltamarcarEnCasa', x);
+                let data = JSON.parse(x['_body'])['data'];
+                console.log('data', data);
+                if (data == 'updated') {
+                  this.api.getDogData(dog['perroid']).subscribe(x => {
+                    console.log('perroid', x);
+                    this.dog = x['data'][0];
+                    this.perroCasa(dog);
+                  })
+                }
+              })
+            }
           }
-        }
-      ]
-    });
-
-    alert.present();
-
+        ]
+      });
+      alert.present();
+    }
   }
 
   goToSlider(dog) {

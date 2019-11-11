@@ -12,6 +12,7 @@ import { EditServicePage } from '../edit-service/edit-service';
   templateUrl: 'my-services.html',
 })
 export class MyServicesPage {
+  sinServicios: boolean = true;
   private services: any[];
   misLocales:any=[];
   misRefugios:any=[];
@@ -42,20 +43,25 @@ export class MyServicesPage {
         console.log('valUser_servicios',val)
         this.api.getMisLocales(val['usuarioid']).subscribe(x=>{
           let data = x['data'];
-          data.map(local=>{
-            local.categorias.map(cat=>{
-              if(cat.categoriaid == '9'){
-                local.refugio = true;
+          if(data.length > 0){
+            data.map(local=>{
+              local.categorias.map(cat=>{
+                if(cat.categoriaid == '9'){
+                  local.refugio = true;
+                }else{
+                  local.refugio = false;
+                }
+              })
+              if(local.refugio){
+                this.misRefugios.push(local);
               }else{
-                local.refugio = false;
+                this.misLocales.push(local);
               }
             })
-            if(local.refugio){
-              this.misRefugios.push(local);
-            }else{
-              this.misLocales.push(local);
-            }
-          })
+            this.sinServicios = false;
+          }else{
+            this.sinServicios = true;
+          }
           console.log('da', data);
         })
       }

@@ -13,9 +13,14 @@
     <ion-list-header text-center class="label-title">
       Mis Servicios
     </ion-list-header>
-    <button ion-item *ngFor="let serv of misLocales" (click)="goToProfileService(serv)">
-      {{serv.nombre}}
-    </button>
+    <div *ngIf="sinServicios">
+      <p text-center>Sin servicios agregados!</p>
+    </div>
+    <div *ngIf="!sinServicios">
+      <button ion-item *ngFor="let serv of misLocales" (click)="goToProfileService(serv)">
+        {{serv.nombre}}
+      </button>
+    </div>
   </ion-list>
   <ion-list *ngIf="refugio" inset class="_list">
     <ion-list-header text-center class="label-title">
