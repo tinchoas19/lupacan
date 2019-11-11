@@ -1,15 +1,100 @@
 page-filtros {
-    .scroll-content{
-        padding-bottom: 0px !important; 
+
+    ion-header {
+        background: $lupa-amarillo;
+
+        ion-navbar {
+
+            button {
+
+                ion-icon {
+                    color: #ffffff!important;
+                    font-weight: 300!important;
+                }
+
+                &.back-button {
+                    margin: 0;
+                }
+            }
+
+            ion-title {
+
+                .toolbar-title {
+                    color: #ffffff!important;
+                    font-weight: 300;
+                }
+            } 
+        }
     }
-    .btn_tienda{
-        border: 1px solid #b7b7b7;
-        margin-top: 8px 0 !important;
-        margin: 0 auto;
-        font-size: 1.2rem;
-        font-weight: 600;
-        background: #ffffff !important;
-        width: 70%;
-        text-transform: uppercase;
+
+    .scroll-content {
+        padding-bottom: 0px !important; 
+
+        .btn_filtros {
+            width: 100%;
+
+            button {
+                width: 100%;
+                display: block;
+                position: relative;
+
+                ion-select {
+                    padding: 0px 8px 0px 16px;
+                    overflow: initial;
+
+                    .select-icon {
+                        position: absolute;
+                        right: 15px;
+                        top: 7px;
+                    }
+
+                    .select-text {
+                        overflow: initial;
+                    }
+                }
+
+                .button-inner {
+                    justify-content: flex-start;
+                }
+
+            }
+
+            .cat-selected {
+                margin-bottom: 0;
+                display: flex;
+                justify-content: center;
+
+                .btn_catSelected {
+                    height: 2.5rem!important;
+                    width: 90%;
+
+                    .button-inner {
+                        justify-content: center;
+
+                        ion-icon {
+                            position: absolute;
+                            right: 15px;
+                            top: 6px;
+                            color: #000;
+                        }
+                    }
+                }
+            }
+        }
+
+        .btn_tienda {
+            border: 1px solid $lupa-amarillo;
+            margin: 20px auto;
+            font-size: 1.2rem;
+            font-weight: 600;
+            background: #ffffff !important;
+            width: 70%;
+            text-transform: uppercase;
+    
+            span {
+                color: $lupa-gray;
+                text-transform: uppercase;
+            }
+        }
     }
 }

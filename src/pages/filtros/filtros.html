@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header class="lupa-shadow">
   <ion-navbar>
     <ion-title text-center>Filtros</ion-title>
     <ion-buttons end>
@@ -11,7 +11,7 @@
 
 <ion-content padding>
   <ion-row justify-content-center *ngIf="filtrosList == 'service'">
-    <ion-col col-12 text-center>
+    <ion-col col-12 no-padding text-center>
       <button class="btn_categorias" ion-button round>Localidad
         <ion-select [(ngModel)]="localidad" okText="Ok" cancelText="Cancelar" multiple="true" [selectOptions]="selectOptionsLocal"
           (ionChange)="getLocal(localidad)" selectedText=" ">
@@ -50,8 +50,8 @@
         </ion-select>
       </button>
     </ion-col>
-    <ion-col *ngIf="razaSelected.length > 0" col-12 padding text-center>
-      <ion-list *ngFor="let select of razaSelected[0]; let i = index;">
+    <ion-col *ngIf="razaSelected.length > 0" col-12 text-center>
+      <ion-list *ngFor="let select of razaSelected[0]; let i = index;" class="cat-selected">
         <button class="btn_catSelected" ion-button round icon-end>{{select.nombre}}
           <span (click)="eliminarRaza(i)">
             <ion-icon name="close"></ion-icon>
@@ -59,7 +59,7 @@
         </button>
       </ion-list>
     </ion-col>
-    <ion-col col-12 text-center>
+    <ion-col col-12 no-padding text-center>
       <button text-center ion-button round color="primary" (click)="openSelectGenero()">Género
         <ion-select multiple="false" #select2 [(ngModel)]="selectgeneroDog" (ionChange)="somethingGenero($event)">
           <ion-option value="0">Masculino</ion-option>
@@ -67,7 +67,7 @@
         </ion-select>
       </button>
     </ion-col>
-    <ion-col col-12 text-center>
+    <ion-col col-12 no-padding text-center>
       <button text-center ion-button round color="primary">Ubicación
         <ion-select multiple="true" #select3 [(ngModel)]="selectubicacion" (ionChange)="somethingUbicacion($event)">
           <ion-option value="10km">10 km</ion-option>
@@ -77,10 +77,9 @@
       </button>
     </ion-col>
   </ion-row>
-</ion-content>
-<ion-footer no-border>
-  <ion-row justify-content-center style="margin: 10px 0;">
+  <ion-row justify-content-center>
     <button *ngIf="filtrosList == 'service'" class="btn_tienda" ion-button full round (click)="aplicarFiltro()">Aplicar</button>
     <button *ngIf="filtrosList == 'perros'" class="btn_tienda" ion-button full round (click)="aplicarFiltroDog()">Aplicar</button>
   </ion-row>
-</ion-footer>
+</ion-content>
+  
