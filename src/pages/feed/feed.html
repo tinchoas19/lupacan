@@ -60,7 +60,7 @@
     </ion-row>
 
     <ion-row *ngIf="filteredDogs.length > 0 && !mostrarMapa" class="cuadricula-imagenes">
-      <ion-col col-4 *ngFor="let dog of filteredDogs" (click)="goToDogDetail(dog)">
+      <ion-col col-4 *ngFor="let dog of filteredDogs">
         <div class="wrapper-img-cuadricula" [ngStyle]="{background: 'url(https://ctrlztest.com.ar/lupacan/apirest/' + dog.fotos[0].fotourl + ')', 'background-size':  'cover' , 'background-position':  'center' }" (click)="goToDogDetail(dog)">
         </div>
         <div class="wrapper-txt-cuadricula">

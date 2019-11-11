@@ -46,42 +46,44 @@
       <ion-list-header text-center>
         CERCANOS A MI
       </ion-list-header>
-      <ion-row justify-content-center *ngIf="services2.length == 0">
+      <ion-row justify-content-center *ngIf="sinOrdenar">
         <ion-spinner text-center></ion-spinner>
       </ion-row>
-      <ion-card class="lupa-shadow" *ngFor="let serv of services2" (click)="goToService(serv)">
-        <ion-grid>
-          <ion-row class="list_serv">
-            <ion-col col-5 no-padding class="service-img">
-              <img *ngIf="serv.imagenes.length >0" src="https://ctrlztest.com.ar/lupacan/apirest/{{serv.imagenes[0].imagen}}" alt="">
-              <img *ngIf="!(serv.imagenes.length >0)" src="../../assets/imgs/vet.jpg" alt="">
-            </ion-col>
-            <ion-col col-7 no-padding class="col_data">
-              <h2>{{serv.nombre}}</h2>
-              <ion-col col-12 *ngIf="serv.descuento != null">
-                <ion-badge color="primary" float-right>
-                  <p>Con Descuentos!</p>
-                </ion-badge>
+      <div *ngIf="!sinOrdenar">
+        <ion-card class="lupa-shadow" *ngFor="let serv of services2" (click)="goToService(serv)">
+          <ion-grid>
+            <ion-row class="list_serv">
+              <ion-col col-5 no-padding class="service-img">
+                <img *ngIf="serv.imagenes.length >0" src="https://ctrlztest.com.ar/lupacan/apirest/{{serv.imagenes[0].imagen}}" alt="">
+                <img *ngIf="!(serv.imagenes.length >0)" src="../../assets/imgs/vet.jpg" alt="">
               </ion-col>
-              <ion-col col-12 no-padding>
+              <ion-col col-7 no-padding class="col_data">
+                <h2>{{serv.nombre}}</h2>
+                <ion-col col-12 *ngIf="serv.descuento != null">
+                  <ion-badge color="primary" float-right>
+                    <p>Con Descuentos!</p>
+                  </ion-badge>
+                </ion-col>
+                <ion-col col-12 no-padding>
+                  <p>
+                    <ion-icon name="pin"></ion-icon> {{serv.direccion}}
+                  </p>
+                </ion-col>
+                <ion-col col-12 no-padding>
+                  <p>Horarios: hrs</p>
+                </ion-col>
                 <p>
-                  <ion-icon name="pin"></ion-icon> {{serv.direccion}}
+                  <ion-icon name="star" class="plus"></ion-icon>
+                  <ion-icon name="star" class="plus"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
                 </p>
               </ion-col>
-              <ion-col col-12 no-padding>
-                <p>Horarios: hrs</p>
-              </ion-col>
-              <p>
-                <ion-icon name="star" class="plus"></ion-icon>
-                <ion-icon name="star" class="plus"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-                <ion-icon name="star"></ion-icon>
-              </p>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-card>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </div>
     </ion-list>
     <ion-row justify-content-center>
       <ion-col col-6 text-center>

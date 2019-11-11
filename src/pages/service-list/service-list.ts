@@ -16,6 +16,7 @@ declare var google: any;
 })
 export class ServiceListPage {
 
+  sinOrdenar: boolean = true;
   hayLocales: boolean = false;
   imgSrc: string;
   @ViewChild('map') mapElement: ElementRef;
@@ -165,7 +166,8 @@ export class ServiceListPage {
         avoidTolls: false
       }, async (response, status) => {
         if (status !== 'OK') {
-          alert('Error was: ' + status);
+          //alert('Error was: ' + status);
+          console.log('Error was: ' , status)
         } else {
           console.log('data', response)
           console.log('respuesta', response['rows'][0]['elements'][0]['distance']['text']);
@@ -174,7 +176,7 @@ export class ServiceListPage {
         }
         setTimeout(() => {
           this.ordenar();
-        }, 300);
+        }, 1000);
       });
       console.log('local', local);
     })
@@ -193,6 +195,7 @@ export class ServiceListPage {
       }
       return 0
     });
+    this.sinOrdenar = false;
     //console.log('serv2', this.services2);
   }
 
