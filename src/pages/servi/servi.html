@@ -19,12 +19,15 @@
   <div [ngSwitch]="servicios">
     <div [hidden]="view!='favoritos'" padding>
       <ion-grid *ngIf="showCategories">
-        <ion-row padding-bottom>
+        <ion-row padding-bottom *ngIf="locales">
           <ion-col class="col_cat" col-4 *ngFor="let cat of categoras" (click)="goToCategory(cat, cat.categorialocalid)">
             <div class="category lupa-shadow">
               <img src="https://ctrlztest.com.ar/lupacan/apirest/{{cat.icono}}" alt=""> {{cat.nombre}}
             </div>
           </ion-col>
+        </ion-row>
+        <ion-row padding *ngIf="!locales">
+          <ion-spinner></ion-spinner>
         </ion-row>
         <ion-row>
           <ion-col>

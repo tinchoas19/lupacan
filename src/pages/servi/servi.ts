@@ -39,7 +39,7 @@ export class ServiPage {
   public inputText: string;
   placesService: any;
   bounds:any;
-  locales:any;
+  locales:any = null;
   verMapa:boolean =false;
   constructor(
     public navCtrl: NavController,
@@ -118,26 +118,28 @@ export class ServiPage {
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(0, 40)
       };
-      this.placesService.getDetails({ placeId: local.placeid }, (details) => {
-        this.zone.run(() => {
-          if(details){
-            location.name = details.name;
-            location.lat = details.geometry.location.lat();
-            location.lng = details.geometry.location.lng();
-            this.saveDisabled = false;
-            //this.maps.map.setCenter({ lat: location.lat, lng: location.lng });
-            var marker = new google.maps.Marker({
-              map: this.maps.map,
-              title: local.nombre,
-              icon: icon,
-              draggable: false,
-              position: { lat: location.lat, lng: location.lng }
-            });
-            this.location = location;
-            this.bounds.extend(marker.position);
-          }
+      if(local.placeid){
+        this.placesService.getDetails({ placeId: local.placeid }, (details) => {
+          this.zone.run(() => {
+            if(details){
+              location.name = details.name;
+              location.lat = details.geometry.location.lat();
+              location.lng = details.geometry.location.lng();
+              this.saveDisabled = false;
+              //this.maps.map.setCenter({ lat: location.lat, lng: location.lng });
+              var marker = new google.maps.Marker({
+                map: this.maps.map,
+                title: local.nombre,
+                icon: icon,
+                draggable: false,
+                position: { lat: location.lat, lng: location.lng }
+              });
+              this.location = location;
+              this.bounds.extend(marker.position);
+            }
+          });
         });
-      });
+      };
     })
     this.createMarkUser();
     //this.maps.map.fitBounds(this.bounds);

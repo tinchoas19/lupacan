@@ -132,25 +132,29 @@ export class ServiceListPage {
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(0, 40)
       };
-      this.placesService.getDetails({ placeId: local.placeid }, (details) => {
-        console.log('details_list_serv', details)
-        this.zone.run(() => {
-          location.name = details.name;
-          location.lat = details.geometry.location.lat();
-          location.lng = details.geometry.location.lng();
-          this.saveDisabled = false;
-          //this.maps.map.setCenter({ lat: this.locationUser.lat, lng: this.locationUser.lng });
-          var marker = new google.maps.Marker({
-            map: this.maps.map,
-            title: local.nombre,
-            icon: icon,
-            draggable: false,
-            position: { lat: location.lat, lng: location.lng }
-          });
-          this.location = location;
-          //this.bounds.extend({ lat: location.lat, lng: location.lng });
+      if(local.placeid){
+        this.placesService.getDetails({ placeId: local.placeid }, (details) => {
+          if(details){
+            console.log('details_list_serv', details)
+            this.zone.run(() => {
+              location.name = details.name;
+              location.lat = details.geometry.location.lat();
+              location.lng = details.geometry.location.lng();
+              this.saveDisabled = false;
+              //this.maps.map.setCenter({ lat: this.locationUser.lat, lng: this.locationUser.lng });
+              var marker = new google.maps.Marker({
+                map: this.maps.map,
+                title: local.nombre,
+                icon: icon,
+                draggable: false,
+                position: { lat: location.lat, lng: location.lng }
+              });
+              this.location = location;
+              //this.bounds.extend({ lat: location.lat, lng: location.lng });
+            });
+          }
         });
-      });
+      }
       this.createMarkUser();
       this.distanceService.getDistanceMatrix({
         origins: [this.locationUser],
