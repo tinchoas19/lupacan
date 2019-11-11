@@ -9,7 +9,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="listas">
   <ion-row justify-content-center>
     <ion-col text-center col-6 no-padding>
       <img text-center class="img_add" [src]="imgSrc">
@@ -27,18 +27,28 @@
       <add-fav-user [usuariofav]="idUser"></add-fav-user>
     </ion-col>
   </ion-row>
-  <ion-list *ngIf="misPerros.length > 0" class="_list">
-    <ion-list-header no-lines class="labe-title">
-      Mis Perros
-    </ion-list-header>
-    <ion-item *ngFor="let dog of misPerros" (click)="goToDogDetail(dog)">
-      <ion-thumbnail item-start>
-        <img src="https://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}">
-      </ion-thumbnail>
-      <h2>{{dog.nombre}}</h2>
-      <p text-wrap>{{dog.perrodireccion}}</p>
-    </ion-item>
-  </ion-list>
+  
+  <div *ngIf="misPerros.length > 0" class="_list">
+    <ion-row>
+      <ion-col>
+        <h2 text-center class="label-title">
+          Mis perros
+        </h2>
+      </ion-col>
+    </ion-row>
+  
+    <ion-row class="item-lista-wrapper lupa-shadow" *ngFor="let dog of misPerros" (click)="goToDogDetail(dog)">
+        <ion-col col-4 no-padding>
+          <div class="item-lista-img" [ngStyle]="{background: 'url(https://ctrlztest.com.ar/lupacan/apirest/' + dog.fotos[0].fotourl + ')', 'background-size':  'cover' , 'background-position':  'center' }">
+              
+          </div>
+        </ion-col>
+        <ion-col col-8 class="item-info-wrapper">
+          <h2 class="nombre-item">{{dog.nombre}}</h2>
+          <p class="desc-item">{{dog.descripcion | slice:0:50}} ...()</p>
+        </ion-col>
+      </ion-row>
+  </div>
   <ion-row *ngIf="!(misPerros.length > 0)" justify-content-center>
     <p text-center>Sin perros agregados!</p>
   </ion-row>
