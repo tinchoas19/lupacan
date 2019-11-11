@@ -1,0 +1,48 @@
+.listas {
+
+    .label-title {
+        border-bottom: 1px solid #ededed;
+        padding-bottom: 5px;
+        margin-bottom: 25px;
+        font-weight: 400!important;
+    }
+
+    .item-lista-wrapper {
+        border-radius: 7px;
+        margin-bottom: 15px;
+        align-items: center;
+        height: 100px;
+
+        .item-lista-img {
+            height: 100px;
+            border-top-left-radius: 7px;
+            border-bottom-left-radius: 7px;
+        }
+    }
+
+    .item-info-wrapper {
+        padding: 12px 10px;
+
+        .nombre-item {
+            font-size: 1.5rem;
+            border-bottom: 1px solid;
+            font-weight: 700;
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+        }
+
+        .desc-item {
+            font-size: 1rem;
+            margin: 0;
+        }
+    }
+
+    .button {
+
+        span {
+            color: #fff;
+        }
+
+    }
+    
+}
