@@ -36,20 +36,28 @@ page-add-dog {
   .lugares {
     display: none;
   }
-  .searchbar-input {
-    padding: 6px 55px;
-    background-position: left 8px center;
-    height: 4rem !important;
-    border-radius: 4rem !important;
-    font-weight: 400;
-    line-height: 3rem;
-    color: inherit;
-    background-color: #fff;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    border: 1px solid color($colors, primary);
-  }
 
+  .searchbar {
+
+    .searchbar-input {
+      padding: 6px 55px;
+      background-position: left 8px center;
+      height: 4rem !important;
+      border-radius: 4rem !important;
+      font-weight: 400;
+      line-height: 3rem;
+      color: inherit;
+      background-color: #fff;
+      -webkit-box-shadow: none !important;
+      box-shadow: none !important;
+      border: 1px solid color($colors, primary);
+    }
+
+    .searchbar-clear-icon {
+      top: 4px;
+    }
+  }
+  
   .button{
     span{
         color: #7e7e7e !important;

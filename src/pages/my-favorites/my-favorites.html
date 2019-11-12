@@ -4,7 +4,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="listas">
   <ion-row justify-content-center>
     <ion-segment class="seg_fav" mode="md" [(ngModel)]="sections" color="primary">
       <ion-segment-button class="first" value="perros">
@@ -27,52 +27,96 @@
       </ion-row>
       <div *ngSwitchCase="'perros'">
         <div *ngIf="!sinFavoritos">
-          <ion-list style="margin-top: 10%;">
-            <ion-item *ngFor="let dog of perros">
-              <ion-avatar item-start>
-                <img src={{url+dog.foto}}>
-              </ion-avatar>
-              <h2>{{dog.nombre}}</h2>
-            </ion-item>
-          </ion-list>
+          <ion-row class="item-lista-wrapper lupa-shadow" *ngFor="let dog of perros" (click)="goToDogDetail(dog)">
+            <ion-col col-4 no-padding>
+              <div class="item-lista-img" [ngStyle]="{background: 'url(https://ctrlztest.com.ar/lupacan/apirest/' + dog.foto + ')', 'background-size':  'cover' , 'background-position':  'center' }">
+                  
+              </div>
+            </ion-col>
+            <ion-col col-8 class="item-info-wrapper">
+              <h2 class="nombre-item">{{dog.nombre}}</h2>
+            </ion-col>
+          </ion-row>
+        </div>
+
+        <div *ngIf="sinFavoritos">
+          <ion-row>
+            <ion-col>
+              <p class="sin-resultados">No tienes favoritos para esta sección</p>
+            </ion-col>
+          </ion-row>
         </div>
       </div>
+
       <div *ngSwitchCase="'usuarios'">
         <div *ngIf="!sinFavoritos">
-          <ion-list style="margin-top: 10%;">
-            <ion-item *ngFor="let user of usuarios">
-              <ion-avatar item-start>
-                <img src={{url+user.imagen}}>
-              </ion-avatar>
-              <h2>{{user.nombre}}</h2>
-            </ion-item>
-          </ion-list>
+          <ion-row class="item-lista-wrapper lupa-shadow" *ngFor="let user of usuarios" (click)="goToDogDetail(user)">
+            <ion-col col-4 no-padding>
+              <div class="item-lista-img" [ngStyle]="{background: 'url(https://ctrlztest.com.ar/lupacan/apirest/' + user.imagen + ')', 'background-size':  'cover' , 'background-position':  'center' }">
+                  
+              </div>
+            </ion-col>
+            <ion-col col-8 class="item-info-wrapper">
+              <h2 class="nombre-item">{{user.nombre}}</h2>
+            </ion-col>
+          </ion-row>
+        </div>
+
+        <div *ngIf="sinFavoritos">
+          <ion-row>
+            <ion-col>
+              <p class="sin-resultados">No tienes favoritos para esta sección</p>
+            </ion-col>
+          </ion-row>
         </div>
       </div>
+
       <div *ngSwitchCase="'locales'">
         <div *ngIf="!sinFavoritos">
-          <ion-list style="margin-top: 10%;">
-            <ion-item *ngFor="let local of locales">
-              <ion-avatar item-start>
-                <img src={{url+local.imagen}}>
-              </ion-avatar>
-              <h2>{{local.nombre}}</h2>
-            </ion-item>
-          </ion-list>
+          <ion-row class="item-lista-wrapper lupa-shadow" *ngFor="let local of locales" (click)="goToDogDetail(local)">
+            <ion-col col-4 no-padding>
+              <div class="item-lista-img" [ngStyle]="{background: 'url(https://ctrlztest.com.ar/lupacan/apirest/' + local.imagen + ')', 'background-size':  'cover' , 'background-position':  'center' }">
+                  
+              </div>
+            </ion-col>
+            <ion-col col-8 class="item-info-wrapper">
+              <h2 class="nombre-item">{{local.nombre}}</h2>
+            </ion-col>
+          </ion-row>
+        </div>
+
+        <div *ngIf="sinFavoritos">
+          <ion-row>
+            <ion-col>
+              <p class="sin-resultados">No tienes favoritos para esta sección</p>
+            </ion-col>
+          </ion-row>
         </div>
       </div>
+
       <div *ngSwitchCase="'refugios'">
         <div *ngIf="!sinFavoritos">
-          <ion-list style="margin-top: 10%;">
-            <ion-item *ngFor="let local of refugios">
-              <ion-avatar item-start>
-                <img src={{url+local.imagen}}>
-              </ion-avatar>
-              <h2>{{local.nombre}}</h2>
-            </ion-item>
-          </ion-list>
+          <ion-row class="item-lista-wrapper lupa-shadow" *ngFor="let local of refugios" (click)="goToDogDetail(local)">
+            <ion-col col-4 no-padding>
+              <div class="item-lista-img" [ngStyle]="{background: 'url(https://ctrlztest.com.ar/lupacan/apirest/' + local.imagen + ')', 'background-size':  'cover' , 'background-position':  'center' }">
+                  
+              </div>
+            </ion-col>
+            <ion-col col-8 class="item-info-wrapper">
+              <h2 class="nombre-item">{{local.nombre}}</h2>
+            </ion-col>
+          </ion-row>
+        </div>
+
+        <div *ngIf="sinFavoritos">
+          <ion-row>
+            <ion-col>
+              <p class="sin-resultados">No tienes favoritos para esta sección</p>
+            </ion-col>
+          </ion-row>
         </div>
       </div>
+      
     </ion-grid>
   </ion-row>
 </ion-content>

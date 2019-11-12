@@ -97,25 +97,27 @@
         </ion-col>
       </ion-row>
 
-      <ion-row class="data-input">
-        <ion-col col-4>
-          <ion-item radio-group [(ngModel)]="dog.esterilizado">
-            <ion-label stacked>Esterilizado</ion-label>
-          </ion-item>
-        </ion-col>  
-        <ion-col col-4>
-          <ion-item>
-            <ion-label>Si</ion-label>
-            <ion-radio checked="true" value="1"></ion-radio>
-          </ion-item>
-        </ion-col>
-        <ion-col col-4>
-          <ion-item>
-            <ion-label>No</ion-label>
-            <ion-radio value="0"></ion-radio>
-          </ion-item>
-        </ion-col>
-      </ion-row>
+      <ion-list radio-group [(ngModel)]="dog.esterilizado">
+        <ion-row class="data-input">
+          <ion-col col-4>
+            <ion-item>
+              <ion-label stacked>Esterilizado</ion-label>
+            </ion-item>
+          </ion-col>  
+          <ion-col col-4>
+            <ion-item>
+              <ion-label>Si</ion-label>
+              <ion-radio checked="true" value="1"></ion-radio>
+            </ion-item>
+          </ion-col>
+          <ion-col col-4>
+            <ion-item>
+              <ion-label>No</ion-label>
+              <ion-radio value="0"></ion-radio>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-list>
 
       <ion-row class="data-input">
         <ion-col col-12>
