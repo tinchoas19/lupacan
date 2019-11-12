@@ -31,6 +31,8 @@ export class AddDogPage {
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
   @ViewChild('mySelect') selectRef: Select;
+  calle:boolean;
+  setEstado:any;
   latitude: number;
   longitude: number;
   autocompleteService: any;
@@ -87,6 +89,13 @@ export class AddDogPage {
     this.searchDisabled = true;
     this.saveDisabled = true;
     this.initializeItems();
+    this.calle = this.navParams.get('calle') ? this.navParams.get('calle') : false;
+    if(this.calle){
+      this.setEstado = '5';
+      this.dog.estado = '5';
+    }
+    console.log('es', this.setEstado);
+    
   }
 
   onAccountTypeChange(estado) {

@@ -108,6 +108,10 @@ export class MyDogsPage {
     alert.present();
   }
 
+  goToIntCalle(dog, i){
+    this.navCtrl.push(PerfilCallejeritoPage,{dogDetail:dog,index:i})
+  }
+
   openModal(dog, i) {
     const profileModal = this.modalCtrl.create(ModalCallejeritoPage, { dog: dog, index: i });
     profileModal.onDidDismiss(data => {

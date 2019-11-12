@@ -103,6 +103,9 @@ export class ProfileSettingsPage {
     console.log('i',i);
     this.navCtrl.push(MyDogsPage,{index:i});
   }
+  goToAddDogCaclle(){
+    this.navCtrl.push(AddDogPage,{calle:true});
+  }
   /* goToSalud(){
     this.navCtrl.push(SaludPage);
   } */
