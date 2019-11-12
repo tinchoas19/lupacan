@@ -132,4 +132,28 @@
     </div>
   </div>
 
+  <div *ngIf="index == 4 && myCalle.length > 0">
+    <div class="._list">
+      <ion-row>
+        <ion-col>
+          <h2 text-center class="label-title">
+              Mis Callejeritos
+          </h2>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="item-lista-wrapper lupa-shadow" *ngFor="let dog of myCalle">
+        <ion-col col-4 no-padding>
+          <div class="item-lista-img" [ngStyle]="{background: 'url(https://ctrlztest.com.ar/lupacan/apirest/' + dog.fotos[0].fotourl + ')', 'background-size':  'cover' , 'background-position':  'center' }">
+              
+          </div>
+        </ion-col>
+        <ion-col col-8 class="item-info-wrapper" (click)="goToIntCalle(dog, 1)">
+          <h2 class="nombre-item">{{dog.nombre}}</h2>
+          <p class="desc-item">{{dog.descripcion}}</p>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+
 </ion-content>

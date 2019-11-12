@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title text-center class="lupa-title">Historial</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="cerrar()">
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div *ngIf="index == '1'">
+    <ion-row class="item-lista-wrapper lupa-shadow">
+      <ion-col col-4 no-padding>
+        <img src="https://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" />
+      </ion-col>
+      <ion-col col-8 class="item-info-wrapper">
+        <h2 class="nombre-item">{{dog.nombre}}</h2>
+        <p class="desc-item">{{dog.descripcion}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-center>
+      <ion-list>
+        <ion-list-header no-lines text-center>
+          Escribe un comentario
+        </ion-list-header>
+        <ion-item no-lines>
+          <ion-textarea [(ngModel)]="txt" placeholder="Comentario..." max="200"></ion-textarea>
+        </ion-item>
+      </ion-list>
+      <ion-col col-12 text-center>
+        <button ion-button round color="primary" (click)="enviar(txt)">Enviar</button>
+      </ion-col>
+    </ion-row>
+  </div>
+  <div *ngIf="index == '2'">
+    <ion-row justify-content-center>
+      <ion-list>
+        <ion-list-header no-lines text-center>
+          Comentarios
+        </ion-list-header>
+        <ion-item no-lines *ngFor="let item of items">
+          <ion-avatar item-start>
+            <img [src]="item.imgSrc">
+          </ion-avatar>
+          <h2>{{item.nombre}}</h2>
+          <p text-wrap>{{item.texto}}</p>
+        </ion-item>
+      </ion-list>
+    </ion-row>
+  </div>
+</ion-content>
