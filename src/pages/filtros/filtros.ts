@@ -26,8 +26,9 @@ export class FiltrosPage {
   catId: any;
   razas: any = [];
   razaSelected: any = [];
+  generoSelected: any;
   estadoDog: any = "";
-  selectgeneroDog:any="";
+  selectgeneroDog: any = "";
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -69,8 +70,14 @@ export class FiltrosPage {
 
   somethingRaza(selectraza) {
     console.log('selectraza', selectraza);
-    this.razaSelected = [];
-    this.razaSelected.push(selectraza);
+    this.razaSelected = selectraza;
+    // this.razaSelected.push(selectraza);
+  }
+
+  somethingGenero(selectgenero) {
+    console.log('select genero', selectgenero);
+    this.selectgeneroDog = selectgenero;
+    // this.razaSelected.push(selectraza);
   }
 
   eliminarLocalidad(index) {
@@ -78,6 +85,11 @@ export class FiltrosPage {
     console.log('antes', this.localidadSelected[0]);
     this.localidadSelected[0].splice(index, 1);
     console.log('desp-elimino', this.localidadSelected);
+  }
+
+  onSelectEstado(event) {
+    console.log("estado seleccionado", event);
+    this.estadoDog = event;
   }
 
   eliminarRaza(index) {
@@ -111,37 +123,15 @@ export class FiltrosPage {
     let array1 = [];
     this.stackFiltrado = this.stack;
     if (this.estadoDog != "") {
-      switch (this.estadoDog) {
-        case 'casa':
-          this.stackFiltrado.map(x => {
-            if (x.estaenadopcion == 0 && x.estaencontrado == 0 && x.estaperdido == 0) {
-              array1.push(x);
-            }
-          })
-          this.stackFiltrado = array1;
-          break;
-        case 'adopcion':
-          this.stackFiltrado.map(x => {
-            if (x.estaenadopcion == 1 && x.estaencontrado == 0 && x.estaperdido == 0) {
-              array1.push(x);
-            }
-          })
-          this.stackFiltrado = array1;
-          break;
-        case 'perdido':
-          this.stackFiltrado.map(x => {
-            if (x.estaenadopcion == 0 && x.estaencontrado == 0 && x.estaperdido == 1) {
-              array1.push(x);
-            }
-          })
-          this.stackFiltrado = array1;
-          break;
-      }
+      array1 = this.stackFiltrado.filter(f => {
+        return (f.estado == this.estadoDog);
+      });
+      this.stackFiltrado = array1;
     }
 
-    if(this.razaSelected[0].length > 0){
+    if (this.razaSelected.length > 0) {
       this.stackFiltrado.map(x => {
-        this.razaSelected[0].map(y => {
+        this.razaSelected.map(y => {
           if (x.raza == y.nombre) {
             array1.push(x);
           }
@@ -150,21 +140,18 @@ export class FiltrosPage {
       this.stackFiltrado = array1;
     }
 
-    if(this.selectgeneroDog != ""){
-      if(this.selectgeneroDog == "0"){
-        this.stackFiltrado.map(x=>{
-          if(x.generoid == 0){
-            array1.push(x);
-          }else{
-            array1.push(x);
-          }
+    if (this.selectgeneroDog != "") {
+      
+        array1 = this.stackFiltrado.filter(x => {
+          return (x.generoid == this.generoSelected);
+            
         })
-      }
+      
       this.stackFiltrado = array1;
     }
 
     this.viewCtrl.dismiss(this.stackFiltrado);
-    
+
   }
 
 }

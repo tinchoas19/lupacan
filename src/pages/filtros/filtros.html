@@ -35,10 +35,10 @@
   <ion-row *ngIf="filtrosList == 'perros'" justify-content-center no-padding class="btn_filtros">
     <ion-col col-12 no-padding text-center>
       <button text-center ion-button round color="primary">Estado
-        <ion-select [(ngModel)]="estadoDog" okText="Ok" cancelText="Cancelar">
-          <ion-option value="casa">En casa</ion-option>
-          <ion-option value="adopcion">En adopción</ion-option>
-          <ion-option value="perdido">Perdidos</ion-option>
+        <ion-select [(ngModel)]="estadoDog" okText="Ok" cancelText="Cancelar" (ionChange)="onSelectEstado($event)">
+          <ion-option value="1">En casa</ion-option>
+          <ion-option value="4">En adopción</ion-option>
+          <ion-option value="2">Perdidos</ion-option>
         </ion-select>
       </button>
     </ion-col>
@@ -51,23 +51,23 @@
       </button>
     </ion-col>
     <ion-col *ngIf="razaSelected.length > 0" col-12 text-center>
-      <ion-list *ngFor="let select of razaSelected[0]; let i = index;" class="cat-selected">
+      <ion-list *ngFor="let select of razaSelected; let i = index;" class="cat-selected">
         <button class="btn_catSelected" ion-button round icon-end>{{select.nombre}}
-          <span (click)="eliminarRaza(i)">
+          <!-- <span (click)="eliminarRaza(i)">
             <ion-icon name="close"></ion-icon>
-          </span>
+          </span> -->
         </button>
       </ion-list>
     </ion-col>
     <ion-col col-12 no-padding text-center>
-      <button text-center ion-button round color="primary" (click)="openSelectGenero()">Género
+      <button text-center ion-button round color="primary">Género
         <ion-select multiple="false" #select2 [(ngModel)]="selectgeneroDog" (ionChange)="somethingGenero($event)">
-          <ion-option value="0">Masculino</ion-option>
-          <ion-option value="1">Femenino</ion-option>
+          <ion-option value="1">Masculino</ion-option>
+          <ion-option value="2">Femenino</ion-option>
         </ion-select>
       </button>
     </ion-col>
-    <ion-col col-12 no-padding text-center>
+    <!-- <ion-col col-12 no-padding text-center>
       <button text-center ion-button round color="primary">Ubicación
         <ion-select multiple="true" #select3 [(ngModel)]="selectubicacion" (ionChange)="somethingUbicacion($event)">
           <ion-option value="10km">10 km</ion-option>
@@ -75,7 +75,7 @@
           <ion-option value="100km">100 km</ion-option>
         </ion-select>
       </button>
-    </ion-col>
+    </ion-col> -->
   </ion-row>
   <ion-row justify-content-center>
     <button *ngIf="filtrosList == 'service'" class="btn_tienda" ion-button full round (click)="aplicarFiltro()">Aplicar</button>

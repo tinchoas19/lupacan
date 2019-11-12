@@ -3,8 +3,9 @@ import { Storage } from '@ionic/storage';
 import { ListDogUserPage } from './../list-dog-user/list-dog-user';
 import { ApiProvider } from './../../providers/api/api';
 import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { NavController, NavParams, Slides } from 'ionic-angular';
+import { NavController, NavParams, Slides, ModalController } from 'ionic-angular';
 import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
+import { FiltrosPage } from '../filtros/filtros';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class FeedUsuariosPage {
   bounds: any;
   ultimosAgregados: any = [];
   todosUsers: any = [];
+  filteredUsers: any = [];
   verFiltro: boolean;
   verMapa: boolean;
   verFav: boolean;
@@ -34,6 +36,7 @@ export class FeedUsuariosPage {
     private api: ApiProvider,
     public maps: GoogleMapsProvider,
     public zone: NgZone,
+    public modalCtrl: ModalController,
     private storage: Storage
   ) {
     this.mostrarMapa = false;
@@ -56,6 +59,24 @@ export class FeedUsuariosPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FeedUsuariosPage');
+  }
+
+  abrirFiltroUsuarios(){
+    console.log('Cucumbers new state:' + this.verFiltro);
+    if (this.verFiltro) {
+      this.verMapa = false;
+      this.filtrosActive = true;
+      this.mostrarMapa = false;
+      this.verFav = false;
+      let filtrosModal = this.modalCtrl.create(FiltrosPage, { categoriaId: null, filtrosDe: 'usuarios', stackFilter: this.filteredUsers });
+      filtrosModal.present();
+      filtrosModal.onDidDismiss(data => {
+        this.filteredUsers = data;
+      });
+    } else {
+      this.filtrosActive = false;
+      this.filteredUsers = this.todosUsers;
+    }
   }
 
   getUltimosAgregados() {
