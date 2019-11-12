@@ -103,14 +103,14 @@ export class FeedPage {
       };
       var icon = {
         url: iconBase + dog.fotos[0].fotourl,
-        fillColor: 'yellow',
-        fillOpacity: 0.8,
-        scale: 1,
-        strokeColor: 'gold',
-        strokeWeight: 14,
-        size: new google.maps.Size(40, 40),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(0, 40)
+        // fillColor: 'yellow',
+        // fillOpacity: 1,
+        // scale: 1,
+        // strokeColor: 'gold',
+        // strokeWeight: 1,scaledSize: new google.maps.Size(50, 50)
+        scaledSize: new google.maps.Size(40, 40),
+         origin: new google.maps.Point(0, 0),
+         anchor: new google.maps.Point(0, 40)
       };
       let placeid = dog.placeid ? dog.placeid : dog.estadoplaceid;
       this.placesService.getDetails({ placeId: placeid }, (details) => {

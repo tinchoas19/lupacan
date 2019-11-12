@@ -156,24 +156,24 @@ export class FeedUsuariosPage {
         if (user.imagen != "") {
           var icon = {
             url: iconBase + user.imagen,
-            fillColor: 'yellow',
-            fillOpacity: 0.8,
-            scale: 1,
-            strokeColor: 'gold',
-            strokeWeight: 14,
-            size: new google.maps.Size(40, 40),
+            // fillColor: 'yellow',
+            // fillOpacity: 0.8,
+            // scale: 1,
+            // strokeColor: 'gold',
+            // strokeWeight: 14,
+            scaledSize: new google.maps.Size(40, 40),
             origin: new google.maps.Point(0, 0),
             anchor: new google.maps.Point(0, 40)
           };
         }else{
           var icon = {
             url: '../../assets/imgs/dog.jpg',
-            fillColor: 'yellow',
-            fillOpacity: 0.8,
-            scale: 1,
-            strokeColor: 'gold',
-            strokeWeight: 14,
-            size: new google.maps.Size(40, 40),
+            // fillColor: 'yellow',
+            // fillOpacity: 0.8,
+            // scale: 1,
+            // strokeColor: 'gold',
+            // strokeWeight: 14,
+            scaledSize: new google.maps.Size(40, 40),
             origin: new google.maps.Point(0, 0),
             anchor: new google.maps.Point(0, 40)
           };
