@@ -1,10 +1,9 @@
 .listas {
 
     .label-title {
-        border-bottom: 1px solid #ededed;
         padding-bottom: 5px;
         margin-bottom: 25px;
-        font-weight: 400!important;
+        font-weight: 600!important;
     }
 
     .item-lista-wrapper {
@@ -25,7 +24,7 @@
 
         .nombre-item {
             font-size: 1.5rem;
-            border-bottom: 1px solid;
+            border-bottom: 1px solid #ededed;
             font-weight: 700;
             padding-bottom: 5px;
             margin-bottom: 5px;
