@@ -1,3 +1,4 @@
+import { PerfilCallejeritoPage } from './../perfil-callejerito/perfil-callejerito';
 import { FeedUsuariosPage } from './../feed-usuarios/feed-usuarios';
 import { ServiPage } from './../servi/servi';
 import { PhotoSliderPage } from './../photo-slider/photo-slider';
@@ -64,7 +65,11 @@ export class FeedPage {
   }
 
   goToDogDetail(dog) {
-    this.navCtrl.push(PhotoSliderPage, { chatid: "8", dogDetail: dog, isMyDogs: false, pageId: this.pageData.id });
+    if(dog.estado != '5'){
+      this.navCtrl.push(PhotoSliderPage, { chatid: "8", dogDetail: dog, isMyDogs: false, pageId: this.pageData.id });
+    }else{
+      this.navCtrl.push(PerfilCallejeritoPage, {dogDetail: dog});
+    }
   }
 
   ionViewDidLoad() {

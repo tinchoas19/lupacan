@@ -1,7 +1,9 @@
+import { ModalCallejeritoPage } from './../modal-callejerito/modal-callejerito';
+import { PerfilCallejeritoPage } from './../perfil-callejerito/perfil-callejerito';
 import { BuscarUsuariosPage } from './../buscar-usuarios/buscar-usuarios';
 import { SaludPage } from './../salud/salud';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ToastController, ModalController } from 'ionic-angular';
 import { DogPage } from '../dog/dog';
 import { AddDogPage } from '../add-dog/add-dog';
 import { ApiProvider } from '../../providers/api/api';
@@ -14,6 +16,7 @@ import { Storage } from '@ionic/storage';
 })
 export class MyDogsPage {
 
+  myCalle: any = [];
   myDogs: any = [];
   index: any;
 
@@ -23,6 +26,7 @@ export class MyDogsPage {
     private ApiProvider: ApiProvider,
     public alertCtrl: AlertController,
     public toastController: ToastController,
+    public modalCtrl: ModalController,
     private storage: Storage
   ) {
     this.index = navParams.data.index || 0;
@@ -32,8 +36,15 @@ export class MyDogsPage {
     this.storage.get('datauser').then(val => {
       this.ApiProvider.getMyDogs(val['usuarioid']).subscribe(data => {
         console.log(data, 'sarasaaa');
-        this.myDogs = (data["data"]);
+        this.myDogs = data["data"];
+        this.myDogs.map(dog => {
+          if (dog.estado == '5') {
+            this.myCalle.push(dog);
+          }
+        })
+        console.log('calle', this.myCalle);
       });
+
     })
   }
 
@@ -60,7 +71,7 @@ export class MyDogsPage {
                   console.log('perroid', x);
                   this.dog = x['data'][0];
                 }) */
-              }else{
+              } else {
                 this.error();
               }
             })
@@ -73,11 +84,11 @@ export class MyDogsPage {
 
   }
 
-  goToSalud(dog){
-    this.navCtrl.push(SaludPage,{dog:dog});
+  goToSalud(dog) {
+    this.navCtrl.push(SaludPage, { dog: dog });
   }
 
-  addTenencia(dog){
+  addTenencia(dog) {
     const alert = this.alertCtrl.create({
       title: 'Compartir tenencia!',
       subTitle: 'Estas seguro de compartir la tenecia de ' + dog.nombre + '?',
@@ -89,7 +100,7 @@ export class MyDogsPage {
         {
           text: 'Si',
           handler: data => {
-            this.navCtrl.push(BuscarUsuariosPage,{dogTransfer:dog, index: 1})
+            this.navCtrl.push(BuscarUsuariosPage, { dogTransfer: dog, index: 1 })
           }
         }
       ]
@@ -97,9 +108,18 @@ export class MyDogsPage {
     alert.present();
   }
 
+  openModal(dog, i) {
+    const profileModal = this.modalCtrl.create(ModalCallejeritoPage, { dog: dog, index: i });
+    profileModal.onDidDismiss(data => {
+      console.log(data);
+      //this.madalDismissData = JSON.stringify(data);
+    });
+    profileModal.present();
+  }
+
   async adopcion(dog) {
     const toast = await this.toastController.create({
-      message: "Listo!\n Nos encargaremos de encontrarle un nuevo hogar a "+ dog.nombre,
+      message: "Listo!\n Nos encargaremos de encontrarle un nuevo hogar a " + dog.nombre,
       duration: 3000,
       showCloseButton: true,
       position: 'top',

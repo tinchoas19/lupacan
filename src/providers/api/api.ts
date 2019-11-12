@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { tap } from 'rxjs/operators/tap';
 import { map } from 'rxjs/operators/map';
 import { Events } from 'ionic-angular';
+import { getDayOfYear } from 'date-fns';
 
 export class ChatMessage {
   messageId: string;
@@ -252,6 +253,63 @@ export class ApiProvider {
       .pipe(
         tap(x => {
           console.log('Probar push', x);
+        })
+      );
+  }
+
+  //-------- BITACORA CALLEJERITO -----------
+  //-POST--------------
+  addHistorial(usuarioid,perro, text): Observable<any> {
+    let fecha = new Date();
+    console.log('fecha', fecha);
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    var body = JSON.stringify({
+      usuarioid : usuarioid,
+      texto : text,
+      fecha : fecha,
+      perroid :perro.perroid
+    });
+
+    console.log('body', body);
+
+    return this.httpPost.post(this.ApiUrl + "agregarbitacora.php", body, options).pipe(
+      tap(x => {
+        console.log('bitacora', x);
+      }));
+  }
+
+  //-------- BITACORA CALLEJERITO -----------
+  //-PEDIR TENENCIA--------------
+  pedirTenenciaCalle(usuarioid, perroid): Observable<any> {
+    console.log('user', usuarioid);
+
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    var body = JSON.stringify({
+      usuarioid: usuarioid,
+      perroid: perroid
+    });
+
+    console.log('body', body);
+
+    return this.httpPost.post(this.ApiUrl + "pedirtenencia.php", body, options).pipe(
+      tap(x => {
+        console.log('pedirtenencia.php', x);
+      }));
+  }
+
+  //-------- BITACORA CALLEJERITO -----------
+  //-GET--------------
+  getBitacora(perroid): Observable<any> {
+    return this.httpClient.get("https://ctrlztest.com.ar/lupacan/apirest/traerbitacora.php?perroid=" + perroid)
+      .pipe(
+        tap(x => {
+          console.log('Bitacora GET', x);
         })
       );
   }
