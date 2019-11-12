@@ -189,6 +189,13 @@ ion-header {
 
     &.header {
         padding: 5px 0 0;
+        -webkit-box-shadow: 0px 1px 5px 0px rgba(50, 50, 50, 0.5);
+        -moz-box-shadow:    0px 1px 5px 0px rgba(50, 50, 50, 0.5);
+        box-shadow:         0px 1px 5px 0px rgba(50, 50, 50, 0.5);
+
+        &.no-shadow {
+            box-shadow: none;
+        }
 
         ion-navbar {
             
@@ -268,7 +275,25 @@ h2 {
     }
 }
 
+.barra-direccion {
+    margin-top: 15px;
+
+    .searchbar {
+        padding: 8px 0;
+    }
+}
+
+/*Img redonda perfil*/
+.img_add {;
+    height: 25vh;
+    width: 50vw;
+    border-radius: 50%;
+    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.3);
+    z-index: -1;
+}
+
 /*Partials*/
 @import "partials/principal-feed.scss";
 @import "partials/listas.scss";
 @import "partials/internas-perro.scss";
+@import "partials/forms.scss";

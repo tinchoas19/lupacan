@@ -7,23 +7,23 @@
 </ion-header>
 
 
-<ion-content>
-  <ion-row *ngIf="!perroRefugio" justify-content-center padding>
-    <ion-col text-center>
-      <ion-item>
-        <ion-label stacked>Estado</ion-label>
-        <ion-select [(ngModel)]="dog.estado" placeholder="Seleccionar" (ionChange)="onAccountTypeChange(dog.estado)">
-          <ion-option value="1">Es mío y está en casa</ion-option>
-          <ion-option value="3">Para dar en adopción</ion-option>
-          <ion-option value="2">Lo perdí</ion-option>
-          <ion-option value="5">Callejerito</ion-option>
-        </ion-select>
-      </ion-item>
-    </ion-col>
-  </ion-row>
-  <ion-list>
+<ion-content class="forms">
     <ion-grid padding>
-      <ion-row *ngIf="dog.estado == '5'">
+      <ion-row class="data-input" *ngIf="!perroRefugio" justify-content-center>
+        <ion-col>
+          <ion-item>
+            <ion-label stacked>Estado</ion-label>
+            <ion-select [(ngModel)]="dog.estado" placeholder="Seleccionar" (ionChange)="onAccountTypeChange(dog.estado)">
+              <ion-option value="1">Es mío y está en casa</ion-option>
+              <ion-option value="3">Para dar en adopción</ion-option>
+              <ion-option value="2">Lo perdí</ion-option>
+              <ion-option value="5">Callejerito</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>    
+
+      <ion-row class="data-input" *ngIf="dog.estado == '5'">
         <ion-col>
           <ion-item>
             <ion-label stacked>Código collar</ion-label>
@@ -31,73 +31,102 @@
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row>
+
+      <ion-row class="data-input">
         <ion-col>
           <ion-item>
             <ion-label stacked>Nombre</ion-label>
-            <ion-input [(ngModel)]="dog.nombre" type="text"></ion-input>
+            <ion-input placeholder="Ingrese nombre..." [(ngModel)]="dog.nombre" type="text"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="dog.estado != 2 && dog.estado != 5">
-        <ion-col>
-          <ion-item no-lines style="height: 64px!important;">
+
+      <ion-row class="data-input" *ngIf="dog.estado != 2 && dog.estado != 5">
+        <ion-col col-6>
+          <ion-item>
             <ion-label stacked>Fecha Nacimiento</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col col-6>
+          <ion-item>
             <ion-datetime [(ngModel)]="dog.nacimiento" displayFormat="DD MMM YYYY" placeholder="dd/mm/aaaa" cancelText="Cancelar" doneText="Ok"></ion-datetime>
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="dog.estado == '2'">
-        <ion-col>
-          <ion-item no-lines style="height: 64px!important;">
+
+      <ion-row class="data-input" *ngIf="dog.estado == '2'">
+        <ion-col col-6>
+          <ion-item>
             <ion-label stacked>Fecha Nacimiento</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col col-6>
+          <ion-item>
             <ion-datetime [(ngModel)]="dog.nacimiento" displayFormat="DD MMM YYYY" placeholder="dd/mm/aaaa" cancelText="Cancelar" doneText="Ok"></ion-datetime>
           </ion-item>
         </ion-col>
-        <ion-col>
-          <ion-item no-lines style="height: 64px!important;">
+        <ion-col col-6>
+          <ion-item>
             <ion-label stacked>Fecha Perdido</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col col-6>
+          <ion-item>
             <ion-datetime [(ngModel)]="dog.estadofecha" displayFormat="DD MMM YYYY" placeholder="dd/mm/aaaa" cancelText="Cancelar" doneText="Ok"></ion-datetime>
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col col-6>
-          <ion-list no-lines radio-group [(ngModel)]="dog.gender">
-            <ion-list-header>Sexo</ion-list-header>
-            <ion-item>
-              <ion-label>Hembra</ion-label>
-              <ion-radio checked="true" value="0"></ion-radio>
-            </ion-item>
-            <ion-item>
-              <ion-label>Macho</ion-label>
-              <ion-radio value="1"></ion-radio>
-            </ion-item>
-          </ion-list>
+
+      <ion-row class="data-input">
+        <ion-col col-4>
+          <ion-item radio-group [(ngModel)]="dog.gender">
+            <ion-label stacked>Sexo</ion-label>
+          </ion-item>
         </ion-col>
-        <ion-col col-6>
-          <ion-list radio-group [(ngModel)]="dog.esterilizado">
-            <ion-list-header>Esterilizado</ion-list-header>
-            <ion-item>
-              <ion-label>Si</ion-label>
-              <ion-radio checked="true" value="1"></ion-radio>
-            </ion-item>
-            <ion-item>
-              <ion-label>No</ion-label>
-              <ion-radio value="0"></ion-radio>
-            </ion-item>
-          </ion-list>
+        <ion-col col-4>
+          <ion-item>
+            <ion-label>Hembra</ion-label>
+            <ion-radio checked="true" value="0"></ion-radio>
+          </ion-item>
+        </ion-col>
+        <ion-col col-4>
+          <ion-item>
+            <ion-label>Macho</ion-label>
+            <ion-radio value="1"></ion-radio>
+          </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col>
+
+      <ion-row class="data-input">
+        <ion-col col-4>
+          <ion-item radio-group [(ngModel)]="dog.esterilizado">
+            <ion-label stacked>Esterilizado</ion-label>
+          </ion-item>
+        </ion-col>  
+        <ion-col col-4>
+          <ion-item>
+            <ion-label>Si</ion-label>
+            <ion-radio checked="true" value="1"></ion-radio>
+          </ion-item>
+        </ion-col>
+        <ion-col col-4>
+          <ion-item>
+            <ion-label>No</ion-label>
+            <ion-radio value="0"></ion-radio>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="data-input">
+        <ion-col col-12>
           <ion-item>
             <ion-label stacked>Raza</ion-label>
             <ion-select [placeholder]="selectRaza" (click)="presentModal()" #mySelect>
             </ion-select>
           </ion-item>
         </ion-col>
-        <ion-col>
+        
+        <ion-col col-12>
           <ion-item>
             <ion-label stacked>Color</ion-label>
             <ion-select [(ngModel)]="dog.color" placeholder="Seleccionar">
@@ -106,7 +135,8 @@
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row>
+
+      <ion-row class="data-input">
         <ion-col col-12>
           <ion-item>
             <ion-label stacked>Características</ion-label>
@@ -114,8 +144,9 @@
           </ion-item>
         </ion-col>
       </ion-row>
-      <div *ngIf="dog.estado != '5'">
-        <ion-row style="margin-top: 7%;">
+
+      <div *ngIf="dog.estado != '5'" class="subida-fotos">
+        <ion-row>
           <ion-col *ngIf="!img1" col-4 class="lupa-shadow add-photo" (click)="getImage(1)">
             <ion-icon name="camera"></ion-icon>
             Subir fotos
@@ -123,6 +154,7 @@
           <ion-col *ngIf="img1" col-4 class="lupa-shadow add-photo">
             <img src="{{imageFileName1}}">
           </ion-col>
+          
           <ion-col *ngIf="!img2" col-4 class="lupa-shadow add-photo" (click)="getImage(2)">
             <ion-icon name="camera"></ion-icon>
             Subir fotos
@@ -130,6 +162,7 @@
           <ion-col *ngIf="img2" col-4 class="lupa-shadow add-photo">
             <img src="{{imageFileName2}}">
           </ion-col>
+
           <ion-col *ngIf="!img3" col-4 class="lupa-shadow add-photo" (click)="getImage(3)">
             <ion-icon name="camera"></ion-icon>
             Subir fotos
@@ -137,6 +170,7 @@
           <ion-col *ngIf="img3" col-4 class="lupa-shadow add-photo">
             <img src="{{imageFileName3}}">
           </ion-col>
+
           <ion-col *ngIf="!img4" col-4 class="lupa-shadow add-photo" (click)="getImage(4)">
             <ion-icon name="camera"></ion-icon>
             Subir fotos
@@ -144,6 +178,7 @@
           <ion-col *ngIf="img4" col-4 class="lupa-shadow add-photo">
             <img src="{{imageFileName4}}">
           </ion-col>
+
           <ion-col *ngIf="!img5" col-4 class="lupa-shadow add-photo" (click)="getImage(5)">
             <ion-icon name="camera"></ion-icon>
             Subir fotos
@@ -153,8 +188,9 @@
           </ion-col>
         </ion-row>
       </div>
-      <div *ngIf="dog.estado == '5'">
-        <ion-row style="margin-top: 7%;">
+
+      <div *ngIf="dog.estado == '5'" class="subida-fotos">
+        <ion-row>
           <ion-col *ngIf="!img1" col-4 class="lupa-shadow add-photo" (click)="abrirCamara(1)">
             <ion-icon name="camera"></ion-icon>
             Subir fotos
@@ -162,6 +198,7 @@
           <ion-col *ngIf="img1" col-4 class="lupa-shadow add-photo">
               <img src="{{imageFileName1}}">
           </ion-col>
+
           <ion-col *ngIf="!img2" col-4 class="lupa-shadow add-photo" (click)="abrirCamara(2)">
             <ion-icon name="camera"></ion-icon>
             Subir fotos
@@ -169,6 +206,7 @@
           <ion-col *ngIf="img2" col-4 class="lupa-shadow add-photo">
               <img src="{{imageFileName2}}">
           </ion-col>
+
           <ion-col *ngIf="!img3" col-4 class="lupa-shadow add-photo" (click)="abrirCamara(3)">
             <ion-icon name="camera"></ion-icon>
             Subir fotos
@@ -176,6 +214,7 @@
           <ion-col *ngIf="img3" col-4 class="lupa-shadow add-photo">
               <img src="{{imageFileName3}}">
           </ion-col>
+
           <ion-col *ngIf="!img4" col-4 class="lupa-shadow add-photo" (click)="abrirCamara(4)">
             <ion-icon name="camera"></ion-icon>
             Subir fotos
@@ -183,6 +222,7 @@
           <ion-col *ngIf="img4" col-4 class="lupa-shadow add-photo">
               <img src="{{imageFileName4}}">
           </ion-col>
+
           <ion-col *ngIf="!img5" col-4 class="lupa-shadow add-photo" (click)="abrirCamara(5)">
             <ion-icon name="camera"></ion-icon>
             Subir fotos
@@ -192,11 +232,12 @@
           </ion-col>
         </ion-row>
       </div>
-      <ion-row>
-        <ion-col col-12 padding>
+
+      <ion-row class="barra-direccion">
+        <ion-col col-12>
           <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" placeholder="Dirección"></ion-searchbar>
         </ion-col>
-        <ion-col padding style="padding-top: 0px!important;">
+        <ion-col>
           <ion-list class="list_map">
             <ion-item *ngFor="let place of places" (touchstart)="selectPlace(place)">
               <p>{{place.description}}</p>
@@ -210,18 +251,20 @@
           <ion-spinner></ion-spinner>
         </div>
       </ion-row>
+
       <ion-row *ngIf="!perroRefugio">
         <ion-col padding text-center>
           <button ion-button block class="btn-iniciar lupa-shadow" (click)="irAHome()">Guardar</button>
           <p (click)="irAAgregar()">Agregar otro perro</p>
         </ion-col>
       </ion-row>
+
       <ion-row *ngIf="perroRefugio">
         <ion-col padding text-center>
           <button ion-button block class="btn-iniciar lupa-shadow" (click)="addDogRefugio()">Agregar perro al refugio!</button>
           <p (click)="irAAgregar()">Agregar otro perro</p>
         </ion-col>
       </ion-row>
-    </ion-grid>
-  </ion-list>
+    
+  </ion-grid>
 </ion-content>

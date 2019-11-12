@@ -1,0 +1,65 @@
+.forms {
+
+    .data-input {
+
+        .item {
+            padding: 0;
+
+            ion-label {
+                font-size: 1.4rem;
+                font-weight: 500;
+                color: $lupa-light-gray;
+            }
+
+            .text-input,
+            .select-text,
+            .datetime-text {
+                color: #000;
+                font-size: 1.6rem;
+
+                &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+                    font-size: 1.4rem;
+                    color: #cdcdcd;
+                }
+                &::-moz-placeholder { /* Firefox 19+ */
+                    font-size: 1.4rem;
+                    color: #cdcdcd;
+                }
+                &:-ms-input-placeholder { /* IE 10+ */
+                    font-size: 1.4rem;
+                    color: #cdcdcd;
+                }
+                &:-moz-placeholder { /* Firefox 18- */
+                    font-size: 1.4rem;
+                    color: #cdcdcd;
+                }
+            }
+
+            .select-placeholder,
+            .datetime-placeholder {
+                font-size: 1.4rem;
+                color: #cdcdcd;
+            }
+
+            &.item-radio {
+
+                ion-label {
+                    font-size: 1.3rem;
+                }
+            }
+
+            &.input-has-focus,
+            &.input-has-value {
+
+                .item-inner {
+                    box-shadow: none!important;
+                }
+            }
+
+            .item-inner {
+                border-bottom: none;
+            }
+        }
+    }
+    
+}

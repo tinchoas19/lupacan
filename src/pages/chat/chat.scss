@@ -1,6 +1,5 @@
 page-chat {
     ion-content .scroll-content {
-        background-color: #f5f5f5; 
     }
     .customIcon {
 
@@ -26,7 +25,7 @@ page-chat {
     .input-wrap textarea {
       flex: 1;
       border: 0;
-      border-bottom: 1px #387ef5;
+      border-bottom: 1px $lupa-amarillo;
       border-style: solid; 
     }
     .message-wrap {
@@ -94,14 +93,14 @@ page-chat {
           right: 10px;
           top: 50px; }
         .message-wrap .message.right .msg-detail .msg-content {
-          background-color: #387ef5;
+          background-color: $lupa-amarillo;
           float: right; 
           p{
             color: #fff;
           }
         }
           .message-wrap .message.right .msg-detail .msg-content span.triangle {
-            background-color: #387ef5;
+            background-color: $lupa-amarillo;
             border-bottom-width: 0;
             border-left-width: 0;
             right: -5px; }
