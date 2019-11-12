@@ -20,6 +20,11 @@ page-add-dog {
     flex-basis: 30%;
     margin: 5px;
     font-size: 1.2rem;
+    
+    img {
+      border: none;
+    }
+
     .icon {
       font-size: 4em;
       color: #f0c52e;
