@@ -8,8 +8,10 @@ import { NavController, NavParams, ViewController } from 'ionic-angular';
   templateUrl: 'filtros.html',
 })
 export class FiltrosPage {
-  localidades: any;
+  localidades: any = null;
+  descuentos: any = null;
   localidadSelected: any = [];
+  descuentoSelected: any = [];
   selectOptionsLocal = {
     title: 'Localidades',
     subTitle: 'Selecciona las localidades para filtrar!',
@@ -41,10 +43,20 @@ export class FiltrosPage {
     /* {filtrosDe: 'service', stackFilter: this.services} */
     this.getLocalidades();
     this.getRazas();
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FiltrosPage');
+  }
+
+  ionViewWillEnter(){
+   
+  }
+
+  onSelectedDecuento(event){
+    console.log("estado seleccionado", event);
+    this.descuentoSelected = event;
   }
 
   getRazas() {
@@ -55,17 +67,16 @@ export class FiltrosPage {
   }
 
   getLocalidades() {
-    this.api.getLocalidades(this.catId).subscribe(cat => {
-      console.log('localidades', cat);
-      this.localidades = cat['data'];
+    this.api.traerFiltrosLocales(this.catId).subscribe(x => {
+      console.log('localidades', x);
+      this.localidades = x['data']['localidades'];
+      this.descuentos = x['data']['descuentos'];
     })
   }
 
-  getLocal(localidad) {
-    console.log('local', localidad);
-    this.localidadSelected = [];
-    this.localidadSelected.push(localidad);
-    console.log('local', this.localidadSelected);
+  onLocalSelected(event) {
+    console.log('local', event);
+    this.localidadSelected = event;
   }
 
   somethingRaza(selectraza) {
@@ -103,12 +114,23 @@ export class FiltrosPage {
   aplicarFiltro() {
     let array1 = [];
     this.stackFiltrado = this.stack;
-    console.log('localidades_seleccionadas', this.localidadSelected[0]);
+    console.log('localidades_seleccionadas', this.localidadSelected);
     console.log('filtrado', this.stackFiltrado);
-    if (this.localidadSelected[0].length > 0) {
+    if (this.localidadSelected.length > 0) {
       this.stackFiltrado.map(x => {
-        this.localidadSelected[0].map(y => {
-          if (x.localidad == y.localidad) {
+        this.localidadSelected.map(y => {
+          if (x.localidad == y) {
+            array1.push(x);
+          }
+        })
+      })
+      this.stackFiltrado = array1;
+      console.log('aux', this.stackFiltrado);
+    }
+    if (this.descuentoSelected.length > 0) {
+      this.stackFiltrado.map(x => {
+        this.descuentoSelected.map(y => {
+          if (x.descuento == y) {
             array1.push(x);
           }
         })

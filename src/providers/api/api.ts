@@ -353,6 +353,16 @@ export class ApiProvider {
         })
       );
   }
+
+  traerFiltrosLocales(categoriaid): Observable<any> {
+    return this.httpClient.get("https://ctrlztest.com.ar/lupacan/apirest/traerfiltroslocal.php?categoriaid=" + categoriaid)
+      .pipe(
+        tap(x => {
+          console.log('traer filtros local', x);
+        })
+      );
+  }
+
   //-------- TODOS USERS -----------
   getAllUsers(userid): Observable<any> {
     return this.httpClient.get("https://ctrlztest.com.ar/lupacan/apirest/traerusuarios.php?usuarioid=" + userid)

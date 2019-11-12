@@ -11,25 +11,33 @@
 
 <ion-content padding>
   <ion-row justify-content-center *ngIf="filtrosList == 'service'">
-    <ion-col col-12 no-padding text-center>
+    <ion-col col-12 no-padding text-center *ngIf="localidades">
       <button class="btn_categorias" ion-button round>Localidad
         <ion-select [(ngModel)]="localidad" okText="Ok" cancelText="Cancelar" multiple="true" [selectOptions]="selectOptionsLocal"
-          (ionChange)="getLocal(localidad)" selectedText=" ">
-          <ion-option *ngFor="let cat of localidades" [value]="cat">{{cat.localidad}}</ion-option>
+          (ionChange)="onLocalSelected($event)" selectedText=" ">
+          <ion-option *ngFor="let localidad of localidades" [value]="localidad">{{localidad}}</ion-option>
         </ion-select>
       </button>
     </ion-col>
     <ion-col *ngIf="localidadSelected.length > 0" col-12 padding text-center>
-      <ion-list *ngFor="let select of localidadSelected[0]; let i = index;">
-        <button class="btn_catSelected" ion-button round icon-end>{{select.localidad}}
-          <span (click)="eliminarLocalidad(i)">
-            <ion-icon name="close"></ion-icon>
-          </span>
+      <ion-list *ngFor="let select of localidadSelected; let i = index;">
+        <button class="btn_catSelected" ion-button round icon-end>{{select}}          
         </button>
       </ion-list>
     </ion-col>
-    <ion-col col-12 text-center>
-      <button class="btn_catSelected" ion-button round>Descuentos</button>
+    <ion-col col-12 no-padding text-center>
+      <button class="btn_categorias" ion-button round>Descuento
+        <ion-select [(ngModel)]="desc" okText="Ok" cancelText="Cancelar" multiple="true" [selectOptions]="selectOptionsLocal"
+          (ionChange)="onSelectedDecuento($event)" selectedText=" ">
+          <ion-option *ngFor="let desc of descuentos" [value]="desc">{{desc}}%</ion-option>
+        </ion-select>
+      </button>
+    </ion-col>
+    <ion-col *ngIf="descuentoSelected.length > 0" col-12 padding text-center>
+      <ion-list *ngFor="let descu of descuentoSelected; let i = index;">
+        <button class="btn_catSelected" ion-button round icon-end>{{descu}}%         
+        </button>
+      </ion-list>
     </ion-col>
   </ion-row>
   <ion-row *ngIf="filtrosList == 'perros'" justify-content-center no-padding class="btn_filtros">
