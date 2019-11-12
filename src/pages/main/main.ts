@@ -22,16 +22,6 @@ export class MainPage {
     private api: ApiProvider,
     private storage: Storage
   ) {
-    /* if(this.navParams.data.user){
-      this.api.getUser(this.navParams.data.user).subscribe(user=>{
-        console.log('dataUser', user);
-        if(user['data']){
-          this.user = user['data'];
-          console.log('main_param', user);
-          this.storage.set('usuario', user['data']);
-        }
-      })
-    }  */
     this.mySelectedIndex = navParams.data.tabIndex || 0;
   }
 

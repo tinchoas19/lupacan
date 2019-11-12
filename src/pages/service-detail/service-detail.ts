@@ -162,7 +162,7 @@ export class ServiceDetailPage {
               map: this.maps.map,
               title: local.nombre,
               icon: icon,
-              draggable: true,
+              draggable: false,
               position: { lat: location.lat, lng: location.lng }
             });
             this.location = location;
