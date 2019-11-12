@@ -43,12 +43,24 @@
       </ion-row>
     </ion-grid>
   </ion-list>
-  <ion-row justify-content-center>
-    <ion-col col-12 text-center>
-      <button text-center ion-button round color="primary" (click)="openModal(dog, 2)">Ver Historial</button>
-    </ion-col>
-    <ion-col col-12 text-center>
-      <button text-center ion-button round color="primary" (click)="pedirTenencia(dog)">Quiero aportar para {{dog.nombre}}</button>      
-    </ion-col>
-  </ion-row>
+  <div *ngIf="index == '0'">
+    <ion-row justify-content-center>
+      <ion-col col-12 text-center>
+        <button text-center ion-button round color="primary" (click)="openModal(dog, 2)">Ver Historial</button>
+      </ion-col>
+      <ion-col col-12 text-center>
+        <button text-center ion-button round color="primary" (click)="pedirTenencia(dog)">Quiero aportar para {{dog.nombre}}</button>
+      </ion-col>
+    </ion-row>
+  </div>
+  <div *ngIf="index == '1'">
+    <ion-row justify-content-center>
+      <ion-col col-12 text-center>
+        <button text-center ion-button round color="primary" (click)="openModal(dog, 1)">Agregar Historia</button>
+      </ion-col>
+      <ion-col col-12 text-center>
+        <button text-center ion-button round color="primary" (click)="addTenencia(dog)">Dar tenencia compartida</button>
+      </ion-col>
+    </ion-row>
+  </div>
 </ion-content>

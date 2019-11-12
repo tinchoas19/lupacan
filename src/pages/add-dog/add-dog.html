@@ -14,10 +14,10 @@
           <ion-item>
             <ion-label stacked>Estado</ion-label>
             <ion-select [(ngModel)]="dog.estado" placeholder="Seleccionar" (ionChange)="onAccountTypeChange(dog.estado)">
-              <ion-option value="1">Es mío y está en casa</ion-option>
-              <ion-option value="3">Para dar en adopción</ion-option>
-              <ion-option value="2">Lo perdí</ion-option>
-              <ion-option value="5">Callejerito</ion-option>
+              <ion-option value="1" [selected]="setEstado == '1'">Es mío y está en casa</ion-option>
+              <ion-option value="3" [selected]="setEstado == '3'">Para dar en adopción</ion-option>
+              <ion-option value="2" [selected]="setEstado == '2'">Lo perdí</ion-option>
+              <ion-option value="5" [selected]="setEstado == '5'">Callejerito</ion-option>
             </ion-select>
           </ion-item>
         </ion-col>
@@ -27,7 +27,7 @@
         <ion-col>
           <ion-item>
             <ion-label stacked>Código collar</ion-label>
-            <ion-input [(ngModel)]="dog.codigo" type="text"></ion-input>
+            <ion-input [(ngModel)]="dog.codigo" type="text" placeholder="Ingresar el código del collar"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
