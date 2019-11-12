@@ -25,7 +25,7 @@
         </button>
       </ion-list>
     </ion-col>
-    <ion-col col-12 no-padding text-center>
+    <ion-col col-12 no-padding text-center *ngIf="descuentos">
       <button class="btn_categorias" ion-button round>Descuento
         <ion-select [(ngModel)]="desc" okText="Ok" cancelText="Cancelar" multiple="true" [selectOptions]="selectOptionsLocal"
           (ionChange)="onSelectedDecuento($event)" selectedText=" ">
