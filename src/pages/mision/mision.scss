@@ -1,8 +1,37 @@
 page-mision {
-    .toolbar-background {
-        background: #fff;
-        border-color: transparent;
+
+    ion-header {
+
+      &.header {
+        padding: 0;
+
+        ion-navbar {
+
+          .back-button,
+          ion-buttons {
+
+            ion-icon {
+              color: #fff;
+              font-size: 2.5rem;
+            }
+          }
+
+          .toolbar-background {
+            background: $lupa-amarillo;
+            border-color: transparent;
+          }
+  
+          .toolbar-content {
+  
+            .toolbar-title {
+              color: #fff;
+            }
+          }
+        }
       }
+    }
+
+    
     
       .slide-zoom {
         height: 100%;
