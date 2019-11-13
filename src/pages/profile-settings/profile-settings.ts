@@ -1,6 +1,6 @@
 import { SaludPage } from './../salud/salud';
 import { MainPage } from './../main/main';
-import { App } from 'ionic-angular';
+import { App, AlertController } from 'ionic-angular';
 import { AddDogPage } from './../add-dog/add-dog';
 import { ListChatsPage } from './../list-chats/list-chats';
 import { RefugioPage } from './../refugio/refugio';
@@ -31,6 +31,7 @@ export class ProfileSettingsPage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     private badge: Badge,
+    public alertCtrl: AlertController,
     private storage: Storage,
     private api: ApiProvider,
     public app: App
@@ -101,8 +102,26 @@ export class ProfileSettingsPage {
   }
   goToMyDogs(i) {
     console.log('i',i);
-    this.navCtrl.push(MyDogsPage,{index:i});
+    if(i == '2'){
+      const confirm = this.alertCtrl.create({
+        title: 'Aviso',
+        message: 'Estamos probando esta funcionalidad nueva!\nMás adelante te informaremos cómo podrás acceder de manera exclusiva a todo este contenido.',
+        buttons: [
+          {
+            text: 'OK',
+            handler: () => {
+              console.log('Agree clicked');
+              this.navCtrl.push(MyDogsPage,{index:i});
+            }
+          }
+        ]
+      });
+      confirm.present();
+    }else{
+      this.navCtrl.push(MyDogsPage,{index:i});
+    }
   }
+  
   goToAddDogCaclle(){
     this.navCtrl.push(AddDogPage,{calle:true});
   }

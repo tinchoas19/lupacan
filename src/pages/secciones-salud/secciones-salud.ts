@@ -1,3 +1,4 @@
+import { ApiProvider } from './../../providers/api/api';
 import { ModalSaludPage } from './../modal-salud/modal-salud';
 import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
@@ -11,14 +12,27 @@ export class SeccionesSaludPage {
   descripcion: string;
   title: string;
   index:any;
+  dog:any;
+  itemSalud:any = null;
+  itemTrata:any = null;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    private api: ApiProvider
   ) {
     this.index = this.navParams.data.index || 0;
+    this.dog = this.navParams.get('dog');
     console.log('index', this.index);
     this.controlSecc(this.index);
+  }
+
+  ionViewWillEnter(){
+    this.api.getSalud(this.dog.perroid).subscribe(x=>{
+      console.log('data',x);
+      this.itemSalud = x['data']['vacunas'];
+      this.itemTrata = x['data']['tratamientos'];
+    })
   }
 
   ionViewDidLoad() {
@@ -49,7 +63,10 @@ export class SeccionesSaludPage {
   }
 
   openModal(title){
-    let profileModal = this.modalCtrl.create(ModalSaludPage, { title: title });
+    let profileModal = this.modalCtrl.create(ModalSaludPage, { title: title, dog: this.dog });
+    profileModal.onDidDismiss(data => {
+      this.ionViewWillEnter();
+    });
     profileModal.present();
   }
 

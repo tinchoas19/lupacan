@@ -257,6 +257,69 @@ export class ApiProvider {
       );
   }
 
+  //------SALUD => VACUNAS---------------
+  getVacunas(): Observable<any> {
+    return this.httpClient.get("https://ctrlztest.com.ar/lupacan/apirest/traervacunasytratamientos.php")
+      .pipe(
+        tap(x => {
+          console.log('traervacunasytratamientos', x);
+        })
+      );
+  }
+
+  getSalud(perroid): Observable<any> {
+    return this.httpClient.get("https://ctrlztest.com.ar/lupacan/apirest/traerperrosalud.php?perroid=" +perroid)
+      .pipe(
+        tap(x => {
+          console.log('traerperrosalud', x);
+        })
+      );
+  }
+
+  //------SALUD => AGREGAR VACUNAS---------------
+  //-POST--------------
+  addVacuna(fecha,perroid, vacuna): Observable<any> {
+    console.log('fecha', fecha);
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    var body = JSON.stringify({
+      fecha : fecha,
+      perroid :perroid,
+      vacunaid: vacuna,
+    });
+
+    console.log('body', body);
+
+    return this.httpPost.post(this.ApiUrl + "agregarvacunaperro.php", body, options).pipe(
+      tap(x => {
+        console.log('bitacora', x);
+      }));
+  }
+
+  //------SALUD => AGREGAR TRATAMIENTO---------------
+  //-POST--------------
+  addTratamiento(fecha,perroid, tratamiento): Observable<any> {
+    console.log('fecha', fecha);
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    let options = new RequestOptions({ headers: headers, withCredentials: true });
+    var body = JSON.stringify({
+      fecha : fecha,
+      perroid :perroid,
+      tratamiento: tratamiento,
+    });
+
+    console.log('body', body);
+
+    return this.httpPost.post(this.ApiUrl + "agregartratamientoperro.php", body, options).pipe(
+      tap(x => {
+        console.log('bitacora', x);
+      }));
+  }
+  
   //-------- BITACORA CALLEJERITO -----------
   //-POST--------------
   addHistorial(usuarioid,perro, text): Observable<any> {

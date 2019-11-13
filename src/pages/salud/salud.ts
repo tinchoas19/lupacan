@@ -9,7 +9,12 @@ import { NavController, NavParams } from 'ionic-angular';
 export class SaludPage {
   expand1:boolean=false;
   expand2:boolean=false;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  dog:any;
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams
+  ) {
+    this.dog = this.navParams.get('dog');
   }
 
   ionViewDidLoad() {
@@ -27,7 +32,7 @@ export class SaludPage {
   }
 
   seccion(i){
-    this.navCtrl.push(SeccionesSaludPage,{index:i});
+    this.navCtrl.push(SeccionesSaludPage,{index:i, dog: this.dog});
   }
 
 }

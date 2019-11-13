@@ -16,6 +16,24 @@
       <p text-wrap>{{descripcion}}</p>
     </ion-item>
   </div>
+  <div *ngIf="itemSalud && index == '0'">
+    <ion-list no-lines>
+      <ion-item *ngFor="let vac of itemSalud">
+        <h1>{{vac.nombre}}</h1>
+        <p>{{vac.fecha | date : "dd/MM/y" }}</p>
+        <ion-icon name="trash" item-end></ion-icon>
+      </ion-item>
+    </ion-list>
+  </div>
+  <div *ngIf="itemSalud && index == '1'">
+    <ion-list no-lines>
+      <ion-item *ngFor="let vac of itemTrata">
+        <h1>{{vac.tratamiento}}</h1>
+        <p>{{vac.fecha | date : "dd/MM/y" }}</p>
+        <ion-icon name="trash" item-end></ion-icon>
+      </ion-item>
+    </ion-list>
+  </div>
   <div *ngIf="index === 5">
     <ion-list>
       <ion-list-header>
