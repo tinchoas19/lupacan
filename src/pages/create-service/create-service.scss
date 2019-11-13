@@ -1,51 +1,61 @@
 page-create-service {
+
     .carga-img-productos {
     
-        .contenedor-img-azul {
-            background-color: color($colors, primary);
+        .contenedor-img {
+            background-color: $lupa-amarillo;
             border-radius: 10px;
             height: 248px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+
+            .empezar-anadir {
+                margin: 0!important;
+                color: #fff;
+                text-align: center;
+                padding: 0 15px;
+                font-weight: 600;
+                font-size: 1.9rem;
+        
+                span {
+                  display: block;
+        
+                  .icon {
+                      color: #fff;
+                      font-weight: 600;
+                      font-size: 8rem;
+                  }
+                }
+              }
         } 
     }
-    .empezar-anadir {
-        padding: 27px 35px;
-        font-size: 1.6rem;
-        text-align: center;
-        margin: 0!important;
-        color: #fff;
 
-        span {
-          display: block;
-          font-size: 7rem;
-          .icon{
-              color: #fff;
-          }
-        }
-      }
-    .searchbar-input {
-        padding: 6px 55px;
-        background-position: left 8px center;
-        height: 4rem !important;
-        border-radius: 4rem !important;
-        font-weight: 400;
-        line-height: 3rem;
-        color: inherit;
-        background-color: #fff;
-        -webkit-box-shadow: none !important;
-        box-shadow: none !important;
-        border: 1px solid color($colors, primary);
-    }
-    .horarios{
-        padding: 0 16px;
-        .col{
-            padding: 0px !important;
+    ion-select {
+        padding: 0 5px!important;
+
+        .select-icon {
+
+            .select-icon-inner {
+                color: #fff!important;
+            }
         }
     }
-    .disabled {
-        opacity:0.6;
-        padding: 0 16px;
-        .col{
-            padding: 0px !important;
-        }         
+
+    .btn_catSelected {
+        display: block;
+        height: 2.3rem!important;
+        width: 75%;
+        font-size: 1.2rem!important;
+
+        .button-inner {
+
+            ion-icon {
+                color: #fff;
+                vertical-align: middle;
+                padding-left: 0.6em;
+            }
+        }
     }
 }
