@@ -8,7 +8,7 @@
             ion-label {
                 font-size: 1.4rem;
                 font-weight: 500;
-                color: $lupa-light-gray;
+                color: $lupa-amarillo;
             }
 
             .text-input,
@@ -132,6 +132,38 @@
             font-weight: 600;
             text-align: center;
         }
+    }
+
+    .carga-img-productos {
+    
+        .contenedor-img {
+            background-color: $lupa-amarillo;
+            border-radius: 10px;
+            height: 248px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+
+            .empezar-anadir {
+                margin: 0!important;
+                color: #fff;
+                text-align: center;
+                padding: 0 15px;
+                font-weight: 600;
+                font-size: 1.9rem;
+        
+                span {
+                  display: block;
+        
+                  .icon {
+                      color: #fff;
+                      font-weight: 600;
+                      font-size: 8rem;
+                  }
+                }
+              }
+        } 
     }
     
 }

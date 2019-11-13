@@ -255,14 +255,14 @@
       </ion-row>
 
       <ion-row *ngIf="!perroRefugio">
-        <ion-col padding text-center>
+        <ion-col text-center>
           <button ion-button block class="btn-iniciar lupa-shadow" (click)="irAHome()">Guardar</button>
           <p (click)="irAAgregar()">Agregar otro perro</p>
         </ion-col>
       </ion-row>
 
       <ion-row *ngIf="perroRefugio">
-        <ion-col padding text-center>
+        <ion-col text-center>
           <button ion-button block class="btn-iniciar lupa-shadow" (click)="addDogRefugio()">Agregar perro al refugio!</button>
           <p (click)="irAAgregar()">Agregar otro perro</p>
         </ion-col>

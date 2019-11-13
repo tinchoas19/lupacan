@@ -8,9 +8,8 @@ page-profile-service-user {
         }
     }
     .tienda-header{
-        margin-top: -32px;
-        background: #fff;
-        color: black;
+        margin: 4px 0!important;
+        color: $lupa-gray;
     }
     .top-cont{
         color: #fff;
@@ -18,7 +17,7 @@ page-profile-service-user {
           .heading{
             border-bottom: 2px solid #fff;
             h2{
-              background: black;
+              background: $lupa-gray;
               color: #fff;
             }
           }
@@ -45,16 +44,17 @@ page-profile-service-user {
             padding-top: 3%;
         }
     }
-    .btn_tienda{
+    .btn_tienda {
         border: 1px solid #b7b7b7;
-        //margin-top: -30px !important;
         margin: 0 auto;
-        font-size: 1.7rem;
-        font-weight: 600;
-        color: #35d9c1;
         background: #ffffff !important;
-        width: 90%;
         text-transform: uppercase;
+
+        span {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: $lupa-gray!important;
+        }
     }
     .descuentos{
         .item{

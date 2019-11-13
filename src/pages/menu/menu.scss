@@ -191,8 +191,15 @@ page-menu {
         transition: 0.09s all linear;
 
         .item-inner {
-            padding-left: 32px;
-            font-size: 14px;
+            padding-left: 60px;
+
+            .input-wrapper {
+
+                .label {
+                    margin: 0;
+                    font-size: 1.2rem;
+                }
+            }
         }
     }
     
