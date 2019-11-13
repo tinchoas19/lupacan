@@ -77,25 +77,27 @@
         </ion-col>
       </ion-row>
 
-      <ion-row class="data-input">
-        <ion-col col-4>
-          <ion-item radio-group [(ngModel)]="dog.gender">
-            <ion-label stacked>Sexo</ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col col-4>
-          <ion-item>
-            <ion-label>Hembra</ion-label>
-            <ion-radio checked="true" value="2"></ion-radio>
-          </ion-item>
-        </ion-col>
-        <ion-col col-4>
-          <ion-item>
-            <ion-label>Macho</ion-label>
-            <ion-radio value="1"></ion-radio>
-          </ion-item>
-        </ion-col>
-      </ion-row>
+      <ion-list radio-group [(ngModel)]="dog.gender">
+        <ion-row class="data-input">
+          <ion-col col-4>
+            <ion-item>
+              <ion-label stacked>Sexo</ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col col-4>
+            <ion-item>
+              <ion-label>Hembra</ion-label>
+              <ion-radio checked="true" value="2"></ion-radio>
+            </ion-item>
+          </ion-col>
+          <ion-col col-4>
+            <ion-item>
+              <ion-label>Macho</ion-label>
+              <ion-radio value="1"></ion-radio>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-list>
 
       <ion-list radio-group [(ngModel)]="dog.esterilizado">
         <ion-row class="data-input">
