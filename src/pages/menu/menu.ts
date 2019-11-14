@@ -49,6 +49,9 @@ export class MenuPage {
         this.events.subscribe('new-service', ()=>{
             this.goToMyServices();
         });
+        this.events.subscribe('new-perfil', ()=>{
+            this.getStorage();
+        });
     }
 
     openItem(){
@@ -84,7 +87,7 @@ export class MenuPage {
     }
 
     ionViewWillEnter(){
-        
+        console.log('hola');
     }
 
     getStorage(){

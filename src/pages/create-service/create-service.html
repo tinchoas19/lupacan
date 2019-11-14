@@ -72,14 +72,14 @@
       <ion-col col-3 class="amarillo-chico">
         <ion-item>
           <ion-label stacked>Apertura</ion-label>
-          <ion-datetime [disabled]="dia.desabilitar" [(ngModel)]="dia.abre" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45" (ionChange)="apertura(dia)"></ion-datetime>
+          <ion-datetime [disabled]="dia.desabilitar" [(ngModel)]="dia.abre" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45" (ionChange)="apertura(dia)" cancelText="Cancelar" doneText="Ok"></ion-datetime>
         </ion-item>
       </ion-col>
 
       <ion-col col-3 class="amarillo-chico">
         <ion-item>
           <ion-label stacked>Cierre</ion-label>
-          <ion-datetime [disabled]="dia.desabilitar" [(ngModel)]="dia.cierra" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45" (ionChange)="cierre(dia)"></ion-datetime>
+          <ion-datetime [disabled]="dia.desabilitar" [(ngModel)]="dia.cierra" displayFormat="H mm" pickerFormat="H mm" minuteValues="0,15,30,45" (ionChange)="cierre(dia)" cancelText="Cancelar" doneText="Ok"></ion-datetime>
         </ion-item>
       </ion-col>
 

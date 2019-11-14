@@ -201,5 +201,10 @@
           </ion-col>
         </ion-row>
 
+        <ion-row *ngIf="showMyControls && dog.estado == '1'">
+          <ion-col>
+            <button ion-button full (click)="relacionarQr(dog)">Relacionar QR</button>
+          </ion-col>
+        </ion-row>
     </ion-grid>
 </ion-content>

@@ -3,7 +3,7 @@ import { ApiProvider } from './../../providers/api/api';
 import { IntervalProvider } from './../../providers/interval/interval';
 import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
-import { NavController, AlertController, MenuController, NavParams } from 'ionic-angular';
+import { NavController, AlertController, MenuController, NavParams, Events } from 'ionic-angular';
 import { ServiPage } from "../servi/servi";
 import { FeedPage } from "../feed/feed";
 import { ProfileSettingsPage } from '../profile-settings/profile-settings';
@@ -16,8 +16,9 @@ import { AgregarPage } from '../agregar/agregar';
 export class HomePage {
 
   numberBadge: number;
-  usuario:any = 0;
-  imgSrc:any=null;
+  usuario: any = 0;
+  imgSrc: any = null;
+  imagen: any;
   public pagesData = [
     { id: 1, title: "Comunidad" },
     { id: 2, title: "Perdidos" },
@@ -29,6 +30,7 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    private events: Events,
     public alertCtrl: AlertController,
     public menuCtrl: MenuController,
     private badge: Badge,
@@ -36,19 +38,28 @@ export class HomePage {
     private api: ApiProvider,
     private interval: IntervalProvider
   ) {
+    this.events.subscribe('new-perfil', ()=>{
+      this.ionViewWillEnter();
+    });
   }
 
 
-  ionViewWillEnter(){
-    this.storage.get('datauser').then(val=>{
+  ionViewWillEnter() {
+    this.storage.get('datauser').then(val => {
       console.log('usuarioHome', val);
-      if(val){
+      if (val) {
         this.usuario = val;
-        this.imgSrc = "https://ctrlztest.com.ar/lupacan/apirest/"+val['imagen'];
-        this.api.getNotificacionesSinLeer(val['usuarioid']).subscribe(x=>{
-          console.log('misNot',x['data']);
+        if (val.imagen == "" && val.facebookid != "") {
+          this.imagen = "https://graph.facebook.com/" + val.facebookid + "/picture?type=large";
+        } else if (val.imagen != "") {
+          this.imagen = "https://ctrlztest.com.ar/lupacan/apirest/" + val.imagen
+        } else {
+          this.imagen = '../../assets/imgs/1.jpg';
+        }
+        this.api.getNotificacionesSinLeer(val['usuarioid']).subscribe(x => {
+          console.log('misNot', x['data']);
           let numberNot = Number(x['data']);
-          console.log('misNot_Parse',numberNot);            
+          console.log('misNot_Parse', numberNot);
           this.badge.set(numberNot);
           this.numberBadge = numberNot;
         })
@@ -56,42 +67,42 @@ export class HomePage {
     })
   }
 
-  ionViewDidLoad(){
-    this.interval.toggleInterval();    
+  ionViewDidLoad() {
+    this.interval.toggleInterval();
   }
 
   openMenu() {
     this.menuCtrl.open();
   }
- 
+
   closeMenu() {
     this.menuCtrl.close();
   }
- 
+
   toggleMenu() {
     this.menuCtrl.toggle();
   }
 
-  traerPublicidad(){
+  traerPublicidad() {
     /* this.api.getPublicidad("1").subscribe(x=>{
       console.log('publicidad',x);
     }) */
   }
 
-  goToCallejeritos(){
-    this.navCtrl.push(FeedPage,this.pagesData[4]);
+  goToCallejeritos() {
+    this.navCtrl.push(FeedPage, this.pagesData[4]);
   }
   goToComunidad() {
-    this.navCtrl.push(FeedPage,this.pagesData[0]);
+    this.navCtrl.push(FeedPage, this.pagesData[0]);
   }
   goToPerdidos() {
-    this.navCtrl.push(FeedPage,this.pagesData[1]);
+    this.navCtrl.push(FeedPage, this.pagesData[1]);
   }
   goToEncontrar() {
-    this.navCtrl.push(FeedPage,this.pagesData[2]);
+    this.navCtrl.push(FeedPage, this.pagesData[2]);
   }
   goToAdopcion() {
-    this.navCtrl.push(FeedPage,this.pagesData[3]);
+    this.navCtrl.push(FeedPage, this.pagesData[3]);
   }
   goToServicios() {
     this.navCtrl.push(ServiPage);

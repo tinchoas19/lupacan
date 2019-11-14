@@ -3,11 +3,12 @@ import { EditDogUserPage } from './../edit-dog-user/edit-dog-user';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Storage } from '@ionic/storage';
 import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ToastController, Slides } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ToastController, Slides, LoadingController } from 'ionic-angular';
 import { PhotoSliderPage } from '../photo-slider/photo-slider';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 import { ApiProvider } from '../../providers/api/api';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 declare var google: any;
 
@@ -17,6 +18,7 @@ declare var google: any;
   templateUrl: 'dog.html',
 })
 export class DogPage {
+  dogScan: any;
   checkEnCasa: boolean;
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
@@ -55,7 +57,9 @@ export class DogPage {
     public zone: NgZone,
     private storage: Storage,
     private api: ApiProvider,
-    public toastController: ToastController
+    public toastController: ToastController,
+    private barcodeScanner: BarcodeScanner,
+    public loadingCtrl: LoadingController,
   ) {
     this.searchDisabled = true;
     this.saveDisabled = true;
@@ -130,7 +134,7 @@ export class DogPage {
       this.autocompleteService = new google.maps.places.AutocompleteService();
       this.placesService = new google.maps.places.PlacesService(this.maps.map);
       this.searchDisabled = false;
-      if (this.dog['estado'] == 1 || this.dog['estado'] == 3 || this.dog['estado'] == 4) {
+      if (this.dog['placeid'] != '') {
         this.selectPlace(this.dog['placeid']);
       } else {
         this.selectPlace(this.dog['estadoplaceid']);
@@ -147,6 +151,45 @@ export class DogPage {
 
   goToEditDog() {
     this.navCtrl.push(EditDogUserPage, { dataDog: this.dog })
+  }
+
+  relacionarQr(dog){
+    let loading = this.loadingCtrl.create({
+      spinner: 'bubbles',
+      content: 'Espere por favor...'
+    });
+    loading.present();
+    this.barcodeScanner.scan({
+      preferFrontCamera: false, // iOS and Android
+      showFlipCameraButton: false, // iOS and Android
+      showTorchButton: true, // iOS and Android
+      torchOn: false, // Android, launch with the torch switched on (if available)
+      prompt: "Coloque el código de QR dentro del área de escaneo", // Android
+      resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+      formats: "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
+      orientation: "portrait", // Android only (portrait|landscape), default unset so it rotates with the device
+      disableAnimations: true, // iOS
+      disableSuccessBeep: false // iOS and Android
+    }).then(barcodeData => {
+      console.log('data', barcodeData);
+      if (barcodeData.text != "") {
+        this.api.addCodigo(dog.perroid, barcodeData.text).subscribe(x => {
+          console.log('VUELTA_API_scanCodeCollar', x);
+          let vuelta = JSON.parse(x['_body'])['data'];
+          if (vuelta == 'asignado') {
+            this.asignado(dog);
+            loading.dismiss();
+          }else{
+
+          }
+        })
+      }
+    }).catch((err) => {
+      // This seems to happen only when the "back" button is pressed
+      //this.showCancelledAlert();
+      loading.dismiss();      
+      console.log('erro', err);
+    });
   }
 
   ionViewDidLoad() {
@@ -176,6 +219,8 @@ export class DogPage {
                   this.dog = x['data'][0];
                   this.adopcion(dog);
                 })
+              }else{
+                this.existe();
               }
             })
           }
@@ -394,6 +439,28 @@ export class DogPage {
   async presentToasteEx() {
     const toast = await this.toastController.create({
       message: "Listo!\n No te preocupes ya avisamos a los usuarios de LupaCan cercanos a ti.",
+      duration: 3000,
+      showCloseButton: true,
+      position: 'top',
+      closeButtonText: 'x'
+    });
+    toast.present();
+  }
+
+  async asignado(dog) {
+    const toast = await this.toastController.create({
+      message: "Listo!\n Se asignamos el código con"+dog.nombre,
+      duration: 3000,
+      showCloseButton: true,
+      position: 'top',
+      closeButtonText: 'x'
+    });
+    toast.present();
+  }
+
+  async existe() {
+    const toast = await this.toastController.create({
+      message: "Uups!\n El código a relacionar ya existe!",
       duration: 3000,
       showCloseButton: true,
       position: 'top',

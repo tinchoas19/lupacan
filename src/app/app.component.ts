@@ -51,7 +51,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-     /*  this.storage.get('datauser').then(val => {
+      /*this.storage.get('datauser').then(val => {
         if (val != null) {
           console.log('components', val);
           this.imagen = "https://ctrlztest.com.ar/lupacan/apirest/" + val['imagen']
@@ -59,13 +59,13 @@ export class MyApp {
           this.email = val['email'];
           this.rootPage = MenuPage;
 
-           this.api.updateFirebase(val['usuarioid'],registration['registrationId']).subscribe(x=>{
+            this.api.updateFirebase(val['usuarioid'],registration['registrationId']).subscribe(x=>{
            console.log('updateFirebase',x);
            let data = JSON.parse(x['_body'])['data'];
            if(data == 'inserted'){
              this.rootPage = MenuPage;
            }
-         })  
+         })   
         } else {
           this.rootPage = LoginPage;
         }

@@ -1,6 +1,7 @@
+import { HomePage } from './../home/home';
 import { ApiProvider } from './../../providers/api/api';
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, AlertController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, AlertController, ToastController, Events } from 'ionic-angular';
 import { Crop } from '@ionic-native/crop';
 import { Base64 } from '@ionic-native/base64';
 import { Camera } from '@ionic-native/camera';
@@ -34,6 +35,7 @@ export class MyProfilePage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public event: Events,
     public platform: Platform,
     private camera: Camera,
     public crop: Crop,
@@ -73,7 +75,10 @@ export class MyProfilePage {
         this.storage.set('datauser', dataUser);
         this.presentToasteEx();
         setTimeout(()=>{
-          this.navCtrl.pop();
+          setTimeout(() => {
+            this.navCtrl.pop();
+            this.event.publish('new-perfil');
+          }, 500);
         },500)
       }
     })

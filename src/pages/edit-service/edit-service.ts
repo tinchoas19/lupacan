@@ -444,7 +444,7 @@ export class EditServicePage {
 
   async presentToasteEx() {
     const toast = await this.toastController.create({
-      message: "Listo!\n Se borró de tu cuenta!",
+      message: "Listo!\nServicio editado.",
       duration: 2000,
       showCloseButton: true,
       position: 'top',

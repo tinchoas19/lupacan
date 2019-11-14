@@ -1,3 +1,4 @@
+import { PerfilCallejeritoPage } from './../perfil-callejerito/perfil-callejerito';
 import { PhotoSliderPage } from './../photo-slider/photo-slider';
 import { ApiProvider } from './../../providers/api/api';
 import { Component } from '@angular/core';
@@ -42,16 +43,23 @@ export class QrCollaresPage {
         if (x['data'].length > 0) {
           this.dogScan = x['data'][0];
           console.log('dogScan', this.dogScan);
+        }else{
+          this.dogScan = null;
         }
       })
     } else {
+      this.dogScan = null;
       /* this.items = [];
       this.mostarUsuarios = this.mostrarPerros = this.mostrarLocales = false; */
     }
   }
 
   goToIntDog(dogScan) {
-    this.navCtrl.push(PhotoSliderPage, { dogDetail: dogScan });
+    if(dogScan.estado != '5'){
+      this.navCtrl.push(PhotoSliderPage, { dogDetail: dogScan });
+    }else{
+      this.navCtrl.push(PerfilCallejeritoPage, {dogDetail: dogScan})
+    }
   }
 
 
@@ -81,7 +89,11 @@ export class QrCollaresPage {
             this.dogScan = x['data'][0];
             console.log('dogScan', this.dogScan);
             loading.dismiss();
-            this.navCtrl.push(PhotoSliderPage, { dogDetail: this.dogScan });
+            if(this.dogScan.estado != '5'){
+              this.navCtrl.push(PhotoSliderPage, { dogDetail: this.dogScan });
+            }else{
+              this.navCtrl.push(PerfilCallejeritoPage, {dogDetail: this.dogScan})
+            }
           }
         })
       }

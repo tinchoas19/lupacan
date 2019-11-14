@@ -17,7 +17,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-row class="item-lista-wrapper lupa-shadow" *ngFor="let dog of myDogs" (click)="goToDogDetail(dog)">
+      <ion-row class="item-lista-wrapper lupa-shadow" *ngFor="let dog of misPerros" (click)="goToDogDetail(dog)">
         <ion-col col-4 no-padding>
           <div class="item-lista-img" [ngStyle]="{background: 'url(https://ctrlztest.com.ar/lupacan/apirest/' + dog.fotos[0].fotourl + ')', 'background-size':  'cover' , 'background-position':  'center' }">
               
@@ -70,7 +70,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-row class="item-lista-wrapper lupa-shadow" *ngFor="let dog of myDogs" (click)="darEnAdopcion(dog)">
+      <ion-row class="item-lista-wrapper lupa-shadow" *ngFor="let dog of misPerros" (click)="darEnAdopcion(dog)">
         <ion-col col-4 no-padding>
           <div class="item-lista-img" [ngStyle]="{background: 'url(https://ctrlztest.com.ar/lupacan/apirest/' + dog.fotos[0].fotourl + ')', 'background-size':  'cover' , 'background-position':  'center' }">
               
@@ -94,7 +94,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-row class="item-lista-wrapper lupa-shadow" *ngFor="let dog of myDogs" (click)="goToSalud(dog)">
+      <ion-row class="item-lista-wrapper lupa-shadow" *ngFor="let dog of misPerros" (click)="goToSalud(dog)">
         <ion-col col-4 no-padding>
           <div class="item-lista-img" [ngStyle]="{background: 'url(https://ctrlztest.com.ar/lupacan/apirest/' + dog.fotos[0].fotourl + ')', 'background-size':  'cover' , 'background-position':  'center' }">
               
@@ -118,7 +118,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-row class="item-lista-wrapper lupa-shadow" *ngFor="let dog of myDogs" (click)="addTenencia(dog)">
+      <ion-row class="item-lista-wrapper lupa-shadow" *ngFor="let dog of misPerros" (click)="addTenencia(dog)">
         <ion-col col-4 no-padding>
           <div class="item-lista-img" [ngStyle]="{background: 'url(https://ctrlztest.com.ar/lupacan/apirest/' + dog.fotos[0].fotourl + ')', 'background-size':  'cover' , 'background-position':  'center' }">
               

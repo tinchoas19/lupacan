@@ -18,6 +18,7 @@ export class MyDogsPage {
 
   myCalle: any = [];
   myDogs: any = [];
+  misPerros: any = [];
   index: any;
 
   constructor(
@@ -33,6 +34,7 @@ export class MyDogsPage {
   }
 
   ionViewWillEnter() {
+    this.misPerros = this.myDogs = this.myCalle = [];
     this.storage.get('datauser').then(val => {
       this.ApiProvider.getMyDogs(val['usuarioid']).subscribe(data => {
         console.log(data, 'sarasaaa');
@@ -40,6 +42,8 @@ export class MyDogsPage {
         this.myDogs.map(dog => {
           if (dog.estado == '5') {
             this.myCalle.push(dog);
+          }else{
+            this.misPerros.push(dog);
           }
         })
         console.log('calle', this.myCalle);

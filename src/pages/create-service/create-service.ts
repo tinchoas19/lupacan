@@ -211,7 +211,7 @@ export class CreateServicePage {
     //console.log('this.catSelected[0]', this.catSelected.length);
     let loading = this.loading.create({
       spinner: 'hide',
-      content: 'Please Wait...'
+      content: 'Espere por favor...'
     });
     loading.present();
     let data;

@@ -6,14 +6,11 @@
           <button *ngIf="usuario.facebookid == '' && usuario.imagen == ''" ion-button icon-only>
             <ion-icon name="contact"></ion-icon>
           </button>
-          <div *ngIf="usuario.imagen != '' && usuario.facebookid == ''">
-            <img class="imgPerfil" style="max-width: 20% !important;" [src]="imgSrc">
-          </div>
-          <div *ngIf="usuario.imagen != '' && usuario.facebookid != ''">
-            <img class="imgPerfil" style="max-width: 20% !important;" [src]="imgSrc">
+          <div *ngIf="usuario.imagen != ''">
+            <img class="imgPerfil" style="max-width: 20% !important;" [src]="imagen">
           </div>
           <div *ngIf="usuario.imagen == '' && usuario.facebookid != ''">
-            <img class="imgPerfil" style="max-width: 20% !important;" src="https://graph.facebook.com/{{usuario.facebookid}}/picture?type=large">
+            <img class="imgPerfil" style="max-width: 20% !important;" [src]="imagen">
           </div>
         </ion-buttons>
       </ion-col>
