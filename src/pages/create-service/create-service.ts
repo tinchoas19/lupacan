@@ -231,7 +231,7 @@ export class CreateServicePage {
             loading.dismiss();
             setTimeout(() => {
               this.navCtrl.pop();
-              this.event.publish('new-service');
+              this.event.publish('new-service', (this.navParams.data.refugio ? true : false));
             }, 500);
           }
         })

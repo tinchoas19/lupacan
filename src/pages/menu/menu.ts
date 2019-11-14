@@ -46,8 +46,8 @@ export class MenuPage {
     ) {
         this.getStorage();
         console.log("params", this.navParams.data);
-        this.events.subscribe('new-service', ()=>{
-            this.goToMyServices();
+        this.events.subscribe('new-service', (data)=>{
+            this.goToMyServices(data);
         });
         this.events.subscribe('new-perfil', ()=>{
             this.getStorage();
@@ -66,12 +66,12 @@ export class MenuPage {
         this.nav.push(MyProfilePage);
     }
 
-    goToMyServices() {
-        this.navCtrl.push(MyServicesPage,{refugio:false});
+    goToMyServices(isRefugio) {
+        this.navCtrl.push(MyServicesPage,{refugio: isRefugio});
     }
 
     goToMyRefugios(){     
-        this.navCtrl.push(MyServicesPage,true);
+        this.navCtrl.push(MyServicesPage,{refugio: true});
     }
     
     goToCreateRefugio(){

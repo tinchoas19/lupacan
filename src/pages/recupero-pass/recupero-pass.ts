@@ -50,7 +50,8 @@ export class RecuperoPassPage {
             this.navCtrl.setRoot(LoginPage);
           },500)
         }else{
-          this.presentToasteError();
+          this.presentToasteError(res);
+          loader.dismiss();
         }
       })
     }
@@ -72,10 +73,10 @@ export class RecuperoPassPage {
     alert.present();
   }
 
-  async presentToasteError() {
+  async presentToasteError(msg) {
     const toast = await this.toastController.create({
-      message: "Hubo un error!\n Vuleve a intentarlo.",
-      duration:2000,
+      message: msg,
+      duration:3000,
       showCloseButton: true,
       position: 'top',
       cssClass: 'toastError',

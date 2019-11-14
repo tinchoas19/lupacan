@@ -140,22 +140,24 @@
       <ion-toggle checked="false" [(ngModel)]="checkAsLost"></ion-toggle>
     </ion-row>
 
-    <ion-row *ngIf="checkAsLost" class="checks separacion-bloques">
+    <ion-row *ngIf="checkAsLost" class="checks separacion-bloques" radio-group [(ngModel)]="relationship">
       <ion-col col-6>
-          <p>En ubicación actual <ion-checkbox color="primary" [(ngModel)]="miUbicacion"></ion-checkbox></p>
-      </ion-col>
+          <!-- <p>En ubicación actual <ion-checkbox color="primary" [(ngModel)]="miUbicacion"></ion-checkbox></p> -->
+          <p>En ubicación actual <ion-radio color="primary" value="miUbicacion"></ion-radio></p>
+        </ion-col>
       <ion-col col-6>
-          <p>En otra ubicación <ion-checkbox color="primary" [(ngModel)]="otraUbicacion"></ion-checkbox></p>
+          <p>En otra ubicación <ion-radio color="primary" value="otraUbicacion"></ion-radio></p>
+          <!-- <p>En otra ubicación <ion-checkbox color="primary" [(ngModel)]="otraUbicacion"></ion-checkbox></p> -->
       </ion-col>
     </ion-row>
 
-    <ion-row *ngIf="miUbicacion && !otraUbicacion" class="separacion-bloques btn-no-flex">
+    <ion-row *ngIf="relationship == 'miUbicacion'" class="separacion-bloques btn-no-flex">
       <ion-col col-12 text-center>
         <button ion-button no-shadow (click)="showAlert()" round color="primary">Guardar Perdido</button>
       </ion-col>
     </ion-row>
 
-    <ion-row *ngIf="otraUbicacion && !miUbicacion" class="separacion-bloques">
+    <ion-row *ngIf="relationship == 'otraUbicacion'" class="separacion-bloques">
       <ion-col col-12>
         <ion-label class="title-item">Se perdió en:</ion-label>
         <ion-searchbar  class="dire-exacta" [(ngModel)]="query" (ionInput)="searchPlace()" placeholder="Dirección exacta"></ion-searchbar>

@@ -32,6 +32,7 @@ export class DogPage {
   private pageId: number;
   public showMyControls: boolean;
   placesService: any;
+  relationship: string;
   searchDisabled: boolean;
   saveDisabled: boolean;
   location: any;
