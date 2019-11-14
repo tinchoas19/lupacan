@@ -27,22 +27,23 @@
       <ion-icon text-center name="arrow-forward"></ion-icon>
     </ion-col>
   </ion-row>
-  <ion-list>
-    <ion-grid padding>
-      <ion-row justify-content-center>
-        <ion-col col-12 text-center>
-          <p>
-            <span class="txt-bold">{{dog.nombre}}</span>
-          </p>
-        </ion-col>
-        <ion-col col-12 text-center>
-          <p>Estado:
-            <span class="txt-bold">{{estado(dog)}}</span>
-          </p>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-list>
+  <ion-row class="nombre-perro" justify-content-center>
+    <ion-col col-10 text-center>
+      <p text-center>
+        {{dog.nombre}} - 
+      </p>
+    </ion-col>
+    <ion-col col-2 text-center>
+      <add-fav-dog [perroid]="dog.perroid"></add-fav-dog>
+    </ion-col>
+  </ion-row>
+  <ion-row justify-content-center>
+    <ion-col col-12 text-center>
+      <p>Estado:
+        <span class="txt-bold">{{estado(dog)}}</span>
+      </p>
+    </ion-col>
+  </ion-row>
   <div *ngIf="index == '0'">
     <ion-row justify-content-center>
       <ion-col col-12 text-center>

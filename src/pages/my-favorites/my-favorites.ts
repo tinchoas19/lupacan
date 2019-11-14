@@ -1,3 +1,6 @@
+import { PerfilCallejeritoPage } from './../perfil-callejerito/perfil-callejerito';
+import { PhotoSliderPage } from './../photo-slider/photo-slider';
+import { ServiceDetailPage } from './../service-detail/service-detail';
 import { ListDogUserPage } from './../list-dog-user/list-dog-user';
 import { ApiProvider } from './../../providers/api/api';
 import { Storage } from '@ionic/storage';
@@ -86,6 +89,27 @@ export class MyFavoritesPage {
 
   goToUserDetail(dog){
     this.navCtrl.push(ListDogUserPage, { id: dog.usuarioid, userName: dog.usuarionombre });
+  }
+
+  goToServDetail(dog){
+    console.log('localid',dog.localid);
+    this.api.getLocalData(dog.localid).subscribe(x=>{
+      console.log('xLocaliid',x);
+      this.navCtrl.push(ServiceDetailPage,{serv:x['data']});
+    })
+  }
+
+  goToDogDetail(dog){
+    this.api.getDogData(dog.perroid).subscribe(x=>{
+      console.log('perro',x);
+      if(x['data'].length > 0){
+        if(x['data'][0]['estado'] != 5){
+          this.navCtrl.push(PhotoSliderPage,{dogDetail: x['data'][0]})
+        }else{
+          this.navCtrl.push(PerfilCallejeritoPage,{dogDetail: x['data'][0]})
+        }
+      }
+    })
   }
 
 }

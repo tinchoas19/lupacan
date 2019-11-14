@@ -13,7 +13,7 @@
       </ion-slide>
     </ion-slides>
   </ion-row>
-  <ion-row *ngIf="!desdeBusq" justify-content-center style="margin-top: 5%;">
+  <ion-row *ngIf="!desdeBusq && dataCategory" justify-content-center style="margin-top: 5%;">
     <ion-col col-12 text-center>
       <h3 text-center color="primary">{{dataCategory.nombre}}</h3>
     </ion-col>

@@ -20,15 +20,16 @@ export class AddFavServComponent implements OnInit {
   ) {
     console.log('Hello AddFavServComponent Component');
     this.isChecked = false;
-    
+
   }
 
-  cargarUser(){
-    this.storage.get('datauser').then(val=>{
-      if(val!=null){
+  cargarUser() {
+    this.storage.get('datauser').then(val => {
+      if (val != null) {
         this.usuarioid = val['usuarioid'];
+        console.log('user:', this.usuarioid);
         this.api.getFavLocal(this.usuarioid, this.localid).subscribe(x => {
-          console.log('x_fav_serv',x);
+          console.log('x_fav_serv', x);
           if (x['data']) {
             this.isChecked = true;
           } else {
@@ -41,8 +42,7 @@ export class AddFavServComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarUser();
-    console.log('user:',this.usuarioid);
-    console.log('localid:',this.localid);
+    console.log('localid:', this.localid);
   }
 
   addToFavorites() {

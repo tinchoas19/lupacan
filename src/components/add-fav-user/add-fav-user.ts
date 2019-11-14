@@ -19,10 +19,12 @@ export class AddFavUserComponent implements OnInit {
     public toastController: ToastController,
   ) {
     console.log('Hello AddFavUserComponent Component');
+    
     this.isChecked = false;
   }
 
   ngOnInit(): void {
+    console.log('id', this.usuariofav);    
     this.storage.get('datauser').then(x => {
       if (x != null) {
         this.userid = x['usuarioid'];

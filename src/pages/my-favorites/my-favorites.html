@@ -50,14 +50,18 @@
 
       <div *ngSwitchCase="'usuarios'">
         <div *ngIf="!sinFavoritos">
-          <ion-row class="item-lista-wrapper lupa-shadow" *ngFor="let user of usuarios" (click)="goToDogDetail(user)">
+          <ion-row class="item-lista-wrapper lupa-shadow" *ngFor="let user of usuarios" (click)="goToUserDetail(user)">
             <ion-col col-4 no-padding *ngIf="user.imagen != ''">
               <div class="item-lista-img" [ngStyle]="{background: 'url(https://ctrlztest.com.ar/lupacan/apirest/' + user.imagen + ')', 'background-size':  'cover' , 'background-position':  'center' }">
                   
               </div>
             </ion-col>
-            <ion-col col-4 no-padding *ngIf="user.imagen == '' && user.facebookid != ''">
+            <ion-col col-4 no-padding *ngIf="user.imagen == '' && user.facebookid != '0'">
               <div class="item-lista-img" [ngStyle]="{background: 'url(https://graph.facebook.com/' + user.facebookid + '/picture?type=large)', 'background-size':  'cover' , 'background-position':  'center' }">
+              </div>
+            </ion-col>
+            <ion-col col-4 no-padding *ngIf="user.imagen == '' && user.facebookid == '0'">
+              <div class="item-lista-img" [ngStyle]="{background: 'url(assets/imgs/1.jpg)', 'background-size':  'cover' , 'background-position':  'center' }">
               </div>
             </ion-col>
             <ion-col col-8 class="item-info-wrapper">
@@ -77,7 +81,7 @@
 
       <div *ngSwitchCase="'locales'">
         <div *ngIf="!sinFavoritos">
-          <ion-row class="item-lista-wrapper lupa-shadow" *ngFor="let local of locales" (click)="goToDogDetail(local)">
+          <ion-row class="item-lista-wrapper lupa-shadow" *ngFor="let local of locales" (click)="goToServDetail(local)">
             <ion-col col-4 no-padding>
               <div class="item-lista-img" [ngStyle]="{background: 'url(https://ctrlztest.com.ar/lupacan/apirest/' + local.imagen + ')', 'background-size':  'cover' , 'background-position':  'center' }">
                   
@@ -100,7 +104,7 @@
 
       <div *ngSwitchCase="'refugios'">
         <div *ngIf="!sinFavoritos">
-          <ion-row class="item-lista-wrapper lupa-shadow" *ngFor="let local of refugios" (click)="goToDogDetail(local)">
+          <ion-row class="item-lista-wrapper lupa-shadow" *ngFor="let local of refugios" (click)="goToServDetail(local)">
             <ion-col col-4 no-padding>
               <div class="item-lista-img" [ngStyle]="{background: 'url(https://ctrlztest.com.ar/lupacan/apirest/' + local.imagen + ')', 'background-size':  'cover' , 'background-position':  'center' }">
                   

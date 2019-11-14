@@ -10,20 +10,22 @@
 </ion-header>
 
 <ion-content padding class="listas">
-  <ion-row justify-content-center>
-    <ion-col text-center col-6 no-padding>
-      <img text-center class="img_add" [src]="imgSrc">
-    </ion-col>
-  </ion-row>
-  <ion-row justify-content-center class="nombre-usuario">
-    <ion-col col-12>
-      <h4 text-center>{{nombreUser}} {{apellidoUser}} <span><add-fav-user class="fav-icon" [usuariofav]="idUser"></add-fav-user></span></h4>
-    </ion-col>
-    <ion-col col-12 *ngIf="user && user.mostrartelefono == '1'">
-      <p text-center class="telefono">
-        <ion-icon name="call"></ion-icon>{{user.telefono}}</p>
-    </ion-col>
-  </ion-row>
+  <div *ngIf="user">
+    <ion-row justify-content-center>
+      <ion-col text-center col-6 no-padding>
+        <img text-center class="img_add" [src]="imgSrc">
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="idUser" justify-content-center class="nombre-usuario">
+      <ion-col col-12>
+        <h4 text-center>{{nombreUser}} {{apellidoUser}} <span><add-fav-user class="fav-icon" [usuariofav]="idUser"></add-fav-user></span></h4>
+      </ion-col>
+      <ion-col col-12 *ngIf="user && user.mostrartelefono == '1'">
+        <p text-center class="telefono">
+          <ion-icon name="call"></ion-icon>{{user.telefono}}</p>
+      </ion-col>
+    </ion-row>
+  </div>
   
   <div *ngIf="misPerros.length > 0" class="_list">
     <ion-row>

@@ -103,7 +103,7 @@ export class FeedUsuariosPage {
           this.todosUsers = x['data'];
           this.todos = x['data'];
           this.todosUsers.map(user=>{
-            if (user.facebookid != '0') {
+            if (user.facebookid != '0' && user.imagen == "") {
               user.imgSrc = "https://graph.facebook.com/" + user.facebookid + "/picture?type=large";
             } else if (user.imagen != "") {
               user.imgSrc = "https://ctrlztest.com.ar/lupacan/apirest/" + user.imagen
