@@ -5,6 +5,7 @@ import { NavController, NavParams, Slides, ToastController, ModalController, Ale
 import { ModalCallejeritoPage } from '../modal-callejerito/modal-callejerito';
 import { MyDogsPage } from '../my-dogs/my-dogs';
 import { BuscarUsuariosPage } from '../buscar-usuarios/buscar-usuarios';
+import { ChatPage } from '../chat/chat';
 
 
 @Component({
@@ -12,11 +13,12 @@ import { BuscarUsuariosPage } from '../buscar-usuarios/buscar-usuarios';
   templateUrl: 'perfil-callejerito.html',
 })
 export class PerfilCallejeritoPage {
-  index:any;
+  userLogueado: any;
+  index: any;
   dog: any;
   @ViewChild('slideWithNav2') slideWithNav2: Slides;
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     public toastController: ToastController,
     public modalCtrl: ModalController,
@@ -26,6 +28,18 @@ export class PerfilCallejeritoPage {
   ) {
     this.dog = this.navParams.data.dogDetail;
     this.index = this.navParams.get('index') ? this.navParams.get('index') : 0;
+  }
+
+  ionViewWillEnter(){
+    this.updateUser();
+  }
+
+  updateUser() {
+    this.storage.get('datauser').then(val => {
+      if (val != null) {
+        this.userLogueado = val;
+      }
+    })
   }
 
   next() {
@@ -44,7 +58,7 @@ export class PerfilCallejeritoPage {
       return 'Encontrado'
     } else if (dog.estado == 4) {
       return 'En Adopción'
-    }else if (dog.estado == 5) {
+    } else if (dog.estado == 5) {
       return 'Callejerito'
     } else {
       return 'En Casa';
@@ -59,22 +73,22 @@ export class PerfilCallejeritoPage {
     profileModal.present();
   }
 
-  pedirTenencia(dog){
-    this.storage.get('datauser').then(val=>{
-      if(val!=null){
-        this.api.pedirTenenciaCalle(val['usuarioid'], dog.perroid).subscribe(x=>{
-          console.log('vueltaTenencia', x);
-          let vuelta = JSON.parse(x['_body'])['data'];
-          if(vuelta == 'inserted'){
-            this.tenencia(this.dog);
-          }
-        })
+  pedirTenencia(dog) {
+    this.api.pedirTenenciaCalle(this.userLogueado['usuarioid'], dog.perroid).subscribe(x => {
+      console.log('vueltaTenencia', x);
+      let vuelta = JSON.parse(x['_body'])['data'];
+      if (vuelta == 'inserted') {
+        this.tenencia(this.dog);
       }
     })
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PerfilCallejeritoPage');
+  }
+
+  goToChat() {
+    this.navCtrl.push(ChatPage, { origenid: this.userLogueado.usuarioid, tipoorigen: 'usuario', destinoid: this.dog['usuarioid'], tipodestino: 'usuario', conversandocon: this.dog['usuarionombre'] });
   }
 
   addTenencia(dog) {
@@ -99,7 +113,7 @@ export class PerfilCallejeritoPage {
 
   async tenencia(dog) {
     const toast = await this.toastController.create({
-      message: "Listo!\n Nos encargaremos de avisarle\n a"+dog.usuarionombre+" que\n deseas tener la tenencia también\n de"+dog.nombre,
+      message: "Listo!\n Nos encargaremos de avisarle\n a" + dog.usuarionombre + " que\n deseas tener la tenencia también\n de" + dog.nombre,
       duration: 3000,
       showCloseButton: true,
       position: 'top',

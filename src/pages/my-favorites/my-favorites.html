@@ -51,9 +51,13 @@
       <div *ngSwitchCase="'usuarios'">
         <div *ngIf="!sinFavoritos">
           <ion-row class="item-lista-wrapper lupa-shadow" *ngFor="let user of usuarios" (click)="goToDogDetail(user)">
-            <ion-col col-4 no-padding>
+            <ion-col col-4 no-padding *ngIf="user.imagen != ''">
               <div class="item-lista-img" [ngStyle]="{background: 'url(https://ctrlztest.com.ar/lupacan/apirest/' + user.imagen + ')', 'background-size':  'cover' , 'background-position':  'center' }">
                   
+              </div>
+            </ion-col>
+            <ion-col col-4 no-padding *ngIf="user.imagen == '' && user.facebookid != ''">
+              <div class="item-lista-img" [ngStyle]="{background: 'url(https://graph.facebook.com/' + user.facebookid + '/picture?type=large)', 'background-size':  'cover' , 'background-position':  'center' }">
               </div>
             </ion-col>
             <ion-col col-8 class="item-info-wrapper">
@@ -62,10 +66,10 @@
           </ion-row>
         </div>
 
-        <div *ngIf="sinFavoritos">
+        <div *ngIf="sinfavotritosUsuario">
           <ion-row>
             <ion-col>
-              <p class="sin-resultados">No tienes favoritos para esta sección</p>
+              <p class="sin-resultados">No tienes usuarios favoritos!</p>
             </ion-col>
           </ion-row>
         </div>
@@ -85,10 +89,10 @@
           </ion-row>
         </div>
 
-        <div *ngIf="sinFavoritos">
+        <div *ngIf="sinfavotritosLocal">
           <ion-row>
             <ion-col>
-              <p class="sin-resultados">No tienes favoritos para esta sección</p>
+              <p class="sin-resultados">No tienes servicios favoritos!</p>
             </ion-col>
           </ion-row>
         </div>
@@ -108,10 +112,10 @@
           </ion-row>
         </div>
 
-        <div *ngIf="sinFavoritos">
+        <div *ngIf="sinfavotritosRefugio">
           <ion-row>
             <ion-col>
-              <p class="sin-resultados">No tienes favoritos para esta sección</p>
+              <p class="sin-resultados">No tienes refugios favoritos!</p>
             </ion-col>
           </ion-row>
         </div>

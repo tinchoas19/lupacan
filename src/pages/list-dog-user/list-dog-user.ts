@@ -30,13 +30,11 @@ export class ListDogUserPage {
 
   ionViewWillEnter(){
     if(this.navParams.data.user){
-      //this.user = this.navParams.data.user;
-      //this.nombreUser = user['nombre'];
       this.idUser = this.navParams.data.user['usuarioid'];
       this.services.getUser(this.idUser).subscribe(x=>{
         console.log('datUser', x);
         this.user = x['data'];
-        if (this.user.facebookid != "") {
+        if (this.user.facebookid != "0" && this.user.imagen == "") {
           this.imgSrc = "https://graph.facebook.com/" + this.user.facebookid + "/picture?type=large";
         } else if (this.user.imagen != "") {
           this.imgSrc = "https://ctrlztest.com.ar/lupacan/apirest/" + this.user.imagen
@@ -53,8 +51,6 @@ export class ListDogUserPage {
       })
     }
     if(this.navParams.data.id){
-      //this.user = this.navParams.data.user;
-      //this.nombreUser = user['nombre'];
       this.idUser = this.navParams.data.id;
       this.services.getUser(this.idUser).subscribe(x=>{
         console.log('datUser', x);

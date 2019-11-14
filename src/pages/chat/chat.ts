@@ -52,9 +52,9 @@ export class ChatPage {
         this.services.getUser(idUser).subscribe(data=>{
           console.log('dataUser',data);
           let info = data['data'];
-          if (info.facebookid != '0') {
+          if (info.facebookid != '0' && info.imagen == "") {
             this.imageChatCon = "https://graph.facebook.com/" + info.facebookid + "/picture?type=large";
-          } else if (info.facebookid.imagen != "") {
+          } else if (info.imagen != "") {
             this.imageChatCon = "https://ctrlztest.com.ar/lupacan/apirest/" + info.imagen
           } else {
             this.imageChatCon = 'assets/imgs/1.jpg';

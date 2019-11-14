@@ -187,7 +187,7 @@ export class PhotoSliderPage {
     let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then(() => {
       this.placesService = new google.maps.places.PlacesService(this.maps.map);
       this.distanceService = new google.maps.DistanceMatrixService;
-      if (this.dog['estado'] == 1 || this.dog['estado'] == 3 || this.dog['estado'] == 4) {
+      if (this.dog.placeid != "") {
         this.selectPlace(this.dog['placeid']);
         this.getDistance(this.dog['perrodireccion'])
       } else {
