@@ -62,6 +62,7 @@ export class PhotoSliderPage {
   ) {
     this.getCurrentPosition();
     this.dog = this.navParams.data.dogDetail;
+    this.dog.edad = this.edad(this.dog.fechanacimiento);
     console.log('this.dog', this.dog);
     this.searchDisabled = true;
     this.saveDisabled = true;

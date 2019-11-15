@@ -33,7 +33,7 @@
     <ion-row class="nombre-perro">
       <ion-col col-12>
         <p>
-          {{dog.nombre}} - <span>{{edad(dog.fechanacimiento)}} años</span>
+          {{dog.nombre}} - <span>{{ (dog.edad > 0 ? (dog.edad == 1 ? '1 año' : (dog.edad + ' años')) : 'menos de un año') }}</span>
           <span no-lines *ngIf="perroMio" class="fav-icon">
             <add-fav-dog [perroid]="dog.perroid"></add-fav-dog>
           </span>

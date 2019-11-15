@@ -40,7 +40,7 @@
     <ion-row justify-content-center class="separacion-bloques">
       <ion-col col-12>
         <p><span class="title-item">Edad:</span>
-          {{edad(dog.fechanacimiento)}} años
+          {{ (dog.edad > 0 ? (dog.edad == 1 ? '1 año' : (dog.edad + ' años')) : 'menos de un año') }}
         </p>
       </ion-col>
     </ion-row>
