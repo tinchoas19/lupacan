@@ -55,9 +55,9 @@
 </ion-content>
 <ion-footer no-border>
   <div class="input-wrap">
-    <button ion-button clear icon-only item-right (click)="switchEmojiPicker()">
+    <!-- <button ion-button clear icon-only item-right (click)="switchEmojiPicker()">
       <ion-icon name="md-happy"></ion-icon>
-    </button>
+    </button> -->
     <textarea #chat_input placeholder="Escribe aqui..." [(ngModel)]="editorMsg" (keyup.enter)="sendMsg()" (focusin)="onFocus()">
       </textarea>
     <button ion-button clear icon-only item-right (click)="sendMsg()">

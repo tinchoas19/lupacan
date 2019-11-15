@@ -572,7 +572,7 @@ export class ApiProvider {
     headers.append('content-type', 'application/json');
     const requestOptions = new RequestOptions({ headers: headers });
 
-    var body = JSON.stringify({ tipodestino: tipodestino, tipoorigen: tipoorigen, destinoid: msg.destinoId, origenid: msg.userId, mensaje: msg.message });
+    var body = JSON.stringify({ tipodestino: tipodestino, tipoorigen: tipoorigen, destinoid: msg.destinoId, origenid: msg.userId, mensaje: msg.message,fechayhora: msg.time });
     console.log(body);
     return this.httpPost.post("https://ctrlztest.com.ar/lupacan/apirest/enviarchat.php", body, { headers: headers, withCredentials: true });
     /* return new Promise(resolve => setTimeout(() => resolve(msg), Math.random() * 1000))
