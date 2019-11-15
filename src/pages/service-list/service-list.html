@@ -4,7 +4,9 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="listas lista-servicios">
+  <ion-grid>
+
   <ion-row justify-content-center>
     <ion-slides autoplay="3000" loop="true" speed="800">
       <ion-slide *ngFor="let image of [1,2,3,4,5]">
@@ -13,11 +15,6 @@
     </ion-slides>
   </ion-row>
 
-  <!-- <ion-row justify-content-center style="margin-top: 5%;">
-    <ion-col col-12 text-center>
-      <h3 text-center color="primary">{{dataCategory.nombre}}</h3>
-    </ion-col>
-  </ion-row> -->
   <div *ngIf="!hayLocales">
 
     <ion-row justify-content-center>
@@ -50,7 +47,31 @@
         <ion-spinner text-center></ion-spinner>
       </ion-row>
       <div *ngIf="!sinOrdenar">
-        <ion-card class="lupa-shadow" *ngFor="let serv of services2" (click)="goToService(serv)">
+        <ion-row class="item-lista-wrapper lupa-shadow" *ngFor="let serv of services2" (click)="goToService(serv)">
+          <ion-col col-4 no-padding class="item-lista-img-wrapper">
+            <div *ngIf="serv.imagenes.length >0" class="item-lista-img" [ngStyle]="{background: 'url(https://ctrlztest.com.ar/lupacan/apirest/' + serv.imagenes[0].imagen + ')', 'background-size':  'cover' , 'background-position':  'center' }">
+                
+            </div>
+            <div *ngIf="!(serv.imagenes.length >0)" class="item-lista-img" [ngStyle]="{background: 'url(../../assets/imgs/vet.jpg)', 'background-size':  'cover' , 'background-position':  'center' }">
+                
+            </div>
+          </ion-col>
+          <ion-col col-8 class="item-info-wrapper">
+            <h2 class="nombre-item">{{serv.nombre}} <span *ngIf="serv.descuento != null">Con Descuentos!</span></h2>
+            <p class="desc-item"><ion-icon name="pin"></ion-icon> {{serv.direccion}}</p>
+            <p class="desc-item">Horarios: hrs</p>
+            <p class="desc-item">
+              <ion-icon name="star" class="plus"></ion-icon>
+              <ion-icon name="star" class="plus"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+            </p>
+          </ion-col>
+        </ion-row>
+
+
+        <!--<ion-card class="lupa-shadow" *ngFor="let serv of services2" (click)="goToService(serv)">
           <ion-grid>
             <ion-row class="list_serv">
               <ion-col col-5 no-padding class="service-img">
@@ -82,7 +103,7 @@
               </ion-col>
             </ion-row>
           </ion-grid>
-        </ion-card>
+        </ion-card>-->
       </div>
     </ion-list>
     <ion-row justify-content-center>
@@ -99,4 +120,6 @@
       <p text-center>Sin servicios dentro de esta categoria, por el momento!</p>
     </ion-row>
   </div>
+
+  </ion-grid>
 </ion-content>

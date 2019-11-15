@@ -11,57 +11,71 @@
 
 </ion-header>
 
-<ion-content>
-  <ion-row>
-    <ion-col col-1 text-center (click)="prev()">
-      <ion-icon text-center name="arrow-back"></ion-icon>
-    </ion-col>
-    <ion-col col-10 text-center>
-      <ion-slides style="width: 100% !important;" #slideWithNav2>
-        <ion-slide *ngFor="let img of dog.fotos">
-          <img class="circular--square" src="https://ctrlztest.com.ar/lupacan/apirest/{{img.fotourl}}" imageViewer>
-        </ion-slide>
-      </ion-slides>
-    </ion-col>
-    <ion-col col-1 text-center (click)="next()">
-      <ion-icon text-center name="arrow-forward"></ion-icon>
-    </ion-col>
-  </ion-row>
-  <ion-row class="nombre-perro" justify-content-center>
-    <ion-col col-10 text-center>
-      <p text-center>
-        {{dog.nombre}} - 
-      </p>
-    </ion-col>
-    <ion-col col-2 text-center>
-      <add-fav-dog [perroid]="dog.perroid"></add-fav-dog>
-    </ion-col>
-  </ion-row>
-  <ion-row justify-content-center>
-    <ion-col col-12 text-center>
-      <p>Estado:
-        <span class="txt-bold">{{estado(dog)}}</span>
-      </p>
-    </ion-col>
-  </ion-row>
-  <div *ngIf="index == '0'">
-    <ion-row justify-content-center>
-      <ion-col col-12 text-center>
-        <button text-center ion-button round color="primary" (click)="openModal(dog, 2)">Ver Historial</button>
+<ion-content class="internas-perro">
+  <ion-grid padding-horizontal>
+
+    <ion-row>
+      <ion-col col-1 text-center (click)="prev()">
+        <ion-icon text-center name="arrow-back"></ion-icon>
       </ion-col>
-      <ion-col col-12 text-center>
-        <button text-center ion-button round color="primary" (click)="pedirTenencia(dog)">Quiero aportar para {{dog.nombre}}</button>
+      <ion-col col-10 text-center>
+        <ion-slides #slideWithNav2>
+          <ion-slide *ngFor="let img of dog.fotos">
+            <img class="circular--square" src="https://ctrlztest.com.ar/lupacan/apirest/{{img.fotourl}}" imageViewer>
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
+      <ion-col col-1 text-center (click)="next()">
+        <ion-icon text-center name="arrow-forward"></ion-icon>
       </ion-col>
     </ion-row>
-  </div>
-  <div *ngIf="index == '1'">
-    <ion-row justify-content-center>
+
+    <ion-row class="nombre-perro">
+        <ion-col col-12>
+          <p>
+            {{dog.nombre}}
+            <span no-lines *ngIf="!perroMio" class="fav-icon">
+              <add-fav-dog [perroid]="dog.perroid"></add-fav-dog>
+            </span>
+          </p>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="estado-distancia separacion-bloques">
+        <ion-col class="estado" col-12 text-center>
+          <p><span class="title-item">Estado:</span>
+            {{estado(dog)}}
+          </p>
+        </ion-col>
+      </ion-row>
+
+    <!--<ion-row justify-content-center>
       <ion-col col-12 text-center>
-        <button text-center ion-button round color="primary" (click)="openModal(dog, 1)">Agregar Historia</button>
+        <p>Estado:
+          <span class="txt-bold">{{estado(dog)}}</span>
+        </p>
       </ion-col>
-      <ion-col col-12 text-center>
-        <button text-center ion-button round color="primary" (click)="addTenencia(dog)">Dar tenencia compartida</button>
-      </ion-col>
-    </ion-row>
-  </div>
+    </ion-row>-->
+
+    <div *ngIf="index == '0'">
+      <ion-row justify-content-center class="separacion-bloques">
+        <ion-col col-12 text-center>
+          <button text-center ion-button round color="primary" (click)="openModal(dog, 2)">Ver Historial</button>
+        </ion-col>
+        <ion-col col-12 text-center>
+          <button text-center ion-button round color="primary" (click)="pedirTenencia(dog)">Quiero aportar para {{dog.nombre}}</button>
+        </ion-col>
+      </ion-row>
+    </div>
+    <div *ngIf="index == '1'">
+      <ion-row justify-content-center class="separacion-bloques">
+        <ion-col col-12 text-center>
+          <button text-center ion-button round color="primary" (click)="openModal(dog, 1)">Agregar Historia</button>
+        </ion-col>
+        <ion-col col-12 text-center>
+          <button text-center ion-button round color="primary" (click)="addTenencia(dog)">Dar tenencia compartida</button>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-grid>
 </ion-content>

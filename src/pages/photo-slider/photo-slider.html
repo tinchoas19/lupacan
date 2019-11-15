@@ -56,14 +56,14 @@
       <ion-toggle checked="false" [(ngModel)]="checkAsLost"></ion-toggle>
     </ion-row>
 
-    <ion-row justify-content-center class="estado-distancia separacion-bloques">
-      <ion-col class="estado" col-6 text-center>
+    <ion-row class="estado-distancia separacion-bloques">
+      <ion-col class="estado" col-6>
         <p><span class="title-item">Estado:</span>
           {{estado(dog)}}
         </p>
       </ion-col>
 
-      <ion-col col-6 *ngIf="!perroMio && dog.estado != '5'" text-center>
+      <ion-col col-6 *ngIf="!perroMio && dog.estado != '5'">
         <p>
           <span class="txt-bold">Es mi Perro</span>
         </p>
