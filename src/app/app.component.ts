@@ -134,7 +134,7 @@ export class MyApp {
       switch (notification.additionalData.params.tipo) {
         case 'encontrado':
           let confirmAlert = this.alertCtrl.create({
-            title: 'Se perdió un Perro!',
+            title: 'Encontraron a tu amigo!',
             message: notification.message,
             buttons: [{
               text: 'Cancelar',

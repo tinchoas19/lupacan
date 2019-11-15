@@ -288,7 +288,8 @@ export class PhotoSliderPage {
             let data = JSON.parse(x['_body'])['data'];
             if (data == 'updated') {
               self.foundDog();
-              self.ionViewWillEnter();
+              //self.ionViewWillEnter();
+              self.navCtrl.pop();
             }
           });
         } else {
