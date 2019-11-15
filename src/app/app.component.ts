@@ -110,7 +110,7 @@ export class MyApp {
         } else {
           this.rootPage = LoginPage;
         }
-      })*/
+      }) */
       //this.services._id = registration['registrationId'];
     });
 

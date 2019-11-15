@@ -260,6 +260,10 @@ export class DogPage {
   }
 
   getPlaceid(usuarioid, perroid, latitude, longitude) {
+    let loading = this.loadingCtrl.create({
+      content: 'Espere por favor...'
+    });
+    loading.present();
     var geocoder = new google.maps.Geocoder();
     var latlng = { lat: parseFloat(latitude), lng: parseFloat(longitude) };
     let placeid: any;
@@ -280,6 +284,7 @@ export class DogPage {
               self.checkAsLost = false;
               self.miUbicacion = false;
               self.otraUbicacion = false;
+              loading.dismiss();
               self.presentToasteEx();
               self.api.getDogData(perroid).subscribe(x => {
                 console.log('perroid', x);

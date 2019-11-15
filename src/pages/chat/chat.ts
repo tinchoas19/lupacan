@@ -2,13 +2,14 @@ import { Storage } from '@ionic/storage';
 import { ApiProvider, usuario, ChatMessage } from './../../providers/api/api';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, NavParams, Events, Content, LoadingController, Navbar } from 'ionic-angular';
+import { DatePipe } from '@angular/common'
 
 @Component({
   selector: 'page-chat',
   templateUrl: 'chat.html',
 })
 export class ChatPage {
-
+  date:any;
   imageChatCon: any;
   imagenUser: any;
   @ViewChild(Content) content: Content;
@@ -35,6 +36,7 @@ export class ChatPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public datepipe: DatePipe,
     public loadingCtrl: LoadingController,
     private services: ApiProvider,
     private storage: Storage
@@ -46,9 +48,10 @@ export class ChatPage {
 
   cargarImg(idUser){
     if(this.navParams.data.userChat){
-      this.navParams.data.userChat.imgSrc
+      this.imageChatCon = this.navParams.data.userChat.imgSrc
     }else{
       if(this.navParams.data.tipodestino == 'usuario'){
+        console.log('chaCOn',this.imageChatCon);
         this.services.getUser(idUser).subscribe(data=>{
           console.log('dataUser',data);
           let info = data['data'];
@@ -60,6 +63,7 @@ export class ChatPage {
             this.imageChatCon = 'assets/imgs/1.jpg';
           }
         })
+        
       }else{
         this.services.getLocalData(idUser).subscribe(data=>{
           console.log('dataTienda',data);
@@ -135,6 +139,7 @@ export class ChatPage {
       console.log('dataChat', x);
       if (x['data']) {
         x['data'].map(message => {
+          console.log('message',message);
           let chatCon = "";
           let origen = "";
           if (message.origenlocalid != null) {
@@ -144,10 +149,10 @@ export class ChatPage {
           }
           let destino = "";
           if (origen == params.origenid) {
-            chatCon = this.nombreUser;
+            chatCon = params.conversandocon;
             destino = params.destinoid;
           } else {
-            chatCon = params.conversandocon;
+            chatCon = this.nombreUser;
             destino = params.origenid;
           }
           let newMsg: ChatMessage = {
@@ -198,15 +203,16 @@ export class ChatPage {
 
   sendMsg(msg) {
     if (!this.editorMsg.trim()) return;
-    console.log('send_nsj', this.toUser);
-
+    console.log('this.navParams.data.destinoid', this.navParams.data.destinoid);
+    this.date=new Date();
+    let latest_date =this.datepipe.transform(this.date, 'yyyy-MM-dd HH:MM');
     const id = Date.now().toString();
-
+    //let fecha = new Date()
     let newMsg: ChatMessage = {
       messageId: Date.now().toString(),
       userId: this.idUser,
       userName: this.nombreUser,
-      time: Date.now(),
+      time: latest_date,
       message: this.editorMsg,
       status: 'pending',
       destinoId: this.navParams.data.destinoid,
