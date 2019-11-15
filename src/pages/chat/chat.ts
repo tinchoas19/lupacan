@@ -93,7 +93,7 @@ export class ChatPage {
   interval() {
     this.buscarChats = setInterval(() => {
       this.traerNoLeidos(this.navParams.data);
-    }, 2000)
+    }, 400)
   }
 
   traerNoLeidos(params) {
@@ -137,7 +137,7 @@ export class ChatPage {
   traerChats(params) {
     this.misDatos();
     console.log('params', params);
-    this.services.getChat(params.origenid, params.origentipo, params.destinoid, params.destinotipo).subscribe(x => {
+    this.services.getChat(params.origenid, params.tipoorigen, params.destinoid, params.tipodestino).subscribe(x => {
       console.log('dataChat', x);
       if (x['data']) {
         x['data'].map(message => {
@@ -151,10 +151,10 @@ export class ChatPage {
           }
           let destino = "";
           if (origen == params.origenid) {
-            chatCon = params.conversandocon;
+            chatCon = this.nombreUser;
             destino = params.destinoid;
           } else {
-            chatCon = this.nombreUser;
+            chatCon =params.conversandocon;
             destino = params.origenid;
           }
           let newMsg: ChatMessage = {
@@ -227,7 +227,7 @@ export class ChatPage {
       this.focus();
     }
 
-    this.services.sendMsg(newMsg, this.navParams.data.destinoTipo, this.navParams.data.origentipo).subscribe((x) => {
+    this.services.sendMsg(newMsg, this.navParams.data.tipodestino, this.navParams.data.tipoorigen).subscribe((x) => {
       console.log('xxx', x);
       let index = this.getMsgIndexById(id);
       if (index !== -1) {
