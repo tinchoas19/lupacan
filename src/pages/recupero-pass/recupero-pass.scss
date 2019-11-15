@@ -1,4 +1,14 @@
 page-recupero-pass {
+    ion-header {
+        &.header {
+            ion-title {
+                .toolbar-title {
+                    font-size: 1.8rem;
+                }
+            }
+        }
+    }
+
     .button, .list{
         width: 100%;
     }

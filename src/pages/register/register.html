@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Registrarse</ion-title>
+      <ion-title text-center class="lupa-title">Registrarse</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -10,8 +10,10 @@
 <ion-content padding>
   <ion-row justify-content-center>
     <ion-col *ngIf="!imgFacebook" text-center col-6 no-padding>
-      <img text-center *ngIf="imagePath" class="img_add" [src]="getTrustImg(imagePath)">
-      <img text-center *ngIf="!imagePath" class="img_add" src="assets/imgs/main.png">
+      <div class="wrapper-img-registro">
+        <img text-center *ngIf="imagePath" class="img-" [src]="getTrustImg(imagePath)">
+        <img text-center *ngIf="!imagePath" class="img-registro" src="assets/imgs/main.png">
+      </div>
       <div class="col_add">
         <span text-center>
           <ion-icon ion-fab mini class="icon_add" name="add" (click)="addPerfilPhoto()"></ion-icon>
@@ -47,7 +49,7 @@
             <ion-item *ngIf="!myForm.controls.direccion.valid  && (myForm.controls.direccion.dirty || submitAttempt)">
               <p>Por favor ingresar una dirección válido.</p>
             </ion-item> -->
-          <ion-item class="fecha_nac">
+          <ion-item class="fecha_nac lupa-shadow">
             <ion-datetime displayFormat="DD/MM/YYYY" placeholder="Fecha de nacimiento" formControlName="edad" [class.invalid]="!myForm.controls.edad.valid && (myForm.controls.edad.dirty || submitAttempt)"></ion-datetime>
           </ion-item>
           <ion-item *ngIf="!myForm.controls.edad.valid  && (myForm.controls.edad.dirty || submitAttempt)">
