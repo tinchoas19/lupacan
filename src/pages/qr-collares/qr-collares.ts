@@ -1,3 +1,4 @@
+import { ToastController } from 'ionic-angular';
 import { PerfilCallejeritoPage } from './../perfil-callejerito/perfil-callejerito';
 import { PhotoSliderPage } from './../photo-slider/photo-slider';
 import { ApiProvider } from './../../providers/api/api';
@@ -26,6 +27,7 @@ export class QrCollaresPage {
     private api: ApiProvider,
     private barcodeScanner: BarcodeScanner,
     public loadingCtrl: LoadingController,
+    public toastController: ToastController
   ) {
   }
 
@@ -85,7 +87,10 @@ export class QrCollaresPage {
       if (barcodeData.text != "") {
         this.api.scanCodeCollar(barcodeData.text).subscribe(x => {
           console.log('VUELTA_API_scanCodeCollar', x);
-          if (x['data'].length > 0) {
+          if (x['data'] == '0') {
+            loading.dismiss();
+            this.presentToasteError();            
+          }else{
             this.dogScan = x['data'][0];
             console.log('dogScan', this.dogScan);
             loading.dismiss();
@@ -103,6 +108,18 @@ export class QrCollaresPage {
       loading.dismiss();      
       console.log('erro', err);
     });
+  }
+
+  async presentToasteError() {
+    const toast = await this.toastController.create({
+      message: "Uups!\n No encontramos ningun perro\n asociado a ese código.",
+      duration:2000,
+      showCloseButton: true,
+      position: 'top',
+      cssClass: 'toastError',
+      closeButtonText: 'x'
+    });
+    toast.present();
   }
 
 }

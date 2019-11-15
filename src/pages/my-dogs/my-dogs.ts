@@ -39,14 +39,14 @@ export class MyDogsPage {
       this.ApiProvider.getMyDogs(val['usuarioid']).subscribe(data => {
         console.log(data, 'sarasaaa');
         this.myDogs = data["data"];
-        this.myDogs.map(dog => {
-          if (dog.estado == '5') {
-            this.myCalle.push(dog);
-          }else{
-            this.misPerros.push(dog);
-          }
+        this.myCalle = this.myDogs.filter(dog=>{
+          return dog.estado == '5';
+        })
+        this.misPerros = this.myDogs.filter(dog=>{
+          return dog.estado != '5';
         })
         console.log('calle', this.myCalle);
+        console.log('misPerros', this.misPerros);
       });
 
     })
@@ -54,38 +54,40 @@ export class MyDogsPage {
 
 
   darEnAdopcion(dog) {
-    const alert = this.alertCtrl.create({
-      title: 'Dar en adopción!',
-      subTitle: 'Estas seguro de dar en adopción a ' + dog.nombre + '?',
-      buttons: [
-        {
-          text: 'No',
-          role: 'Cancel'
-        },
-        {
-          text: 'Si',
-          handler: data => {
-            this.ApiProvider.marcarenAdopcion(dog['usuarioid'], dog['perroid']).subscribe(x => {
-              console.log('vueltamarcarEnCasa', x);
-              let data = JSON.parse(x['_body'])['data'];
-              console.log('data', data);
-              if (data == 'updated') {
-                this.adopcion(dog);
-                /* this.ApiProvider.getDogData(dog['perroid']).subscribe(x => {
-                  console.log('perroid', x);
-                  this.dog = x['data'][0];
-                }) */
-              } else {
-                this.error();
-              }
-            })
+    if(dog.estado != '5'){
+      const alert = this.alertCtrl.create({
+        title: 'Dar en adopción!',
+        subTitle: 'Estas seguro de dar en adopción a ' + dog.nombre + '?',
+        buttons: [
+          {
+            text: 'No',
+            role: 'Cancel'
+          },
+          {
+            text: 'Si',
+            handler: data => {
+              this.ApiProvider.marcarenAdopcion(dog['usuarioid'], dog['perroid']).subscribe(x => {
+                console.log('vueltamarcarEnCasa', x);
+                let data = JSON.parse(x['_body'])['data'];
+                console.log('data', data);
+                if (data == 'updated') {
+                  this.adopcion(dog);
+                  /* this.ApiProvider.getDogData(dog['perroid']).subscribe(x => {
+                    console.log('perroid', x);
+                    this.dog = x['data'][0];
+                  }) */
+                } else {
+                  this.error();
+                }
+              })
+            }
           }
-        }
-      ]
-    });
-
-    alert.present();
-
+        ]
+      });
+      alert.present();
+    }else{
+      this.error2();
+    }
   }
 
   goToSalud(dog) {
@@ -141,6 +143,19 @@ export class MyDogsPage {
       message: "Ups!\n Algo no salió como esperabamos, vuelve a intentarlo!",
       duration: 3000,
       showCloseButton: true,
+      cssClass: 'toastError',
+      position: 'top',
+      closeButtonText: 'x'
+    });
+    toast.present();
+  }
+
+  async error2() {
+    const toast = await this.toastController.create({
+      message: "Ups!\n Tu perro está perdido!",
+      duration: 3000,
+      showCloseButton: true,
+      cssClass: 'toastError',
       position: 'top',
       closeButtonText: 'x'
     });

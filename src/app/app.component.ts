@@ -65,7 +65,7 @@ export class MyApp {
            if(data == 'inserted'){
              this.rootPage = MenuPage;
            }
-         }) */   
+         })  */  
         } else {
           this.rootPage = LoginPage;
         }

@@ -100,6 +100,7 @@ export class ProfileSettingsPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfileSettingsPage');
   }
+  
   goToMyDogs(i) {
     console.log('i',i);
     if(i == '2'){

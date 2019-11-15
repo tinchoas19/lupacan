@@ -17,7 +17,7 @@ export class MyFavoritesPage {
   sinfavotritosLocal: boolean;
   sinfavotritosUsuario: boolean;
   msj: string;
-  sinfavotritos: boolean;
+  sinfavotritosPerros: boolean;
   perros: any;
   locales: any;
   usuarios: any;
@@ -61,6 +61,11 @@ export class MyFavoritesPage {
           console.log('data', x);
           let data = x['data'];
           this.perros = data['perros'];
+          if (this.perros.length == 0) {
+            console.log('1');
+
+            this.sinfavotritosPerros = true;
+          }
           this.usuarios = data['usuarios'];
           this.locales = data['locales'];
           if (this.locales.length > 0) {
@@ -71,11 +76,6 @@ export class MyFavoritesPage {
           } else {
             this.sinfavotritosLocal = true;
             this.sinfavotritosRefugio = true;
-          }
-          if (this.perros.length == 0) {
-            console.log('1');
-
-            this.sinfavotritos = true;
           }
           if (this.usuarios.length == 0) {
             console.log('2');
