@@ -103,6 +103,7 @@ export class QrCollaresPage {
       loading.dismiss();      
       console.log('erro', err);
     });
+    loading.dismiss();      
   }
 
 }
