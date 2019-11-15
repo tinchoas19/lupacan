@@ -284,6 +284,9 @@ export class DogPage {
               self.checkAsLost = false;
               self.miUbicacion = false;
               self.otraUbicacion = false;
+              self.otherLocation = null;
+              self.otraUbicacion = null;
+              self.relationship = null;
               loading.dismiss();
               self.presentToasteEx();
               self.api.getDogData(perroid).subscribe(x => {

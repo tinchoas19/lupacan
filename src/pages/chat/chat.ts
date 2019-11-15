@@ -97,7 +97,9 @@ export class ChatPage {
   }
 
   traerNoLeidos(params) {
-    this.services.getChatNoLeidos(params.origenid, params.origentipo, params.destinoid, params.destinotipo).subscribe(x => {
+    console.log('paramsNoLeidos',params);
+    
+    this.services.getChatNoLeidos(params.origenid, params.tipoorigen, params.destinoid, params.tipodestino).subscribe(x => {
       console.log('ChatNoLeidos', x);
       if (x['data'] != null) {
         x['data'].map(message => {

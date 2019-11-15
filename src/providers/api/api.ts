@@ -529,6 +529,8 @@ export class ApiProvider {
   }
 
   getChatNoLeidos(origenid, origentipo, destinoid, destinotipo): Observable<any> {
+    console.log(origenid, origentipo, destinoid, destinotipo);
+    
     return this.httpClient.get("https://ctrlztest.com.ar/lupacan/apirest/traermensajeschatnoleidos.php?origenid=" + origenid + "&origentipo=" + origentipo + "&destinoid=" + destinoid + "&destinotipo=" + destinotipo)
       .pipe(
         tap(x => {
