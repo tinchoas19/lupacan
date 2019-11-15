@@ -266,7 +266,7 @@ export class EditServicePage {
           this.events.publish('new-service');
         }, 500);
       }
-    })
+    },err => {loading.dismiss();})
     console.log('dias', this.tienda);
 
   }
