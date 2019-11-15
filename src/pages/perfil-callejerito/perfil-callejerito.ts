@@ -77,7 +77,7 @@ export class PerfilCallejeritoPage {
     this.api.pedirTenenciaCalle(this.userLogueado['usuarioid'], dog.perroid).subscribe(x => {
       console.log('vueltaTenencia', x);
       let vuelta = JSON.parse(x['_body'])['data'];
-      if (vuelta == 'inserted') {
+      if (vuelta == 'updated') {
         this.tenencia(this.dog);
       }
     })

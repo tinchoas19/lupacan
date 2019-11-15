@@ -1,43 +1,64 @@
 page-register {
-  .img_add{
+  ion-header {
+    &.header {
+      box-shadow: none;
+    }
+  }
+
+  /*.img_add{
     //position:absolute;
     height: 25vh;
     width: 50vw;
     border-radius: 50%;
     box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.3);
     z-index: -1;
+}*/
+
+.wrapper-img-registro {
+  border-radius: 50%;
+  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+    width: 50vw;
+    height: 28vh;
+    display: flex;
+    align-items: center;
 }
-.col_add{
+
+  .col_add {
     margin-left: 70%;
     margin-top: -5vh;
     z-index: 1000;
-    .fab{
+
+    .fab {
         background-color: #FFFFFF !important;
         ion-icon{
             font-weight: 600;
             color: #44ebbf !important;
         }
     }
-    .icon_add{
-        //position:absolute;
-        margin: auto;
-        z-index: 100;           
-        box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.3);    
-        font-size: 2rem;
-        font-weight: 600;
-        color: #2f73b4 !important;
-        border-radius: 50%;
-        //width: 20%;
+
+    .icon_add {
+      //position:absolute;
+      margin: auto;
+      z-index: 100;           
+      box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.3);    
+      font-size: 2rem;
+      font-weight: 600;
+      color: #2f73b4 !important;
+      border-radius: 50%;
+      //width: 20%;
     }
 }
-.item-block{
+
+.item-block {
   min-height: 3.6rem !important;
 }
-.fecha_nac{
+
+.fecha_nac {
   padding: 0px !important;
   border-radius: 1.8rem !important;
-  box-shadow: 0px 0px 15px -1px rgba(0, 0, 0, 0.3)!important;
-  .datetime{
+
+  .datetime {
     height: 3.6rem;
     border-radius: 1.8rem;
     width: 100%;
@@ -59,22 +80,38 @@ page-register {
   .lupa-shadow {
     margin: 1em 0;
   }
-  .searchbar{
+  .searchbar {
     padding: 0px!important;
+    box-shadow: 0px 3px 16px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 1.8rem;
+
+    .searchbar-input {
+      padding: 3px 55px;
+      background-position: left 8px center;
+      border-radius: 1.8rem!important;
+      font-weight: 400;
+      line-height: 3rem;
+      color: inherit;
+      background-color: #fff;
+      border: none;
+      box-shadow: none!important;
+      font-size: 1.4rem;
+      text-align: center;
+    }
+
+    .searchbar-search-icon {
+      top: 8px;
+    }
+
+    .searchbar-clear-icon {
+      top: 2px;
+      width: 18px;
+      background-size: 18px;
+    }
+
   }
-  .searchbar-input {
-    padding: 6px 55px;
-    background-position: left 8px center;
-    height: 4rem !important;
-    border-radius: 4rem !important;
-    font-weight: 400;
-    line-height: 3rem;
-    color: inherit;
-    background-color: #fff;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    border: 1px solid color($colors, primary);
-  }
+
+    
   .checkbox {
     display: flex;
     flex-direction: row;

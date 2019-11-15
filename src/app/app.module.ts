@@ -93,6 +93,7 @@ import { CuidadoPage } from '../pages/cuidado/cuidado';
 import { PerfilCallejeritoPage } from '../pages/perfil-callejerito/perfil-callejerito';
 import { ModalCallejeritoPage } from '../pages/modal-callejerito/modal-callejerito';
 import { Calendar } from '@ionic-native/calendar'
+import { DatePipe } from '@angular/common'
 
 declare var google: any;
 
@@ -262,7 +263,8 @@ declare var google: any;
     ConnectivityServiceProvider,
     GoogleMapsProvider,
     Network,
-    IntervalProvider
+    IntervalProvider,
+    DatePipe
   ]
 })
 export class AppModule {}

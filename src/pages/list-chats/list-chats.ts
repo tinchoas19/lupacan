@@ -59,14 +59,22 @@ export class ListChatsPage {
   goToChat(chat){
     let destinoid = "";
     let tipodestino = "";
+    let origenid = "";
     if(chat['localid'] != null){
       destinoid = chat['localid'];
       tipodestino = 'tienda';
     }else{
-      destinoid = chat['usuarioid2'];
-      tipodestino = 'usuario';
+      if(this.userid == chat['usuarioid2']){
+        origenid = chat['usuarioid2'];
+        destinoid = chat['usuarioid1'];
+        tipodestino = 'usuario';
+      }else{
+        origenid = chat['usuarioid1'];        
+        destinoid = chat['usuarioid2'];
+        tipodestino = 'usuario';
+      }
     }
-    this.navCtrl.push(ChatPage,{userChat: chat, origenid:chat['usuarioid1'], tipoorigen: 'usuario', destinoid: destinoid, tipodestino: tipodestino, conversandocon: chat['conversandocon']});    
+    this.navCtrl.push(ChatPage,{userChat: chat, origenid:origenid, tipoorigen: 'usuario', destinoid: destinoid, tipodestino: tipodestino, conversandocon: chat['conversandocon']});    
   }
 
 }

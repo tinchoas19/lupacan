@@ -339,6 +339,25 @@ ion-alert {
     font-weight: 600;
 }
 
+ion-header {
+    &.header-main {
+        ion-navbar {
+            .back-button {
+                display: none;
+            }
+        }
+
+        .toolbar-content {
+            ion-title {
+                .toolbar-title {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+
 /*Partials*/
 @import "partials/principal-feed.scss";
 @import "partials/listas.scss";

@@ -369,9 +369,9 @@ export class ApiProvider {
 
     console.log('body', body);
 
-    return this.httpPost.post(this.ApiUrl + "pedirtenencia.php", body, options).pipe(
+    return this.httpPost.post(this.ApiUrl + "pedirtenenciacallejerito.php", body, options).pipe(
       tap(x => {
-        console.log('pedirtenencia.php', x);
+        console.log('pedirtenenciacallejerito.php', x);
       }));
   }
 
@@ -564,7 +564,10 @@ export class ApiProvider {
     }, Math.random() * 1800)
   }
 
-  sendMsg(msg: ChatMessage, tipodestino, tipoorigen) {
+  sendMsg(msg: ChatMessage, tipodestino, tipoorigen) : Observable<any>{
+    console.log('msg',msg);
+    console.log('tipodestino',tipodestino);
+    console.log('tipoorigen',tipoorigen);
     var headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');

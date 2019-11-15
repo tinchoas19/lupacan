@@ -1,4 +1,9 @@
 page-login {
+    ion-header {
+        &.header {
+            box-shadow: none;
+        }
+    }
     .button, .list{
         width: 100%;
     }
