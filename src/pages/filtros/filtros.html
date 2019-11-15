@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-row justify-content-center *ngIf="filtrosList == 'service'">
+  <ion-row justify-content-center padding *ngIf="filtrosList == 'service'" class="btn_filtros">
     <ion-col col-12 no-padding text-center *ngIf="localidades">
       <button class="btn_categorias" ion-button round>Localidad
         <ion-select [(ngModel)]="localidad" okText="Ok" cancelText="Cancelar" multiple="true" [selectOptions]="selectOptionsLocal"
@@ -40,6 +40,7 @@
       </ion-list>
     </ion-col>
   </ion-row>
+
   <ion-row *ngIf="filtrosList == 'perros'" justify-content-center no-padding class="btn_filtros">
     <ion-col col-12 no-padding text-center>
       <button text-center ion-button round color="primary">Estado
@@ -85,6 +86,7 @@
       </button>
     </ion-col> -->
   </ion-row>
+
   <ion-row justify-content-center>
     <button *ngIf="filtrosList == 'service'" class="btn_tienda" ion-button full round (click)="aplicarFiltro()">Aplicar</button>
     <button *ngIf="filtrosList == 'perros'" class="btn_tienda" ion-button full round (click)="aplicarFiltroDog()">Aplicar</button>
