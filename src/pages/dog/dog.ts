@@ -176,7 +176,8 @@ export class DogPage {
       if (barcodeData.text != "") {
         this.api.addCodigo(dog.perroid, barcodeData.text).subscribe(x => {
           console.log('VUELTA_API_scanCodeCollar', x);
-          let vuelta = JSON.parse(x['_body'])['data'];
+          //let vuelta = JSON.parse(x['_body'])['data'];
+          let vuelta = x['data'];
           if (vuelta == 'asignado') {
             this.asignado(dog);
             loading.dismiss();

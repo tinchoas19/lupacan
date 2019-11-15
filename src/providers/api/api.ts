@@ -248,23 +248,12 @@ export class ApiProvider {
 
   //------CÓDIGO => PERRO---------------
   addCodigo(perroid, codigo): Observable<any> {
-    console.log('codigo', codigo, perroid);
-
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-
-    let options = new RequestOptions({ headers: headers, withCredentials: true });
-    var body = JSON.stringify({
-      perroid: perroid,
-      codigo: codigo
-    });
-
-    console.log('body', body);
-
-    return this.httpPost.post(this.ApiUrl + "relacionarcodigoperro.php", body, options).pipe(
+    return this.httpClient.get(this.ApiUrl + "relacionarcodigoperro.php?codigo=" + codigo + "&perroid=" + perroid)
+    .pipe(
       tap(x => {
-        console.log('relacionarcodigoperro', x);
-      }));
+        console.log('traervacunasytratamientos', x);
+      })
+    );
   }
 
   //------PUSH NOTIFICATION---------------
