@@ -77,6 +77,64 @@
         } 
     }
 
+    ion-textarea {
+        border: 1px solid $lupa-gray!important;
+        color: #000;
+        font-size: 1.6rem;
+
+        textarea {
+            &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+                font-size: 1.4rem;
+                color: #cdcdcd;
+            }
+            &::-moz-placeholder { /* Firefox 19+ */
+                font-size: 1.4rem;
+                color: #cdcdcd;
+            }
+            &:-ms-input-placeholder { /* IE 10+ */
+                font-size: 1.4rem;
+                color: #cdcdcd;
+            }
+            &:-moz-placeholder { /* Firefox 18- */
+                font-size: 1.4rem;
+                color: #cdcdcd;
+            }
+        }
+    }
+
+    .data-show {
+
+        .item {
+            &.input-has-focus,
+            &.input-has-value {
+
+                .item-inner {
+                    box-shadow: none!important;
+                }
+            }
+
+            .item-inner {
+                border-bottom: none;
+            }
+        }
+
+        .item- {
+
+            &title {
+                font-size: 1.4rem;
+                font-weight: 500;
+                color: $lupa-amarillo;
+                margin: 0 0 5px 0;
+            }
+
+            &info {
+                color: #000;
+                font-size: 1.6rem;
+                margin: 0;
+            }
+        }
+    }
+
     .searchbar {
 
         .searchbar-input {

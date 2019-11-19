@@ -357,6 +357,33 @@ ion-header {
     }
 }
 
+/*Ion Segment Buttons*/
+ion-segment {
+
+    &.seg_fav {
+    margin: 25px 0 10px;
+
+        .segment-button {
+            background: $lupa-gray;
+
+            &.first {
+            margin-right: 10px;
+            }
+
+            &.second {
+                margin-left: 10px;   
+            }
+
+            &.segment-activated{
+            background: $lupa-amarillo;
+            }
+        }
+    }
+}
+
+.plus{
+    color: color($colors, primary);
+}
 
 /*Partials*/
 @import "partials/principal-feed.scss";
