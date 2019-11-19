@@ -5,7 +5,7 @@
 </ion-header>
 
 
-<ion-content class="forms">
+<ion-content class="forms listas">
   <ion-grid padding>
   
   <ion-row justify-content-center>
@@ -131,12 +131,20 @@
         </ion-col>
       </ion-row>
 
-      <div *ngIf="service.perros">
-        <ion-row *ngIf="service.perros.length > 1" style="margin-top: 7%;">
-          <h4 text-center>Perros en este Refugio</h4>
-          <ion-col col-4 *ngFor="let dog of service.perros" (click)="goToDogDetail(dog[0])">
-            <div class="dog-name">{{dog[0].nombre}}</div>
-            <img src="https://ctrlztest.com.ar/lupacan/apirest/{{dog[0].fotos[0].fotourl}}" alt="{{dog.nombre}}">
+      <div *ngIf="service.perros" class="perros-en-refugio">
+        <ion-row *ngIf="service.perros.length > 1">
+          <ion-col text-center>
+            <h4>Perros en este Refugio</h4>
+          </ion-col>
+        </ion-row>
+        <ion-row class="item-lista-wrapper lupa-shadow" *ngFor="let dog of service.perros" (click)="goToDogDetail(dog[0])">
+          <ion-col col-4 class="item-lista-img-wrapper" no-padding>
+            <div class="item-lista-img" [ngStyle]="{background: 'url(https://ctrlztest.com.ar/lupacan/apirest/' + dog[0].fotos[0].fotourl + ')', 'background-size':  'cover' , 'background-position':  'center' }">
+                
+            </div>
+          </ion-col>
+          <ion-col col-8 class="item-info-wrapper">
+            <h2 class="nombre-item">{{dog[0].nombre}}</h2>
           </ion-col>
         </ion-row>
       </div>

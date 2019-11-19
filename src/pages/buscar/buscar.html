@@ -4,35 +4,52 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-row style="padding-top: 0px;" justify-content-center padding>
-    <ion-searchbar style="padding-top: 0px;" padding placeholder="Buscar..." [(ngModel)]="txtbusqueda" (ionInput)="getItems($event)"></ion-searchbar>
-  </ion-row>
-  <ion-list *ngIf="mostarUsuarios" no-lines class="_list">
-    <ion-list-header text-center class="label-title" >
-      Usuarios
-    </ion-list-header>
-    <ion-item *ngFor="let item of items['usuarios']" (click)="goToPerfilUser(item)">
-      {{item.nombre}}
-    </ion-item>
-  </ion-list>
-  <ion-list *ngIf="mostrarPerros" text-center no-lines class="_list">
-    <ion-list-header class="label-title" >
-      Perros
-    </ion-list-header>
-    <ion-item *ngFor="let item of items['perros']" (click)="goToPerfilDog(item)">
-      {{item.nombre}}
-    </ion-item>
-  </ion-list>
-  <ion-list *ngIf="mostrarLocales" text-center no-lines class="_list">
-    <ion-list-header class="label-title" >
-      Servicios
-    </ion-list-header>
-    <ion-item *ngFor="let item of items['locales']" (click)="goToPerfilService(item)">
-      {{item.nombre}}
-    </ion-item>
-  </ion-list>
-  <ion-row justify-content-center *ngIf="!mostarUsuarios || !mostrarPerros || !txtbusqueda">
-    <p text-center>Sin Resultados...</p>
-  </ion-row>
+<ion-content class="buscar">
+  <ion-grid padding>
+
+    <ion-row style="padding-top: 0px;" justify-content-center padding>
+      <ion-searchbar style="padding-top: 0px;" padding placeholder="Buscar..." [(ngModel)]="txtbusqueda" (ionInput)="getItems($event)"></ion-searchbar>
+    </ion-row>
+
+    <ion-list *ngIf="mostarUsuarios" no-lines class="_list no-border">
+      <ion-list-header text-center class="label-title" >
+        Usuarios
+      </ion-list-header>
+      <ion-item *ngFor="let item of items['usuarios']" (click)="goToPerfilUser(item)">
+        <ion-avatar item-start>
+          <img src="https://ctrlztest.com.ar/lupacan/apirest/{{item.imagen}}">
+        </ion-avatar>
+        <p>{{item.nombre}}</p>
+      </ion-item>
+    </ion-list>
+
+    <ion-list *ngIf="mostrarPerros" text-center no-lines class="_list">
+      <ion-list-header class="label-title">
+        Perros
+      </ion-list-header>
+      <ion-item *ngFor="let item of items['perros']" (click)="goToPerfilDog(item)">
+        <ion-avatar item-start>
+          <img src="https://ctrlztest.com.ar/lupacan/apirest/{{item.imagen}}">
+        </ion-avatar>
+        <p>{{item.nombre}}</p>
+      </ion-item>
+    </ion-list>
+
+    <ion-list *ngIf="mostrarLocales" text-center no-lines class="_list">
+      <ion-list-header class="label-title" >
+        Servicios
+      </ion-list-header>
+      <ion-item *ngFor="let item of items['locales']" (click)="goToPerfilService(item)">
+        <ion-avatar item-start>
+          <img src="https://ctrlztest.com.ar/lupacan/apirest/{{item.imagen}}">
+        </ion-avatar>
+        <p>{{item.nombre}}</p>
+      </ion-item>
+    </ion-list>
+
+    <ion-row justify-content-center *ngIf="!mostarUsuarios || !mostrarPerros || !txtbusqueda">
+      <p class="sin-resultados">Sin Resultados...</p>
+    </ion-row>
+
+  </ion-grid>  
 </ion-content>

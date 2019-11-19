@@ -1,0 +1,41 @@
+.buscar {
+
+    ion-list {
+
+        ion-list-header {
+            border-top: 1px solid #ededed;
+            margin-bottom: 0;
+
+            ion-label {
+                font-size: 2rem;
+                color: $lupa-amarillo;
+                margin-bottom: 0;
+            }
+        }
+
+        &.no-border {
+
+            ion-list-header {
+                border-top: none;
+            }
+        }
+        
+        ion-item {
+
+            &:last-child {
+                margin-bottom: 20px;
+            }
+        }
+        
+    }
+
+   
+
+
+    .sin-resultados {
+        font-size: 1.6rem;
+        font-weight: 600;
+        text-align: center;
+    }
+    
+}
