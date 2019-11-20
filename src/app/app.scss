@@ -207,7 +207,7 @@ ion-header {
         ion-title {
 
             .toolbar-title {
-                width: 85%;
+                width: 80%;
                 color: #7e7e7e;
                 text-align: center;
             }
@@ -315,6 +315,10 @@ ion-alert {
             }
         }
 
+        .alert-message {
+            padding: 24px;
+        }
+
         .alert-button {
 
             span {
@@ -391,3 +395,5 @@ ion-segment {
 @import "partials/internas-perro.scss";
 @import "partials/forms.scss";
 @import "partials/buscar.scss";
+@import "partials/salud.scss";
+@import "partials/modals.scss";

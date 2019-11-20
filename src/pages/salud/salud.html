@@ -5,22 +5,35 @@
 </ion-header>
 
 
-<ion-content padding>
-  <ion-row justify-content-center padding>
-    <button ion-button block color="primary" icon-start (click)="expand(0)">
-      <ion-icon name="home"></ion-icon>
-      Cuidado
-    </button>
-    <div padding *ngIf="expand1" justify-content-center>
-      <button text-center ion-button block outline icon-start (click)="seccion(0)">
-        <ion-icon name="home"></ion-icon>
-        Vacunación
-      </button>
-      <button ion-button outline icon-start (click)="seccion(1)">
-        <ion-icon name="home"></ion-icon>
-        Tratamientos
-      </button>
-    </div>
+<ion-content class="salud">
+  <ion-grid padding>
+  
+    <ion-row justify-content-center>
+      <ion-col col-12>
+        <button ion-button block icon-start (click)="expand(0)">
+          <i class="fa fa-ambulance white-icon" aria-hidden="true"></i>
+          Cuidado
+        </button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row justify-content-center *ngIf="expand1">
+      <ion-col col-12>
+        <button ion-button block icon-start (click)="seccion(0)">
+          <i class="fa fa-medkit white-icon" aria-hidden="true"></i>
+          Vacunación
+        </button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row justify-content-center *ngIf="expand1">
+      <ion-col col-12>  
+        <button ion-button block icon-start (click)="seccion(1)">
+          <i class="fa fa-heartbeat white-icon" aria-hidden="true"></i>
+          Tratamientos
+        </button>
+      </ion-col>
+    </ion-row>
     <!-- <button ion-button block color="primary" icon-start (click)="expand(1)">
       <ion-icon name="home"></ion-icon>
       Salud
@@ -43,5 +56,5 @@
         Visitas al veterinario
       </button>
     </div> -->
-  </ion-row>
+  </ion-grid>
 </ion-content>

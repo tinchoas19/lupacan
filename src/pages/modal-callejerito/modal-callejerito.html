@@ -1,53 +1,74 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title text-center class="lupa-title">Historial</ion-title>
-    <ion-buttons end>
-      <button ion-button (click)="cerrar()">
-        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
+<ion-header class="modals">
+
+    <ion-navbar>
+      <ion-title>Historial</ion-title>
+    </ion-navbar>
+  
 </ion-header>
 
-<ion-content padding>
-  <div *ngIf="index == '1'">
-    <ion-row class="item-lista-wrapper lupa-shadow">
-      <ion-col col-4 class="item-lista-img-wrapper" no-padding>
-        <img src="https://ctrlztest.com.ar/lupacan/apirest/{{dog.fotos[0].fotourl}}" />
-      </ion-col>
-      <ion-col col-8 class="item-info-wrapper">
-        <h2 class="nombre-item">{{dog.nombre}}</h2>
-        <p class="desc-item">{{dog.descripcion}}</p>
-      </ion-col>
-    </ion-row>
-    <ion-row justify-content-center>
-      <ion-list>
-        <ion-list-header no-lines text-center>
-          Escribe un comentario
-        </ion-list-header>
-        <ion-item no-lines>
+<ion-content class="listas modals buscar">
+  <ion-grid padding>
+    
+    <div *ngIf="index == '1'">
+      <ion-row class="item-lista-wrapper lupa-shadow">
+        <ion-col col-4 class="item-lista-img-wrapper" no-padding>
+          <div class="item-lista-img" [ngStyle]="{background: 'url(https://ctrlztest.com.ar/lupacan/apirest/' + dog.fotos[0].fotourl + ')', 'background-size':  'cover' , 'background-position':  'center' }">
+            
+          </div>
+        </ion-col>
+        <ion-col col-8 class="item-info-wrapper">
+          <h2 class="nombre-item">{{dog.nombre}}</h2>
+          <p class="desc-item">{{dog.descripcion}}</p>
+        </ion-col>
+      </ion-row>
+
+      <ion-row justify-content-center>
+        <ion-col col-12>
+          <span class="item-title">Escribe un comentario</span>
+        </ion-col>
+        <ion-col col-12>
           <ion-textarea [(ngModel)]="txt" placeholder="Comentario..." max="200"></ion-textarea>
-        </ion-item>
-      </ion-list>
-      <ion-col col-12 text-center>
-        <button ion-button round color="primary" (click)="enviar(txt)">Enviar</button>
-      </ion-col>
-    </ion-row>
-  </div>
-  <div *ngIf="index == '2'">
-    <ion-row justify-content-center>
-      <ion-list>
-        <ion-list-header no-lines text-center>
-          Comentarios
-        </ion-list-header>
-        <ion-item no-lines *ngFor="let item of items">
+        </ion-col>
+        <!--<ion-col col-12 text-center>
+          <button ion-button round color="primary" (click)="enviar(txt)">Enviar</button>
+        </ion-col>-->
+      </ion-row>
+    </div>
+
+   <!--<div *ngIf="index == '2'">-->
+    <div>
+      <ion-row justify-content-center>
+        <ion-col col-12>
+          <span class="item-title">Comentarios</span>
+        </ion-col>
+        <ion-item *ngFor="let item of items">
           <ion-avatar item-start>
+              <img *ngIf="item.imgSrc" src="item.imgSrc">
+              <img *ngIf="!item.imgSrc" src="assets/imgs/menu01.png">
             <img [src]="item.imgSrc">
           </ion-avatar>
           <h2>{{item.nombre}}</h2>
           <p text-wrap>{{item.texto}}</p>
-        </ion-item>
-      </ion-list>
-    </ion-row>
-  </div>
+        </ion-item>         
+      </ion-row>
+    </div>
+    
+  </ion-grid>  
 </ion-content>
+
+<ion-footer class="modals">
+  <ion-row>
+    <ion-col col-6>
+      <ion-buttons text-center>
+        <button ion-button  (click)="cerrar()">
+          <span>Cerrar</span>
+        </button>
+      </ion-buttons>
+    </ion-col>
+    <ion-col col-6>
+      <ion-buttons text-center>
+        <button ion-button (click)="enviar(txt)">Enviar</button>
+      </ion-buttons>
+    </ion-col>
+  </ion-row>  
+</ion-footer>

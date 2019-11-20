@@ -1,120 +1,112 @@
-<ion-header>
+<ion-header class="modals">
 
   <ion-navbar>
-    <ion-buttons left>
-      <button ion-button icon-start (click)="cerrar()">
-        <ion-icon name="close"></ion-icon>
-      </button>
-    </ion-buttons>
     <ion-title>{{title}}</ion-title>
-    <ion-buttons right>
-      <button ion-button icon-start (click)="createVacunaApi()">
-        <ion-icon name="checkmark"></ion-icon>
-      </button>
-    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
-<ion-content padding>
-  <div *ngIf="title == 'Vacunación'">
-    <ion-list no-lines>
-      <ion-row>
+<ion-content class="modals">
+  <ion-grid padding>
+
+    <div *ngIf="title == 'Vacunación'">
+      <ion-row justify-content-center margin-bottom>
         <ion-col col-12>
-          <ion-item>
-            <ion-label>
-              <strong>Vacuna:</strong>
-            </ion-label>
-          </ion-item>
+          <span class="item-title">Vacuna</span>
         </ion-col>
         <ion-col col-12>
-          <ion-item>
-            <ion-select no-padding interface="popover" class="selector" [(ngModel)]="vacuna" placeholder="Vacuna" (ionCange)="changeVac(vacuna)">
-              <ion-option *ngFor="let vac of vacunas" value="{{vac.vacunaid}}">{{vac.nombre}}</ion-option>
-            </ion-select>
-          </ion-item>
+          <ion-select no-padding interface="popover" class="selector" [(ngModel)]="vacuna" placeholder="Seleccione Vacuna" (ionCange)="changeVac(vacuna)">
+            <ion-option *ngFor="let vac of vacunas" value="{{vac.vacunaid}}">{{vac.nombre}}</ion-option>
+          </ion-select>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-item>
-          <ion-label>
-            <strong>Fecha de aplicación</strong>
-          </ion-label>
-        </ion-item>
-        <ion-item>
+
+      <ion-row justify-content-center margin-bottom>
+        <ion-col col-12>
+          <span class="item-title">Fecha de aplicación</span>
+        </ion-col>
+        <ion-col col-12>
           <ion-datetime [(ngModel)]="fechaVacuna" displayFormat="DD/MM/YYYY" placeholder="dd/mm/aaaa" cancelText="Cancelar" doneText="Ok"></ion-datetime>
-        </ion-item>
+        </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-item>
-          <ion-label>
-            <strong>Recordatorio</strong>
-          </ion-label>
+
+      <ion-row justify-content-center>
+        <ion-col col-12>
+          <span class="item-title">Recordatorio</span>
           <ion-toggle [(ngModel)]="recordatorio"></ion-toggle>
-        </ion-item>
+        </ion-col>
       </ion-row>
-      <ion-row *ngIf="recordatorio">
-        <ion-item>
+
+      <ion-row justify-content-center *ngIf="recordatorio">
+        <ion-col col-12 margin-bottom>
           <ion-datetime [(ngModel)]="fechaAlarm" displayFormat="YYYY-MM-DD" placeholder="dd/mm/aaaa" cancelText="Cancelar" doneText="Ok"></ion-datetime>
-        </ion-item>
-        <ion-item>
-          <ion-label>
-            <strong>Notas:</strong>
-          </ion-label>
-        </ion-item>
-        <ion-item>
+        </ion-col>
+        <ion-col col-12>
+          <span class="item-title">Notas:</span>
+        </ion-col>
+        <ion-col col-12>
           <ion-textarea [(ngModel)]="notaAlarm" placeholder="Notas de la vacuna"></ion-textarea>
-        </ion-item>
-      </ion-row>
-    </ion-list>
-  </div>
-  <div *ngIf="title == 'Tratamientos'">
-    <ion-list no-lines>
-      <ion-row>
-        <ion-col col-12>
-          <ion-item>
-            <ion-label>
-              <strong>Tratamiento:</strong>
-            </ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col col-12>
-          <ion-item>
-            <ion-input type="text" [(ngModel)]="tratamiento" placeholder="Tratamiento"></ion-input>
-          </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-item>
-          <ion-label>
-            <strong>Fecha</strong>
-          </ion-label>
-        </ion-item>
-        <ion-item>
+    </div>
+    
+    <div *ngIf="title == 'Tratamientos'">
+      <ion-row justify-content-center margin-bottom>
+        <ion-col col-12>
+          <span class="item-title">Tratamiento:</span>
+        </ion-col>
+        <ion-col col-12>
+            <ion-input type="text" [(ngModel)]="tratamiento" placeholder="Ingrese tratamiento"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row justify-content-center margin-bottom>
+        <ion-col col-12>
+          <span class="item-title">Fecha</span>
+        </ion-col>
+        <ion-col col-12>
           <ion-datetime [(ngModel)]="fechaTratamiento" displayFormat="DD/MM/YYYY" placeholder="dd/mm/aaaa" cancelText="Cancelar" doneText="Ok"></ion-datetime>
-        </ion-item>
+        </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-item>
-          <ion-label>
-            <strong>Recordatorio</strong>
-          </ion-label>
+
+      <ion-row justify-content-center>
+        <ion-col col-12>
+          <span class="item-title">Recordatorio</span>
           <ion-toggle [(ngModel)]="recordatorio"></ion-toggle>
-        </ion-item>
+        </ion-col>
       </ion-row>
-      <ion-row *ngIf="recordatorio">
-        <ion-item>
+
+      <ion-row justify-content-center *ngIf="recordatorio">
+        <ion-col col-12 margin-bottom>
           <ion-datetime [(ngModel)]="fechaTratamientoAlarm" displayFormat="YYYY-MM-DD" placeholder="dd/mm/aaaa" cancelText="Cancelar" doneText="Ok"></ion-datetime>
-        </ion-item>
-        <ion-item>
-          <ion-label>
-            <strong>Notas:</strong>
-          </ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-textarea [(ngModel)]="notaTratamientoAlarm" placeholder="Notas de la tratamiento"></ion-textarea>
-        </ion-item>
+        </ion-col>
+        <ion-col col-12>
+          <span class="item-title">Notas:</span>
+        </ion-col>
+        <ion-col col-12>
+          <ion-textarea [(ngModel)]="notaTratamientoAlarm" placeholder="Notas de la vacuna"></ion-textarea>
+        </ion-col>
       </ion-row>
-    </ion-list>
-  </div>
+    </div>
+
+  </ion-grid>
 </ion-content>
+
+<ion-footer class="modals">
+  <ion-row>
+    <ion-col col-6>
+      <ion-buttons text-center>
+        <button ion-button icon-end (click)="cerrar()">
+          <span>Cerrar</span>
+        </button>
+      </ion-buttons>
+    </ion-col>
+    <ion-col col-6>
+      <ion-buttons text-center>
+        <button ion-button icon-end (click)="createVacunaApi()">
+          <span>Confirmar</span>
+        </button>
+      </ion-buttons>
+    </ion-col>
+  </ion-row>  
+</ion-footer>
