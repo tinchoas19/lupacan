@@ -43,9 +43,8 @@
         </ion-col>
         <ion-item *ngFor="let item of items">
           <ion-avatar item-start>
-              <img *ngIf="item.imgSrc" src="item.imgSrc">
-              <img *ngIf="!item.imgSrc" src="assets/imgs/menu01.png">
-            <img [src]="item.imgSrc">
+              <img *ngIf="item.imgSrc" [src]="item.imgSrc" >
+              <img *ngIf="!item.imgSrc" [src]="assets/imgs/menu01.png">
           </ion-avatar>
           <h2>{{item.nombre}}</h2>
           <p text-wrap>{{item.texto}}</p>
