@@ -71,7 +71,11 @@ export class FeedUsuariosPage {
       let filtrosModal = this.modalCtrl.create(FiltrosPage, { categoriaId: null, filtrosDe: 'usuarios', stackFilter: this.filteredUsers });
       filtrosModal.present();
       filtrosModal.onDidDismiss(data => {
-        this.filteredUsers = data;
+        if(data.length > 0){
+          this.filteredUsers = data;
+        }else{
+          this.filteredUsers = this.todosUsers;
+        }
       });
     } else {
       this.filtrosActive = false;

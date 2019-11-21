@@ -94,6 +94,7 @@ import { PerfilCallejeritoPage } from '../pages/perfil-callejerito/perfil-callej
 import { ModalCallejeritoPage } from '../pages/modal-callejerito/modal-callejerito';
 import { Calendar } from '@ionic-native/calendar'
 import { DatePipe } from '@angular/common'
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 declare var google: any;
 
@@ -259,6 +260,7 @@ declare var google: any;
     Push,
     Diagnostic,
     Geolocation,
+    ScreenOrientation,
     Badge,
     ConnectivityServiceProvider,
     GoogleMapsProvider,

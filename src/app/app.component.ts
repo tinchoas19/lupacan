@@ -17,6 +17,7 @@ import { Badge } from '@ionic-native/badge';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { IntervalProvider } from '../providers/interval/interval';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 @Component({
   templateUrl: "app.html"
@@ -42,6 +43,7 @@ export class MyApp {
     public alertCtrl: AlertController,
     private _DIAGNOSTIC: Diagnostic,
     private interval: IntervalProvider,
+    public screenOrientation: ScreenOrientation,
     private locationAccuracy: LocationAccuracy
   ) {
     platform.ready().then(() => {
@@ -49,9 +51,11 @@ export class MyApp {
       this.isLocationAvailable();
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
+      if (platform.is('android')) {
+        statusBar.backgroundColorByHexString("#33000000");
+      }
       splashScreen.hide();
-      this.storage.get('datauser').then(val => {
+      /* this.storage.get('datauser').then(val => {
         if (val != null) {
           console.log('components', val);
           this.imagen = "https://ctrlztest.com.ar/lupacan/apirest/" + val['imagen']
@@ -59,17 +63,18 @@ export class MyApp {
           this.email = val['email'];
           this.rootPage = MenuPage;
 
-           /*  this.api.updateFirebase(val['usuarioid'],registration['registrationId']).subscribe(x=>{
+            this.api.updateFirebase(val['usuarioid'],registration['registrationId']).subscribe(x=>{
            console.log('updateFirebase',x);
            let data = JSON.parse(x['_body'])['data'];
            if(data == 'inserted'){
              this.rootPage = MenuPage;
            }
-         })  */  
+         })   
         } else {
           this.rootPage = LoginPage;
         }
-      })
+      }) */
+      screenOrientation.lock(screenOrientation.ORIENTATIONS.PORTRAIT);
     });
   }
 
@@ -92,7 +97,7 @@ export class MyApp {
       console.log('Device registered', registration);
       console.log('_id', registration['registrationId']);
       this.storage.set('firebaseUserId', registration['registrationId']);
-      /* this.storage.get('datauser').then(val => {
+      this.storage.get('datauser').then(val => {
         if (val != null) {
           console.log('components', val);
           this.imagen = "https://ctrlztest.com.ar/lupacan/apirest/" + val['imagen']
@@ -110,7 +115,7 @@ export class MyApp {
         } else {
           this.rootPage = LoginPage;
         }
-      }) */
+      })
       //this.services._id = registration['registrationId'];
     });
 

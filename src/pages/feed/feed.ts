@@ -167,7 +167,11 @@ export class FeedPage {
       let filtrosModal = this.modalCtrl.create(FiltrosPage, { categoriaId: null, filtrosDe: 'perros', stackFilter: this.filteredDogs });
       filtrosModal.present();
       filtrosModal.onDidDismiss(data => {
-        this.filteredDogs = data;
+        if(data.length > 0){
+          this.filteredDogs = data;
+        }else{
+          this.filteredDogs = this.dogs;
+        }
       });
     } else {
       this.filtrosActive = false;

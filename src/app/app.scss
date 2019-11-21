@@ -25,6 +25,14 @@ $lupa-amarillo: #F1C969;
 $lupa-light-gray: #A1A1A1;
 $lupa-gray: #7E7E7E;
 
+.platform-android {
+    .ion-page {
+      ion-header {
+        padding-top: 6%!important;
+      }
+    }
+  }
+
 item-ios{
     color: #7e7e7e;
 }
