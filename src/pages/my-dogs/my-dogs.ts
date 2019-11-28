@@ -33,6 +33,20 @@ export class MyDogsPage {
     this.index = navParams.data.index || 0;
   }
 
+  estado(dog) {
+    if (dog.estado == 2) {
+      return 'Está Perdido';
+    } else if (dog.estado == 3) {
+      return 'Fue Encontrado'
+    } else if (dog.estado == 4) {
+      return 'Está en Adopción'
+    }else if (dog.estado == 5) {
+      return 'Es un Callejerito'
+    } else {
+      return 'Es mio y esta en Casa';
+    }
+  }
+
   ionViewWillEnter() {
     this.misPerros = this.myDogs = this.myCalle = [];
     this.storage.get('datauser').then(val => {
@@ -129,9 +143,10 @@ export class MyDogsPage {
 
   async adopcion(dog) {
     const toast = await this.toastController.create({
-      message: "Listo!\n Nos encargaremos de encontrarle un nuevo hogar a " + dog.nombre,
+      message: "Listo!\n Nos encargaremos de encontrarle\n un nuevo hogar a " + dog.nombre,
       duration: 3000,
       showCloseButton: true,
+      cssClass: 'toastExito',
       position: 'top',
       closeButtonText: 'x'
     });

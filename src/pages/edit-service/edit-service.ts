@@ -248,7 +248,6 @@ export class EditServicePage {
     console.log('categorias', this.servicios);
     console.log('imagenes', this.imagenes);
     loading.dismiss();
-
     //console.log('servSelec', this.servicios);
     //console.log('imagene', this.imagenes);    
     this.api.updateService(this.tienda, this.servicios, this.imagenes).subscribe(x => {
@@ -268,7 +267,6 @@ export class EditServicePage {
       }
     },err => {loading.dismiss();})
     console.log('dias', this.tienda);
-
   }
 
 
@@ -292,7 +290,7 @@ export class EditServicePage {
           handler: data => {
             console.log("si");
             this.api.deleteLocal(this.service['localid']).subscribe(x => {
-              this.presentToasteEx();
+              this.servicioEliminado();
             })
           }
         }
@@ -449,6 +447,21 @@ export class EditServicePage {
       showCloseButton: true,
       position: 'top',
       cssClass: 'toastExito',
+      closeButtonText: 'x'
+    });
+    toast.present();
+    const startIndex = this.navCtrl.getActive().index - 1;
+    this.navCtrl.remove(startIndex, 1);
+    this.navCtrl.pop();
+  }
+
+  async servicioEliminado() {
+    const toast = await this.toastController.create({
+      message: "Listo!\nServicio eliminado.",
+      duration: 2000,
+      showCloseButton: true,
+      position: 'top',
+      cssClass: 'toastError',
       closeButtonText: 'x'
     });
     toast.present();

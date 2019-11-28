@@ -141,7 +141,7 @@ export class AddDogPage {
 
   presentModal() {
     this.selectRef.close();
-    const modal = this.modalCtrl.create(MisionPage);
+    const modal = this.modalCtrl.create(MisionPage,{ param: 'raza' });
     modal.present();
     modal.onDidDismiss(data => {
       console.log(data);

@@ -1,6 +1,7 @@
 import { ApiProvider } from './../../providers/api/api';
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController } from 'ionic-angular';
+import { NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
+import { MisionPage } from '../mision/mision';
 
 
 @Component({
@@ -35,6 +36,7 @@ export class FiltrosPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public viewCtrl: ViewController,
+    public modalCtrl: ModalController,
     private api: ApiProvider
   ) {
     this.filtrosList = navParams.get('filtrosDe')
@@ -52,6 +54,19 @@ export class FiltrosPage {
 
   ionViewWillEnter(){
    
+  }
+
+  presentModal() {
+    const modal = this.modalCtrl.create(MisionPage,{ param: 'localidades' });
+    modal.present();
+    modal.onDidDismiss(data => {
+      console.log(data);
+      /* if (data) {
+        this.selectRaza = data.nombre
+        this.dog.raza = data.razaid;
+      } else this.selectRaza = 'Seleccionar';
+      console.log('dog', this.dog); */
+    });
   }
 
   onSelectedDecuento(event){

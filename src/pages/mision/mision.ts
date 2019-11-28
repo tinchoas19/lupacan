@@ -16,6 +16,7 @@ export class MisionPage {
   displayProperty: string;
   selectedItem: any;
   searchQuery: string;
+  param:any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -23,6 +24,7 @@ export class MisionPage {
     private storage: Storage,
     public viewCtrl: ViewController
   ) {
+    this.param = this.navParams.data.param;
     this.initializeItems();
     this.slides = [
       {

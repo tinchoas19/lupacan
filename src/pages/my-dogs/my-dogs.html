@@ -26,6 +26,7 @@
         <ion-col col-8 class="item-info-wrapper">
           <h2 class="nombre-item">{{dog.nombre}}</h2>
           <p class="desc-item">{{dog.descripcion | slice:0:50}} ...()</p>
+          <p class="desc-item">Estado : {{estado(dog)}}</p>          
         </ion-col>
       </ion-row>
     </div>
@@ -49,6 +50,7 @@
         <ion-col col-8 class="item-info-wrapper">
           <h2 class="nombre-item">{{dog.nombre}}</h2>
           <p class="desc-item">{{dog.descripcion}}</p>
+          <p class="desc-item">Estado : {{estado(dog)}}</p>          
         </ion-col>
       </ion-row>
     </div>
@@ -79,6 +81,7 @@
         <ion-col col-8 class="item-info-wrapper">
           <h2 class="nombre-item">{{dog.nombre}}</h2>
           <p class="desc-item">{{dog.descripcion}}</p>
+          <p class="desc-item">Estado : {{estado(dog)}}</p>
         </ion-col>
       </ion-row>
     </div>
@@ -103,6 +106,7 @@
         <ion-col col-8 class="item-info-wrapper">
           <h2 class="nombre-item">{{dog.nombre}}</h2>
           <p class="desc-item">{{dog.descripcion}}</p>
+          <p class="desc-item">Estado : {{estado(dog)}}</p>          
         </ion-col>
       </ion-row>
     </div>
@@ -127,6 +131,7 @@
         <ion-col col-8 class="item-info-wrapper">
           <h2 class="nombre-item">{{dog.nombre}}</h2>
           <p class="desc-item">{{dog.descripcion}}</p>
+          <p class="desc-item">Estado : {{estado(dog)}}</p>          
         </ion-col>
       </ion-row>
     </div>
@@ -151,6 +156,7 @@
         <ion-col col-8 class="item-info-wrapper" (click)="goToIntCalle(dog, 1)">
           <h2 class="nombre-item">{{dog.nombre}}</h2>
           <p class="desc-item">{{dog.descripcion}}</p>
+          <p class="desc-item">Estado : {{estado(dog)}}</p>          
         </ion-col>
       </ion-row>
     </div>

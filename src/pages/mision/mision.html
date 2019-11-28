@@ -1,6 +1,7 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Razas</ion-title>
+    <ion-title *ngIf="param == 'raza'">Razas</ion-title>
+    <ion-title *ngIf="param == 'localidades'">Localidades</ion-title>
     <ion-buttons end>
       <button ion-button (click)="dismiss()">
         <ion-icon name="close" showWhen="android,windows,core,mobileweb"></ion-icon>
@@ -10,12 +11,22 @@
 </ion-header>
 
 <ion-content class="tutorial-page">
-  <ion-searchbar (ionInput)="getItems($event)" placeholder="Buscar raza.."></ion-searchbar>
-  <ion-list inset>
-    <ion-item *ngFor="let item of items">
-      <ion-label (click)="select(item)">{{item.nombre}}</ion-label>
-    </ion-item>
-  </ion-list>
+  <div *ngIf="param == 'raza'">
+    <ion-searchbar (ionInput)="getItems($event)" placeholder="Buscar raza.."></ion-searchbar>
+    <ion-list inset>
+      <ion-item *ngFor="let item of items">
+        <ion-label (click)="select(item)">{{item.nombre}}</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+  <div *ngIf="param == 'localidades'">
+    <ion-searchbar (ionInput)="getItems($event)" placeholder="Buscar localidades.."></ion-searchbar>
+    <ion-list inset>
+      <ion-item *ngFor="let item of localidades">
+        <ion-label (click)="select(item)">{{item.nombre}}</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
   <!-- <ion-slides pager>
     <ion-slide *ngFor="let slide of slides">
       <ion-toolbar>
