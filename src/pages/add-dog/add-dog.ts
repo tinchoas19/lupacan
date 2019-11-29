@@ -1,3 +1,4 @@
+import { MyDogsPage } from './../my-dogs/my-dogs';
 import { MisionPage } from './../mision/mision';
 import { GoogleMapsProvider } from './../../providers/google-maps/google-maps';
 import { Storage } from '@ionic/storage';
@@ -252,7 +253,7 @@ export class AddDogPage {
           this.msgError = 'Se agrego con Exito!'
           this, this.presentToast(this.msgError);
           setTimeout(() => {
-            this.navCtrl.pop();
+            this.navCtrl.push(MyDogsPage,{index:0});
           }, 2000)
         } else {
           loading.dismiss();
