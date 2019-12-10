@@ -131,8 +131,9 @@ export class DogPage {
         this.dog = x['data'];
         
       })
-      this.dog.edad = this.edad(this.dog.fechanacimiento);
+      
     }
+    this.dog.edad = this.edad(this.dog.fechanacimiento);
     let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then(() => {
       this.autocompleteService = new google.maps.places.AutocompleteService();
       this.placesService = new google.maps.places.PlacesService(this.maps.map);
